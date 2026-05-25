@@ -1,0 +1,11 @@
+{
+  "name": "jlpt-n3-review",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node ./scripts/serve.mjs",
+    "build:data": "node ./scripts/build-n3-data.mjs",
+    "check": "node --check ./app.js && node --check ./scripts/build-n3-data.mjs"
+  }
+}
