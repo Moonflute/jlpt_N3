@@ -15,6 +15,7 @@ const state = {
   progress: loadProgress(),
   dataset: null,
   error: "",
+  isPoppingState: false,
 };
 
 function loadProgress() {
@@ -78,11 +79,31 @@ function getTrackProgress(trackId) {
   return state.progress[trackId];
 }
 
-function setRoute(route, payload = {}) {
+function currentRouteState() {
+  return {
+    route: state.route,
+    groupId: state.groupId,
+    trackId: state.trackId,
+  };
+}
+
+function applyRouteState(routeState) {
+  state.route = routeState.route ?? "home";
+  state.groupId = routeState.groupId ?? null;
+  state.trackId = routeState.trackId ?? null;
+  state.reveal = {};
+}
+
+function setRoute(route, payload = {}, options = {}) {
   state.route = route;
   state.groupId = payload.groupId ?? state.groupId;
   state.trackId = payload.trackId ?? state.trackId;
   state.reveal = {};
+
+  if (!options.skipHistory && !state.isPoppingState) {
+    window.history.pushState(currentRouteState(), "");
+  }
+
   render();
 }
 
@@ -144,7 +165,7 @@ function advanceCard(result) {
 }
 
 function reveal(key) {
-  state.reveal[key] = true;
+  state.reveal[key] = !state.reveal[key];
   render();
 }
 
@@ -301,72 +322,66 @@ function renderStudy() {
     `);
   }
 
+  const exampleJa = escapeHtml(item.exampleJa);
+  const exampleKo = escapeHtml(item.exampleKo);
+  const metaText = escapeHtml(item.note || item.hint || "");
+  const metaVisible = Boolean(state.reveal.meta && metaText);
+  const metaButtonVisible = Boolean(metaText);
+
   let primary = "";
   let secondary = "";
   let tertiary = "";
-  let note = "";
+  let choices = "";
   let modeText = "";
   let actions = [];
-  let choices = "";
 
   if (track.mode === "kanji_to_kana") {
     modeText = "한자를 보고 읽기를 떠올린 뒤 확인";
     primary = renderRubyParts(item.rubyParts, state.reveal.reading);
     secondary = state.reveal.meaning ? escapeHtml(item.meaning) : "";
-    note = state.reveal.note ? escapeHtml(item.note) : "";
     actions = [
-      { key: "reading", label: "요미가나 보기" },
+      { key: "reading", label: "히라가나 보기" },
       { key: "meaning", label: "의미 보기" },
-      { key: "note", label: "메모 보기" },
+      { key: "example", label: "예문 보기", enabled: Boolean(exampleJa) },
+      { key: "exampleKo", label: "예문 해설 보기", enabled: Boolean(exampleKo) },
     ];
   } else if (track.mode === "kana_to_kanji") {
     modeText = "히라가나를 보고 맞는 한자 표기를 떠올린 뒤 확인";
     primary = escapeHtml(item.primary);
-    secondary = state.reveal.answer
-      ? renderRubyParts(item.rubyParts, true)
-      : "";
-    choices = state.reveal.choices
-      ? escapeHtml(buildChoiceList(item).join(" · "))
-      : "";
-    note = state.reveal.hint ? escapeHtml(item.hint) : "";
+    secondary = state.reveal.answer ? renderRubyParts(item.rubyParts, true) : "";
+    choices = state.reveal.choices ? escapeHtml(buildChoiceList(item).join(" · ")) : "";
     actions = [
       { key: "choices", label: "보기 열기" },
       { key: "answer", label: "정답 보기" },
-      { key: "hint", label: "헷갈리는 한자 보기" },
+      { key: "example", label: "예문 보기", enabled: Boolean(exampleJa) },
+      { key: "exampleKo", label: "예문 해설 보기", enabled: Boolean(exampleKo) },
     ];
   } else if (track.mode === "synonym_pair") {
     modeText = "한쪽 표현을 보고 대응되는 유의 표현을 떠올리는 연습";
     primary = renderRubyParts(item.rubyParts, state.reveal.reading);
-    secondary = state.reveal.pair
-      ? escapeHtml(item.pairText)
-      : "";
-    tertiary = state.reveal.pair && item.pairReading
-      ? escapeHtml(item.pairReading)
-      : "";
-    note = state.reveal.meaning ? escapeHtml(item.meaning) : "";
+    secondary = state.reveal.pair ? escapeHtml(item.pairText) : "";
+    tertiary = state.reveal.pair && item.pairReading ? escapeHtml(item.pairReading) : "";
+    choices = state.reveal.meaning ? escapeHtml(item.meaning) : "";
     actions = [
-      { key: "reading", label: "요미가나 보기" },
+      { key: "reading", label: "히라가나 보기" },
       { key: "pair", label: "유의 표현 보기" },
       { key: "meaning", label: "의미 보기" },
+      { key: "example", label: "예문 보기", enabled: Boolean(exampleJa) },
+      { key: "exampleKo", label: "예문 해설 보기", enabled: Boolean(exampleKo) },
     ];
   } else {
-    modeText = "의미와 예문을 함께 보고 회독";
+    modeText = "의미를 떠올린 뒤 예문으로 확인";
     primary = renderRubyParts(item.rubyParts, state.reveal.reading);
     secondary = state.reveal.meaning ? escapeHtml(item.meaning) : "";
-    note = state.reveal.note ? escapeHtml(item.note) : "";
     actions = [
-      { key: "reading", label: "요미가나 보기" },
+      { key: "reading", label: "히라가나 보기" },
       { key: "meaning", label: "의미 보기" },
-      { key: "note", label: "분류 보기" },
+      { key: "example", label: "예문 보기", enabled: Boolean(exampleJa) },
+      { key: "exampleKo", label: "예문 해설 보기", enabled: Boolean(exampleKo) },
     ];
   }
 
-  const exampleJa = escapeHtml(item.exampleJa);
-  const exampleKo = escapeHtml(item.exampleKo);
-  const exampleBlock =
-    exampleJa || exampleKo
-      ? `<div class="card-example">${exampleJa}${exampleJa && exampleKo ? "<br />" : ""}${exampleKo}</div>`
-      : `<div class="muted-box">이 카드에는 예문이 없습니다.</div>`;
+  const visibleActions = actions.filter((action) => action.enabled !== false);
 
   return appShell(`
     <div class="topbar">
@@ -375,8 +390,9 @@ function renderStudy() {
     <div class="section-card">
       <div class="study-head">
         <div>
-          <h1 class="page-title">${escapeHtml(track.title)}</h1>
+          <h1 class="page-title page-title--study">${escapeHtml(track.title)}</h1>
           <p class="page-subtitle">${escapeHtml(stage.label)} ${escapeHtml(stage.range)}</p>
+          <p class="page-subtitle page-subtitle--mode">${escapeHtml(modeText)}</p>
         </div>
         <div class="study-progress">${(progress.cursor % visibleItems.length) + 1} / ${visibleItems.length}</div>
       </div>
@@ -393,16 +409,19 @@ function renderStudy() {
     </div>
     <div class="section-card card-frame">
       <div class="card-panel">
-        <div class="card-mode">${escapeHtml(modeText)}</div>
+        ${metaButtonVisible ? `<button class="card-meta-button" data-reveal="meta" aria-label="메모 열기">✏️</button>` : ""}
+        ${metaVisible ? `<div class="card-meta-popover">${metaText}</div>` : ""}
         <div class="card-primary">${primary}</div>
-        <div class="card-reading">${secondary}</div>
-        <div class="card-meaning">${tertiary}</div>
-        ${choices ? `<div class="card-note">${choices}</div>` : ""}
-        <div class="card-note">${note}</div>
-        ${exampleBlock}
+        <div class="card-slot card-reading${secondary ? "" : " is-empty"}">${secondary || "&nbsp;"}</div>
+        <div class="card-slot card-meaning${tertiary ? "" : " is-empty"}">${tertiary || "&nbsp;"}</div>
+        <div class="card-slot card-choice${choices ? "" : " is-empty"}">${choices || "&nbsp;"}</div>
+        <div class="card-example-shell">
+          <div class="card-example${state.reveal.example && exampleJa ? "" : " is-empty"}">${state.reveal.example && exampleJa ? exampleJa : "&nbsp;"}</div>
+          <div class="card-example card-example--ko${state.reveal.exampleKo && exampleKo ? "" : " is-empty"}">${state.reveal.exampleKo && exampleKo ? exampleKo : "&nbsp;"}</div>
+        </div>
       </div>
       <div class="action-row">
-        ${actions
+        ${visibleActions
           .map(
             (action) =>
               `<button class="action-button" data-reveal="${action.key}">${escapeHtml(action.label)}</button>`,
@@ -512,6 +531,16 @@ function bindEvents() {
 }
 
 async function init() {
+  window.history.replaceState(currentRouteState(), "");
+
+  window.addEventListener("popstate", (event) => {
+    const routeState = event.state;
+    state.isPoppingState = true;
+    applyRouteState(routeState ?? { route: "home", groupId: null, trackId: null });
+    render();
+    state.isPoppingState = false;
+  });
+
   render();
 
   if ("serviceWorker" in navigator) {

@@ -71,12 +71,20 @@ button {
   line-height: 1.08;
 }
 
+.page-title--study {
+  font-size: clamp(18px, 4.8vw, 22px);
+}
+
 .title-block p,
 .page-subtitle {
-  margin: 10px 0 0;
+  margin: 6px 0 0;
   color: var(--muted);
-  font-size: 15px;
-  line-height: 1.55;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.page-subtitle--mode {
+  max-width: 320px;
 }
 
 .home-button,
@@ -206,7 +214,7 @@ button {
 .study-head {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   gap: 12px;
 }
 
@@ -214,6 +222,7 @@ button {
   text-align: right;
   color: var(--muted);
   font-weight: 800;
+  font-size: 13px;
 }
 
 .summary-list {
@@ -221,20 +230,20 @@ button {
 }
 
 .summary-pill {
-  padding: 14px;
-  border-radius: 18px;
+  padding: 10px 12px;
+  border-radius: 14px;
   background: white;
   border: 1px solid var(--line);
 }
 
 .summary-pill__label {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--muted);
 }
 
 .summary-pill__value {
-  margin-top: 4px;
-  font-size: 18px;
+  margin-top: 2px;
+  font-size: 15px;
   font-weight: 850;
 }
 
@@ -245,17 +254,18 @@ button {
 }
 
 .card-panel {
-  min-height: 390px;
+  min-height: 300px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  gap: 10px;
-  padding: 28px 16px;
+  gap: 6px;
+  padding: 18px 14px 14px;
   background: white;
   border-radius: 26px;
   border: 1px solid var(--line);
   text-align: center;
+  position: relative;
 }
 
 .card-mode {
@@ -265,27 +275,99 @@ button {
 }
 
 .card-primary {
-  font-size: clamp(36px, 9vw, 62px);
+  min-height: 78px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(30px, 8vw, 52px);
   font-weight: 800;
   color: #20252b;
   line-height: 1.15;
   word-break: keep-all;
 }
 
+.card-slot {
+  width: 100%;
+  max-width: 620px;
+  min-height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 0;
+}
+
+.card-slot.is-empty {
+  visibility: hidden;
+}
+
 .card-reading,
-.card-meaning {
-  font-size: clamp(24px, 5vw, 34px);
+.card-meaning,
+.card-choice {
+  font-size: clamp(20px, 4.5vw, 28px);
   color: #27313a;
   font-weight: 700;
-  line-height: 1.32;
+  line-height: 1.28;
+}
+
+.card-choice {
+  min-height: 26px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.card-example-shell {
+  width: 100%;
+  max-width: 620px;
+  min-height: 88px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 6px;
+  margin-top: 4px;
 }
 
 .card-note,
-.card-example {
+.card-example,
+.card-meta-popover {
   max-width: 620px;
   color: var(--muted);
-  line-height: 1.65;
-  font-size: 15px;
+  line-height: 1.55;
+  font-size: 14px;
+}
+
+.card-example {
+  min-height: 38px;
+}
+
+.card-example.is-empty {
+  visibility: hidden;
+}
+
+.card-meta-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 999px;
+  background: #f5f7f8;
+  box-shadow: 0 4px 12px rgba(20, 29, 38, 0.08);
+  cursor: pointer;
+}
+
+.card-meta-popover {
+  position: absolute;
+  top: 52px;
+  right: 12px;
+  width: min(240px, calc(100% - 24px));
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: #f9fbfc;
+  border: 1px solid var(--line);
+  text-align: left;
+  z-index: 1;
 }
 
 ruby {
@@ -307,22 +389,23 @@ rt {
 
 .action-button {
   flex: 1;
-  min-width: 120px;
-  border-radius: 16px;
-  padding: 14px 16px;
+  min-width: 100px;
+  border-radius: 14px;
+  padding: 11px 12px;
   background: linear-gradient(180deg, #27b7bf 0%, #108992 100%);
   color: white;
-  font-weight: 850;
+  font-size: 14px;
+  font-weight: 800;
 }
 
 .decision-button {
   flex: 1;
-  min-width: 150px;
-  border-radius: 18px;
-  padding: 16px;
+  min-width: 120px;
+  border-radius: 14px;
+  padding: 12px 12px;
   color: white;
-  font-size: 18px;
-  font-weight: 900;
+  font-size: 15px;
+  font-weight: 850;
 }
 
 .decision-button--again {
@@ -356,5 +439,25 @@ rt {
 
   .study-head {
     flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .card-panel {
+    min-height: 270px;
+    padding-top: 16px;
+  }
+
+  .card-primary {
+    min-height: 66px;
+    font-size: clamp(26px, 7vw, 42px);
+  }
+
+  .card-example-shell {
+    min-height: 76px;
+  }
+
+  .action-row,
+  .decision-row {
+    gap: 8px;
   }
 }
