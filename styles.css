@@ -436,6 +436,11 @@ rt {
   font-weight: 850;
 }
 
+.decision-button:disabled {
+  opacity: 0.52;
+  cursor: default;
+}
+
 .decision-button--again {
   background: linear-gradient(180deg, #1ba8b2 0%, #0c7f87 100%);
 }

@@ -72,12 +72,21 @@ function getTrackProgress(trackId) {
       known: 0,
       again: 0,
       cursor: 0,
+      itemStates: {},
       recentPairIds: [],
       sessions: {},
     };
   }
 
+  state.progress[trackId].itemStates ??= {};
+  state.progress[trackId].sessions ??= {};
   return state.progress[trackId];
+}
+
+function syncTrackTotals(progress) {
+  const values = Object.values(progress.itemStates ?? {});
+  progress.known = values.filter((value) => value === "known").length;
+  progress.again = values.filter((value) => value === "again").length;
 }
 
 function currentRouteState() {
@@ -131,7 +140,7 @@ function onSelectStage(index) {
   const track = getTrack(state.trackId);
   const progress = getTrackProgress(state.trackId);
   progress.stageIndex = index;
-  initializeStageSession(track, true);
+  initializeStageSession(track, false);
   saveProgress();
   setRoute("study");
 }
@@ -226,11 +235,17 @@ function advanceCard(result) {
   const track = getTrack(state.trackId);
   const progress = getTrackProgress(state.trackId);
   const session = getStageSession(track);
+
+  if (session.prompt) {
+    return;
+  }
+
   const currentItemId = session.queueIds[session.pointer];
   const currentItem = getItemById(track, currentItemId);
 
-  progress[result] += 1;
   session.statusMap[currentItemId] = result;
+  progress.itemStates[currentItemId] = result;
+  syncTrackTotals(progress);
 
   if (track.mode === "synonym_pair" && currentItem?.pairId) {
     session.recentPairIds = [...(session.recentPairIds ?? []), currentItem.pairId].slice(-4);
@@ -309,11 +324,11 @@ function findNextSynonymCursor(items, currentCursor, recentPairIds) {
 
 function handleRetryPrompt(shouldRetry) {
   const track = getTrack(state.trackId);
+  const progress = getTrackProgress(track.id);
   const session = getStageSession(track);
   const retryIds = session.prompt?.itemIds ?? [];
 
   if (!shouldRetry) {
-    const progress = getTrackProgress(track.id);
     progress.sessions[getStageKey(track)] = null;
     saveProgress();
     setRoute("stage");
@@ -505,6 +520,7 @@ function renderStudy() {
   const exampleActions = visibleActions.filter(
     (action) => action.key === "example" || action.key === "exampleKo",
   );
+  const isPromptOpen = Boolean(session.prompt);
 
   return appShell(`
     <div class="topbar">
@@ -565,8 +581,8 @@ function renderStudy() {
             : ""
         }
         <div class="decision-row">
-          <button class="decision-button decision-button--again" data-decision="again">공부하겠음</button>
-          <button class="decision-button decision-button--known" data-decision="known">알고있음</button>
+          <button class="decision-button decision-button--again" data-decision="again"${isPromptOpen ? " disabled" : ""}>공부하겠음</button>
+          <button class="decision-button decision-button--known" data-decision="known"${isPromptOpen ? " disabled" : ""}>알고있음</button>
         </div>
         ${
           session.prompt?.type === "retry"
