@@ -73,6 +73,7 @@ function getTrackProgress(trackId) {
       again: 0,
       cursor: 0,
       recentPairIds: [],
+      sessions: {},
     };
   }
 
@@ -127,8 +128,10 @@ function onSelectTrack(trackId) {
 }
 
 function onSelectStage(index) {
+  const track = getTrack(state.trackId);
   const progress = getTrackProgress(state.trackId);
   progress.stageIndex = index;
+  initializeStageSession(track, true);
   saveProgress();
   setRoute("study");
 }
@@ -140,23 +143,106 @@ function getVisibleItems(track) {
   return track.items.slice(0, stage.end);
 }
 
+function getStageKey(track) {
+  const progress = getTrackProgress(track.id);
+  const stages = getStages(track.total);
+  const stage = stages[Math.min(progress.stageIndex, stages.length - 1)];
+  return `${track.id}:${stage.end}`;
+}
+
+function shuffleArray(items) {
+  const copied = [...items];
+  for (let index = copied.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [copied[index], copied[swapIndex]] = [copied[swapIndex], copied[index]];
+  }
+  return copied;
+}
+
+function initializeStageSession(track, reset = false) {
+  const progress = getTrackProgress(track.id);
+  const stageKey = getStageKey(track);
+  progress.sessions ??= {};
+
+  if (!reset && progress.sessions[stageKey]) {
+    return progress.sessions[stageKey];
+  }
+
+  const items = getVisibleItems(track);
+  progress.sessions[stageKey] = {
+    sourceIds: items.map((item) => item.id),
+    queueIds: items.map((item) => item.id),
+    pointer: 0,
+    round: 1,
+    statusMap: {},
+    prompt: null,
+    recentPairIds: [],
+  };
+  return progress.sessions[stageKey];
+}
+
+function getStageSession(track) {
+  return initializeStageSession(track, false);
+}
+
+function getItemById(track, itemId) {
+  return track.items.find((item) => item.id === itemId) ?? null;
+}
+
+function getSessionStats(session) {
+  let known = 0;
+  let again = 0;
+
+  for (const itemId of session.sourceIds) {
+    const value = session.statusMap[itemId];
+    if (value === "known") {
+      known += 1;
+    } else if (value === "again") {
+      again += 1;
+    }
+  }
+
+  return { known, again };
+}
+
+function getNextQueueIndex(track, session, currentIndex) {
+  if (track.mode !== "synonym_pair") {
+    return currentIndex + 1;
+  }
+
+  const recent = new Set(session.recentPairIds ?? []);
+  for (let offset = 1; offset < session.queueIds.length - currentIndex; offset += 1) {
+    const nextIndex = currentIndex + offset;
+    const candidate = getItemById(track, session.queueIds[nextIndex]);
+    if (!candidate?.pairId || !recent.has(candidate.pairId)) {
+      return nextIndex;
+    }
+  }
+
+  return currentIndex + 1;
+}
+
 function advanceCard(result) {
   const track = getTrack(state.trackId);
   const progress = getTrackProgress(state.trackId);
-  const visibleItems = getVisibleItems(track);
-  const currentItem = visibleItems[progress.cursor % Math.max(visibleItems.length, 1)];
+  const session = getStageSession(track);
+  const currentItemId = session.queueIds[session.pointer];
+  const currentItem = getItemById(track, currentItemId);
 
   progress[result] += 1;
+  session.statusMap[currentItemId] = result;
 
-  if (track.mode === "synonym_pair" && visibleItems.length) {
-    if (currentItem?.pairId) {
-      progress.recentPairIds = [...(progress.recentPairIds ?? []), currentItem.pairId].slice(-4);
-    }
-    progress.cursor = findNextSynonymCursor(visibleItems, progress.cursor, progress.recentPairIds);
+  if (track.mode === "synonym_pair" && currentItem?.pairId) {
+    session.recentPairIds = [...(session.recentPairIds ?? []), currentItem.pairId].slice(-4);
+  }
+
+  if (session.pointer < session.queueIds.length - 1) {
+    session.pointer = getNextQueueIndex(track, session, session.pointer);
   } else {
-    progress.cursor = visibleItems.length
-      ? (progress.cursor + 1) % visibleItems.length
-      : 0;
+    const retryIds = session.queueIds.filter((itemId) => session.statusMap[itemId] === "again");
+    session.prompt = retryIds.length
+      ? { type: "retry", itemIds: retryIds }
+      : { type: "complete" };
   }
 
   saveProgress();
@@ -170,14 +256,12 @@ function reveal(key) {
 }
 
 function getCurrentItem(track) {
-  const progress = getTrackProgress(track.id);
-  const visibleItems = getVisibleItems(track);
-
-  if (!visibleItems.length) {
+  const session = getStageSession(track);
+  if (!session.queueIds.length) {
     return null;
   }
 
-  return visibleItems[progress.cursor % visibleItems.length];
+  return getItemById(track, session.queueIds[session.pointer]);
 }
 
 function escapeHtml(value) {
@@ -221,6 +305,37 @@ function findNextSynonymCursor(items, currentCursor, recentPairIds) {
   }
 
   return (currentCursor + 1) % items.length;
+}
+
+function handleRetryPrompt(shouldRetry) {
+  const track = getTrack(state.trackId);
+  const session = getStageSession(track);
+  const retryIds = session.prompt?.itemIds ?? [];
+
+  if (!shouldRetry) {
+    const progress = getTrackProgress(track.id);
+    progress.sessions[getStageKey(track)] = null;
+    saveProgress();
+    setRoute("stage");
+    return;
+  }
+
+  session.queueIds = shuffleArray(retryIds);
+  session.pointer = 0;
+  session.round += 1;
+  session.prompt = null;
+  session.recentPairIds = [];
+  saveProgress();
+  state.reveal = {};
+  render();
+}
+
+function handleCompletePrompt() {
+  const track = getTrack(state.trackId);
+  const progress = getTrackProgress(track.id);
+  progress.sessions[getStageKey(track)] = null;
+  saveProgress();
+  setRoute("stage");
 }
 
 function appShell(inner) {
@@ -308,8 +423,10 @@ function renderStudy() {
   const progress = getTrackProgress(track.id);
   const stages = getStages(track.total);
   const stage = stages[Math.min(progress.stageIndex, stages.length - 1)];
+  const session = getStageSession(track);
   const visibleItems = getVisibleItems(track);
   const item = getCurrentItem(track);
+  const stats = getSessionStats(session);
 
   if (!item) {
     return appShell(`
@@ -343,7 +460,7 @@ function renderStudy() {
       { key: "reading", label: "히라가나 보기" },
       { key: "meaning", label: "의미 보기" },
       { key: "example", label: "예문 보기", enabled: Boolean(exampleJa) },
-      { key: "exampleKo", label: "예문 해설 보기", enabled: Boolean(exampleKo) },
+      { key: "exampleKo", label: "예문 해석 보기", enabled: Boolean(exampleKo) },
     ];
   } else if (track.mode === "kana_to_kanji") {
     modeText = "히라가나를 보고 맞는 한자 표기를 떠올린 뒤 확인";
@@ -354,7 +471,7 @@ function renderStudy() {
       { key: "choices", label: "보기 열기" },
       { key: "answer", label: "정답 보기" },
       { key: "example", label: "예문 보기", enabled: Boolean(exampleJa) },
-      { key: "exampleKo", label: "예문 해설 보기", enabled: Boolean(exampleKo) },
+      { key: "exampleKo", label: "예문 해석 보기", enabled: Boolean(exampleKo) },
     ];
   } else if (track.mode === "synonym_pair") {
     modeText = "한쪽 표현을 보고 대응되는 유의 표현을 떠올리는 연습";
@@ -367,7 +484,7 @@ function renderStudy() {
       { key: "pair", label: "유의 표현 보기" },
       { key: "meaning", label: "의미 보기" },
       { key: "example", label: "예문 보기", enabled: Boolean(exampleJa) },
-      { key: "exampleKo", label: "예문 해설 보기", enabled: Boolean(exampleKo) },
+      { key: "exampleKo", label: "예문 해석 보기", enabled: Boolean(exampleKo) },
     ];
   } else {
     modeText = "의미를 떠올린 뒤 예문으로 확인";
@@ -377,11 +494,17 @@ function renderStudy() {
       { key: "reading", label: "히라가나 보기" },
       { key: "meaning", label: "의미 보기" },
       { key: "example", label: "예문 보기", enabled: Boolean(exampleJa) },
-      { key: "exampleKo", label: "예문 해설 보기", enabled: Boolean(exampleKo) },
+      { key: "exampleKo", label: "예문 해석 보기", enabled: Boolean(exampleKo) },
     ];
   }
 
   const visibleActions = actions.filter((action) => action.enabled !== false);
+  const primaryActions = visibleActions.filter(
+    (action) => action.key !== "example" && action.key !== "exampleKo",
+  );
+  const exampleActions = visibleActions.filter(
+    (action) => action.key === "example" || action.key === "exampleKo",
+  );
 
   return appShell(`
     <div class="topbar">
@@ -391,19 +514,19 @@ function renderStudy() {
       <div class="study-head">
         <div>
           <h1 class="page-title page-title--study">${escapeHtml(track.title)}</h1>
-          <p class="page-subtitle">${escapeHtml(stage.label)} ${escapeHtml(stage.range)}</p>
-          <p class="page-subtitle page-subtitle--mode">${escapeHtml(modeText)}</p>
+          <div class="study-inline-meta">
+            <span class="page-subtitle">${escapeHtml(modeText)}</span>
+          </div>
         </div>
-        <div class="study-progress">${(progress.cursor % visibleItems.length) + 1} / ${visibleItems.length}</div>
+        <div class="study-progress">${Math.min(session.pointer + 1, session.queueIds.length)} / ${session.queueIds.length}</div>
       </div>
-      <div class="summary-list">
-        <div class="summary-pill">
-          <div class="summary-pill__label">알고있음</div>
-          <div class="summary-pill__value">${progress.known}</div>
+      <div class="study-summary-row">
+        <div class="study-summary-left">
+          <span class="page-subtitle">${escapeHtml(stage.label)} ${escapeHtml(stage.range)} · ${session.round}라운드</span>
         </div>
-        <div class="summary-pill">
-          <div class="summary-pill__label">공부하겠음</div>
-          <div class="summary-pill__value">${progress.again}</div>
+        <div class="study-summary-stats">
+          <span class="study-stat-chip">알고있음 <strong>${stats.known}</strong></span>
+          <span class="study-stat-chip">공부하겠음 <strong>${stats.again}</strong></span>
         </div>
       </div>
     </div>
@@ -420,17 +543,52 @@ function renderStudy() {
           <div class="card-example card-example--ko${state.reveal.exampleKo && exampleKo ? "" : " is-empty"}">${state.reveal.exampleKo && exampleKo ? exampleKo : "&nbsp;"}</div>
         </div>
       </div>
-      <div class="action-row">
-        ${visibleActions
-          .map(
-            (action) =>
-              `<button class="action-button" data-reveal="${action.key}">${escapeHtml(action.label)}</button>`,
-          )
-          .join("")}
-      </div>
-      <div class="decision-row">
-        <button class="decision-button decision-button--again" data-decision="again">공부하겠음</button>
-        <button class="decision-button decision-button--known" data-decision="known">알고있음</button>
+      <div class="action-stack">
+        <div class="action-row action-row--primary">
+          ${primaryActions
+            .map(
+              (action) =>
+                `<button class="action-button" data-reveal="${action.key}">${escapeHtml(action.label)}</button>`,
+            )
+            .join("")}
+        </div>
+        ${
+          exampleActions.length
+            ? `<div class="action-row action-row--examples">
+          ${exampleActions
+            .map(
+              (action) =>
+                `<button class="action-button action-button--secondary" data-reveal="${action.key}">${escapeHtml(action.label)}</button>`,
+            )
+            .join("")}
+        </div>`
+            : ""
+        }
+        <div class="decision-row">
+          <button class="decision-button decision-button--again" data-decision="again">공부하겠음</button>
+          <button class="decision-button decision-button--known" data-decision="known">알고있음</button>
+        </div>
+        ${
+          session.prompt?.type === "retry"
+            ? `<div class="session-prompt">
+          <div class="session-prompt__text">공부하겠음을 누른 단어들만 다시 띄울까요?</div>
+          <div class="session-prompt__actions">
+            <button class="prompt-button" data-session-action="retry-yes">예</button>
+            <button class="prompt-button prompt-button--ghost" data-session-action="retry-no">아니오</button>
+          </div>
+        </div>`
+            : ""
+        }
+        ${
+          session.prompt?.type === "complete"
+            ? `<div class="session-prompt session-prompt--complete">
+          <div class="session-prompt__text">완료했습니다!</div>
+          <div class="session-prompt__actions">
+            <button class="prompt-button" data-session-action="complete-ok">확인</button>
+          </div>
+        </div>`
+            : ""
+        }
       </div>
     </div>
   `);
@@ -527,6 +685,18 @@ function bindEvents() {
 
   document.querySelectorAll("[data-decision]").forEach((button) => {
     button.addEventListener("click", () => advanceCard(button.dataset.decision));
+  });
+
+  document.querySelectorAll("[data-session-action]").forEach((button) => {
+    button.addEventListener("click", () => {
+      if (button.dataset.sessionAction === "retry-yes") {
+        handleRetryPrompt(true);
+      } else if (button.dataset.sessionAction === "retry-no") {
+        handleRetryPrompt(false);
+      } else if (button.dataset.sessionAction === "complete-ok") {
+        handleCompletePrompt();
+      }
+    });
   });
 }
 

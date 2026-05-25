@@ -218,6 +218,10 @@ button {
   gap: 12px;
 }
 
+.study-inline-meta {
+  margin-top: 4px;
+}
+
 .study-progress {
   text-align: right;
   color: var(--muted);
@@ -225,26 +229,36 @@ button {
   font-size: 13px;
 }
 
-.summary-list {
-  grid-template-columns: 1fr 1fr;
+.study-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
 }
 
-.summary-pill {
-  padding: 10px 12px;
-  border-radius: 14px;
-  background: white;
-  border: 1px solid var(--line);
-}
-
-.summary-pill__label {
-  font-size: 11px;
+.study-summary-left {
   color: var(--muted);
 }
 
-.summary-pill__value {
-  margin-top: 2px;
-  font-size: 15px;
-  font-weight: 850;
+.study-summary-stats {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.study-stat-chip {
+  font-size: 13px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.study-stat-chip strong {
+  margin-left: 6px;
+  color: var(--ink);
+  font-size: 16px;
 }
 
 .card-frame {
@@ -387,6 +401,16 @@ rt {
   gap: 10px;
 }
 
+.action-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.action-row--examples .action-button {
+  min-width: 0;
+}
+
 .action-button {
   flex: 1;
   min-width: 100px;
@@ -396,6 +420,10 @@ rt {
   color: white;
   font-size: 14px;
   font-weight: 800;
+}
+
+.action-button--secondary {
+  flex: 1 1 calc(50% - 5px);
 }
 
 .decision-button {
@@ -416,6 +444,47 @@ rt {
   background: linear-gradient(180deg, #3c4653 0%, #1e252f 100%);
 }
 
+.session-prompt {
+  margin-top: 2px;
+  padding: 14px;
+  border-radius: 18px;
+  background: #f9fbfc;
+  border: 1px solid var(--line);
+}
+
+.session-prompt--complete {
+  background: #f3fbf8;
+}
+
+.session-prompt__text {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.session-prompt__actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.prompt-button {
+  flex: 1;
+  border: 0;
+  border-radius: 14px;
+  padding: 12px;
+  background: linear-gradient(180deg, #27b7bf 0%, #108992 100%);
+  color: white;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.prompt-button--ghost {
+  background: #eef2f5;
+  color: var(--ink);
+}
+
 .muted-box {
   padding: 16px;
   border-radius: 20px;
@@ -429,10 +498,6 @@ rt {
     width: min(100vw - 12px, 100%);
   }
 
-  .summary-list {
-    grid-template-columns: 1fr;
-  }
-
   .big-button {
     min-height: 96px;
   }
@@ -440,6 +505,17 @@ rt {
   .study-head {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .study-summary-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .study-summary-stats {
+    gap: 14px;
+    justify-content: flex-start;
   }
 
   .card-panel {
