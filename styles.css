@@ -318,7 +318,7 @@ button {
   align-items: center;
   justify-content: center;
   font-size: clamp(30px, 8vw, 52px);
-  font-weight: 800;
+  font-weight: 650;
   color: #20252b;
   line-height: 1.15;
   word-break: keep-all;
@@ -343,16 +343,18 @@ button {
 .card-choice {
   font-size: clamp(20px, 4.5vw, 28px);
   color: #27313a;
-  font-weight: 700;
+  font-weight: 560;
   line-height: 1.28;
 }
 
 .card-reading--answer {
   font-size: clamp(24px, 5.3vw, 34px);
+  font-weight: 620;
 }
 
 .card-meaning--answer {
   font-size: clamp(19px, 4vw, 24px);
+  font-weight: 560;
 }
 
 .card-choice {
