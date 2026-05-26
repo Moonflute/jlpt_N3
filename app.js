@@ -727,7 +727,7 @@ function renderStudy() {
     </div>
     <div class="section-card card-frame">
       <div class="card-panel">
-        <button class="card-speak-button" data-speak aria-label="?? ?? ??">??</button>
+        <button class="card-speak-button" data-speak aria-label="단어 발음 듣기">&#128266;</button>
         ${metaButtonVisible ? `<button class="card-meta-button" data-reveal="meta" aria-label="메모 열기">✏️</button>` : ""}
         ${metaVisible ? `<div class="card-meta-popover">${metaText}</div>` : ""}
         <div class="card-primary">${primary}</div>
