@@ -300,6 +300,13 @@ function advanceCard(result) {
 }
 
 function reveal(key) {
+  if (key === "exampleKo" && !state.reveal.exampleKo && !state.reveal.example) {
+    state.reveal.example = true;
+    state.reveal.exampleKo = true;
+    render();
+    return;
+  }
+
   state.reveal[key] = !state.reveal[key];
   render();
 }
