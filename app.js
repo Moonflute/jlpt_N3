@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "0.1.1";
+const APP_VERSION = "0.1.2";
 
 const GROUPS = [
   { id: "언지", title: "언지" },
@@ -214,9 +214,10 @@ function initializeStageSession(track, reset = false) {
   }
 
   const items = getVisibleItems(track);
+  const sourceIds = items.map((item) => item.id);
   progress.sessions[stageKey] = {
-    sourceIds: items.map((item) => item.id),
-    queueIds: items.map((item) => item.id),
+    sourceIds,
+    queueIds: shuffleArray(sourceIds),
     pointer: 0,
     round: 1,
     statusMap: {},
@@ -584,15 +585,16 @@ function renderStage() {
     <div class="section-card">
       <div class="stage-list">${buttons}</div>
     </div>
+
     ${
       state.stagePrompt
-        ? `<div class="section-card">
-      <div class="session-prompt stage-prompt">
-        <div class="session-prompt__text">학습한 회차입니다. 초기화하고 다시 학습하시겠습니까?</div>
+        ? `<div class="modal-backdrop">
+      <div class="modal-panel session-prompt stage-prompt">
+        <div class="session-prompt__text">\uD559\uC2B5\uD55C \uD68C\uCC28\uC785\uB2C8\uB2E4. \uCD08\uAE30\uD654\uD558\uACE0 \uB2E4\uC2DC \uD559\uC2B5\uD558\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?</div>
         <div class="stage-prompt__meta">${escapeHtml(state.stagePrompt.label)} ${escapeHtml(state.stagePrompt.range)}</div>
         <div class="session-prompt__actions">
-          <button class="prompt-button" data-stage-reset="yes">예</button>
-          <button class="prompt-button prompt-button--ghost" data-stage-reset="no">아니오</button>
+          <button class="prompt-button" data-stage-reset="yes">\uC608</button>
+          <button class="prompt-button prompt-button--ghost" data-stage-reset="no">\uC544\uB2C8\uC624</button>
         </div>
       </div>
     </div>`
@@ -849,7 +851,31 @@ function render() {
     app.innerHTML = renderStudy();
   }
 
+  normalizeStudyHeaderLayout();
   bindEvents();
+}
+
+function normalizeStudyHeaderLayout() {
+  const studyHead = document.querySelector(".study-head");
+  const progress = document.querySelector(".study-progress");
+  const summaryRow = document.querySelector(".study-summary-row");
+  const stats = document.querySelector(".study-summary-stats");
+
+  if (!studyHead || !progress || !summaryRow || !stats) {
+    return;
+  }
+
+  if (summaryRow.nextElementSibling?.classList.contains("study-summary-row--stats")) {
+    return;
+  }
+
+  progress.remove();
+  stats.remove();
+
+  const statsRow = document.createElement("div");
+  statsRow.className = "study-summary-row study-summary-row--stats";
+  statsRow.append(progress, stats);
+  summaryRow.insertAdjacentElement("afterend", statsRow);
 }
 
 function bindEvents() {

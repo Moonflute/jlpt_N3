@@ -270,6 +270,10 @@ button {
   margin-top: 10px;
 }
 
+.study-summary-row--stats {
+  margin-top: 6px;
+}
+
 .study-summary-left {
   color: var(--muted);
 }
@@ -280,6 +284,15 @@ button {
   justify-content: flex-end;
   gap: 18px;
   flex-wrap: wrap;
+}
+
+.study-summary-row--stats .study-progress {
+  min-width: 56px;
+  text-align: left;
+}
+
+.study-summary-row--stats .study-summary-stats {
+  justify-content: flex-start;
 }
 
 .study-stat-chip {
@@ -518,6 +531,23 @@ rt {
   border-radius: 18px;
   background: #f9fbfc;
   border: 1px solid var(--line);
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  background: rgba(20, 29, 38, 0.22);
+  z-index: 40;
+}
+
+.modal-panel {
+  width: min(420px, calc(100vw - 36px));
+  margin: 0;
+  box-shadow: 0 16px 40px rgba(20, 29, 38, 0.18);
 }
 
 .session-prompt--complete {
