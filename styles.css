@@ -64,6 +64,15 @@ button {
   justify-content: center;
 }
 
+.home-version {
+  width: 100%;
+  padding: 0 0 18px;
+  text-align: center;
+  color: #9aa4ad;
+  font-size: 12px;
+  line-height: 1;
+}
+
 .title-block h1,
 .page-title {
   margin: 0;

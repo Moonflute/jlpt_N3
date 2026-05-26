@@ -1,4 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
+const APP_VERSION = "0.1.1";
 
 const GROUPS = [
   { id: "언지", title: "언지" },
@@ -521,6 +522,7 @@ function renderHome() {
     <div class="home-actions">
       <div class="grid-2">${buttons}</div>
     </div>
+    <div class="home-version">ver ${APP_VERSION}</div>
   `);
 }
 
