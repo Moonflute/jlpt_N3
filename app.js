@@ -13,6 +13,7 @@ const state = {
   trackId: null,
   reveal: {},
   stagePrompt: null,
+  voicesLoaded: false,
   progress: loadProgress(),
   dataset: null,
   error: "",
@@ -309,6 +310,57 @@ function reveal(key) {
 
   state.reveal[key] = !state.reveal[key];
   render();
+}
+
+function getSpeechText(item, track) {
+  if (track.mode === "kana_to_kanji") {
+    return item.reading || item.primary || item.answer || "";
+  }
+
+  return item.reading || item.primary || "";
+}
+
+function pickJapaneseVoice() {
+  if (!("speechSynthesis" in window)) {
+    return null;
+  }
+
+  const voices = window.speechSynthesis.getVoices();
+  if (!voices.length) {
+    return null;
+  }
+
+  return (
+    voices.find((voice) => voice.lang?.toLowerCase() === "ja-jp") ||
+    voices.find((voice) => voice.lang?.toLowerCase().startsWith("ja")) ||
+    null
+  );
+}
+
+function speakCurrentItem() {
+  const track = getTrack(state.trackId);
+  if (!track || !("speechSynthesis" in window)) {
+    return;
+  }
+
+  const item = getCurrentItem(track);
+  const text = item ? getSpeechText(item, track) : "";
+  if (!text) {
+    return;
+  }
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = "ja-JP";
+  utterance.rate = 0.96;
+  utterance.pitch = 1;
+
+  const voice = pickJapaneseVoice();
+  if (voice) {
+    utterance.voice = voice;
+  }
+
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(utterance);
 }
 
 function getCurrentItem(track) {
@@ -673,6 +725,7 @@ function renderStudy() {
     </div>
     <div class="section-card card-frame">
       <div class="card-panel">
+        <button class="card-speak-button" data-speak aria-label="?? ?? ??">??</button>
         ${metaButtonVisible ? `<button class="card-meta-button" data-reveal="meta" aria-label="메모 열기">✏️</button>` : ""}
         ${metaVisible ? `<div class="card-meta-popover">${metaText}</div>` : ""}
         <div class="card-primary">${primary}</div>
@@ -822,6 +875,10 @@ function bindEvents() {
 
   document.querySelectorAll("[data-reveal]").forEach((button) => {
     button.addEventListener("click", () => reveal(button.dataset.reveal));
+  });
+
+  document.querySelectorAll("[data-speak]").forEach((button) => {
+    button.addEventListener("click", speakCurrentItem);
   });
 
   document.querySelectorAll("[data-decision]").forEach((button) => {

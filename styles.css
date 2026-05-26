@@ -410,6 +410,19 @@ button {
   cursor: pointer;
 }
 
+.card-speak-button {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 999px;
+  background: #f5f7f8;
+  box-shadow: 0 4px 12px rgba(20, 29, 38, 0.08);
+  cursor: pointer;
+}
+
 .card-meta-popover {
   position: absolute;
   top: 52px;
