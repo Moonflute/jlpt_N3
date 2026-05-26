@@ -344,21 +344,53 @@ function renderRubyParts(parts, revealRuby, options = {}) {
     .join("");
 }
 
+function getExampleTerms(track, item) {
+  const terms = new Set();
+
+  if (item.primary) {
+    terms.add(item.primary);
+  }
+
+  if (track.mode === "kana_to_kanji" && item.answer) {
+    terms.add(item.answer);
+  }
+
+  if (track.mode === "synonym_pair" && item.pairText) {
+    terms.add(item.pairText);
+  }
+
+  return [...terms].filter(Boolean).sort((left, right) => right.length - left.length);
+}
+
 function highlightExampleText(example, item, track) {
-  const term = track.mode === "kana_to_kanji" ? item.answer || item.primary : item.primary;
-  if (!example || !term) {
+  const terms = getExampleTerms(track, item);
+  if (!example || !terms.length) {
     return escapeHtml(example || "");
   }
 
-  const index = example.indexOf(term);
-  if (index === -1) {
-    return escapeHtml(example);
+  let cursor = 0;
+  let output = "";
+
+  while (cursor < example.length) {
+    let matchedTerm = "";
+    for (const term of terms) {
+      if (example.startsWith(term, cursor)) {
+        matchedTerm = term;
+        break;
+      }
+    }
+
+    if (matchedTerm) {
+      output += `<span class="example-highlight">${escapeHtml(matchedTerm)}</span>`;
+      cursor += matchedTerm.length;
+      continue;
+    }
+
+    output += escapeHtml(example[cursor]);
+    cursor += 1;
   }
 
-  const before = escapeHtml(example.slice(0, index));
-  const match = escapeHtml(example.slice(index, index + term.length));
-  const after = escapeHtml(example.slice(index + term.length));
-  return `${before}<span class="example-highlight">${match}</span>${after}`;
+  return output;
 }
 
 function findNextSynonymCursor(items, currentCursor, recentPairIds) {
