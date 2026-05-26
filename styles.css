@@ -211,6 +211,30 @@ button {
   line-height: 1.45;
 }
 
+.stage-button__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.stage-button.is-complete {
+  border-color: rgba(20, 158, 163, 0.38);
+}
+
+.stage-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(20, 158, 163, 0.12);
+  color: var(--teal-deep);
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
 .study-head {
   display: flex;
   justify-content: space-between;
@@ -323,6 +347,14 @@ button {
   line-height: 1.28;
 }
 
+.card-reading--answer {
+  font-size: clamp(24px, 5.3vw, 34px);
+}
+
+.card-meaning--answer {
+  font-size: clamp(19px, 4vw, 24px);
+}
+
 .card-choice {
   min-height: 26px;
   font-size: 15px;
@@ -352,6 +384,11 @@ button {
 
 .card-example {
   min-height: 38px;
+}
+
+.example-highlight {
+  color: var(--teal-deep);
+  font-weight: 800;
 }
 
 .card-example.is-empty {
@@ -386,12 +423,14 @@ button {
 
 ruby {
   ruby-position: over;
+  ruby-align: center;
 }
 
 rt {
   font-size: 0.42em;
   color: var(--teal-deep);
   font-weight: 700;
+  line-height: 1;
 }
 
 .action-row,
@@ -471,6 +510,12 @@ rt {
   display: flex;
   gap: 10px;
   margin-top: 12px;
+}
+
+.stage-prompt__meta {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 13px;
 }
 
 .prompt-button {

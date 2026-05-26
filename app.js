@@ -12,6 +12,7 @@ const state = {
   groupId: null,
   trackId: null,
   reveal: {},
+  stagePrompt: null,
   progress: loadProgress(),
   dataset: null,
   error: "",
@@ -73,13 +74,16 @@ function getTrackProgress(trackId) {
       again: 0,
       cursor: 0,
       itemStates: {},
+      completedStages: {},
       recentPairIds: [],
       sessions: {},
     };
   }
 
   state.progress[trackId].itemStates ??= {};
+  state.progress[trackId].completedStages ??= {};
   state.progress[trackId].sessions ??= {};
+  syncTrackTotals(state.progress[trackId]);
   return state.progress[trackId];
 }
 
@@ -102,6 +106,7 @@ function applyRouteState(routeState) {
   state.groupId = routeState.groupId ?? null;
   state.trackId = routeState.trackId ?? null;
   state.reveal = {};
+  state.stagePrompt = null;
 }
 
 function setRoute(route, payload = {}, options = {}) {
@@ -109,6 +114,7 @@ function setRoute(route, payload = {}, options = {}) {
   state.groupId = payload.groupId ?? state.groupId;
   state.trackId = payload.trackId ?? state.trackId;
   state.reveal = {};
+  state.stagePrompt = null;
 
   if (!options.skipHistory && !state.isPoppingState) {
     window.history.pushState(currentRouteState(), "");
@@ -136,11 +142,40 @@ function onSelectTrack(trackId) {
   setRoute("stage");
 }
 
-function onSelectStage(index) {
+function getStageByIndex(track, index) {
+  const stages = getStages(track.total);
+  return stages[Math.min(index, stages.length - 1)];
+}
+
+function getStageKeyByEnd(track, end) {
+  return `${track.id}:${end}`;
+}
+
+function isStageCompleted(track, stage) {
+  const progress = getTrackProgress(track.id);
+  return Boolean(progress.completedStages[getStageKeyByEnd(track, stage.end)]);
+}
+
+function onSelectStage(index, options = {}) {
   const track = getTrack(state.trackId);
   const progress = getTrackProgress(state.trackId);
   progress.stageIndex = index;
-  initializeStageSession(track, false);
+  const stage = getStageByIndex(track, index);
+  const stageKey = getStageKeyByEnd(track, stage.end);
+
+  if (isStageCompleted(track, stage) && !options.forceReset) {
+    state.stagePrompt = { index, stageKey, label: stage.label, range: stage.range };
+    saveProgress();
+    render();
+    return;
+  }
+
+  if (options.forceReset) {
+    delete progress.completedStages[stageKey];
+    progress.sessions[stageKey] = null;
+  }
+
+  initializeStageSession(track, Boolean(options.forceReset));
   saveProgress();
   setRoute("study");
 }
@@ -154,9 +189,8 @@ function getVisibleItems(track) {
 
 function getStageKey(track) {
   const progress = getTrackProgress(track.id);
-  const stages = getStages(track.total);
-  const stage = stages[Math.min(progress.stageIndex, stages.length - 1)];
-  return `${track.id}:${stage.end}`;
+  const stage = getStageByIndex(track, progress.stageIndex);
+  return getStageKeyByEnd(track, stage.end);
 }
 
 function shuffleArray(items) {
@@ -288,21 +322,43 @@ function escapeHtml(value) {
     .replaceAll("'", "&#39;");
 }
 
-function renderRubyParts(parts, revealRuby) {
+function renderRubyParts(parts, revealRuby, options = {}) {
   if (!parts?.length) {
     return "";
   }
 
+  const padBlankRuby = Boolean(options.padBlankRuby);
   return parts
     .map((part) => {
       const base = escapeHtml(part.base);
-      if (!revealRuby || !part.ruby) {
+      if (!revealRuby) {
         return base;
       }
 
-      return `<ruby>${base}<rt>${escapeHtml(part.ruby)}</rt></ruby>`;
+      if (!part.ruby && !padBlankRuby) {
+        return base;
+      }
+
+      return `<ruby>${base}<rt>${part.ruby ? escapeHtml(part.ruby) : "&nbsp;"}</rt></ruby>`;
     })
     .join("");
+}
+
+function highlightExampleText(example, item, track) {
+  const term = track.mode === "kana_to_kanji" ? item.answer || item.primary : item.primary;
+  if (!example || !term) {
+    return escapeHtml(example || "");
+  }
+
+  const index = example.indexOf(term);
+  if (index === -1) {
+    return escapeHtml(example);
+  }
+
+  const before = escapeHtml(example.slice(0, index));
+  const match = escapeHtml(example.slice(index, index + term.length));
+  const after = escapeHtml(example.slice(index + term.length));
+  return `${before}<span class="example-highlight">${match}</span>${after}`;
 }
 
 function findNextSynonymCursor(items, currentCursor, recentPairIds) {
@@ -348,6 +404,7 @@ function handleRetryPrompt(shouldRetry) {
 function handleCompletePrompt() {
   const track = getTrack(state.trackId);
   const progress = getTrackProgress(track.id);
+  progress.completedStages[getStageKey(track)] = true;
   progress.sessions[getStageKey(track)] = null;
   saveProgress();
   setRoute("stage");
@@ -409,14 +466,18 @@ function renderStage() {
   const progress = getTrackProgress(track.id);
   const stages = getStages(track.total);
   const buttons = stages
-    .map(
-      (stage, index) => `
-        <button class="stage-button${index === progress.stageIndex ? " is-active" : ""}" data-stage="${index}">
+    .map((stage, index) => {
+      const completed = isStageCompleted(track, stage);
+      return `
+        <button class="stage-button${index === progress.stageIndex ? " is-active" : ""}${completed ? " is-complete" : ""}" data-stage="${index}">
           <div class="stage-button__title">${escapeHtml(stage.label)} ${escapeHtml(stage.range)}</div>
-          <div class="stage-button__meta">누적 범위 ${escapeHtml(stage.range)}</div>
+          <div class="stage-button__meta">
+            <span>누적 범위 ${escapeHtml(stage.range)}</span>
+            ${completed ? '<span class="stage-badge">완료</span>' : ""}
+          </div>
         </button>
-      `,
-    )
+      `;
+    })
     .join("");
 
   return appShell(`
@@ -430,6 +491,20 @@ function renderStage() {
     <div class="section-card">
       <div class="stage-list">${buttons}</div>
     </div>
+    ${
+      state.stagePrompt
+        ? `<div class="section-card">
+      <div class="session-prompt stage-prompt">
+        <div class="session-prompt__text">학습한 회차입니다. 초기화하고 다시 학습하시겠습니까?</div>
+        <div class="stage-prompt__meta">${escapeHtml(state.stagePrompt.label)} ${escapeHtml(state.stagePrompt.range)}</div>
+        <div class="session-prompt__actions">
+          <button class="prompt-button" data-stage-reset="yes">예</button>
+          <button class="prompt-button prompt-button--ghost" data-stage-reset="no">아니오</button>
+        </div>
+      </div>
+    </div>`
+        : ""
+    }
   `);
 }
 
@@ -466,10 +541,13 @@ function renderStudy() {
   let choices = "";
   let modeText = "";
   let actions = [];
+  let secondaryClass = "card-reading";
+  let tertiaryClass = "card-meaning";
+  let choiceClass = "card-choice";
 
   if (track.mode === "kanji_to_kana") {
     modeText = "한자를 보고 읽기를 떠올린 뒤 확인";
-    primary = renderRubyParts(item.rubyParts, state.reveal.reading);
+    primary = renderRubyParts(item.rubyParts, state.reveal.reading, { padBlankRuby: true });
     secondary = state.reveal.meaning ? escapeHtml(item.meaning) : "";
     actions = [
       { key: "reading", label: "히라가나 보기" },
@@ -480,7 +558,10 @@ function renderStudy() {
   } else if (track.mode === "kana_to_kanji") {
     modeText = "히라가나를 보고 맞는 한자 표기를 떠올린 뒤 확인";
     primary = escapeHtml(item.primary);
-    secondary = state.reveal.answer ? renderRubyParts(item.rubyParts, true) : "";
+    secondary = state.reveal.answer ? renderRubyParts(item.rubyParts, true, { padBlankRuby: true }) : "";
+    tertiary = state.reveal.answer ? escapeHtml(item.meaning) : "";
+    secondaryClass = "card-reading card-reading--answer";
+    tertiaryClass = "card-meaning card-meaning--answer";
     choices = state.reveal.choices ? escapeHtml(buildChoiceList(item).join(" · ")) : "";
     actions = [
       { key: "choices", label: "보기 열기" },
@@ -490,9 +571,14 @@ function renderStudy() {
     ];
   } else if (track.mode === "synonym_pair") {
     modeText = "한쪽 표현을 보고 대응되는 유의 표현을 떠올리는 연습";
-    primary = renderRubyParts(item.rubyParts, state.reveal.reading);
-    secondary = state.reveal.pair ? escapeHtml(item.pairText) : "";
-    tertiary = state.reveal.pair && item.pairReading ? escapeHtml(item.pairReading) : "";
+    primary = renderRubyParts(item.rubyParts, state.reveal.reading, { padBlankRuby: true });
+    secondary = state.reveal.pair
+      ? renderRubyParts(
+          item.pairRubyParts || [{ base: item.pairText, ruby: item.pairReading || "" }],
+          true,
+          { padBlankRuby: true },
+        )
+      : "";
     choices = state.reveal.meaning ? escapeHtml(item.meaning) : "";
     actions = [
       { key: "reading", label: "히라가나 보기" },
@@ -503,7 +589,7 @@ function renderStudy() {
     ];
   } else {
     modeText = "의미를 떠올린 뒤 예문으로 확인";
-    primary = renderRubyParts(item.rubyParts, state.reveal.reading);
+    primary = renderRubyParts(item.rubyParts, state.reveal.reading, { padBlankRuby: true });
     secondary = state.reveal.meaning ? escapeHtml(item.meaning) : "";
     actions = [
       { key: "reading", label: "히라가나 보기" },
@@ -551,11 +637,11 @@ function renderStudy() {
         ${metaButtonVisible ? `<button class="card-meta-button" data-reveal="meta" aria-label="메모 열기">✏️</button>` : ""}
         ${metaVisible ? `<div class="card-meta-popover">${metaText}</div>` : ""}
         <div class="card-primary">${primary}</div>
-        <div class="card-slot card-reading${secondary ? "" : " is-empty"}">${secondary || "&nbsp;"}</div>
-        <div class="card-slot card-meaning${tertiary ? "" : " is-empty"}">${tertiary || "&nbsp;"}</div>
-        <div class="card-slot card-choice${choices ? "" : " is-empty"}">${choices || "&nbsp;"}</div>
+        <div class="card-slot ${secondaryClass}${secondary ? "" : " is-empty"}">${secondary || "&nbsp;"}</div>
+        <div class="card-slot ${tertiaryClass}${tertiary ? "" : " is-empty"}">${tertiary || "&nbsp;"}</div>
+        <div class="card-slot ${choiceClass}${choices ? "" : " is-empty"}">${choices || "&nbsp;"}</div>
         <div class="card-example-shell">
-          <div class="card-example${state.reveal.example && exampleJa ? "" : " is-empty"}">${state.reveal.example && exampleJa ? exampleJa : "&nbsp;"}</div>
+          <div class="card-example${state.reveal.example && exampleJa ? "" : " is-empty"}">${state.reveal.example && exampleJa ? highlightExampleText(item.exampleJa, item, track) : "&nbsp;"}</div>
           <div class="card-example card-example--ko${state.reveal.exampleKo && exampleKo ? "" : " is-empty"}">${state.reveal.exampleKo && exampleKo ? exampleKo : "&nbsp;"}</div>
         </div>
       </div>
@@ -712,6 +798,18 @@ function bindEvents() {
       } else if (button.dataset.sessionAction === "complete-ok") {
         handleCompletePrompt();
       }
+    });
+  });
+
+  document.querySelectorAll("[data-stage-reset]").forEach((button) => {
+    button.addEventListener("click", () => {
+      if (button.dataset.stageReset === "yes" && state.stagePrompt) {
+        onSelectStage(state.stagePrompt.index, { forceReset: true });
+        return;
+      }
+
+      state.stagePrompt = null;
+      render();
     });
   });
 }

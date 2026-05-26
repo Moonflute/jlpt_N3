@@ -6,6 +6,32 @@ const sourcePath = path.join(rootDir, "_N3", "1 일본어___해커스 N3.txt");
 const outputDir = path.join(rootDir, "data");
 const outputPath = path.join(outputDir, "n3.json");
 const overridePath = path.join(rootDir, "data", "furigana-overrides.json");
+const READING_OVERRIDES = {
+  "～に比べて": "～にくらべて",
+  "～に加えて": "～にくわえて",
+  "～に対して": "～にたいして",
+  "～に反して": "～にはんして",
+  "～を中心に": "～をちゅうしんに",
+  "～を通じて": "～をつうじて",
+  "～を抜きにして": "～をぬきにして",
+  "～降りそうにない": "～ふりそうにない",
+  "～終わる": "～おわる",
+  "～直す": "～なおす",
+  "～始める": "～はじめる",
+  "～て以来": "～ていらい",
+  "～ている間に": "～ているあいだに",
+  "～一方だ": "～いっぽうだ",
+  "～一方で": "～いっぽうで",
+  "～ようと思う": "～ようとおもう",
+  "～ても不思議ではない": "～てもふしぎではない",
+  "～とは限らない": "～とはかぎらない",
+  "～最中に": "～さいちゅうに",
+  "～場合": "～ばあい",
+  "～前に": "～まえに",
+  "～に決まっている": "～にきまっている",
+  "～に違いない": "～にちがいない",
+  "～に行く": "～にいく",
+};
 
 const TRACK_DEFS = {
   "1 일본어::_해커스 N3::1 언지::문제 1 (한자읽기)": {
@@ -368,11 +394,12 @@ function parseSynonymPair(raw) {
 }
 
 function buildItem(track, row, index, candidateMap, overrides) {
+  const effectiveReading = row.c3 || READING_OVERRIDES[row.c2] || "";
   const override = overrides[row.c2];
   const item = {
     id: `${track.id}-${index + 1}`,
     primary: row.c2,
-    reading: row.c3,
+    reading: effectiveReading,
     meaning: row.c5,
     exampleJa: row.c6,
     exampleEn: row.c7,
@@ -380,18 +407,21 @@ function buildItem(track, row, index, candidateMap, overrides) {
     note: row.c11,
     hint: row.c12,
     sourceTag: row.c14,
-    rubyParts: override || segmentReadingByKanji(row.c2, row.c3, candidateMap),
+    rubyParts: override || segmentReadingByKanji(row.c2, effectiveReading, candidateMap),
   };
 
   if (track.mode === "kana_to_kanji") {
     item.answer = row.c2;
-    item.primary = row.c3 || row.c2;
+    item.primary = effectiveReading || row.c2;
   }
 
   if (track.mode === "synonym_pair") {
     const pair = parseSynonymPair(row.c12);
     item.pairText = pair?.text || "";
     item.pairReading = pair?.reading || "";
+    item.pairRubyParts = item.pairText
+      ? (overrides[item.pairText] || segmentReadingByKanji(item.pairText, item.pairReading, candidateMap))
+      : [];
   }
 
   return item;
@@ -405,7 +435,7 @@ function main() {
   const overrides = loadOverrides();
 
   for (const row of rows) {
-    collectSingleKanjiReadings(row.c2, row.c3, candidateMap);
+    collectSingleKanjiReadings(row.c2, row.c3 || READING_OVERRIDES[row.c2] || "", candidateMap);
   }
 
   for (const [deck, def] of Object.entries(TRACK_DEFS)) {

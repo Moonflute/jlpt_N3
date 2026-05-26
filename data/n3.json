@@ -1,6 +1,6 @@
 {
   "level": "N3",
-  "generatedAt": "2026-05-25T14:32:11.926Z",
+  "generatedAt": "2026-05-26T11:17:02.831Z",
   "stageSize": 25,
   "tracks": [
     {
@@ -5535,7 +5535,7 @@
           "rubyParts": [
             {
               "base": "疑",
-              "ruby": ""
+              "ruby": "うたが"
             },
             {
               "base": "う",
@@ -17737,7 +17737,7 @@
             },
             {
               "base": "祝",
-              "ruby": ""
+              "ruby": "いわ"
             },
             {
               "base": "い",
@@ -21061,15 +21061,15 @@
           "rubyParts": [
             {
               "base": "代",
-              "ruby": ""
+              "ruby": "だい"
             },
             {
               "base": "表",
-              "ruby": ""
+              "ruby": "ひょう"
             },
             {
               "base": "的",
-              "ruby": ""
+              "ruby": "てき"
             },
             {
               "base": "だ",
@@ -21808,6 +21808,12 @@
           ],
           "pairText": "アドバイス",
           "pairReading": "アドバイス",
+          "pairRubyParts": [
+            {
+              "base": "アドバイス",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-1"
         },
         {
@@ -21829,6 +21835,12 @@
           ],
           "pairText": "アイデア",
           "pairReading": "アイデア",
+          "pairRubyParts": [
+            {
+              "base": "アイデア",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-2"
         },
         {
@@ -21850,6 +21862,12 @@
           ],
           "pairText": "案",
           "pairReading": "あん",
+          "pairRubyParts": [
+            {
+              "base": "案",
+              "ruby": "あん"
+            }
+          ],
           "pairId": "pair-2"
         },
         {
@@ -21871,6 +21889,12 @@
           ],
           "pairText": "場所",
           "pairReading": "ばしょ",
+          "pairRubyParts": [
+            {
+              "base": "場所",
+              "ruby": "ばしょ"
+            }
+          ],
           "pairId": "pair-3"
         },
         {
@@ -21892,6 +21916,12 @@
           ],
           "pairText": "位置",
           "pairReading": "いち",
+          "pairRubyParts": [
+            {
+              "base": "位置",
+              "ruby": "いち"
+            }
+          ],
           "pairId": "pair-3"
         },
         {
@@ -21925,6 +21955,16 @@
           ],
           "pairText": "全てうる",
           "pairReading": "すべてうる",
+          "pairRubyParts": [
+            {
+              "base": "全",
+              "ruby": "すべ"
+            },
+            {
+              "base": "てうる",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-4"
         },
         {
@@ -21950,6 +21990,24 @@
           ],
           "pairText": "売り切れ",
           "pairReading": "うりきれ",
+          "pairRubyParts": [
+            {
+              "base": "売",
+              "ruby": "う"
+            },
+            {
+              "base": "り",
+              "ruby": ""
+            },
+            {
+              "base": "切",
+              "ruby": "き"
+            },
+            {
+              "base": "れ",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-4"
         },
         {
@@ -21971,6 +22029,16 @@
           ],
           "pairText": "渡ってはいけない",
           "pairReading": "わたってはいけない",
+          "pairRubyParts": [
+            {
+              "base": "渡",
+              "ruby": "わた"
+            },
+            {
+              "base": "ってはいけない",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-5"
         },
         {
@@ -21996,6 +22064,12 @@
           ],
           "pairText": "横断禁止",
           "pairReading": "おうだんきんし",
+          "pairRubyParts": [
+            {
+              "base": "横断禁止",
+              "ruby": "おうだんきんし"
+            }
+          ],
           "pairId": "pair-5"
         },
         {
@@ -22017,6 +22091,16 @@
           ],
           "pairText": "終わり",
           "pairReading": "おわり",
+          "pairRubyParts": [
+            {
+              "base": "終",
+              "ruby": "お"
+            },
+            {
+              "base": "わり",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-6"
         },
         {
@@ -22042,6 +22126,12 @@
           ],
           "pairText": "おしまい",
           "pairReading": "おしまい",
+          "pairRubyParts": [
+            {
+              "base": "おしまい",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-6"
         },
         {
@@ -22067,6 +22157,12 @@
           ],
           "pairText": "におい",
           "pairReading": "臭い",
+          "pairRubyParts": [
+            {
+              "base": "におい",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-7"
         },
         {
@@ -22092,6 +22188,12 @@
           ],
           "pairText": "かおり",
           "pairReading": "香り",
+          "pairRubyParts": [
+            {
+              "base": "かおり",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-8"
         },
         {
@@ -22117,6 +22219,16 @@
           ],
           "pairText": "お礼",
           "pairReading": "おれい",
+          "pairRubyParts": [
+            {
+              "base": "お",
+              "ruby": ""
+            },
+            {
+              "base": "礼",
+              "ruby": "れい"
+            }
+          ],
           "pairId": "pair-9"
         },
         {
@@ -22142,6 +22254,16 @@
           ],
           "pairText": "感謝のことば",
           "pairReading": "かんしゃのことば",
+          "pairRubyParts": [
+            {
+              "base": "感謝",
+              "ruby": "かんしゃ"
+            },
+            {
+              "base": "のことば",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-9"
         },
         {
@@ -22163,6 +22285,12 @@
           ],
           "pairText": "機会",
           "pairReading": "きかい",
+          "pairRubyParts": [
+            {
+              "base": "機会",
+              "ruby": "きかい"
+            }
+          ],
           "pairId": "pair-10"
         },
         {
@@ -22188,6 +22316,12 @@
           ],
           "pairText": "規則",
           "pairReading": "きそく",
+          "pairRubyParts": [
+            {
+              "base": "規則",
+              "ruby": "きそく"
+            }
+          ],
           "pairId": "pair-11"
         },
         {
@@ -22209,6 +22343,12 @@
           ],
           "pairText": "台所",
           "pairReading": "だいどころ",
+          "pairRubyParts": [
+            {
+              "base": "台所",
+              "ruby": "だいどころ"
+            }
+          ],
           "pairId": "pair-12"
         },
         {
@@ -22230,6 +22370,12 @@
           ],
           "pairText": "キッチン",
           "pairReading": "キッチン",
+          "pairRubyParts": [
+            {
+              "base": "キッチン",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-12"
         },
         {
@@ -22251,6 +22397,12 @@
           ],
           "pairText": "反対",
           "pairReading": "はんたい",
+          "pairRubyParts": [
+            {
+              "base": "反対",
+              "ruby": "はんたい"
+            }
+          ],
           "pairId": "pair-13"
         },
         {
@@ -22272,6 +22424,16 @@
           ],
           "pairText": "同じところ",
           "pairReading": "おなじところ",
+          "pairRubyParts": [
+            {
+              "base": "同",
+              "ruby": "おな"
+            },
+            {
+              "base": "じところ",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-14"
         },
         {
@@ -22297,6 +22459,12 @@
           ],
           "pairText": "共通点",
           "pairReading": "きょうつうてん",
+          "pairRubyParts": [
+            {
+              "base": "共通点",
+              "ruby": "きょうつうてん"
+            }
+          ],
           "pairId": "pair-14"
         },
         {
@@ -22318,6 +22486,12 @@
           ],
           "pairText": "不満",
           "pairReading": "ふまん",
+          "pairRubyParts": [
+            {
+              "base": "不満",
+              "ruby": "ふまん"
+            }
+          ],
           "pairId": "pair-15"
         },
         {
@@ -22339,6 +22513,12 @@
           ],
           "pairText": "苦情",
           "pairReading": "くじょう",
+          "pairRubyParts": [
+            {
+              "base": "苦情",
+              "ruby": "くじょう"
+            }
+          ],
           "pairId": "pair-15"
         },
         {
@@ -22364,6 +22544,12 @@
           ],
           "pairText": "生活",
           "pairReading": "せいかつ",
+          "pairRubyParts": [
+            {
+              "base": "生活",
+              "ruby": "せいかつ"
+            }
+          ],
           "pairId": "pair-16"
         },
         {
@@ -22385,6 +22571,16 @@
           ],
           "pairText": "暮らし",
           "pairReading": "くらし",
+          "pairRubyParts": [
+            {
+              "base": "暮",
+              "ruby": "く"
+            },
+            {
+              "base": "らし",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-16"
         },
         {
@@ -22406,6 +22602,12 @@
           ],
           "pairText": "団体",
           "pairReading": "だんたい",
+          "pairRubyParts": [
+            {
+              "base": "団体",
+              "ruby": "だんたい"
+            }
+          ],
           "pairId": "pair-17"
         },
         {
@@ -22427,6 +22629,12 @@
           ],
           "pairText": "グループ",
           "pairReading": "グループ",
+          "pairRubyParts": [
+            {
+              "base": "グループ",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-17"
         },
         {
@@ -22448,6 +22656,16 @@
           ],
           "pairText": "暮れ",
           "pairReading": "くれ",
+          "pairRubyParts": [
+            {
+              "base": "暮",
+              "ruby": "く"
+            },
+            {
+              "base": "れ",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-18"
         },
         {
@@ -22469,6 +22687,12 @@
           ],
           "pairText": "欠点",
           "pairReading": "けってん",
+          "pairRubyParts": [
+            {
+              "base": "欠点",
+              "ruby": "けってん"
+            }
+          ],
           "pairId": "pair-19"
         },
         {
@@ -22494,6 +22718,12 @@
           ],
           "pairText": "最近",
           "pairReading": "さいきん",
+          "pairRubyParts": [
+            {
+              "base": "最近",
+              "ruby": "さいきん"
+            }
+          ],
           "pairId": "pair-20"
         },
         {
@@ -22515,6 +22745,16 @@
           ],
           "pairText": "この頃",
           "pairReading": "このごろ",
+          "pairRubyParts": [
+            {
+              "base": "この",
+              "ruby": ""
+            },
+            {
+              "base": "頃",
+              "ruby": "ごろ"
+            }
+          ],
           "pairId": "pair-20"
         },
         {
@@ -22536,6 +22776,16 @@
           ],
           "pairText": "大きさ",
           "pairReading": "おおきさ",
+          "pairRubyParts": [
+            {
+              "base": "大",
+              "ruby": "おお"
+            },
+            {
+              "base": "きさ",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-21"
         },
         {
@@ -22561,6 +22811,12 @@
           ],
           "pairText": "サイズ",
           "pairReading": "サイズ",
+          "pairRubyParts": [
+            {
+              "base": "サイズ",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-21"
         },
         {
@@ -22582,6 +22838,24 @@
           ],
           "pairText": "少し前に",
           "pairReading": "すこしまえに",
+          "pairRubyParts": [
+            {
+              "base": "少",
+              "ruby": "すこ"
+            },
+            {
+              "base": "し",
+              "ruby": ""
+            },
+            {
+              "base": "前",
+              "ruby": "まえ"
+            },
+            {
+              "base": "に",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-22"
         },
         {
@@ -22615,6 +22889,12 @@
           ],
           "pairText": "さっき",
           "pairReading": "さっき",
+          "pairRubyParts": [
+            {
+              "base": "さっき",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-22"
         },
         {
@@ -22640,6 +22920,12 @@
           ],
           "pairText": "手段",
           "pairReading": "しゅだん",
+          "pairRubyParts": [
+            {
+              "base": "手段",
+              "ruby": "しゅだん"
+            }
+          ],
           "pairId": "pair-23"
         },
         {
@@ -22661,6 +22947,12 @@
           ],
           "pairText": "予定",
           "pairReading": "よてい",
+          "pairRubyParts": [
+            {
+              "base": "予定",
+              "ruby": "よてい"
+            }
+          ],
           "pairId": "pair-24"
         },
         {
@@ -22682,6 +22974,12 @@
           ],
           "pairText": "スケジュール",
           "pairReading": "スケジュール",
+          "pairRubyParts": [
+            {
+              "base": "スケジュール",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-24"
         },
         {
@@ -22707,6 +23005,16 @@
           ],
           "pairText": "全部",
           "pairReading": "ぜんぶ",
+          "pairRubyParts": [
+            {
+              "base": "全",
+              "ruby": "ぜん"
+            },
+            {
+              "base": "部",
+              "ruby": "ぶ"
+            }
+          ],
           "pairId": "pair-25"
         },
         {
@@ -22732,6 +23040,16 @@
           ],
           "pairText": "全て",
           "pairReading": "すべて",
+          "pairRubyParts": [
+            {
+              "base": "全",
+              "ruby": "すべ"
+            },
+            {
+              "base": "て",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-25"
         },
         {
@@ -22761,6 +23079,16 @@
           ],
           "pairText": "節約",
           "pairReading": "せつやく",
+          "pairRubyParts": [
+            {
+              "base": "節",
+              "ruby": "せつ"
+            },
+            {
+              "base": "約",
+              "ruby": "やく"
+            }
+          ],
           "pairId": "pair-26"
         },
         {
@@ -22782,6 +23110,16 @@
           ],
           "pairText": "入ってはいけない",
           "pairReading": "はいってはいけない",
+          "pairRubyParts": [
+            {
+              "base": "入",
+              "ruby": "はい"
+            },
+            {
+              "base": "ってはいけない",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-27"
         },
         {
@@ -22807,6 +23145,12 @@
           ],
           "pairText": "立入禁止",
           "pairReading": "たちいりきんし",
+          "pairRubyParts": [
+            {
+              "base": "立入禁止",
+              "ruby": "たちいりきんし"
+            }
+          ],
           "pairId": "pair-27"
         },
         {
@@ -22836,6 +23180,16 @@
           ],
           "pairText": "頼み",
           "pairReading": "たのみ",
+          "pairRubyParts": [
+            {
+              "base": "頼",
+              "ruby": "たの"
+            },
+            {
+              "base": "み",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-28"
         },
         {
@@ -22857,6 +23211,24 @@
           ],
           "pairText": "持ち帰る",
           "pairReading": "もちかえる",
+          "pairRubyParts": [
+            {
+              "base": "持",
+              "ruby": "も"
+            },
+            {
+              "base": "ち",
+              "ruby": ""
+            },
+            {
+              "base": "帰",
+              "ruby": "かえ"
+            },
+            {
+              "base": "る",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-29"
         },
         {
@@ -22890,6 +23262,12 @@
           ],
           "pairText": "テイクアウト",
           "pairReading": "テイクアウト",
+          "pairRubyParts": [
+            {
+              "base": "テイクアウト",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-29"
         },
         {
@@ -22911,6 +23289,16 @@
           ],
           "pairText": "完成",
           "pairReading": "かんせい",
+          "pairRubyParts": [
+            {
+              "base": "完",
+              "ruby": "かん"
+            },
+            {
+              "base": "成",
+              "ruby": "せい"
+            }
+          ],
           "pairId": "pair-30"
         },
         {
@@ -22932,6 +23320,12 @@
           ],
           "pairText": "練習",
           "pairReading": "れんしゅう",
+          "pairRubyParts": [
+            {
+              "base": "練習",
+              "ruby": "れんしゅう"
+            }
+          ],
           "pairId": "pair-31"
         },
         {
@@ -22953,6 +23347,12 @@
           ],
           "pairText": "トレーニング",
           "pairReading": "トレーニング",
+          "pairRubyParts": [
+            {
+              "base": "トレーニング",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-31"
         },
         {
@@ -22978,6 +23378,12 @@
           ],
           "pairText": "内容",
           "pairReading": "ないよう",
+          "pairRubyParts": [
+            {
+              "base": "内容",
+              "ruby": "ないよう"
+            }
+          ],
           "pairId": "pair-32"
         },
         {
@@ -22999,6 +23405,16 @@
           ],
           "pairText": "中身",
           "pairReading": "なかみ",
+          "pairRubyParts": [
+            {
+              "base": "中",
+              "ruby": "なか"
+            },
+            {
+              "base": "身",
+              "ruby": "み"
+            }
+          ],
           "pairId": "pair-32"
         },
         {
@@ -23020,6 +23436,12 @@
           ],
           "pairText": "はやる",
           "pairReading": "はやる",
+          "pairRubyParts": [
+            {
+              "base": "はやる",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-33"
         },
         {
@@ -23041,6 +23463,12 @@
           ],
           "pairText": "ブーム",
           "pairReading": "ぶーむ",
+          "pairRubyParts": [
+            {
+              "base": "ブーム",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-33"
         },
         {
@@ -23074,6 +23502,12 @@
           ],
           "pairText": "孫",
           "pairReading": "まご",
+          "pairRubyParts": [
+            {
+              "base": "孫",
+              "ruby": "まご"
+            }
+          ],
           "pairId": "pair-34"
         },
         {
@@ -23111,6 +23545,12 @@
           ],
           "pairText": "無料",
           "pairReading": "むりょう",
+          "pairRubyParts": [
+            {
+              "base": "無料",
+              "ruby": "むりょう"
+            }
+          ],
           "pairId": "pair-35"
         },
         {
@@ -23132,6 +23572,12 @@
           ],
           "pairText": "ただ",
           "pairReading": "ただ",
+          "pairRubyParts": [
+            {
+              "base": "ただ",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-36"
         },
         {
@@ -23153,6 +23599,12 @@
           ],
           "pairText": "無料",
           "pairReading": "むりょう",
+          "pairRubyParts": [
+            {
+              "base": "無料",
+              "ruby": "むりょう"
+            }
+          ],
           "pairId": "pair-36"
         },
         {
@@ -23174,6 +23626,20 @@
           ],
           "pairText": "次の年",
           "pairReading": "つぎのとし",
+          "pairRubyParts": [
+            {
+              "base": "次",
+              "ruby": "つぎ"
+            },
+            {
+              "base": "の",
+              "ruby": ""
+            },
+            {
+              "base": "年",
+              "ruby": "とし"
+            }
+          ],
           "pairId": "pair-37"
         },
         {
@@ -23203,6 +23669,12 @@
           ],
           "pairText": "翌年",
           "pairReading": "よくねん",
+          "pairRubyParts": [
+            {
+              "base": "翌年",
+              "ruby": "よくねん"
+            }
+          ],
           "pairId": "pair-37"
         },
         {
@@ -23224,6 +23696,12 @@
           ],
           "pairText": "理由",
           "pairReading": "りゆう",
+          "pairRubyParts": [
+            {
+              "base": "理由",
+              "ruby": "りゆう"
+            }
+          ],
           "pairId": "pair-38"
         },
         {
@@ -23245,6 +23723,12 @@
           ],
           "pairText": "わけ",
           "pairReading": "わけ",
+          "pairRubyParts": [
+            {
+              "base": "わけ",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-38"
         },
         {
@@ -23282,6 +23766,16 @@
           ],
           "pairText": "疑う",
           "pairReading": "うたがう",
+          "pairRubyParts": [
+            {
+              "base": "疑",
+              "ruby": "うたが"
+            },
+            {
+              "base": "う",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-39"
         },
         {
@@ -23298,7 +23792,7 @@
           "rubyParts": [
             {
               "base": "奪",
-              "ruby": ""
+              "ruby": "うば"
             },
             {
               "base": "う",
@@ -23307,6 +23801,16 @@
           ],
           "pairText": "取る",
           "pairReading": "とる",
+          "pairRubyParts": [
+            {
+              "base": "取",
+              "ruby": "と"
+            },
+            {
+              "base": "る",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-40"
         },
         {
@@ -23332,6 +23836,16 @@
           ],
           "pairText": "奪う",
           "pairReading": "うばう",
+          "pairRubyParts": [
+            {
+              "base": "奪",
+              "ruby": "うば"
+            },
+            {
+              "base": "う",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-40"
         },
         {
@@ -23353,6 +23867,28 @@
           ],
           "pairText": "お金を払う",
           "pairReading": "おかねをはらう",
+          "pairRubyParts": [
+            {
+              "base": "お",
+              "ruby": ""
+            },
+            {
+              "base": "金",
+              "ruby": "かね"
+            },
+            {
+              "base": "を",
+              "ruby": ""
+            },
+            {
+              "base": "払",
+              "ruby": "はら"
+            },
+            {
+              "base": "う",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-41"
         },
         {
@@ -23390,6 +23926,12 @@
           ],
           "pairText": "おごる",
           "pairReading": "おごる",
+          "pairRubyParts": [
+            {
+              "base": "おごる",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-41"
         },
         {
@@ -23415,6 +23957,16 @@
           ],
           "pairText": "覚える",
           "pairReading": "おぼえる",
+          "pairRubyParts": [
+            {
+              "base": "覚",
+              "ruby": "おぼ"
+            },
+            {
+              "base": "える",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-42"
         },
         {
@@ -23436,6 +23988,16 @@
           ],
           "pairText": "曲がる",
           "pairReading": "まがる",
+          "pairRubyParts": [
+            {
+              "base": "曲",
+              "ruby": "ま"
+            },
+            {
+              "base": "がる",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-43"
         },
         {
@@ -23461,6 +24023,12 @@
           ],
           "pairText": "カーブする",
           "pairReading": "かーぶする",
+          "pairRubyParts": [
+            {
+              "base": "カーブする",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-43"
         },
         {
@@ -23486,6 +24054,16 @@
           ],
           "pairText": "集める",
           "pairReading": "あつめる",
+          "pairRubyParts": [
+            {
+              "base": "集",
+              "ruby": "あつ"
+            },
+            {
+              "base": "める",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-44"
         },
         {
@@ -23511,6 +24089,16 @@
           ],
           "pairText": "回収する",
           "pairReading": "かいしゅうする",
+          "pairRubyParts": [
+            {
+              "base": "回収",
+              "ruby": "かいしゅう"
+            },
+            {
+              "base": "する",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-44"
         },
         {
@@ -23536,6 +24124,16 @@
           ],
           "pairText": "光る",
           "pairReading": "ひかる",
+          "pairRubyParts": [
+            {
+              "base": "光",
+              "ruby": "ひか"
+            },
+            {
+              "base": "る",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-45"
         },
         {
@@ -23561,6 +24159,16 @@
           ],
           "pairText": "輝く",
           "pairReading": "かがやく",
+          "pairRubyParts": [
+            {
+              "base": "輝",
+              "ruby": "かがや"
+            },
+            {
+              "base": "く",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-45"
         },
         {
@@ -23586,6 +24194,20 @@
           ],
           "pairText": "手伝う",
           "pairReading": "てつだう",
+          "pairRubyParts": [
+            {
+              "base": "手",
+              "ruby": "て"
+            },
+            {
+              "base": "伝",
+              "ruby": "つだ"
+            },
+            {
+              "base": "う",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-46"
         },
         {
@@ -23615,6 +24237,16 @@
           ],
           "pairText": "協力する",
           "pairReading": "きょうりょくする",
+          "pairRubyParts": [
+            {
+              "base": "協力",
+              "ruby": "きょうりょく"
+            },
+            {
+              "base": "する",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-46"
         },
         {
@@ -23636,6 +24268,16 @@
           ],
           "pairText": "疲れる",
           "pairReading": "つかれる",
+          "pairRubyParts": [
+            {
+              "base": "疲",
+              "ruby": "つか"
+            },
+            {
+              "base": "れる",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-47"
         },
         {
@@ -23665,6 +24307,16 @@
           ],
           "pairText": "人がたくさんいる",
           "pairReading": "ひとがたくさんいる",
+          "pairRubyParts": [
+            {
+              "base": "人",
+              "ruby": "ひと"
+            },
+            {
+              "base": "がたくさんいる",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-48"
         },
         {
@@ -23690,6 +24342,20 @@
           ],
           "pairText": "混雑する",
           "pairReading": "こんざつする",
+          "pairRubyParts": [
+            {
+              "base": "混",
+              "ruby": "こ"
+            },
+            {
+              "base": "雑",
+              "ruby": "んざつ"
+            },
+            {
+              "base": "する",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-48"
         },
         {
@@ -23715,6 +24381,12 @@
           ],
           "pairText": "うるさくする",
           "pairReading": "うるさくする",
+          "pairRubyParts": [
+            {
+              "base": "うるさくする",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-49"
         },
         {
@@ -23736,6 +24408,16 @@
           ],
           "pairText": "騒ぐ",
           "pairReading": "さわぐ",
+          "pairRubyParts": [
+            {
+              "base": "騒",
+              "ruby": "さわ"
+            },
+            {
+              "base": "ぐ",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-49"
         },
         {
@@ -23761,6 +24443,16 @@
           ],
           "pairText": "教える",
           "pairReading": "おしえる",
+          "pairRubyParts": [
+            {
+              "base": "教",
+              "ruby": "おし"
+            },
+            {
+              "base": "える",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-50"
         },
         {
@@ -23786,6 +24478,16 @@
           ],
           "pairText": "上がる",
           "pairReading": "あがる",
+          "pairRubyParts": [
+            {
+              "base": "上",
+              "ruby": "あ"
+            },
+            {
+              "base": "がる",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-51"
         },
         {
@@ -23811,6 +24513,16 @@
           ],
           "pairText": "辞める",
           "pairReading": "やめる",
+          "pairRubyParts": [
+            {
+              "base": "辞",
+              "ruby": "や"
+            },
+            {
+              "base": "める",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-52"
         },
         {
@@ -23836,6 +24548,16 @@
           ],
           "pairText": "終わる",
           "pairReading": "おわる",
+          "pairRubyParts": [
+            {
+              "base": "終",
+              "ruby": "お"
+            },
+            {
+              "base": "わる",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-53"
         },
         {
@@ -23861,6 +24583,16 @@
           ],
           "pairText": "明ける",
           "pairReading": "あける",
+          "pairRubyParts": [
+            {
+              "base": "明",
+              "ruby": "あ"
+            },
+            {
+              "base": "ける",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-53"
         },
         {
@@ -23886,6 +24618,24 @@
           ],
           "pairText": "多すぎて残る",
           "pairReading": "おおすぎてのこる",
+          "pairRubyParts": [
+            {
+              "base": "多",
+              "ruby": "おお"
+            },
+            {
+              "base": "すぎて",
+              "ruby": ""
+            },
+            {
+              "base": "残",
+              "ruby": "のこ"
+            },
+            {
+              "base": "る",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-54"
         },
         {
@@ -23919,6 +24669,16 @@
           ],
           "pairText": "余る",
           "pairReading": "あまる",
+          "pairRubyParts": [
+            {
+              "base": "余",
+              "ruby": "あま"
+            },
+            {
+              "base": "る",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-54"
         },
         {
@@ -23940,6 +24700,16 @@
           ],
           "pairText": "話す",
           "pairReading": "はなす",
+          "pairRubyParts": [
+            {
+              "base": "話",
+              "ruby": "はな"
+            },
+            {
+              "base": "す",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-55"
         },
         {
@@ -23965,6 +24735,12 @@
           ],
           "pairText": "しゃべる",
           "pairReading": "しゃべる",
+          "pairRubyParts": [
+            {
+              "base": "しゃべる",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-55"
         },
         {
@@ -23990,6 +24766,16 @@
           ],
           "pairText": "終わらせる",
           "pairReading": "おわらせる",
+          "pairRubyParts": [
+            {
+              "base": "終",
+              "ruby": "お"
+            },
+            {
+              "base": "わらせる",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-56"
         },
         {
@@ -24015,6 +24801,16 @@
           ],
           "pairText": "済ませる",
           "pairReading": "すませる",
+          "pairRubyParts": [
+            {
+              "base": "済",
+              "ruby": "す"
+            },
+            {
+              "base": "ませる",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-56"
         },
         {
@@ -24040,6 +24836,20 @@
           ],
           "pairText": "片付ける",
           "pairReading": "かたづける",
+          "pairRubyParts": [
+            {
+              "base": "片",
+              "ruby": "かた"
+            },
+            {
+              "base": "付",
+              "ruby": "づ"
+            },
+            {
+              "base": "ける",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-57"
         },
         {
@@ -24069,6 +24879,16 @@
           ],
           "pairText": "整理する",
           "pairReading": "せいりする",
+          "pairRubyParts": [
+            {
+              "base": "整理",
+              "ruby": "せいり"
+            },
+            {
+              "base": "する",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-57"
         },
         {
@@ -24094,6 +24914,12 @@
           ],
           "pairText": "チェックする",
           "pairReading": "チェックする",
+          "pairRubyParts": [
+            {
+              "base": "チェックする",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-58"
         },
         {
@@ -24115,6 +24941,16 @@
           ],
           "pairText": "確かめる",
           "pairReading": "たしかめる",
+          "pairRubyParts": [
+            {
+              "base": "確",
+              "ruby": "たし"
+            },
+            {
+              "base": "かめる",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-58"
         },
         {
@@ -24140,6 +24976,16 @@
           ],
           "pairText": "経つ",
           "pairReading": "たつ",
+          "pairRubyParts": [
+            {
+              "base": "経",
+              "ruby": "た"
+            },
+            {
+              "base": "つ",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-59"
         },
         {
@@ -24181,6 +25027,16 @@
           ],
           "pairText": "黙る",
           "pairReading": "だまる",
+          "pairRubyParts": [
+            {
+              "base": "黙",
+              "ruby": "だま"
+            },
+            {
+              "base": "る",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-60"
         },
         {
@@ -24206,6 +25062,16 @@
           ],
           "pairText": "十分だ",
           "pairReading": "じゅうぶんだ",
+          "pairRubyParts": [
+            {
+              "base": "十分",
+              "ruby": "じゅうぶん"
+            },
+            {
+              "base": "だ",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-61"
         },
         {
@@ -24231,6 +25097,16 @@
           ],
           "pairText": "足りる",
           "pairReading": "たりる",
+          "pairRubyParts": [
+            {
+              "base": "足",
+              "ruby": "た"
+            },
+            {
+              "base": "りる",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-61"
         },
         {
@@ -24256,6 +25132,16 @@
           ],
           "pairText": "頼む",
           "pairReading": "たのむ",
+          "pairRubyParts": [
+            {
+              "base": "頼",
+              "ruby": "たの"
+            },
+            {
+              "base": "む",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-62"
         },
         {
@@ -24285,6 +25171,24 @@
           ],
           "pairText": "仕事に行く",
           "pairReading": "しごとにいく",
+          "pairRubyParts": [
+            {
+              "base": "仕事",
+              "ruby": "しごと"
+            },
+            {
+              "base": "に",
+              "ruby": ""
+            },
+            {
+              "base": "行",
+              "ruby": "い"
+            },
+            {
+              "base": "く",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-63"
         },
         {
@@ -24318,6 +25222,20 @@
           ],
           "pairText": "通勤する",
           "pairReading": "つうきんする",
+          "pairRubyParts": [
+            {
+              "base": "通",
+              "ruby": "つう"
+            },
+            {
+              "base": "勤",
+              "ruby": "きん"
+            },
+            {
+              "base": "する",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-63"
         },
         {
@@ -24343,6 +25261,28 @@
           ],
           "pairText": "大声で怒る",
           "pairReading": "おおごえでおこる",
+          "pairRubyParts": [
+            {
+              "base": "大",
+              "ruby": "おお"
+            },
+            {
+              "base": "声",
+              "ruby": "ごえ"
+            },
+            {
+              "base": "で",
+              "ruby": ""
+            },
+            {
+              "base": "怒",
+              "ruby": "おこ"
+            },
+            {
+              "base": "る",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-64"
         },
         {
@@ -24380,6 +25320,16 @@
           ],
           "pairText": "怒鳴る",
           "pairReading": "どなる",
+          "pairRubyParts": [
+            {
+              "base": "怒鳴",
+              "ruby": "どな"
+            },
+            {
+              "base": "る",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-64"
         },
         {
@@ -24405,6 +25355,12 @@
           ],
           "pairText": "はやる",
           "pairReading": "はやる",
+          "pairRubyParts": [
+            {
+              "base": "はやる",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-65"
         },
         {
@@ -24430,6 +25386,12 @@
           ],
           "pairText": "しないようにする",
           "pairReading": "しないようにする",
+          "pairRubyParts": [
+            {
+              "base": "しないようにする",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-66"
         },
         {
@@ -24451,6 +25413,16 @@
           ],
           "pairText": "控える",
           "pairReading": "ひかえる",
+          "pairRubyParts": [
+            {
+              "base": "控",
+              "ruby": "ひか"
+            },
+            {
+              "base": "える",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-66"
         },
         {
@@ -24476,6 +25448,16 @@
           ],
           "pairText": "少なくなる",
           "pairReading": "すくなくなる",
+          "pairRubyParts": [
+            {
+              "base": "少",
+              "ruby": "すく"
+            },
+            {
+              "base": "なくなる",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-67"
         },
         {
@@ -24501,6 +25483,16 @@
           ],
           "pairText": "減る",
           "pairReading": "へる",
+          "pairRubyParts": [
+            {
+              "base": "減",
+              "ruby": "へ"
+            },
+            {
+              "base": "る",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-67"
         },
         {
@@ -24538,6 +25530,24 @@
           ],
           "pairText": "待ち合わせる",
           "pairReading": "まちあわせる",
+          "pairRubyParts": [
+            {
+              "base": "待",
+              "ruby": "ま"
+            },
+            {
+              "base": "ち",
+              "ruby": ""
+            },
+            {
+              "base": "合",
+              "ruby": "あ"
+            },
+            {
+              "base": "わせる",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-68"
         },
         {
@@ -24563,6 +25573,16 @@
           ],
           "pairText": "合う",
           "pairReading": "あう",
+          "pairRubyParts": [
+            {
+              "base": "合",
+              "ruby": "あ"
+            },
+            {
+              "base": "う",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-69"
         },
         {
@@ -24588,6 +25608,16 @@
           ],
           "pairText": "向く",
           "pairReading": "むく",
+          "pairRubyParts": [
+            {
+              "base": "向",
+              "ruby": "む"
+            },
+            {
+              "base": "く",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-69"
         },
         {
@@ -24617,6 +25647,20 @@
           ],
           "pairText": "もう一度やる",
           "pairReading": "もういちどやる",
+          "pairRubyParts": [
+            {
+              "base": "もう",
+              "ruby": ""
+            },
+            {
+              "base": "一度",
+              "ruby": "いちど"
+            },
+            {
+              "base": "やる",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-70"
         },
         {
@@ -24646,6 +25690,20 @@
           ],
           "pairText": "やり直す",
           "pairReading": "やりなおす",
+          "pairRubyParts": [
+            {
+              "base": "やり",
+              "ruby": ""
+            },
+            {
+              "base": "直",
+              "ruby": "なお"
+            },
+            {
+              "base": "す",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-70"
         },
         {
@@ -24671,6 +25729,16 @@
           ],
           "pairText": "気をつける",
           "pairReading": "きをつける",
+          "pairRubyParts": [
+            {
+              "base": "気",
+              "ruby": "き"
+            },
+            {
+              "base": "をつける",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-71"
         },
         {
@@ -24696,6 +25764,16 @@
           ],
           "pairText": "用心する",
           "pairReading": "ようじんする",
+          "pairRubyParts": [
+            {
+              "base": "用心",
+              "ruby": "ようじん"
+            },
+            {
+              "base": "する",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-71"
         },
         {
@@ -24717,6 +25795,16 @@
           ],
           "pairText": "忙しい",
           "pairReading": "いそがしい",
+          "pairRubyParts": [
+            {
+              "base": "忙",
+              "ruby": "いそが"
+            },
+            {
+              "base": "しい",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-72"
         },
         {
@@ -24742,6 +25830,12 @@
           ],
           "pairText": "あわただしい",
           "pairReading": "あわただしい",
+          "pairRubyParts": [
+            {
+              "base": "あわただしい",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-72"
         },
         {
@@ -24767,6 +25861,12 @@
           ],
           "pairText": "おかしい",
           "pairReading": "おかしい",
+          "pairRubyParts": [
+            {
+              "base": "おかしい",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-73"
         },
         {
@@ -24788,6 +25888,24 @@
           ],
           "pairText": "年の若い",
           "pairReading": "としのわかい",
+          "pairRubyParts": [
+            {
+              "base": "年",
+              "ruby": "とし"
+            },
+            {
+              "base": "の",
+              "ruby": ""
+            },
+            {
+              "base": "若",
+              "ruby": "わか"
+            },
+            {
+              "base": "い",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-74"
         },
         {
@@ -24821,6 +25939,12 @@
           ],
           "pairText": "おさない",
           "pairReading": "おさない",
+          "pairRubyParts": [
+            {
+              "base": "おさない",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-74"
         },
         {
@@ -24846,6 +25970,16 @@
           ],
           "pairText": "惜しい",
           "pairReading": "おしい",
+          "pairRubyParts": [
+            {
+              "base": "惜",
+              "ruby": "お"
+            },
+            {
+              "base": "しい",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-75"
         },
         {
@@ -24867,6 +26001,12 @@
           ],
           "pairText": "おそろしい",
           "pairReading": "おそろしい",
+          "pairRubyParts": [
+            {
+              "base": "おそろしい",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-76"
         },
         {
@@ -24888,6 +26028,16 @@
           ],
           "pairText": "頭がいい",
           "pairReading": "あたまがいい",
+          "pairRubyParts": [
+            {
+              "base": "頭",
+              "ruby": "あたま"
+            },
+            {
+              "base": "がいい",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-77"
         },
         {
@@ -24913,6 +26063,12 @@
           ],
           "pairText": "かしこい",
           "pairReading": "かしこい",
+          "pairRubyParts": [
+            {
+              "base": "かしこい",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-77"
         },
         {
@@ -24942,6 +26098,12 @@
           ],
           "pairText": "きつい",
           "pairReading": "きつい",
+          "pairRubyParts": [
+            {
+              "base": "きつい",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-78"
         },
         {
@@ -24967,6 +26129,16 @@
           ],
           "pairText": "詳しい",
           "pairReading": "くわしい",
+          "pairRubyParts": [
+            {
+              "base": "詳",
+              "ruby": "くわ"
+            },
+            {
+              "base": "しい",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-79"
         },
         {
@@ -24988,6 +26160,12 @@
           ],
           "pairText": "うるさい",
           "pairReading": "うるさい",
+          "pairRubyParts": [
+            {
+              "base": "うるさい",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-80"
         },
         {
@@ -25009,6 +26187,12 @@
           ],
           "pairText": "さわがしい",
           "pairReading": "さわがしい",
+          "pairRubyParts": [
+            {
+              "base": "さわがしい",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-80"
         },
         {
@@ -25030,6 +26214,16 @@
           ],
           "pairText": "方法がない",
           "pairReading": "ほうほうがない",
+          "pairRubyParts": [
+            {
+              "base": "方法",
+              "ruby": "ほうほう"
+            },
+            {
+              "base": "がない",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-81"
         },
         {
@@ -25055,6 +26249,12 @@
           ],
           "pairText": "しかたない",
           "pairReading": "しかたない",
+          "pairRubyParts": [
+            {
+              "base": "しかたない",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-81"
         },
         {
@@ -25076,6 +26276,12 @@
           ],
           "pairText": "くるしい",
           "pairReading": "くるしい",
+          "pairRubyParts": [
+            {
+              "base": "くるしい",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-82"
         },
         {
@@ -25097,6 +26303,12 @@
           ],
           "pairText": "つらい",
           "pairReading": "つらい",
+          "pairRubyParts": [
+            {
+              "base": "つらい",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-82"
         },
         {
@@ -25118,6 +26330,20 @@
           ],
           "pairText": "お金がない",
           "pairReading": "おかねがない",
+          "pairRubyParts": [
+            {
+              "base": "お",
+              "ruby": ""
+            },
+            {
+              "base": "金",
+              "ruby": "かね"
+            },
+            {
+              "base": "がない",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-83"
         },
         {
@@ -25147,6 +26373,12 @@
           ],
           "pairText": "まずしい",
           "pairReading": "まずしい",
+          "pairRubyParts": [
+            {
+              "base": "まずしい",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-83"
         },
         {
@@ -25172,6 +26404,16 @@
           ],
           "pairText": "眩しい",
           "pairReading": "まぶしい",
+          "pairRubyParts": [
+            {
+              "base": "眩",
+              "ruby": "まぶ"
+            },
+            {
+              "base": "しい",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-84"
         },
         {
@@ -25193,6 +26435,12 @@
           ],
           "pairText": "めずらしい",
           "pairReading": "めずらしい",
+          "pairRubyParts": [
+            {
+              "base": "めずらしい",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-85"
         },
         {
@@ -25218,6 +26466,12 @@
           ],
           "pairText": "もったいない",
           "pairReading": "もったいない",
+          "pairRubyParts": [
+            {
+              "base": "もったいない",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-86"
         },
         {
@@ -25243,6 +26497,12 @@
           ],
           "pairText": "ゆるい",
           "pairReading": "ゆるい",
+          "pairRubyParts": [
+            {
+              "base": "ゆるい",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-87"
         },
         {
@@ -25264,6 +26524,12 @@
           ],
           "pairText": "はっきりしない",
           "pairReading": "はっきりしない",
+          "pairRubyParts": [
+            {
+              "base": "はっきりしない",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-88"
         },
         {
@@ -25285,6 +26551,12 @@
           ],
           "pairText": "あいまいだ",
           "pairReading": "あいまいだ",
+          "pairRubyParts": [
+            {
+              "base": "あいまいだ",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-88"
         },
         {
@@ -25306,6 +26578,12 @@
           ],
           "pairText": "からからだ",
           "pairReading": "からからだ",
+          "pairRubyParts": [
+            {
+              "base": "からからだ",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-89"
         },
         {
@@ -25327,6 +26605,12 @@
           ],
           "pairText": "がらがらだ",
           "pairReading": "がらがらだ",
+          "pairRubyParts": [
+            {
+              "base": "がらがらだ",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-90"
         },
         {
@@ -25352,6 +26636,16 @@
           ],
           "pairText": "容易だ",
           "pairReading": "よういだ",
+          "pairRubyParts": [
+            {
+              "base": "容易",
+              "ruby": "ようい"
+            },
+            {
+              "base": "だ",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-91"
         },
         {
@@ -25377,6 +26671,12 @@
           ],
           "pairText": "まじめだ",
           "pairReading": "まじめだ",
+          "pairRubyParts": [
+            {
+              "base": "まじめだ",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-92"
         },
         {
@@ -25398,6 +26698,16 @@
           ],
           "pairText": "真剣だ",
           "pairReading": "しんけんだ",
+          "pairRubyParts": [
+            {
+              "base": "真剣",
+              "ruby": "しんけん"
+            },
+            {
+              "base": "だ",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-92"
         },
         {
@@ -25423,6 +26733,12 @@
           ],
           "pairText": "そっくりだ",
           "pairReading": "そっくりだ",
+          "pairRubyParts": [
+            {
+              "base": "そっくりだ",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-93"
         },
         {
@@ -25448,6 +26764,12 @@
           ],
           "pairText": "つまらない",
           "pairReading": "つまらない",
+          "pairRubyParts": [
+            {
+              "base": "つまらない",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-94"
         },
         {
@@ -25469,6 +26791,16 @@
           ],
           "pairText": "退屈だ",
           "pairReading": "たいくつだ",
+          "pairRubyParts": [
+            {
+              "base": "退屈",
+              "ruby": "たいくつ"
+            },
+            {
+              "base": "だ",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-94"
         },
         {
@@ -25498,6 +26830,20 @@
           ],
           "pairText": "すぐ怒る",
           "pairReading": "すぐおこる",
+          "pairRubyParts": [
+            {
+              "base": "すぐ",
+              "ruby": ""
+            },
+            {
+              "base": "怒",
+              "ruby": "おこ"
+            },
+            {
+              "base": "る",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-95"
         },
         {
@@ -25527,6 +26873,20 @@
           ],
           "pairText": "短気だ",
           "pairReading": "たんきだ",
+          "pairRubyParts": [
+            {
+              "base": "短",
+              "ruby": "たん"
+            },
+            {
+              "base": "気",
+              "ruby": "き"
+            },
+            {
+              "base": "だ",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-95"
         },
         {
@@ -25552,6 +26912,16 @@
           ],
           "pairText": "分かりやすい",
           "pairReading": "わかりやすい",
+          "pairRubyParts": [
+            {
+              "base": "分",
+              "ruby": "わ"
+            },
+            {
+              "base": "かりやすい",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-96"
         },
         {
@@ -25577,6 +26947,16 @@
           ],
           "pairText": "単純だ",
           "pairReading": "たんじゅんだ",
+          "pairRubyParts": [
+            {
+              "base": "単純",
+              "ruby": "たんじゅん"
+            },
+            {
+              "base": "だ",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-96"
         },
         {
@@ -25602,6 +26982,16 @@
           ],
           "pairText": "得意だ",
           "pairReading": "とくいだ",
+          "pairRubyParts": [
+            {
+              "base": "得意",
+              "ruby": "とくい"
+            },
+            {
+              "base": "だ",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-97"
         },
         {
@@ -25627,6 +27017,16 @@
           ],
           "pairText": "不安だ",
           "pairReading": "ふあんだ",
+          "pairRubyParts": [
+            {
+              "base": "不安",
+              "ruby": "ふあん"
+            },
+            {
+              "base": "だ",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-98"
         },
         {
@@ -25648,6 +27048,24 @@
           ],
           "pairText": "上手に話せる",
           "pairReading": "じょうずにはなせる",
+          "pairRubyParts": [
+            {
+              "base": "上手",
+              "ruby": "じょうず"
+            },
+            {
+              "base": "に",
+              "ruby": ""
+            },
+            {
+              "base": "話",
+              "ruby": "はな"
+            },
+            {
+              "base": "せる",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-99"
         },
         {
@@ -25681,6 +27099,12 @@
           ],
           "pairText": "ぺらぺらだ",
           "pairReading": "ぺらぺらだ",
+          "pairRubyParts": [
+            {
+              "base": "ぺらぺらだ",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-99"
         },
         {
@@ -25702,6 +27126,20 @@
           ],
           "pairText": "見事だ",
           "pairReading": "みごとだ",
+          "pairRubyParts": [
+            {
+              "base": "見",
+              "ruby": "み"
+            },
+            {
+              "base": "事",
+              "ruby": "ごと"
+            },
+            {
+              "base": "だ",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-100"
         },
         {
@@ -25723,6 +27161,16 @@
           ],
           "pairText": "役にたたない",
           "pairReading": "やくにたたない",
+          "pairRubyParts": [
+            {
+              "base": "役",
+              "ruby": "やく"
+            },
+            {
+              "base": "にたたない",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-101"
         },
         {
@@ -25748,6 +27196,12 @@
           ],
           "pairText": "むだだ",
           "pairReading": "むだだ",
+          "pairRubyParts": [
+            {
+              "base": "むだだ",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-101"
         },
         {
@@ -25769,6 +27223,12 @@
           ],
           "pairText": "したくない",
           "pairReading": "したくない",
+          "pairRubyParts": [
+            {
+              "base": "したくない",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-102"
         },
         {
@@ -25790,6 +27250,12 @@
           ],
           "pairText": "めんどうだ",
           "pairReading": "めんどうだ",
+          "pairRubyParts": [
+            {
+              "base": "めんどうだ",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-102"
         },
         {
@@ -25811,6 +27277,16 @@
           ],
           "pairText": "立派だ",
           "pairReading": "りっぱだ",
+          "pairRubyParts": [
+            {
+              "base": "立派",
+              "ruby": "りっぱ"
+            },
+            {
+              "base": "だ",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-103"
         },
         {
@@ -25836,6 +27312,24 @@
           ],
           "pairText": "落ち着く",
           "pairReading": "おちつく",
+          "pairRubyParts": [
+            {
+              "base": "落",
+              "ruby": "お"
+            },
+            {
+              "base": "ち",
+              "ruby": ""
+            },
+            {
+              "base": "着",
+              "ruby": "つ"
+            },
+            {
+              "base": "く",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-104"
         },
         {
@@ -25869,6 +27363,16 @@
           ],
           "pairText": "冷静だ",
           "pairReading": "れいせいだ",
+          "pairRubyParts": [
+            {
+              "base": "冷静",
+              "ruby": "れいせい"
+            },
+            {
+              "base": "だ",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-104"
         },
         {
@@ -25890,6 +27394,24 @@
           ],
           "pairText": "他人のことを考えない",
           "pairReading": "たにんのことをかんがえない",
+          "pairRubyParts": [
+            {
+              "base": "他人",
+              "ruby": "たにん"
+            },
+            {
+              "base": "のことを",
+              "ruby": ""
+            },
+            {
+              "base": "考",
+              "ruby": "かんが"
+            },
+            {
+              "base": "えない",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-105"
         },
         {
@@ -25923,6 +27445,12 @@
           ],
           "pairText": "わがままだ",
           "pairReading": "わがままだ",
+          "pairRubyParts": [
+            {
+              "base": "わがままだ",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-105"
         },
         {
@@ -25952,6 +27480,24 @@
           ],
           "pairText": "前と同じで",
           "pairReading": "まえとおなじで",
+          "pairRubyParts": [
+            {
+              "base": "前",
+              "ruby": "まえ"
+            },
+            {
+              "base": "と",
+              "ruby": ""
+            },
+            {
+              "base": "同",
+              "ruby": "おな"
+            },
+            {
+              "base": "じで",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-106"
         },
         {
@@ -25985,6 +27531,20 @@
           ],
           "pairText": "相変わらず",
           "pairReading": "あいかわらず",
+          "pairRubyParts": [
+            {
+              "base": "相",
+              "ruby": "あい"
+            },
+            {
+              "base": "変",
+              "ruby": "か"
+            },
+            {
+              "base": "わらず",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-106"
         },
         {
@@ -26010,6 +27570,16 @@
           ],
           "pairText": "思ったより",
           "pairReading": "おもったより",
+          "pairRubyParts": [
+            {
+              "base": "思",
+              "ruby": "おも"
+            },
+            {
+              "base": "ったより",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-107"
         },
         {
@@ -26035,6 +27605,16 @@
           ],
           "pairText": "案外",
           "pairReading": "あんがい",
+          "pairRubyParts": [
+            {
+              "base": "案",
+              "ruby": "あん"
+            },
+            {
+              "base": "外",
+              "ruby": "がい"
+            }
+          ],
           "pairId": "pair-107"
         },
         {
@@ -26056,6 +27636,12 @@
           ],
           "pairText": "突然",
           "pairReading": "とつぜん",
+          "pairRubyParts": [
+            {
+              "base": "突然",
+              "ruby": "とつぜん"
+            }
+          ],
           "pairId": "pair-108"
         },
         {
@@ -26077,6 +27663,12 @@
           ],
           "pairText": "大体",
           "pairReading": "だいたい",
+          "pairRubyParts": [
+            {
+              "base": "大体",
+              "ruby": "だいたい"
+            }
+          ],
           "pairId": "pair-109"
         },
         {
@@ -26098,6 +27690,12 @@
           ],
           "pairText": "およそ",
           "pairReading": "およそ",
+          "pairRubyParts": [
+            {
+              "base": "およそ",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-109"
         },
         {
@@ -26119,6 +27717,24 @@
           ],
           "pairText": "周りに気づかれないように",
           "pairReading": "まわりにきづかれないように",
+          "pairRubyParts": [
+            {
+              "base": "周",
+              "ruby": "まわ"
+            },
+            {
+              "base": "りに",
+              "ruby": ""
+            },
+            {
+              "base": "気",
+              "ruby": "き"
+            },
+            {
+              "base": "づかれないように",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-110"
         },
         {
@@ -26152,6 +27768,12 @@
           ],
           "pairText": "こっそり",
           "pairReading": "こっそり",
+          "pairRubyParts": [
+            {
+              "base": "こっそり",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-110"
         },
         {
@@ -26177,6 +27799,16 @@
           ],
           "pairText": "少しずつ",
           "pairReading": "すこしずつ",
+          "pairRubyParts": [
+            {
+              "base": "少",
+              "ruby": "すこ"
+            },
+            {
+              "base": "しずつ",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-111"
         },
         {
@@ -26202,6 +27834,16 @@
           ],
           "pairText": "次第に",
           "pairReading": "しだいに",
+          "pairRubyParts": [
+            {
+              "base": "次第",
+              "ruby": "しだい"
+            },
+            {
+              "base": "に",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-111"
         },
         {
@@ -26223,6 +27865,12 @@
           ],
           "pairText": "じっと",
           "pairReading": "じっと",
+          "pairRubyParts": [
+            {
+              "base": "じっと",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-112"
         },
         {
@@ -26248,6 +27896,12 @@
           ],
           "pairText": "しばらく",
           "pairReading": "しばらく",
+          "pairRubyParts": [
+            {
+              "base": "しばらく",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-113"
         },
         {
@@ -26269,6 +27923,12 @@
           ],
           "pairText": "正直",
           "pairReading": "しょうじき",
+          "pairRubyParts": [
+            {
+              "base": "正直",
+              "ruby": "しょうじき"
+            }
+          ],
           "pairId": "pair-114"
         },
         {
@@ -26290,6 +27950,16 @@
           ],
           "pairText": "必ず",
           "pairReading": "かならず",
+          "pairRubyParts": [
+            {
+              "base": "必",
+              "ruby": "かなら"
+            },
+            {
+              "base": "ず",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-115"
         },
         {
@@ -26311,6 +27981,12 @@
           ],
           "pairText": "かなり",
           "pairReading": "かなり",
+          "pairRubyParts": [
+            {
+              "base": "かなり",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-116"
         },
         {
@@ -26332,6 +28008,12 @@
           ],
           "pairText": "相当",
           "pairReading": "そうとう",
+          "pairRubyParts": [
+            {
+              "base": "相当",
+              "ruby": "そうとう"
+            }
+          ],
           "pairId": "pair-116"
         },
         {
@@ -26357,6 +28039,12 @@
           ],
           "pairText": "そっと",
           "pairReading": "そっと",
+          "pairRubyParts": [
+            {
+              "base": "そっと",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-117"
         },
         {
@@ -26378,6 +28066,24 @@
           ],
           "pairText": "何も変えないで",
           "pairReading": "なにもかえないで",
+          "pairRubyParts": [
+            {
+              "base": "何",
+              "ruby": "なに"
+            },
+            {
+              "base": "も",
+              "ruby": ""
+            },
+            {
+              "base": "変",
+              "ruby": "か"
+            },
+            {
+              "base": "えないで",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-118"
         },
         {
@@ -26411,6 +28117,12 @@
           ],
           "pairText": "そのまま",
           "pairReading": "そのまま",
+          "pairRubyParts": [
+            {
+              "base": "そのまま",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-118"
         },
         {
@@ -26432,6 +28144,12 @@
           ],
           "pairText": "ちょっと",
           "pairReading": "ちょっと",
+          "pairRubyParts": [
+            {
+              "base": "ちょっと",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-119"
         },
         {
@@ -26453,6 +28171,12 @@
           ],
           "pairText": "多分",
           "pairReading": "たぶん",
+          "pairRubyParts": [
+            {
+              "base": "多分",
+              "ruby": "たぶん"
+            }
+          ],
           "pairId": "pair-119"
         },
         {
@@ -26474,6 +28198,12 @@
           ],
           "pairText": "十分",
           "pairReading": "じゅうぶん",
+          "pairRubyParts": [
+            {
+              "base": "十分",
+              "ruby": "じゅうぶん"
+            }
+          ],
           "pairId": "pair-120"
         },
         {
@@ -26495,6 +28225,12 @@
           ],
           "pairText": "たっぷり",
           "pairReading": "たっぷり",
+          "pairRubyParts": [
+            {
+              "base": "たっぷり",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-120"
         },
         {
@@ -26516,6 +28252,16 @@
           ],
           "pairText": "何度も",
           "pairReading": "なんども",
+          "pairRubyParts": [
+            {
+              "base": "何度",
+              "ruby": "なんど"
+            },
+            {
+              "base": "も",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-121"
         },
         {
@@ -26541,6 +28287,12 @@
           ],
           "pairText": "たびたび",
           "pairReading": "たびたび",
+          "pairRubyParts": [
+            {
+              "base": "たびたび",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-121"
         },
         {
@@ -26562,6 +28314,12 @@
           ],
           "pairText": "ときどき",
           "pairReading": "ときどき",
+          "pairRubyParts": [
+            {
+              "base": "ときどき",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-122"
         },
         {
@@ -26583,6 +28341,12 @@
           ],
           "pairText": "たまに",
           "pairReading": "たまに",
+          "pairRubyParts": [
+            {
+              "base": "たまに",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-122"
         },
         {
@@ -26604,6 +28368,12 @@
           ],
           "pairText": "全然",
           "pairReading": "ぜんぜん",
+          "pairRubyParts": [
+            {
+              "base": "全然",
+              "ruby": "ぜんぜん"
+            }
+          ],
           "pairId": "pair-123"
         },
         {
@@ -26625,6 +28395,12 @@
           ],
           "pairText": "ちっとも",
           "pairReading": "ちっとも",
+          "pairRubyParts": [
+            {
+              "base": "ちっとも",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-123"
         },
         {
@@ -26654,6 +28430,16 @@
           ],
           "pairText": "続いて",
           "pairReading": "つづいて",
+          "pairRubyParts": [
+            {
+              "base": "続",
+              "ruby": "つづ"
+            },
+            {
+              "base": "いて",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-124"
         },
         {
@@ -26679,6 +28465,20 @@
           ],
           "pairText": "次々と",
           "pairReading": "つぎつぎと",
+          "pairRubyParts": [
+            {
+              "base": "次",
+              "ruby": "つぎ"
+            },
+            {
+              "base": "々",
+              "ruby": "つぎ"
+            },
+            {
+              "base": "と",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-124"
         },
         {
@@ -26700,6 +28500,12 @@
           ],
           "pairText": "ぜひ",
           "pairReading": "ぜひ",
+          "pairRubyParts": [
+            {
+              "base": "ぜひ",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-125"
         },
         {
@@ -26721,6 +28527,12 @@
           ],
           "pairText": "どうしても",
           "pairReading": "どうしても",
+          "pairRubyParts": [
+            {
+              "base": "どうしても",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-125"
         },
         {
@@ -26742,6 +28554,12 @@
           ],
           "pairText": "もちろん",
           "pairReading": "もちろん",
+          "pairRubyParts": [
+            {
+              "base": "もちろん",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-126"
         },
         {
@@ -26763,6 +28581,12 @@
           ],
           "pairText": "当然",
           "pairReading": "とうぜん",
+          "pairRubyParts": [
+            {
+              "base": "当然",
+              "ruby": "とうぜん"
+            }
+          ],
           "pairId": "pair-126"
         },
         {
@@ -26784,6 +28608,12 @@
           ],
           "pairText": "なるべく",
           "pairReading": "なるべく",
+          "pairRubyParts": [
+            {
+              "base": "なるべく",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-127"
         },
         {
@@ -26805,6 +28635,12 @@
           ],
           "pairText": "いつも",
           "pairReading": "いつも",
+          "pairRubyParts": [
+            {
+              "base": "いつも",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-128"
         },
         {
@@ -26826,6 +28662,12 @@
           ],
           "pairText": "年中",
           "pairReading": "ねんじゅう",
+          "pairRubyParts": [
+            {
+              "base": "年中",
+              "ruby": "ねんじゅう"
+            }
+          ],
           "pairId": "pair-128"
         },
         {
@@ -26847,6 +28689,12 @@
           ],
           "pairText": "ゆっくり",
           "pairReading": "ゆっくり",
+          "pairRubyParts": [
+            {
+              "base": "ゆっくり",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-129"
         },
         {
@@ -26868,6 +28716,12 @@
           ],
           "pairText": "のろのろ",
           "pairReading": "のろのろ",
+          "pairRubyParts": [
+            {
+              "base": "のろのろ",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-129"
         },
         {
@@ -26893,6 +28747,12 @@
           ],
           "pairText": "とても",
           "pairReading": "とても",
+          "pairRubyParts": [
+            {
+              "base": "とても",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-130"
         },
         {
@@ -26914,6 +28774,16 @@
           ],
           "pairText": "非常に",
           "pairReading": "ひじょうに",
+          "pairRubyParts": [
+            {
+              "base": "非常",
+              "ruby": "ひじょう"
+            },
+            {
+              "base": "に",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-130"
         },
         {
@@ -26935,6 +28805,12 @@
           ],
           "pairText": "いつも",
           "pairReading": "いつも",
+          "pairRubyParts": [
+            {
+              "base": "いつも",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-131"
         },
         {
@@ -26960,6 +28836,16 @@
           ],
           "pairText": "事前に",
           "pairReading": "じぜんに",
+          "pairRubyParts": [
+            {
+              "base": "事前",
+              "ruby": "じぜん"
+            },
+            {
+              "base": "に",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-132"
         },
         {
@@ -26985,6 +28871,16 @@
           ],
           "pairText": "前もって",
           "pairReading": "まえもって",
+          "pairRubyParts": [
+            {
+              "base": "前",
+              "ruby": "まえ"
+            },
+            {
+              "base": "もって",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-132"
         },
         {
@@ -27006,6 +28902,12 @@
           ],
           "pairText": "だんだん",
           "pairReading": "だんだん",
+          "pairRubyParts": [
+            {
+              "base": "だんだん",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-133"
         },
         {
@@ -27027,6 +28929,12 @@
           ],
           "pairText": "ますます",
           "pairReading": "ますます",
+          "pairRubyParts": [
+            {
+              "base": "ますます",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-133"
         },
         {
@@ -27048,6 +28956,12 @@
           ],
           "pairText": "一番",
           "pairReading": "いちばん",
+          "pairRubyParts": [
+            {
+              "base": "一番",
+              "ruby": "いちばん"
+            }
+          ],
           "pairId": "pair-134"
         },
         {
@@ -27069,6 +28983,12 @@
           ],
           "pairText": "もっとも",
           "pairReading": "もっとも",
+          "pairRubyParts": [
+            {
+              "base": "もっとも",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-134"
         },
         {
@@ -27090,6 +29010,12 @@
           ],
           "pairText": "大体",
           "pairReading": "だいたい",
+          "pairRubyParts": [
+            {
+              "base": "大体",
+              "ruby": "だいたい"
+            }
+          ],
           "pairId": "pair-135"
         },
         {
@@ -27111,6 +29037,12 @@
           ],
           "pairText": "やっと",
           "pairReading": "やっと",
+          "pairRubyParts": [
+            {
+              "base": "やっと",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-136"
         },
         {
@@ -27132,6 +29064,12 @@
           ],
           "pairText": "ようやく",
           "pairReading": "ようやく",
+          "pairRubyParts": [
+            {
+              "base": "ようやく",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-136"
         },
         {
@@ -27153,6 +29091,12 @@
           ],
           "pairText": "たった",
           "pairReading": "たった",
+          "pairRubyParts": [
+            {
+              "base": "たった",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-137"
         },
         {
@@ -27174,6 +29118,12 @@
           ],
           "pairText": "わずか",
           "pairReading": "わずか",
+          "pairRubyParts": [
+            {
+              "base": "わずか",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-137"
         },
         {
@@ -27207,6 +29157,24 @@
           ],
           "pairText": "朝ごはんを全然食べない",
           "pairReading": "あさごはんをぜんぜんたべない",
+          "pairRubyParts": [
+            {
+              "base": "朝",
+              "ruby": "あさ"
+            },
+            {
+              "base": "ごはんを",
+              "ruby": ""
+            },
+            {
+              "base": "全然食",
+              "ruby": "ぜんぜんた"
+            },
+            {
+              "base": "べない",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-138"
         },
         {
@@ -27240,6 +29208,24 @@
           ],
           "pairText": "朝ごはんを抜く",
           "pairReading": "あさごはんをぬく",
+          "pairRubyParts": [
+            {
+              "base": "朝",
+              "ruby": "あさ"
+            },
+            {
+              "base": "ごはんを",
+              "ruby": ""
+            },
+            {
+              "base": "抜",
+              "ruby": "ぬ"
+            },
+            {
+              "base": "く",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-138"
         },
         {
@@ -27265,6 +29251,32 @@
           ],
           "pairText": "英語で自由に話せる",
           "pairReading": "えいごでじゆうにはなせる",
+          "pairRubyParts": [
+            {
+              "base": "英語",
+              "ruby": "えいご"
+            },
+            {
+              "base": "で",
+              "ruby": ""
+            },
+            {
+              "base": "自由",
+              "ruby": "じゆう"
+            },
+            {
+              "base": "に",
+              "ruby": ""
+            },
+            {
+              "base": "話",
+              "ruby": "はな"
+            },
+            {
+              "base": "せる",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-139"
         },
         {
@@ -27306,6 +29318,16 @@
           ],
           "pairText": "英語がぺらぺらだ",
           "pairReading": "えいごがぺらぺらだ",
+          "pairRubyParts": [
+            {
+              "base": "英語",
+              "ruby": "えいご"
+            },
+            {
+              "base": "がぺらぺらだ",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-139"
         },
         {
@@ -27331,6 +29353,32 @@
           ],
           "pairText": "後の別の日にすることになる",
           "pairReading": "あとのべつのひにすることになる",
+          "pairRubyParts": [
+            {
+              "base": "後",
+              "ruby": "あと"
+            },
+            {
+              "base": "の",
+              "ruby": ""
+            },
+            {
+              "base": "別",
+              "ruby": "べつ"
+            },
+            {
+              "base": "の",
+              "ruby": ""
+            },
+            {
+              "base": "日",
+              "ruby": "ひ"
+            },
+            {
+              "base": "にすることになる",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-140"
         },
         {
@@ -27372,6 +29420,16 @@
           ],
           "pairText": "延期になる",
           "pairReading": "えんきになる",
+          "pairRubyParts": [
+            {
+              "base": "延期",
+              "ruby": "えんき"
+            },
+            {
+              "base": "になる",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-140"
         },
         {
@@ -27401,6 +29459,20 @@
           ],
           "pairText": "お腹がすいている",
           "pairReading": "おなかがすいている",
+          "pairRubyParts": [
+            {
+              "base": "お",
+              "ruby": ""
+            },
+            {
+              "base": "腹",
+              "ruby": "なか"
+            },
+            {
+              "base": "がすいている",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-141"
         },
         {
@@ -27430,6 +29502,20 @@
           ],
           "pairText": "お腹がぺこぺこだ",
           "pairReading": "おなかがぺこぺこだ",
+          "pairRubyParts": [
+            {
+              "base": "お",
+              "ruby": ""
+            },
+            {
+              "base": "腹",
+              "ruby": "なか"
+            },
+            {
+              "base": "がぺこぺこだ",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-141"
         },
         {
@@ -27451,6 +29537,16 @@
           ],
           "pairText": "謝る",
           "pairReading": "あやまる",
+          "pairRubyParts": [
+            {
+              "base": "謝",
+              "ruby": "あやま"
+            },
+            {
+              "base": "る",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-142"
         },
         {
@@ -27476,6 +29572,12 @@
           ],
           "pairText": "おわびする",
           "pairReading": "おわびする",
+          "pairRubyParts": [
+            {
+              "base": "おわびする",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-142"
         },
         {
@@ -27501,6 +29603,16 @@
           ],
           "pairText": "走ってくる",
           "pairReading": "はしってくる",
+          "pairRubyParts": [
+            {
+              "base": "走",
+              "ruby": "はし"
+            },
+            {
+              "base": "ってくる",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-143"
         },
         {
@@ -27526,6 +29638,16 @@
           ],
           "pairText": "駆けてくる",
           "pairReading": "かけてくる",
+          "pairRubyParts": [
+            {
+              "base": "駆",
+              "ruby": "か"
+            },
+            {
+              "base": "けてくる",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-143"
         },
         {
@@ -27547,6 +29669,24 @@
           ],
           "pairText": "残念だと思う",
           "pairReading": "ざんねんだとおもう",
+          "pairRubyParts": [
+            {
+              "base": "残念",
+              "ruby": "ざんねん"
+            },
+            {
+              "base": "だと",
+              "ruby": ""
+            },
+            {
+              "base": "思",
+              "ruby": "おも"
+            },
+            {
+              "base": "う",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-144"
         },
         {
@@ -27580,6 +29720,12 @@
           ],
           "pairText": "がっかりする",
           "pairReading": "がっかりする",
+          "pairRubyParts": [
+            {
+              "base": "がっかりする",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-144"
         },
         {
@@ -27613,6 +29759,16 @@
           ],
           "pairText": "好きだ",
           "pairReading": "すきだ",
+          "pairRubyParts": [
+            {
+              "base": "好",
+              "ruby": "す"
+            },
+            {
+              "base": "きだ",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-145"
         },
         {
@@ -27638,6 +29794,24 @@
           ],
           "pairText": "気に入る",
           "pairReading": "きにいる",
+          "pairRubyParts": [
+            {
+              "base": "気",
+              "ruby": "き"
+            },
+            {
+              "base": "に",
+              "ruby": ""
+            },
+            {
+              "base": "入",
+              "ruby": "い"
+            },
+            {
+              "base": "る",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-145"
         },
         {
@@ -27663,6 +29837,12 @@
           ],
           "pairText": "かまわない",
           "pairReading": "かまわない",
+          "pairRubyParts": [
+            {
+              "base": "かまわない",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-146"
         },
         {
@@ -27684,6 +29864,16 @@
           ],
           "pairText": "気にしない",
           "pairReading": "きにしない",
+          "pairRubyParts": [
+            {
+              "base": "気",
+              "ruby": "き"
+            },
+            {
+              "base": "にしない",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-146"
         },
         {
@@ -27709,6 +29899,12 @@
           ],
           "pairText": "やめさせられる",
           "pairReading": "やめさせられる",
+          "pairRubyParts": [
+            {
+              "base": "やめさせられる",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-147"
         },
         {
@@ -27730,6 +29926,16 @@
           ],
           "pairText": "首になる",
           "pairReading": "くびになる",
+          "pairRubyParts": [
+            {
+              "base": "首",
+              "ruby": "くび"
+            },
+            {
+              "base": "になる",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-147"
         },
         {
@@ -27763,6 +29969,24 @@
           ],
           "pairText": "仕事が残る",
           "pairReading": "しごとがのこる",
+          "pairRubyParts": [
+            {
+              "base": "仕事",
+              "ruby": "しごと"
+            },
+            {
+              "base": "が",
+              "ruby": ""
+            },
+            {
+              "base": "残",
+              "ruby": "のこ"
+            },
+            {
+              "base": "る",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-148"
         },
         {
@@ -27796,6 +30020,24 @@
           ],
           "pairText": "仕事が溜まる",
           "pairReading": "しごとがたまる",
+          "pairRubyParts": [
+            {
+              "base": "仕事",
+              "ruby": "しごと"
+            },
+            {
+              "base": "が",
+              "ruby": ""
+            },
+            {
+              "base": "溜",
+              "ruby": "た"
+            },
+            {
+              "base": "まる",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-148"
         },
         {
@@ -27825,6 +30067,16 @@
           ],
           "pairText": "ふだんの顔",
           "pairReading": "ふだんのかお",
+          "pairRubyParts": [
+            {
+              "base": "ふだんの",
+              "ruby": ""
+            },
+            {
+              "base": "顔",
+              "ruby": "かお"
+            }
+          ],
           "pairId": "pair-149"
         },
         {
@@ -27850,6 +30102,20 @@
           ],
           "pairText": "自然な顔",
           "pairReading": "しぜんなかお",
+          "pairRubyParts": [
+            {
+              "base": "自然",
+              "ruby": "しぜん"
+            },
+            {
+              "base": "な",
+              "ruby": ""
+            },
+            {
+              "base": "顔",
+              "ruby": "かお"
+            }
+          ],
           "pairId": "pair-149"
         },
         {
@@ -27875,6 +30141,28 @@
           ],
           "pairText": "本当だと思う",
           "pairReading": "ほんとうだとおもう",
+          "pairRubyParts": [
+            {
+              "base": "本",
+              "ruby": "ほん"
+            },
+            {
+              "base": "当",
+              "ruby": "とう"
+            },
+            {
+              "base": "だと",
+              "ruby": ""
+            },
+            {
+              "base": "思",
+              "ruby": "おも"
+            },
+            {
+              "base": "う",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-150"
         },
         {
@@ -27912,6 +30200,16 @@
           ],
           "pairText": "信じている",
           "pairReading": "しんじている",
+          "pairRubyParts": [
+            {
+              "base": "信",
+              "ruby": "しん"
+            },
+            {
+              "base": "じている",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-150"
         },
         {
@@ -27937,6 +30235,16 @@
           ],
           "pairText": "通ってはいけない",
           "pairReading": "とおってはいけない",
+          "pairRubyParts": [
+            {
+              "base": "通",
+              "ruby": "とお"
+            },
+            {
+              "base": "ってはいけない",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-151"
         },
         {
@@ -27962,6 +30270,16 @@
           ],
           "pairText": "通行止めとなる",
           "pairReading": "つうこうどめとなる",
+          "pairRubyParts": [
+            {
+              "base": "通行止",
+              "ruby": "つうこうど"
+            },
+            {
+              "base": "めとなる",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-151"
         },
         {
@@ -27995,6 +30313,16 @@
           ],
           "pairText": "買う",
           "pairReading": "かう",
+          "pairRubyParts": [
+            {
+              "base": "買",
+              "ruby": "か"
+            },
+            {
+              "base": "う",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-152"
         },
         {
@@ -28020,6 +30348,24 @@
           ],
           "pairText": "手に入る",
           "pairReading": "てにはいる",
+          "pairRubyParts": [
+            {
+              "base": "手",
+              "ruby": "て"
+            },
+            {
+              "base": "に",
+              "ruby": ""
+            },
+            {
+              "base": "入",
+              "ruby": "はい"
+            },
+            {
+              "base": "る",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-152"
         },
         {
@@ -28049,6 +30395,16 @@
           ],
           "pairText": "面倒だ",
           "pairReading": "めんどうだ",
+          "pairRubyParts": [
+            {
+              "base": "面倒",
+              "ruby": "めんどう"
+            },
+            {
+              "base": "だ",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-153"
         },
         {
@@ -28074,6 +30430,24 @@
           ],
           "pairText": "誰にも話さない",
           "pairReading": "だれにもはなさない",
+          "pairRubyParts": [
+            {
+              "base": "誰",
+              "ruby": "だれ"
+            },
+            {
+              "base": "にも",
+              "ruby": ""
+            },
+            {
+              "base": "話",
+              "ruby": "はな"
+            },
+            {
+              "base": "さない",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-154"
         },
         {
@@ -28107,6 +30481,16 @@
           ],
           "pairText": "内緒にする",
           "pairReading": "ないしょにする",
+          "pairRubyParts": [
+            {
+              "base": "内緒",
+              "ruby": "ないしょ"
+            },
+            {
+              "base": "にする",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-154"
         },
         {
@@ -28132,6 +30516,16 @@
           ],
           "pairText": "届けてもらう",
           "pairReading": "とどけてもらう",
+          "pairRubyParts": [
+            {
+              "base": "届",
+              "ruby": "とど"
+            },
+            {
+              "base": "けてもらう",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-155"
         },
         {
@@ -28157,6 +30551,16 @@
           ],
           "pairText": "配達してもらう",
           "pairReading": "はいたつしてもらう",
+          "pairRubyParts": [
+            {
+              "base": "配達",
+              "ruby": "はいたつ"
+            },
+            {
+              "base": "してもらう",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-155"
         },
         {
@@ -28190,6 +30594,20 @@
           ],
           "pairText": "まだ焼けていない",
           "pairReading": "まだやけていない",
+          "pairRubyParts": [
+            {
+              "base": "まだ",
+              "ruby": ""
+            },
+            {
+              "base": "焼",
+              "ruby": "や"
+            },
+            {
+              "base": "けていない",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-156"
         },
         {
@@ -28219,6 +30637,24 @@
           ],
           "pairText": "火が通っていない",
           "pairReading": "ひがとおっていない",
+          "pairRubyParts": [
+            {
+              "base": "火",
+              "ruby": "ひ"
+            },
+            {
+              "base": "が",
+              "ruby": ""
+            },
+            {
+              "base": "通",
+              "ruby": "とお"
+            },
+            {
+              "base": "っていない",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-156"
         },
         {
@@ -28244,6 +30680,16 @@
           ],
           "pairText": "勉強している",
           "pairReading": "べんきょうしている",
+          "pairRubyParts": [
+            {
+              "base": "勉強",
+              "ruby": "べんきょう"
+            },
+            {
+              "base": "している",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-157"
         },
         {
@@ -28269,6 +30715,16 @@
           ],
           "pairText": "学んでいる",
           "pairReading": "まなんでいる",
+          "pairRubyParts": [
+            {
+              "base": "学",
+              "ruby": "まな"
+            },
+            {
+              "base": "んでいる",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-157"
         },
         {
@@ -28302,6 +30758,16 @@
           ],
           "pairText": "日がのぼる",
           "pairReading": "ひがのぼる",
+          "pairRubyParts": [
+            {
+              "base": "日",
+              "ruby": "ひ"
+            },
+            {
+              "base": "がのぼる",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-158"
         },
         {
@@ -28327,6 +30793,24 @@
           ],
           "pairText": "夜が明ける",
           "pairReading": "よがあける",
+          "pairRubyParts": [
+            {
+              "base": "夜",
+              "ruby": "よ"
+            },
+            {
+              "base": "が",
+              "ruby": ""
+            },
+            {
+              "base": "明",
+              "ruby": "あ"
+            },
+            {
+              "base": "ける",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-158"
         },
         {
@@ -28352,6 +30836,24 @@
           ],
           "pairText": "寝て休む",
           "pairReading": "ねてやすむ",
+          "pairRubyParts": [
+            {
+              "base": "寝",
+              "ruby": "ね"
+            },
+            {
+              "base": "て",
+              "ruby": ""
+            },
+            {
+              "base": "休",
+              "ruby": "やす"
+            },
+            {
+              "base": "む",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-159"
         },
         {
@@ -28385,6 +30887,16 @@
           ],
           "pairText": "横になる",
           "pairReading": "よこになる",
+          "pairRubyParts": [
+            {
+              "base": "横",
+              "ruby": "よこ"
+            },
+            {
+              "base": "になる",
+              "ruby": ""
+            }
+          ],
           "pairId": "pair-159"
         }
       ]
@@ -34934,7 +37446,7 @@
         {
           "id": "grammar-pattern-8",
           "primary": "～に比べて",
-          "reading": "",
+          "reading": "～にくらべて",
           "meaning": "~에 비해",
           "exampleJa": "日本に比べてベトナムの方が物価が安い。",
           "exampleEn": "",
@@ -34953,7 +37465,7 @@
             },
             {
               "base": "比",
-              "ruby": ""
+              "ruby": "くら"
             },
             {
               "base": "べて",
@@ -34964,7 +37476,7 @@
         {
           "id": "grammar-pattern-9",
           "primary": "～に加えて",
-          "reading": "",
+          "reading": "～にくわえて",
           "meaning": "~에 더하여",
           "exampleJa": "彼女は仕事に加えて子育てもしている。",
           "exampleEn": "",
@@ -34983,7 +37495,7 @@
             },
             {
               "base": "加",
-              "ruby": ""
+              "ruby": "くわ"
             },
             {
               "base": "えて",
@@ -35038,7 +37550,7 @@
         {
           "id": "grammar-pattern-12",
           "primary": "～に対して",
-          "reading": "",
+          "reading": "～にたいして",
           "meaning": "~에 대하여, ~에 대해",
           "exampleJa": "この美術館は学生に対して割引サービスを行っています。",
           "exampleEn": "",
@@ -35057,7 +37569,7 @@
             },
             {
               "base": "対",
-              "ruby": ""
+              "ruby": "たい"
             },
             {
               "base": "して",
@@ -35112,7 +37624,7 @@
         {
           "id": "grammar-pattern-15",
           "primary": "～に反して",
-          "reading": "",
+          "reading": "～にはんして",
           "meaning": "~와 달리, ~에 반하여",
           "exampleJa": "予想に反して、今年の試験は難しくなかったそうだ。",
           "exampleEn": "",
@@ -35131,7 +37643,7 @@
             },
             {
               "base": "反",
-              "ruby": ""
+              "ruby": "はん"
             },
             {
               "base": "して",
@@ -35252,7 +37764,7 @@
         {
           "id": "grammar-pattern-21",
           "primary": "～を中心に",
-          "reading": "",
+          "reading": "～をちゅうしんに",
           "meaning": "~을 중심으로",
           "exampleJa": "先生を中心に写真を撮りましょう。",
           "exampleEn": "",
@@ -35270,12 +37782,8 @@
               "ruby": ""
             },
             {
-              "base": "中",
-              "ruby": ""
-            },
-            {
-              "base": "心",
-              "ruby": ""
+              "base": "中心",
+              "ruby": "ちゅうしん"
             },
             {
               "base": "に",
@@ -35286,7 +37794,7 @@
         {
           "id": "grammar-pattern-22",
           "primary": "～を通じて",
-          "reading": "",
+          "reading": "～をつうじて",
           "meaning": "~을 통해",
           "exampleJa": "この国は一年を通じて暖かいので、雪が降りません。",
           "exampleEn": "",
@@ -35305,7 +37813,7 @@
             },
             {
               "base": "通",
-              "ruby": ""
+              "ruby": "つう"
             },
             {
               "base": "じて",
@@ -35316,7 +37824,7 @@
         {
           "id": "grammar-pattern-23",
           "primary": "～を抜きにして",
-          "reading": "",
+          "reading": "～をぬきにして",
           "meaning": "~을 빼고",
           "exampleJa": "松本さんの努力を抜きにして今回のような成果はありえなかったと思う。",
           "exampleEn": "",
@@ -35335,7 +37843,7 @@
             },
             {
               "base": "抜",
-              "ruby": ""
+              "ruby": "ぬ"
             },
             {
               "base": "きにして",
@@ -35560,7 +38068,7 @@
         {
           "id": "grammar-pattern-33",
           "primary": "～降りそうにない",
-          "reading": "",
+          "reading": "～ふりそうにない",
           "meaning": "~할 것 같지 않다 (비가 내릴 가능성이 낮음)",
           "exampleJa": "雨はまだ降りそうにない。",
           "exampleEn": "",
@@ -35575,7 +38083,7 @@
             },
             {
               "base": "降",
-              "ruby": ""
+              "ruby": "ふ"
             },
             {
               "base": "りそうにない",
@@ -35652,7 +38160,7 @@
         {
           "id": "grammar-pattern-37",
           "primary": "～終わる",
-          "reading": "",
+          "reading": "～おわる",
           "meaning": "~을 끝내다",
           "exampleJa": "昨日借りたDVDは見終わった。",
           "exampleEn": "",
@@ -35667,7 +38175,7 @@
             },
             {
               "base": "終",
-              "ruby": ""
+              "ruby": "お"
             },
             {
               "base": "わる",
@@ -35678,7 +38186,7 @@
         {
           "id": "grammar-pattern-38",
           "primary": "～直す",
-          "reading": "",
+          "reading": "～なおす",
           "meaning": "~을 다시 하다",
           "exampleJa": "レポートのテーマを変えたせいで、最初から書き直した。",
           "exampleEn": "",
@@ -35693,7 +38201,7 @@
             },
             {
               "base": "直",
-              "ruby": ""
+              "ruby": "なお"
             },
             {
               "base": "す",
@@ -35726,7 +38234,7 @@
         {
           "id": "grammar-pattern-40",
           "primary": "～始める",
-          "reading": "",
+          "reading": "～はじめる",
           "meaning": "~하기 시작하다",
           "exampleJa": "先週からピアノを習い始めた。",
           "exampleEn": "",
@@ -35741,7 +38249,7 @@
             },
             {
               "base": "始",
-              "ruby": ""
+              "ruby": "はじ"
             },
             {
               "base": "める",
@@ -35818,7 +38326,7 @@
         {
           "id": "grammar-pattern-44",
           "primary": "～て以来",
-          "reading": "",
+          "reading": "～ていらい",
           "meaning": "(~한) 이래, (~한) 이후",
           "exampleJa": "マラソンを始めて以来、初めて大会に出てみようと思っている。",
           "exampleEn": "",
@@ -35836,12 +38344,8 @@
               "ruby": ""
             },
             {
-              "base": "以",
-              "ruby": ""
-            },
-            {
-              "base": "来",
-              "ruby": ""
+              "base": "以来",
+              "ruby": "いらい"
             }
           ]
         },
@@ -35870,7 +38374,7 @@
         {
           "id": "grammar-pattern-46",
           "primary": "～ている間に",
-          "reading": "",
+          "reading": "～ているあいだに",
           "meaning": "(~하는) 동안에",
           "exampleJa": "友だちを待っている間に、音楽をきいていました。",
           "exampleEn": "",
@@ -35889,7 +38393,7 @@
             },
             {
               "base": "間",
-              "ruby": ""
+              "ruby": "あいだ"
             },
             {
               "base": "に",
@@ -36360,7 +38864,7 @@
         {
           "id": "grammar-pattern-67",
           "primary": "～一方だ",
-          "reading": "",
+          "reading": "～いっぽうだ",
           "meaning": "~(하)기만 하다",
           "exampleJa": "子どもの数は減る一方だ。",
           "exampleEn": "",
@@ -36374,12 +38878,8 @@
               "ruby": ""
             },
             {
-              "base": "一",
-              "ruby": ""
-            },
-            {
-              "base": "方",
-              "ruby": ""
+              "base": "一方",
+              "ruby": "いっぽう"
             },
             {
               "base": "だ",
@@ -36390,7 +38890,7 @@
         {
           "id": "grammar-pattern-68",
           "primary": "～一方で",
-          "reading": "",
+          "reading": "～いっぽうで",
           "meaning": "~(하)는 한편",
           "exampleJa": "最近、自転車が健康にいいと注目される一方で、自転車事故が増えて問題になっている。",
           "exampleEn": "",
@@ -36404,12 +38904,8 @@
               "ruby": ""
             },
             {
-              "base": "一",
-              "ruby": ""
-            },
-            {
-              "base": "方",
-              "ruby": ""
+              "base": "一方",
+              "ruby": "いっぽう"
             },
             {
               "base": "で",
@@ -36706,7 +39202,7 @@
         {
           "id": "grammar-pattern-82",
           "primary": "～ようと思う",
-          "reading": "",
+          "reading": "～ようとおもう",
           "meaning": "~하려고 생각하다",
           "exampleJa": "今月から運動を始めようと思っている。",
           "exampleEn": "",
@@ -36725,7 +39221,7 @@
             },
             {
               "base": "思",
-              "ruby": ""
+              "ruby": "おも"
             },
             {
               "base": "う",
@@ -36868,7 +39364,7 @@
         {
           "id": "grammar-pattern-89",
           "primary": "～ても不思議ではない",
-          "reading": "",
+          "reading": "～てもふしぎではない",
           "meaning": "~해도 이상하지 않다",
           "exampleJa": "いつ倒れても不思議ではないくらい古い家です。",
           "exampleEn": "",
@@ -36886,16 +39382,8 @@
               "ruby": ""
             },
             {
-              "base": "不",
-              "ruby": ""
-            },
-            {
-              "base": "思",
-              "ruby": ""
-            },
-            {
-              "base": "議",
-              "ruby": ""
+              "base": "不思議",
+              "ruby": "ふしぎ"
             },
             {
               "base": "ではない",
@@ -37324,7 +39812,7 @@
         {
           "id": "grammar-pattern-109",
           "primary": "～とは限らない",
-          "reading": "",
+          "reading": "～とはかぎらない",
           "meaning": "~라고 할 수는 없다",
           "exampleJa": "必ずしも勝つとは限りません。",
           "exampleEn": "",
@@ -37343,7 +39831,7 @@
             },
             {
               "base": "限",
-              "ruby": ""
+              "ruby": "かぎ"
             },
             {
               "base": "らない",
@@ -37464,7 +39952,7 @@
         {
           "id": "grammar-pattern-115",
           "primary": "～最中に",
-          "reading": "",
+          "reading": "～さいちゅうに",
           "meaning": "~한창 ~하는 중에",
           "exampleJa": "勉強をしている最中に停電した。",
           "exampleEn": "",
@@ -37478,12 +39966,8 @@
               "ruby": ""
             },
             {
-              "base": "最",
-              "ruby": ""
-            },
-            {
-              "base": "中",
-              "ruby": ""
+              "base": "最中",
+              "ruby": "さいちゅう"
             },
             {
               "base": "に",
@@ -37692,7 +40176,7 @@
         {
           "id": "grammar-pattern-125",
           "primary": "～場合",
-          "reading": "",
+          "reading": "～ばあい",
           "meaning": "~인 경우",
           "exampleJa": "電話番号が変わった場合は新しい番号を教えてくださいね。",
           "exampleEn": "",
@@ -37706,12 +40190,8 @@
               "ruby": ""
             },
             {
-              "base": "場",
-              "ruby": ""
-            },
-            {
-              "base": "合",
-              "ruby": ""
+              "base": "場合",
+              "ruby": "ばあい"
             }
           ]
         },
@@ -37740,7 +40220,7 @@
         {
           "id": "grammar-pattern-127",
           "primary": "～前に",
-          "reading": "",
+          "reading": "～まえに",
           "meaning": "~전에",
           "exampleJa": "食事をする前に手を洗いましょう。",
           "exampleEn": "",
@@ -37755,7 +40235,7 @@
             },
             {
               "base": "前",
-              "ruby": ""
+              "ruby": "まえ"
             },
             {
               "base": "に",
@@ -37942,7 +40422,7 @@
         {
           "id": "grammar-pattern-136",
           "primary": "～に決まっている",
-          "reading": "",
+          "reading": "～にきまっている",
           "meaning": "당연히 ~이다, ~으로 정해져 있다",
           "exampleJa": "遅刻したら、先生は怒るに決まっている。",
           "exampleEn": "",
@@ -37961,7 +40441,7 @@
             },
             {
               "base": "決",
-              "ruby": ""
+              "ruby": "き"
             },
             {
               "base": "まっている",
@@ -37972,7 +40452,7 @@
         {
           "id": "grammar-pattern-137",
           "primary": "～に違いない",
-          "reading": "",
+          "reading": "～にちがいない",
           "meaning": "~임에 틀림없다",
           "exampleJa": "あの俳優は今年きっと売れるに違いない。",
           "exampleEn": "",
@@ -37991,7 +40471,7 @@
             },
             {
               "base": "違",
-              "ruby": ""
+              "ruby": "ちが"
             },
             {
               "base": "いない",
@@ -38002,7 +40482,7 @@
         {
           "id": "grammar-pattern-138",
           "primary": "～に行く",
-          "reading": "",
+          "reading": "～にいく",
           "meaning": "~하러 가다",
           "exampleJa": "コンビニにパンを買いに行った。",
           "exampleEn": "",
@@ -38021,7 +40501,7 @@
             },
             {
               "base": "行",
-              "ruby": ""
+              "ruby": "い"
             },
             {
               "base": "く",
@@ -38463,7 +40943,7 @@
           "rubyParts": [
             {
               "base": "祝",
-              "ruby": ""
+              "ruby": "いわ"
             },
             {
               "base": "い",
@@ -46267,7 +48747,7 @@
           "rubyParts": [
             {
               "base": "歌",
-              "ruby": ""
+              "ruby": "うた"
             },
             {
               "base": "う",
@@ -46823,15 +49303,11 @@
           "rubyParts": [
             {
               "base": "大",
-              "ruby": ""
+              "ruby": "だい"
             },
             {
-              "base": "丈",
-              "ruby": ""
-            },
-            {
-              "base": "夫",
-              "ruby": ""
+              "base": "丈夫",
+              "ruby": "じょうぶ"
             },
             {
               "base": "だ",
