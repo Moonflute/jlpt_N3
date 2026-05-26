@@ -60,7 +60,7 @@ npm run build:data
 1. GitHub에 새 저장소를 만든다.
 2. 이 폴더를 그 저장소에 push 한다.
 3. GitHub 저장소의 `Settings > Pages`에서 `Build and deployment`가 `GitHub Actions`인지 확인한다.
-4. `main` 브랜치에 push 하면 자동 배포된다.
+4. `main` 브랜치에 push 하면 자동 배포된다..
 
 ## 체크
 
