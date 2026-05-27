@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "0.1.4";
+const APP_VERSION = "0.1.5";
 
 const GROUPS = [
   { id: "언지", title: "언지" },

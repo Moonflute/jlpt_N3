@@ -6,6 +6,7 @@ const sourcePath = path.join(rootDir, "_N3", "1 일본어___해커스 N3.txt");
 const outputDir = path.join(rootDir, "data");
 const outputPath = path.join(outputDir, "n3.json");
 const overridePath = path.join(rootDir, "data", "furigana-overrides.json");
+const extraOverridePath = path.join(rootDir, "data", "furigana-overrides-extra.json");
 const READING_OVERRIDES = {
   "～に比べて": "～にくらべて",
   "～に加えて": "～にくわえて",
@@ -144,12 +145,19 @@ function parseTsv(text) {
   return rows;
 }
 
-function loadOverrides() {
-  if (!fs.existsSync(overridePath)) {
-    return {};
-  }
+function isPlaceholderValue(text) {
+  return /[?？]{2,}/.test(String(text || "").trim());
+}
 
-  return JSON.parse(fs.readFileSync(overridePath, "utf8"));
+function loadOverrides() {
+  const base = fs.existsSync(overridePath)
+    ? JSON.parse(fs.readFileSync(overridePath, "utf8"))
+    : {};
+  const extra = fs.existsSync(extraOverridePath)
+    ? JSON.parse(fs.readFileSync(extraOverridePath, "utf8"))
+    : {};
+
+  return { ...base, ...extra };
 }
 
 function toHiragana(text) {
@@ -247,7 +255,118 @@ function collectSingleKanjiReadings(primary, reading, candidateMap) {
   }
 }
 
-function segmentReadingByKanji(primary, reading, candidateMap) {
+function addCandidateReading(candidateMap, char, ruby, weight = 1) {
+  if (!char || !ruby) {
+    return;
+  }
+
+  if (!candidateMap.has(char)) {
+    candidateMap.set(char, new Map());
+  }
+
+  const readings = candidateMap.get(char);
+  readings.set(ruby, (readings.get(ruby) ?? 0) + weight);
+}
+
+function collectOverrideReadings(overrides, candidateMap) {
+  for (const parts of Object.values(overrides || {})) {
+    for (const part of parts || []) {
+      if (Array.from(part.base || "").length === 1 && isKanji(part.base) && part.ruby) {
+        addCandidateReading(candidateMap, part.base, part.ruby, 4);
+      }
+    }
+  }
+}
+
+function countSupportedParts(parts, candidateMap) {
+  return parts.filter((part) => {
+    if (Array.from(part.base || "").length !== 1 || !isKanji(part.base) || !part.ruby) {
+      return false;
+    }
+
+    const readings = candidateMap.get(part.base);
+    return readings?.has(part.ruby);
+  }).length;
+}
+
+function isReliableTrainingSegmentation(parts, candidateMap) {
+  const kanjiParts = parts.filter((part) => Array.from(part.base || "").length === 1 && isKanji(part.base));
+  if (!kanjiParts.length) {
+    return false;
+  }
+
+  if (kanjiParts.some((part) => {
+    const len = Array.from(part.ruby || "").length;
+    return len < 1 || len > 4;
+  })) {
+    return false;
+  }
+
+  const supported = countSupportedParts(parts, candidateMap);
+  if (kanjiParts.length === 1) {
+    return supported === 1;
+  }
+
+  return supported >= Math.max(1, Math.floor(kanjiParts.length / 2));
+}
+
+function collectSegmentedReadings(parts, candidateMap, weight = 1) {
+  for (const part of parts) {
+    if (Array.from(part.base || "").length === 1 && isKanji(part.base) && part.ruby) {
+      addCandidateReading(candidateMap, part.base, part.ruby, weight);
+    }
+  }
+}
+
+function buildExpandedCandidateMap(rows, overrides) {
+  const candidateMap = new Map();
+
+  for (const row of rows) {
+    collectSingleKanjiReadings(row.c2, resolveReading(row), candidateMap);
+  }
+
+  collectOverrideReadings(overrides, candidateMap);
+
+  for (let iteration = 0; iteration < 5; iteration += 1) {
+    let learned = 0;
+
+    for (const row of rows) {
+      const reading = resolveReading(row);
+      if (row.c2 && reading) {
+        const parts = segmentReadingByKanji(row.c2, reading, candidateMap, {
+          minSupportRatio: 0,
+          fallbackWhole: false,
+        });
+
+        if (isReliableTrainingSegmentation(parts, candidateMap)) {
+          collectSegmentedReadings(parts, candidateMap, 1);
+          learned += 1;
+        }
+      }
+
+      const pair = parseSynonymPair(row.c12);
+      if (pair?.text && pair.reading) {
+        const parts = segmentReadingByKanji(pair.text, pair.reading, candidateMap, {
+          minSupportRatio: 0,
+          fallbackWhole: false,
+        });
+
+        if (isReliableTrainingSegmentation(parts, candidateMap)) {
+          collectSegmentedReadings(parts, candidateMap, 1);
+          learned += 1;
+        }
+      }
+    }
+
+    if (!learned) {
+      break;
+    }
+  }
+
+  return candidateMap;
+}
+
+function segmentReadingByKanji(primary, reading, candidateMap, options = {}) {
   if (!primary) {
     return [];
   }
@@ -278,7 +397,7 @@ function segmentReadingByKanji(primary, reading, candidateMap) {
     const originalSlice = originalChars
       .slice(cursor, limit === -1 ? originalChars.length : limit)
       .join("");
-    const segmented = segmentKanjiRun(run.text, readingSlice, originalSlice, candidateMap);
+    const segmented = segmentKanjiRun(run.text, readingSlice, originalSlice, candidateMap, options);
     parts.push(...segmented);
     cursor = limit === -1 ? readingNorm.length : limit;
   }
@@ -286,7 +405,7 @@ function segmentReadingByKanji(primary, reading, candidateMap) {
   return parts.filter((part) => part.base);
 }
 
-function segmentKanjiRun(baseText, readingNorm, originalReading, candidateMap) {
+function segmentKanjiRun(baseText, readingNorm, originalReading, candidateMap, options = {}) {
   if (!baseText) {
     return [];
   }
@@ -365,12 +484,12 @@ function segmentKanjiRun(baseText, readingNorm, originalReading, candidateMap) {
     return { base: char, ruby };
   });
 
-  const supportedCount = parts.filter((part) => {
-    const readings = candidateMap.get(part.base);
-    return readings?.has(part.ruby);
-  }).length;
+  const supportedCount = countSupportedParts(parts, candidateMap);
+  const minSupportRatio = options.minSupportRatio ?? 0.5;
+  const supportedRatio = chars.length ? supportedCount / chars.length : 0;
+  const fallbackWhole = options.fallbackWhole ?? true;
 
-  if (supportedCount < Math.ceil(chars.length / 2)) {
+  if (fallbackWhole && supportedRatio < minSupportRatio) {
     return [{ base: baseText, ruby: originalReading }];
   }
 
@@ -393,13 +512,39 @@ function parseSynonymPair(raw) {
   };
 }
 
+function extractBracketReading(raw) {
+  if (!raw) {
+    return "";
+  }
+
+  const matches = [...raw.matchAll(/\[([^\]]+)\]/g)].map((match) => match[1]).filter(Boolean);
+  return matches.join("");
+}
+
+function resolveReading(row) {
+  const bracketReading = extractBracketReading(row.c4);
+  if (bracketReading) {
+    return bracketReading;
+  }
+
+  if (row.c3 && !/[一-龯々ヶ]/.test(row.c3)) {
+    return row.c3;
+  }
+
+  return READING_OVERRIDES[row.c2] || row.c3 || "";
+}
+
 function buildItem(track, row, index, candidateMap, overrides) {
-  const effectiveReading = row.c3 || READING_OVERRIDES[row.c2] || "";
+  const effectiveReading = resolveReading(row);
   const override = overrides[row.c2];
+  const rubyParts = override || segmentReadingByKanji(row.c2, effectiveReading, candidateMap);
+  const normalizedReading = effectiveReading && !/[一-龯々ヶ]/.test(effectiveReading)
+    ? effectiveReading
+    : rubyParts.map((part) => part.ruby || "").join("");
   const item = {
     id: `${track.id}-${index + 1}`,
     primary: row.c2,
-    reading: effectiveReading,
+    reading: normalizedReading,
     meaning: row.c5,
     exampleJa: row.c6,
     exampleEn: row.c7,
@@ -407,7 +552,7 @@ function buildItem(track, row, index, candidateMap, overrides) {
     note: row.c11,
     hint: row.c12,
     sourceTag: row.c14,
-    rubyParts: override || segmentReadingByKanji(row.c2, effectiveReading, candidateMap),
+    rubyParts,
   };
 
   if (track.mode === "kana_to_kanji") {
@@ -431,15 +576,11 @@ function main() {
   const text = fs.readFileSync(sourcePath, "utf8");
   const rows = parseTsv(text);
   const tracks = [];
-  const candidateMap = new Map();
   const overrides = loadOverrides();
-
-  for (const row of rows) {
-    collectSingleKanjiReadings(row.c2, row.c3 || READING_OVERRIDES[row.c2] || "", candidateMap);
-  }
+  const candidateMap = buildExpandedCandidateMap(rows, overrides);
 
   for (const [deck, def] of Object.entries(TRACK_DEFS)) {
-    const trackRows = rows.filter((row) => row.deck === deck);
+    const trackRows = rows.filter((row) => row.deck === deck && !isPlaceholderValue(row.c2));
     const items = trackRows.map((row, index) => buildItem(def, row, index, candidateMap, overrides));
 
     if (def.mode === "kana_to_kanji") {
