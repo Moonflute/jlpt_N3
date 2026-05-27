@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "0.1.3";
+const APP_VERSION = "0.1.4";
 
 const GROUPS = [
   { id: "언지", title: "언지" },
@@ -498,10 +498,9 @@ function renderStagePreviewTarget(track, item) {
 
 function renderStagePreviewRows(track, items) {
   return items
-    .map((item, index) => {
+    .map((item) => {
       return `
         <tr>
-          <td>${index + 1}</td>
           <td class="stage-preview-table__word">${renderStagePreviewWord(track, item)}</td>
           <td>${escapeHtml(item.meaning || "")}</td>
           <td>${renderStagePreviewTarget(track, item)}</td>
@@ -764,7 +763,6 @@ function renderStage() {
             <table class="stage-preview-table">
               <thead>
                 <tr>
-                  <th>No.</th>
                   <th>${escapeHtml(previewTitle)}</th>
                   <th>뜻</th>
                   <th>메모 / 대상</th>
