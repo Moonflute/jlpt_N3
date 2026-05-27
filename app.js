@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "0.1.2";
+const APP_VERSION = "0.1.3";
 
 const GROUPS = [
   { id: "언지", title: "언지" },
@@ -14,6 +14,7 @@ const state = {
   trackId: null,
   reveal: {},
   stagePrompt: null,
+  stagePreview: null,
   voicesLoaded: false,
   progress: loadProgress(),
   dataset: null,
@@ -109,6 +110,7 @@ function applyRouteState(routeState) {
   state.trackId = routeState.trackId ?? null;
   state.reveal = {};
   state.stagePrompt = null;
+  state.stagePreview = null;
 }
 
 function setRoute(route, payload = {}, options = {}) {
@@ -117,6 +119,7 @@ function setRoute(route, payload = {}, options = {}) {
   state.trackId = payload.trackId ?? state.trackId;
   state.reveal = {};
   state.stagePrompt = null;
+  state.stagePreview = null;
 
   if (!options.skipHistory && !state.isPoppingState) {
     window.history.pushState(currentRouteState(), "");
@@ -187,6 +190,10 @@ function getVisibleItems(track) {
   const stages = getStages(track.total);
   const stage = stages[Math.min(progress.stageIndex, stages.length - 1)];
   return track.items.slice(0, stage.end);
+}
+
+function getItemsForStage(track, stageEnd) {
+  return track.items.slice(0, stageEnd);
 }
 
 function getStageKey(track) {
@@ -322,26 +329,111 @@ function getSpeechText(item, track) {
   return item.reading || item.primary || "";
 }
 
-function pickJapaneseVoice() {
+function getSpeechSynth() {
   if (!("speechSynthesis" in window)) {
     return null;
   }
 
-  const voices = window.speechSynthesis.getVoices();
-  if (!voices.length) {
+  return window.speechSynthesis;
+}
+
+function scoreJapaneseVoice(voice) {
+  const lang = voice.lang?.toLowerCase() ?? "";
+  const name = voice.name?.toLowerCase() ?? "";
+  let score = 0;
+
+  if (lang === "ja-jp") {
+    score += 60;
+  } else if (lang.startsWith("ja")) {
+    score += 40;
+  }
+
+  if (voice.localService) {
+    score += 12;
+  }
+
+  if (/google|microsoft|kyoko|otoya|sayaka|nanami|keita|haruka|ayumi|japanese/.test(name)) {
+    score += 24;
+  }
+
+  if (/eloquence|english|korean|corean/.test(name)) {
+    score -= 80;
+  }
+
+  return score;
+}
+
+function pickJapaneseVoice(voices = null) {
+  const synth = getSpeechSynth();
+  if (!synth) {
     return null;
   }
 
-  return (
-    voices.find((voice) => voice.lang?.toLowerCase() === "ja-jp") ||
-    voices.find((voice) => voice.lang?.toLowerCase().startsWith("ja")) ||
-    null
-  );
+  const pool = voices ?? synth.getVoices();
+  const japaneseVoices = pool.filter((voice) => voice.lang?.toLowerCase().startsWith("ja"));
+  if (!japaneseVoices.length) {
+    return null;
+  }
+
+  return [...japaneseVoices].sort((left, right) => scoreJapaneseVoice(right) - scoreJapaneseVoice(left))[0] ?? null;
 }
 
-function speakCurrentItem() {
+function primeSpeechVoices() {
+  const synth = getSpeechSynth();
+  if (!synth || state.voicesLoaded) {
+    return;
+  }
+
+  const refresh = () => {
+    const voices = synth.getVoices();
+    if (voices.length) {
+      state.voicesLoaded = true;
+    }
+  };
+
+  refresh();
+  synth.addEventListener?.("voiceschanged", refresh);
+}
+
+function waitForSpeechVoices(timeout = 800) {
+  const synth = getSpeechSynth();
+  if (!synth) {
+    return Promise.resolve([]);
+  }
+
+  const existing = synth.getVoices();
+  if (existing.length) {
+    state.voicesLoaded = true;
+    return Promise.resolve(existing);
+  }
+
+  return new Promise((resolve) => {
+    let settled = false;
+    const finish = () => {
+      if (settled) {
+        return;
+      }
+
+      settled = true;
+      clearTimeout(timer);
+      synth.removeEventListener?.("voiceschanged", finish);
+      const voices = synth.getVoices();
+      if (voices.length) {
+        state.voicesLoaded = true;
+      }
+      resolve(voices);
+    };
+
+    const timer = window.setTimeout(finish, timeout);
+    synth.addEventListener?.("voiceschanged", finish);
+    synth.getVoices();
+  });
+}
+
+async function speakCurrentItem() {
   const track = getTrack(state.trackId);
-  if (!track || !("speechSynthesis" in window)) {
+  const synth = getSpeechSynth();
+  if (!track || !synth) {
     return;
   }
 
@@ -351,18 +443,20 @@ function speakCurrentItem() {
     return;
   }
 
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = "ja-JP";
-  utterance.rate = 0.96;
-  utterance.pitch = 1;
-
-  const voice = pickJapaneseVoice();
-  if (voice) {
-    utterance.voice = voice;
+  const voices = await waitForSpeechVoices();
+  const voice = pickJapaneseVoice(voices);
+  if (!voice) {
+    return;
   }
 
-  window.speechSynthesis.cancel();
-  window.speechSynthesis.speak(utterance);
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = "ja-JP";
+  utterance.rate = 0.92;
+  utterance.pitch = 1;
+  utterance.voice = voice;
+
+  synth.cancel();
+  synth.speak(utterance);
 }
 
 function getCurrentItem(track) {
@@ -372,6 +466,49 @@ function getCurrentItem(track) {
   }
 
   return getItemById(track, session.queueIds[session.pointer]);
+}
+
+function renderStagePreviewWord(track, item) {
+  if (track.mode === "kana_to_kanji") {
+    return escapeHtml(item.primary || "");
+  }
+
+  if (track.mode === "synonym_pair") {
+    return renderRubyParts(item.rubyParts, true, { padBlankRuby: true });
+  }
+
+  return renderRubyParts(item.rubyParts, true, { padBlankRuby: true });
+}
+
+function renderStagePreviewTarget(track, item) {
+  if (track.mode === "kana_to_kanji") {
+    return renderRubyParts(item.rubyParts, true, { padBlankRuby: true });
+  }
+
+  if (track.mode === "synonym_pair") {
+    return renderRubyParts(
+      item.pairRubyParts || [{ base: item.pairText || "", ruby: item.pairReading || "" }],
+      true,
+      { padBlankRuby: true },
+    );
+  }
+
+  return escapeHtml(item.note || item.hint || item.reading || "");
+}
+
+function renderStagePreviewRows(track, items) {
+  return items
+    .map((item, index) => {
+      return `
+        <tr>
+          <td>${index + 1}</td>
+          <td class="stage-preview-table__word">${renderStagePreviewWord(track, item)}</td>
+          <td>${escapeHtml(item.meaning || "")}</td>
+          <td>${renderStagePreviewTarget(track, item)}</td>
+        </tr>
+      `;
+    })
+    .join("");
 }
 
 function escapeHtml(value) {
@@ -562,22 +699,33 @@ function renderStage() {
   const buttons = stages
     .map((stage, index) => {
       const completed = isStageCompleted(track, stage);
-      return `
-        <button class="stage-button${index === progress.stageIndex ? " is-active" : ""}${completed ? " is-complete" : ""}" data-stage="${index}">
-          <div class="stage-button__title">${escapeHtml(stage.label)} ${escapeHtml(stage.range)}</div>
-          <div class="stage-button__meta">
-            <span>누적 범위 ${escapeHtml(stage.range)}</span>
-            ${completed ? '<span class="stage-badge">완료</span>' : ""}
+        return `
+          <div class="stage-row">
+            <button class="stage-button${index === progress.stageIndex ? " is-active" : ""}${completed ? " is-complete" : ""}" data-stage="${index}">
+              <div class="stage-button__title">${escapeHtml(stage.label)} ${escapeHtml(stage.range)}</div>
+              <div class="stage-button__meta">
+                <span>누적 범위 ${escapeHtml(stage.range)}</span>
+                ${completed ? '<span class="stage-badge">완료</span>' : ""}
+              </div>
+            </button>
+            <button class="stage-preview-button" type="button" data-stage-preview="${index}" aria-label="회독 목록 보기">&#9776;</button>
           </div>
-        </button>
-      `;
-    })
-    .join("");
+        `;
+      })
+      .join("");
+
+  const previewStage = state.stagePreview ? stages[state.stagePreview.index] : null;
+  const previewItems = previewStage ? getItemsForStage(track, previewStage.end) : [];
+  const previewTitle = track.mode === "kana_to_kanji"
+    ? "히라가나 / 정답 표기"
+    : track.mode === "synonym_pair"
+      ? "단어 / 유의 표현"
+      : "단어 / 읽기";
 
   return appShell(`
-    <div class="topbar">
-      <button class="back-button" data-route="home">홈</button>
-    </div>
+      <div class="topbar">
+        <button class="back-button" data-route="home">홈</button>
+      </div>
     <div class="section-card">
       <h1 class="page-title">${escapeHtml(track.title)}</h1>
       <p class="page-subtitle">${escapeHtml(track.description)}</p>
@@ -586,21 +734,50 @@ function renderStage() {
       <div class="stage-list">${buttons}</div>
     </div>
 
-    ${
-      state.stagePrompt
-        ? `<div class="modal-backdrop">
-      <div class="modal-panel session-prompt stage-prompt">
-        <div class="session-prompt__text">\uD559\uC2B5\uD55C \uD68C\uCC28\uC785\uB2C8\uB2E4. \uCD08\uAE30\uD654\uD558\uACE0 \uB2E4\uC2DC \uD559\uC2B5\uD558\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?</div>
-        <div class="stage-prompt__meta">${escapeHtml(state.stagePrompt.label)} ${escapeHtml(state.stagePrompt.range)}</div>
-        <div class="session-prompt__actions">
-          <button class="prompt-button" data-stage-reset="yes">\uC608</button>
-          <button class="prompt-button prompt-button--ghost" data-stage-reset="no">\uC544\uB2C8\uC624</button>
+      ${
+        state.stagePrompt
+          ? `<div class="modal-backdrop">
+        <div class="modal-panel session-prompt stage-prompt">
+          <div class="session-prompt__text">\uD559\uC2B5\uD55C \uD68C\uCC28\uC785\uB2C8\uB2E4. \uCD08\uAE30\uD654\uD558\uACE0 \uB2E4\uC2DC \uD559\uC2B5\uD558\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?</div>
+          <div class="stage-prompt__meta">${escapeHtml(state.stagePrompt.label)} ${escapeHtml(state.stagePrompt.range)}</div>
+          <div class="session-prompt__actions">
+            <button class="prompt-button" data-stage-reset="yes">\uC608</button>
+            <button class="prompt-button prompt-button--ghost" data-stage-reset="no">\uC544\uB2C8\uC624</button>
+          </div>
         </div>
-      </div>
-    </div>`
-        : ""
-    }
-  `);
+      </div>`
+          : ""
+      }
+
+      ${
+        state.stagePreview && previewStage
+          ? `<div class="modal-backdrop">
+        <div class="modal-panel section-card stage-preview-modal">
+          <div class="stage-preview-head">
+            <div>
+              <div class="stage-preview-title">${escapeHtml(track.title)} · ${escapeHtml(previewStage.label)} ${escapeHtml(previewStage.range)}</div>
+              <div class="stage-preview-subtitle">이 회독 범위에서 확인할 항목 목록</div>
+            </div>
+            <button class="stage-preview-close" type="button" data-stage-preview-close aria-label="목록 닫기">\u2715</button>
+          </div>
+          <div class="stage-preview-table-wrap">
+            <table class="stage-preview-table">
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>${escapeHtml(previewTitle)}</th>
+                  <th>뜻</th>
+                  <th>메모 / 대상</th>
+                </tr>
+              </thead>
+              <tbody>${renderStagePreviewRows(track, previewItems)}</tbody>
+            </table>
+          </div>
+        </div>
+      </div>`
+          : ""
+      }
+    `);
 }
 
 function renderStudy() {
@@ -891,6 +1068,20 @@ function bindEvents() {
     button.addEventListener("click", () => onSelectStage(Number(button.dataset.stage)));
   });
 
+  document.querySelectorAll("[data-stage-preview]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.stagePreview = { index: Number(button.dataset.stagePreview) };
+      render();
+    });
+  });
+
+  document.querySelectorAll("[data-stage-preview-close]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.stagePreview = null;
+      render();
+    });
+  });
+
   document.querySelectorAll("[data-route]").forEach((button) => {
     button.addEventListener("click", () => {
       if (button.dataset.route === "home") {
@@ -940,6 +1131,7 @@ function bindEvents() {
 
 async function init() {
   window.history.replaceState(currentRouteState(), "");
+  primeSpeechVoices();
 
   window.addEventListener("popstate", (event) => {
     const routeState = event.state;
@@ -953,6 +1145,7 @@ async function init() {
 
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
+      primeSpeechVoices();
       navigator.serviceWorker.register("./sw.js").then((registration) => {
         if (registration.waiting) {
           registration.waiting.postMessage({ type: "SKIP_WAITING" });
@@ -981,6 +1174,7 @@ async function init() {
     }
 
     state.dataset = await response.json();
+    primeSpeechVoices();
     render();
   } catch (error) {
     state.error = `데이터 로드 실패: ${error instanceof Error ? error.message : "알 수 없는 오류"}`;
