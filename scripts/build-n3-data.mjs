@@ -201,6 +201,85 @@ function splitIntoRuns(text) {
   return runs;
 }
 
+function partsToReading(parts) {
+  return (parts || [])
+    .map((part) => {
+      if (part.ruby) {
+        return part.ruby;
+      }
+
+      return isKana(part.base) ? part.base : "";
+    })
+    .join("");
+}
+
+function parseAnnotatedRuby(raw) {
+  if (!raw || !raw.includes("[") || !raw.includes("]")) {
+    return null;
+  }
+
+  const bracketCount = [...raw.matchAll(/\[([^\]]+)\]/g)].length;
+  if (bracketCount <= 1) {
+    return null;
+  }
+
+  const parts = [];
+  let buffer = "";
+  let index = 0;
+
+  function flushPlain(text) {
+    if (!text || !text.trim()) {
+      return;
+    }
+
+    for (const run of splitIntoRuns(text)) {
+      parts.push({ base: run.text, ruby: "" });
+    }
+  }
+
+  while (index < raw.length) {
+    const char = raw[index];
+
+    if (char === "[") {
+      const closeIndex = raw.indexOf("]", index + 1);
+      if (closeIndex === -1) {
+        buffer += raw.slice(index);
+        break;
+      }
+
+      const ruby = raw.slice(index + 1, closeIndex);
+      const runs = splitIntoRuns(buffer);
+      let targetIndex = -1;
+
+      for (let runIndex = runs.length - 1; runIndex >= 0; runIndex -= 1) {
+        if (runs[runIndex].type === "kanji") {
+          targetIndex = runIndex;
+          break;
+        }
+      }
+
+      if (targetIndex === -1) {
+        flushPlain(buffer);
+      } else {
+        flushPlain(runs.slice(0, targetIndex).map((run) => run.text).join(""));
+        parts.push({ base: runs[targetIndex].text, ruby });
+        flushPlain(runs.slice(targetIndex + 1).map((run) => run.text).join(""));
+      }
+
+      buffer = "";
+      index = closeIndex + 1;
+      continue;
+    }
+
+    buffer += char;
+    index += 1;
+  }
+
+  flushPlain(buffer);
+
+  return parts.length ? parts : null;
+}
+
 function collectSingleKanjiReadings(primary, reading, candidateMap) {
   const runs = splitIntoRuns(primary);
   const readingNorm = toHiragana(reading);
@@ -537,10 +616,11 @@ function resolveReading(row) {
 function buildItem(track, row, index, candidateMap, overrides) {
   const effectiveReading = resolveReading(row);
   const override = overrides[row.c2];
-  const rubyParts = override || segmentReadingByKanji(row.c2, effectiveReading, candidateMap);
+  const annotatedRubyParts = parseAnnotatedRuby(row.c4);
+  const rubyParts = override || annotatedRubyParts || segmentReadingByKanji(row.c2, effectiveReading, candidateMap);
   const normalizedReading = effectiveReading && !/[一-龯々ヶ]/.test(effectiveReading)
     ? effectiveReading
-    : rubyParts.map((part) => part.ruby || "").join("");
+    : partsToReading(rubyParts);
   const item = {
     id: `${track.id}-${index + 1}`,
     primary: row.c2,
@@ -564,8 +644,9 @@ function buildItem(track, row, index, candidateMap, overrides) {
     const pair = parseSynonymPair(row.c12);
     item.pairText = pair?.text || "";
     item.pairReading = pair?.reading || "";
+    const annotatedPairRubyParts = parseAnnotatedRuby(row.c12);
     item.pairRubyParts = item.pairText
-      ? (overrides[item.pairText] || segmentReadingByKanji(item.pairText, item.pairReading, candidateMap))
+      ? (overrides[item.pairText] || annotatedPairRubyParts || segmentReadingByKanji(item.pairText, item.pairReading, candidateMap))
       : [];
   }
 

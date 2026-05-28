@@ -1,6 +1,6 @@
 {
   "level": "N3",
-  "generatedAt": "2026-05-27T15:20:48.165Z",
+  "generatedAt": "2026-05-28T16:25:30.862Z",
   "stageSize": 25,
   "tracks": [
     {
@@ -953,11 +953,11 @@
           "rubyParts": [
             {
               "base": "合",
-              "ruby": "あ"
+              "ruby": "あい"
             },
             {
               "base": "図",
-              "ruby": "いず"
+              "ruby": "ず"
             }
           ]
         },
@@ -4005,11 +4005,11 @@
           "rubyParts": [
             {
               "base": "呼",
-              "ruby": "こき"
+              "ruby": "こ"
             },
             {
               "base": "吸",
-              "ruby": "ゅう"
+              "ruby": "きゅう"
             }
           ]
         },
@@ -9176,7 +9176,7 @@
         {
           "id": "gengo-q1-414",
           "primary": "一般的だ",
-          "reading": "いっぱん的",
+          "reading": "いっぱん的だ",
           "meaning": "일반적이다",
           "exampleJa": "",
           "exampleEn": "",
@@ -13842,7 +13842,7 @@
           "rubyParts": [
             {
               "base": "痛",
-              "ruby": ""
+              "ruby": "いた"
             },
             {
               "base": "い",
@@ -21443,7 +21443,7 @@
           "rubyParts": [
             {
               "base": "言",
-              "ruby": ""
+              "ruby": "い"
             },
             {
               "base": "い",
@@ -21451,7 +21451,7 @@
             },
             {
               "base": "直",
-              "ruby": "いなお"
+              "ruby": "なお"
             },
             {
               "base": "す",
@@ -36916,7 +36916,7 @@
         {
           "id": "grammar-pos-33",
           "primary": "少し",
-          "reading": "少",
+          "reading": "少し",
           "meaning": "조금",
           "exampleJa": "少し待って。",
           "exampleEn": "",
@@ -36938,7 +36938,7 @@
         {
           "id": "grammar-pos-34",
           "primary": "少しも〜ない",
-          "reading": "少",
+          "reading": "少しもない",
           "meaning": "조금도~않는다",
           "exampleJa": "少しも知らない。",
           "exampleEn": "",
@@ -36968,7 +36968,7 @@
         {
           "id": "grammar-pos-35",
           "primary": "絶対に",
-          "reading": "絶対",
+          "reading": "絶対に",
           "meaning": "절대로",
           "exampleJa": "絶対に負けない。",
           "exampleEn": "",
@@ -37186,7 +37186,7 @@
         {
           "id": "grammar-pos-46",
           "primary": "先に",
-          "reading": "先",
+          "reading": "先に",
           "meaning": "먼저",
           "exampleJa": "先に帰るね。",
           "exampleEn": "",
@@ -37226,7 +37226,7 @@
         {
           "id": "grammar-pos-48",
           "primary": "次第に",
-          "reading": "次第",
+          "reading": "次第に",
           "meaning": "점점",
           "exampleJa": "次第に寒くなった。",
           "exampleEn": "",
@@ -37486,7 +37486,7 @@
         {
           "id": "grammar-pos-62",
           "primary": "必ずしも〜ない",
-          "reading": "必",
+          "reading": "必ずしもない",
           "meaning": "반드시~인 것은 아니다",
           "exampleJa": "必ずしも正しくない。",
           "exampleEn": "",
@@ -37750,7 +37750,7 @@
         {
           "id": "grammar-pos-76",
           "primary": "確かに",
-          "reading": "確",
+          "reading": "確かに",
           "meaning": "확실히",
           "exampleJa": "確かにそうだ。",
           "exampleEn": "",
@@ -38810,7 +38810,7 @@
         {
           "id": "grammar-expression-16",
           "primary": "書かれる (1그룹)",
-          "reading": "書",
+          "reading": "書かれる",
           "meaning": "쓰이다 (수동) / [u단 → a단 + れる] / 書く → 書かれる",
           "exampleJa": "この本は英語で書かれている。",
           "exampleEn": "",
@@ -38836,7 +38836,7 @@
         {
           "id": "grammar-expression-17",
           "primary": "食べられる (2그룹)",
-          "reading": "食",
+          "reading": "食べられる",
           "meaning": "먹히다 (수동) / [る 탈락 + られる] / 食べる → 食べられる",
           "exampleJa": "弟にケーキを食べられた。",
           "exampleEn": "",
@@ -38862,7 +38862,7 @@
         {
           "id": "grammar-expression-18",
           "primary": "注意される (3그룹)",
-          "reading": "注意",
+          "reading": "注意される",
           "meaning": "주의받다, 혼나다 (수동) / [する → される] / 注意する → 注意される",
           "exampleJa": "先生に注意された。",
           "exampleEn": "",
@@ -38888,7 +38888,7 @@
         {
           "id": "grammar-expression-19",
           "primary": "待たせる (1그룹)",
-          "reading": "待",
+          "reading": "待たせる",
           "meaning": "기다리게 하다 (사역) / [u단 → a단 + せる] / 待つ → 待たせる",
           "exampleJa": "友達を1時間も待たせた。",
           "exampleEn": "",
@@ -38914,7 +38914,7 @@
         {
           "id": "grammar-expression-20",
           "primary": "食べさせる (2그룹)",
-          "reading": "食",
+          "reading": "食べさせる",
           "meaning": "먹게 하다 (사역) / [る 탈락 + させる] / 食べる → 食べさせる",
           "exampleJa": "子供に野菜を食べさせる。",
           "exampleEn": "",
@@ -38940,7 +38940,7 @@
         {
           "id": "grammar-expression-21",
           "primary": "勉強させる (3그룹)",
-          "reading": "勉強",
+          "reading": "勉強させる",
           "meaning": "공부시키다 (사역) / [する → させる] / 勉強する → 勉強させる",
           "exampleJa": "親は子供に勉強させる。",
           "exampleEn": "",
@@ -38966,7 +38966,7 @@
         {
           "id": "grammar-expression-22",
           "primary": "飲まされる (1그룹)",
-          "reading": "飲",
+          "reading": "飲まされる",
           "meaning": "억지로 마시다 (사역수동) / [u단 → a단 + される] / 飲む → 飲まされる",
           "exampleJa": "先輩に酒を飲まされた。",
           "exampleEn": "",
@@ -38992,7 +38992,7 @@
         {
           "id": "grammar-expression-23",
           "primary": "食べさせられる (2그룹)",
-          "reading": "食",
+          "reading": "食べさせられる",
           "meaning": "억지로 먹다 (사역수동) / [る 탈락 + させられる] / 食べる → 食べさせられる",
           "exampleJa": "嫌いな料理を食べさせられた。",
           "exampleEn": "",
@@ -39018,7 +39018,7 @@
         {
           "id": "grammar-expression-24",
           "primary": "残業させられる (3그룹)",
-          "reading": "残業",
+          "reading": "残業させられる",
           "meaning": "억지로 야근하다 (사역수동) / [する → させられる] / 残業する → 残業させられる",
           "exampleJa": "毎日残業させられる。",
           "exampleEn": "",
@@ -39044,7 +39044,7 @@
         {
           "id": "grammar-expression-25",
           "primary": "使われますか (1그룹)",
-          "reading": "使",
+          "reading": "使われますか",
           "meaning": "사용하시겠어요? (존경) / [u단 → a단 + れる] / 使う → 使われる",
           "exampleJa": "コピー機を使われますか。",
           "exampleEn": "",
@@ -39070,7 +39070,7 @@
         {
           "id": "grammar-expression-26",
           "primary": "行かれましたか (1그룹)",
-          "reading": "行",
+          "reading": "行かれましたか",
           "meaning": "가셨나요? (존경) / [u단 → a단 + れる] / 行く → 行かれる",
           "exampleJa": "先生はいつ行かれましたか。",
           "exampleEn": "",
@@ -39096,7 +39096,7 @@
         {
           "id": "grammar-expression-27",
           "primary": "出られる (2그룹)",
-          "reading": "出",
+          "reading": "出られる",
           "meaning": "나가시다 (존경) / [る 탈락 + られる] / 出る → 出られる",
           "exampleJa": "社長はマラソン大会に出られる。",
           "exampleEn": "",
@@ -39122,7 +39122,7 @@
         {
           "id": "grammar-expression-28",
           "primary": "来られます (3그룹)",
-          "reading": "来",
+          "reading": "来られます",
           "meaning": "오십니다 (존경) / [くる → こられる] / 来る → 来られる",
           "exampleJa": "田中さんはすぐこちらに来られます。",
           "exampleEn": "",
@@ -39148,7 +39148,7 @@
         {
           "id": "grammar-expression-29",
           "primary": "書けます (1그룹)",
-          "reading": "書",
+          "reading": "書けます",
           "meaning": "쓸 수 있다 (가능) / [u단 → e단 + る] / 書く → 書ける",
           "exampleJa": "私は韓国語が書けます。",
           "exampleEn": "",
@@ -39174,7 +39174,7 @@
         {
           "id": "grammar-expression-30",
           "primary": "走れます (1그룹)",
-          "reading": "走",
+          "reading": "走れます",
           "meaning": "달릴 수 있다 (가능) / [u단 → e단 + る] / 走る → 走れる",
           "exampleJa": "100メートルを15秒で走れます。",
           "exampleEn": "",
@@ -39200,7 +39200,7 @@
         {
           "id": "grammar-expression-31",
           "primary": "見られた (2그룹)",
-          "reading": "見",
+          "reading": "見られた",
           "meaning": "볼 수 있었다 (가능) / [る 탈락 + られる] / 見る → 見られる",
           "exampleJa": "星が見られた。",
           "exampleEn": "",
@@ -39484,7 +39484,7 @@
         {
           "id": "grammar-sonkeigo-1",
           "primary": "お目にかかる",
-          "reading": "目",
+          "reading": "お目にかかる",
           "meaning": "'만나다(会う)'의 겸양어",
           "exampleJa": "社長にお目にかかりたいです。",
           "exampleEn": "",
@@ -39594,7 +39594,7 @@
         {
           "id": "grammar-sonkeigo-6",
           "primary": "ご存じだ",
-          "reading": "存",
+          "reading": "ご存じだ",
           "meaning": "'알고 있다(知っている)'의 존경어",
           "exampleJa": "そのニュース、ご存じですか。",
           "exampleEn": "",
@@ -39620,7 +39620,7 @@
         {
           "id": "grammar-sonkeigo-7",
           "primary": "存じている",
-          "reading": "存",
+          "reading": "存じている",
           "meaning": "'알고 있다(知っている)'의 겸양어",
           "exampleJa": "はい、存じております。",
           "exampleEn": "",
@@ -39696,7 +39696,7 @@
         {
           "id": "grammar-sonkeigo-11",
           "primary": "申す (もうす)",
-          "reading": "申",
+          "reading": "申すもうす",
           "meaning": "'말하다(言う)'의 겸양어",
           "exampleJa": "田中と申します。",
           "exampleEn": "",
@@ -39730,7 +39730,7 @@
         {
           "id": "grammar-sonkeigo-12",
           "primary": "申し上げる",
-          "reading": "申上",
+          "reading": "申し上げる",
           "meaning": "'말하다(言う)'의 겸양어 (대상에게)",
           "exampleJa": "先生に申し上げました。",
           "exampleEn": "",
@@ -39760,7 +39760,7 @@
         {
           "id": "grammar-sonkeigo-13",
           "primary": "伺う (うかがう) (1)",
-          "reading": "伺",
+          "reading": "伺ううかがう",
           "meaning": "'듣다/묻다(聞く)'의 겸양어",
           "exampleJa": "お話を伺いたいです。",
           "exampleEn": "",
@@ -39794,7 +39794,7 @@
         {
           "id": "grammar-sonkeigo-14",
           "primary": "伺う (うかがう) (2)",
-          "reading": "伺",
+          "reading": "伺ううかがう",
           "meaning": "'방문하다(訪ねる)'의 겸양어",
           "exampleJa": "3時にそちらへ伺います。",
           "exampleEn": "",
@@ -39828,7 +39828,7 @@
         {
           "id": "grammar-sonkeigo-15",
           "primary": "ご覧になる",
-          "reading": "覧",
+          "reading": "ご覧になる",
           "meaning": "'보다(見る)'의 존경어 보시다",
           "exampleJa": "資料はもうご覧になりましたか。",
           "exampleEn": "",
@@ -39887,15 +39887,19 @@
           "rubyParts": [
             {
               "base": "差",
-              "ruby": "さあ"
+              "ruby": "さ"
             },
             {
               "base": "し",
               "ruby": ""
             },
             {
-              "base": "上",
+              "base": " ",
               "ruby": ""
+            },
+            {
+              "base": "上",
+              "ruby": "あ"
             },
             {
               "base": "げる",
@@ -39957,15 +39961,19 @@
           "rubyParts": [
             {
               "base": "召",
-              "ruby": "めあ"
+              "ruby": "め"
             },
             {
               "base": "し",
               "ruby": ""
             },
             {
-              "base": "上",
+              "base": " ",
               "ruby": ""
+            },
+            {
+              "base": "上",
+              "ruby": "あ"
             },
             {
               "base": "がる",
@@ -39998,7 +40006,7 @@
         {
           "id": "grammar-sonkeigo-22",
           "primary": "お休みになる",
-          "reading": "休",
+          "reading": "お休みになる",
           "meaning": "'자다(寝る/休む)'의 존경어 주무시다",
           "exampleJa": "父はもうお休みになりました。",
           "exampleEn": "",
@@ -40024,7 +40032,7 @@
         {
           "id": "grammar-sonkeigo-23",
           "primary": "ご存じ上げる",
-          "reading": "存上",
+          "reading": "ご存じ上げる",
           "meaning": "'알다(知る)'의 겸양어 (사람 대상)",
           "exampleJa": "先生のことはよくご存じ上げております。",
           "exampleEn": "",
@@ -40058,7 +40066,7 @@
         {
           "id": "grammar-sonkeigo-24",
           "primary": "お見えになる",
-          "reading": "見",
+          "reading": "お見えになる",
           "meaning": "'오시다(来る)'의 존경어",
           "exampleJa": "田中様がお見えになりました。",
           "exampleEn": "",
@@ -40084,7 +40092,7 @@
         {
           "id": "grammar-sonkeigo-25",
           "primary": "お越(こ)しになる",
-          "reading": "越(",
+          "reading": "お越(こしになる",
           "meaning": "'오다(来る)'의 존경어 오시다",
           "exampleJa": "わざわざお越しになり、ありがとうございます。",
           "exampleEn": "",
@@ -40132,7 +40140,7 @@
         {
           "id": "grammar-pattern-1",
           "primary": "～だって",
-          "reading": "",
+          "reading": "だって",
           "meaning": "~라도, ~조차도",
           "exampleJa": "そのくらいは小学生だって知っているはずだ。",
           "exampleEn": "",
@@ -40154,7 +40162,7 @@
         {
           "id": "grammar-pattern-2",
           "primary": "～でしかない",
-          "reading": "",
+          "reading": "でしかない",
           "meaning": "~에 불과하다",
           "exampleJa": "スマホはただの連絡手段でしかない。",
           "exampleEn": "",
@@ -40176,7 +40184,7 @@
         {
           "id": "grammar-pattern-3",
           "primary": "～でなくてもよければ",
-          "reading": "",
+          "reading": "でなくてもよければ",
           "meaning": "~이 아니어도 괜찮다면",
           "exampleJa": "今日でなくてもよければ買い物に付き合える。",
           "exampleEn": "",
@@ -40198,7 +40206,7 @@
         {
           "id": "grammar-pattern-4",
           "primary": "～として",
-          "reading": "",
+          "reading": "として",
           "meaning": "~로서",
           "exampleJa": "彼は歌手として有名になった。",
           "exampleEn": "",
@@ -40220,7 +40228,7 @@
         {
           "id": "grammar-pattern-5",
           "primary": "～としては",
-          "reading": "",
+          "reading": "としては",
           "meaning": "~의 입장에서는",
           "exampleJa": "私としてはあなたの意見に賛成することができません。",
           "exampleEn": "",
@@ -40242,7 +40250,7 @@
         {
           "id": "grammar-pattern-6",
           "primary": "～において",
-          "reading": "",
+          "reading": "において",
           "meaning": "~에서, ~에 있어서",
           "exampleJa": "人生においてもっとも重要だと思うことは何ですか。",
           "exampleEn": "",
@@ -40264,7 +40272,7 @@
         {
           "id": "grammar-pattern-7",
           "primary": "～にかけて",
-          "reading": "",
+          "reading": "にかけて",
           "meaning": "~에 걸쳐",
           "exampleJa": "この仕事は夏休みにかけて特に忙しくなる。",
           "exampleEn": "",
@@ -40346,7 +40354,7 @@
         {
           "id": "grammar-pattern-10",
           "primary": "～にしかできない",
-          "reading": "",
+          "reading": "にしかできない",
           "meaning": "~만이 할 수 있다",
           "exampleJa": "この仕事はあなたにしかできない。",
           "exampleEn": "",
@@ -40368,7 +40376,7 @@
         {
           "id": "grammar-pattern-11",
           "primary": "～にする",
-          "reading": "",
+          "reading": "にする",
           "meaning": "~로 하다, 결정",
           "exampleJa": "私はハンバーグにします。",
           "exampleEn": "",
@@ -40420,7 +40428,7 @@
         {
           "id": "grammar-pattern-13",
           "primary": "～について",
-          "reading": "",
+          "reading": "について",
           "meaning": "~에 대하여",
           "exampleJa": "農村について調べている。",
           "exampleEn": "",
@@ -40442,7 +40450,7 @@
         {
           "id": "grammar-pattern-14",
           "primary": "～にとって",
-          "reading": "",
+          "reading": "にとって",
           "meaning": "~에게 있어서, ~에게는",
           "exampleJa": "私にとって人生でいちばん大切なのは家族の幸せだ。",
           "exampleEn": "",
@@ -40494,7 +40502,7 @@
         {
           "id": "grammar-pattern-16",
           "primary": "～によって",
-          "reading": "",
+          "reading": "によって",
           "meaning": "~에 따라서, ~에 의해서",
           "exampleJa": "人によって考え方が違う。",
           "exampleEn": "",
@@ -40516,7 +40524,7 @@
         {
           "id": "grammar-pattern-17",
           "primary": "～による",
-          "reading": "",
+          "reading": "による",
           "meaning": "~에 의한, ~에 따른",
           "exampleJa": "台風による被害が大きいそうです。",
           "exampleEn": "",
@@ -40538,7 +40546,7 @@
         {
           "id": "grammar-pattern-18",
           "primary": "～によると",
-          "reading": "",
+          "reading": "によると",
           "meaning": "~에 의하면, ~에 따르면",
           "exampleJa": "天気予報によると明日は晴れるそうです。",
           "exampleEn": "",
@@ -40560,7 +40568,7 @@
         {
           "id": "grammar-pattern-19",
           "primary": "～にわたって",
-          "reading": "",
+          "reading": "にわたって",
           "meaning": "~에 걸쳐",
           "exampleJa": "中田先生の講義は2時間にわたって続いた。",
           "exampleEn": "",
@@ -40582,7 +40590,7 @@
         {
           "id": "grammar-pattern-20",
           "primary": "～のことで",
-          "reading": "",
+          "reading": "のことで",
           "meaning": "~에 대해서",
           "exampleJa": "レポートのことで、相談したいことがあるんですが。",
           "exampleEn": "",
@@ -40698,7 +40706,7 @@
         {
           "id": "grammar-pattern-24",
           "primary": "～をめぐって",
-          "reading": "",
+          "reading": "をめぐって",
           "meaning": "~을 둘러싸고",
           "exampleJa": "そのうわさをめぐっていろんな意見がある。",
           "exampleEn": "",
@@ -40720,7 +40728,7 @@
         {
           "id": "grammar-pattern-25",
           "primary": "～をもとに",
-          "reading": "",
+          "reading": "をもとに",
           "meaning": "~을 토대로",
           "exampleJa": "この小説は実際にあった事件をもとにしている。",
           "exampleEn": "",
@@ -40742,7 +40750,7 @@
         {
           "id": "grammar-pattern-26",
           "primary": "A, BといったC",
-          "reading": "",
+          "reading": "といった",
           "meaning": "A,B와 같은 C",
           "exampleJa": "タイ、ベトナムといった東南アジアに旅行に行きたい。",
           "exampleEn": "",
@@ -40768,7 +40776,7 @@
         {
           "id": "grammar-pattern-27",
           "primary": "Aほど～Bはない",
-          "reading": "",
+          "reading": "ほどはない",
           "meaning": "A만큼 ~한 B는 없다",
           "exampleJa": "母が作るケーキほどおいしいものはない。",
           "exampleEn": "",
@@ -40798,7 +40806,7 @@
         {
           "id": "grammar-pattern-28",
           "primary": "いまにも～そうだ",
-          "reading": "",
+          "reading": "いまにもそうだ",
           "meaning": "금세라도 ~할 것 같다",
           "exampleJa": "いまにも泣きそうな顔をしている。",
           "exampleEn": "",
@@ -40824,7 +40832,7 @@
         {
           "id": "grammar-pattern-29",
           "primary": "～がちだ",
-          "reading": "",
+          "reading": "がちだ",
           "meaning": "~(하)기 쉽다",
           "exampleJa": "子供は好きなものだけ食べがちだ。",
           "exampleEn": "",
@@ -40846,7 +40854,7 @@
         {
           "id": "grammar-pattern-30",
           "primary": "～かねない",
-          "reading": "",
+          "reading": "かねない",
           "meaning": "~할지도 모른다",
           "exampleJa": "そうやって週末も仕事をしていたら病気になりかねないよ。",
           "exampleEn": "",
@@ -40868,7 +40876,7 @@
         {
           "id": "grammar-pattern-31",
           "primary": "～きれない",
-          "reading": "",
+          "reading": "きれない",
           "meaning": "다~(할) 수 없다",
           "exampleJa": "量が多すぎて食べきれなかった。",
           "exampleEn": "",
@@ -40890,7 +40898,7 @@
         {
           "id": "grammar-pattern-32",
           "primary": "～できそうもない",
-          "reading": "",
+          "reading": "できそうもない",
           "meaning": "~(할)것 같지 않다",
           "exampleJa": "いくら頑張っても、できそうもない。",
           "exampleEn": "",
@@ -40938,7 +40946,7 @@
         {
           "id": "grammar-pattern-34",
           "primary": "～そうになる",
-          "reading": "",
+          "reading": "そうになる",
           "meaning": "~할 뻔하다",
           "exampleJa": "事故を起こしそうになったことがある。",
           "exampleEn": "",
@@ -40960,7 +40968,7 @@
         {
           "id": "grammar-pattern-35",
           "primary": "～たい",
-          "reading": "",
+          "reading": "たい",
           "meaning": "~하고 싶다",
           "exampleJa": "将来は作家になりたい。",
           "exampleEn": "",
@@ -40982,7 +40990,7 @@
         {
           "id": "grammar-pattern-36",
           "primary": "～つけっぱなし",
-          "reading": "",
+          "reading": "つけっぱなし",
           "meaning": "~한 채로 두다",
           "exampleJa": "エアコンをつけっぱなしにしていると、電気代が高くなる。",
           "exampleEn": "",
@@ -41056,7 +41064,7 @@
         {
           "id": "grammar-pattern-39",
           "primary": "～にくい",
-          "reading": "",
+          "reading": "にくい",
           "meaning": "~하기 어렵다",
           "exampleJa": "ここでは話しにくい内容だからあとで話すね。",
           "exampleEn": "",
@@ -41104,7 +41112,7 @@
         {
           "id": "grammar-pattern-41",
           "primary": "～やすい",
-          "reading": "",
+          "reading": "やすい",
           "meaning": "~하기 쉽다",
           "exampleJa": "日本は韓国から近いので行きやすいです。",
           "exampleEn": "",
@@ -41126,7 +41134,7 @@
         {
           "id": "grammar-pattern-42",
           "primary": "～てある",
-          "reading": "",
+          "reading": "てある",
           "meaning": "~되어 있다",
           "exampleJa": "テーブルの上には花が飾ってある。",
           "exampleEn": "",
@@ -41148,7 +41156,7 @@
         {
           "id": "grammar-pattern-43",
           "primary": "～ていく",
-          "reading": "",
+          "reading": "ていく",
           "meaning": "(~하고) 가다",
           "exampleJa": "今日はお弁当を持っていきます。",
           "exampleEn": "",
@@ -41200,7 +41208,7 @@
         {
           "id": "grammar-pattern-45",
           "primary": "～ている",
-          "reading": "",
+          "reading": "ている",
           "meaning": "(~하고) 있다, (~한) 상태이다",
           "exampleJa": "人が多いから待っている。",
           "exampleEn": "",
@@ -41252,7 +41260,7 @@
         {
           "id": "grammar-pattern-47",
           "primary": "～ておく",
-          "reading": "",
+          "reading": "ておく",
           "meaning": "(해) 두다",
           "exampleJa": "暑いから窓は開けておくね。",
           "exampleEn": "",
@@ -41274,7 +41282,7 @@
         {
           "id": "grammar-pattern-48",
           "primary": "～てから",
-          "reading": "",
+          "reading": "てから",
           "meaning": "(~하고) 나서",
           "exampleJa": "遊びに行くのは宿題を終えてからだ。",
           "exampleEn": "",
@@ -41296,7 +41304,7 @@
         {
           "id": "grammar-pattern-49",
           "primary": "～てからでないと",
-          "reading": "",
+          "reading": "てからでないと",
           "meaning": "~ 하고 나서야",
           "exampleJa": "この仕事が全部終わってからでないと帰れません。",
           "exampleEn": "",
@@ -41318,7 +41326,7 @@
         {
           "id": "grammar-pattern-50",
           "primary": "～てごらん",
-          "reading": "",
+          "reading": "てごらん",
           "meaning": "~해 보렴",
           "exampleJa": "もう一度ゆっくりやってごらん。",
           "exampleEn": "",
@@ -41340,7 +41348,7 @@
         {
           "id": "grammar-pattern-51",
           "primary": "～てしまう(=ちゃう)",
-          "reading": "",
+          "reading": "てしまうちゃう",
           "meaning": "~해 버리다",
           "exampleJa": "お皿を割ってしまいました(割っちゃいました)。",
           "exampleEn": "",
@@ -41374,7 +41382,7 @@
         {
           "id": "grammar-pattern-52",
           "primary": "～てはじめて",
-          "reading": "",
+          "reading": "てはじめて",
           "meaning": "~하고 나서야 비로소",
           "exampleJa": "社会人になってはじめて、お金を稼ぐことの大変さが分かりました。",
           "exampleEn": "",
@@ -41396,7 +41404,7 @@
         {
           "id": "grammar-pattern-53",
           "primary": "～てばかりいる",
-          "reading": "",
+          "reading": "てばかりいる",
           "meaning": "~하기만 하다",
           "exampleJa": "最近遊んでばかりいるせいで成績が落ちた。",
           "exampleEn": "",
@@ -41418,7 +41426,7 @@
         {
           "id": "grammar-pattern-54",
           "primary": "～てほしい",
-          "reading": "",
+          "reading": "てほしい",
           "meaning": "~해 주었으면 좋겠다",
           "exampleJa": "もしよかったら、少し手伝ってほしいです。",
           "exampleEn": "",
@@ -41440,7 +41448,7 @@
         {
           "id": "grammar-pattern-55",
           "primary": "～てもかまわない",
-          "reading": "",
+          "reading": "てもかまわない",
           "meaning": "~해도 상관없다",
           "exampleJa": "食事が終わったら、1階でお土産を見てもかまいません。",
           "exampleEn": "",
@@ -41462,7 +41470,7 @@
         {
           "id": "grammar-pattern-56",
           "primary": "～たうえで",
-          "reading": "",
+          "reading": "たうえで",
           "meaning": "~한 후에",
           "exampleJa": "相手の意見を理解したうえで自分の考えを話してください。",
           "exampleEn": "",
@@ -41484,7 +41492,7 @@
         {
           "id": "grammar-pattern-57",
           "primary": "～たことがある",
-          "reading": "",
+          "reading": "たことがある",
           "meaning": "~한 적이 있다",
           "exampleJa": "日本の小説を読んだことがある。",
           "exampleEn": "",
@@ -41506,7 +41514,7 @@
         {
           "id": "grammar-pattern-58",
           "primary": "～たことがない",
-          "reading": "",
+          "reading": "たことがない",
           "meaning": "~한 적이 없다",
           "exampleJa": "両親は飛行機に乗ったことがない。",
           "exampleEn": "",
@@ -41528,7 +41536,7 @@
         {
           "id": "grammar-pattern-59",
           "primary": "～たところ",
-          "reading": "",
+          "reading": "たところ",
           "meaning": "~해 보니",
           "exampleJa": "アンケート調査をしてみたところ、意外な結果が出た。",
           "exampleEn": "",
@@ -41550,7 +41558,7 @@
         {
           "id": "grammar-pattern-60",
           "primary": "～たとたん",
-          "reading": "",
+          "reading": "たとたん",
           "meaning": "~하자마자",
           "exampleJa": "空港に着いたとたん、あやしい人が話しかけてきた。",
           "exampleEn": "",
@@ -41572,7 +41580,7 @@
         {
           "id": "grammar-pattern-61",
           "primary": "～たばかり",
-          "reading": "",
+          "reading": "たばかり",
           "meaning": "~한 지 얼마 안 되다",
           "exampleJa": "買ったばかりのテレビなのに壊れてしまった。",
           "exampleEn": "",
@@ -41594,7 +41602,7 @@
         {
           "id": "grammar-pattern-62",
           "primary": "～たものだ",
-          "reading": "",
+          "reading": "たものだ",
           "meaning": "~하곤 했다",
           "exampleJa": "子供のころはこの公園でよく遊んだものだ。",
           "exampleEn": "",
@@ -41616,7 +41624,7 @@
         {
           "id": "grammar-pattern-63",
           "primary": "～たり～たりする",
-          "reading": "",
+          "reading": "たりたりする",
           "meaning": "~(하)거나 ~(하)거나 하다",
           "exampleJa": "週末は買い物をしたり友達と食事をしたりする。",
           "exampleEn": "",
@@ -41646,7 +41654,7 @@
         {
           "id": "grammar-pattern-64",
           "primary": "～ずに",
-          "reading": "",
+          "reading": "ずに",
           "meaning": "~(하)지 않고",
           "exampleJa": "この料理は誰でも失敗せずにおいしく作れる。",
           "exampleEn": "",
@@ -41668,7 +41676,7 @@
         {
           "id": "grammar-pattern-65",
           "primary": "～ないこともない",
-          "reading": "",
+          "reading": "ないこともない",
           "meaning": "~(하)지 않을 것도 없다",
           "exampleJa": "この山はそんなに高くないので、１時間で登れないこともないです。",
           "exampleEn": "",
@@ -41690,7 +41698,7 @@
         {
           "id": "grammar-pattern-66",
           "primary": "～ないで",
-          "reading": "",
+          "reading": "ないで",
           "meaning": "~(하)지 않고",
           "exampleJa": "一週間も授業に来ないで何をしていたの？",
           "exampleEn": "",
@@ -41772,7 +41780,7 @@
         {
           "id": "grammar-pattern-69",
           "primary": "～うえで",
-          "reading": "",
+          "reading": "うえで",
           "meaning": "~하는 데 있어서",
           "exampleJa": "生きるうえで、一番重要なのは何だと思う？",
           "exampleEn": "",
@@ -41794,7 +41802,7 @@
         {
           "id": "grammar-pattern-70",
           "primary": "～ことができる",
-          "reading": "",
+          "reading": "ことができる",
           "meaning": "~할 수 있다",
           "exampleJa": "さまざまな方法を利用して感情を伝えることができる。",
           "exampleEn": "",
@@ -41816,7 +41824,7 @@
         {
           "id": "grammar-pattern-71",
           "primary": "～ことだ",
-          "reading": "",
+          "reading": "ことだ",
           "meaning": "~해야 한다",
           "exampleJa": "かぜを早く治したいんだったら、ぐっすり寝ることだ。",
           "exampleEn": "",
@@ -41838,7 +41846,7 @@
         {
           "id": "grammar-pattern-72",
           "primary": "～ことにする",
-          "reading": "",
+          "reading": "ことにする",
           "meaning": "~하기로 하다",
           "exampleJa": "友だちと旅行に行くことにした。",
           "exampleEn": "",
@@ -41860,7 +41868,7 @@
         {
           "id": "grammar-pattern-73",
           "primary": "～ことになっている",
-          "reading": "",
+          "reading": "ことになっている",
           "meaning": "~하기로 되어 있다",
           "exampleJa": "運転免許は10年ごとに更新することになっている。",
           "exampleEn": "",
@@ -41882,7 +41890,7 @@
         {
           "id": "grammar-pattern-74",
           "primary": "～ことになる",
-          "reading": "",
+          "reading": "ことになる",
           "meaning": "~하게 되다",
           "exampleJa": "親の転勤でアメリカに行くことになりました。",
           "exampleEn": "",
@@ -41904,7 +41912,7 @@
         {
           "id": "grammar-pattern-75",
           "primary": "～ことはない",
-          "reading": "",
+          "reading": "ことはない",
           "meaning": "~할 필요는 없다",
           "exampleJa": "失敗しただけで、そんなに泣くことはない。",
           "exampleEn": "",
@@ -41926,7 +41934,7 @@
         {
           "id": "grammar-pattern-76",
           "primary": "～つもりだ",
-          "reading": "",
+          "reading": "つもりだ",
           "meaning": "~할 생각이다",
           "exampleJa": "来年はヨーロッパへ旅行するつもりだ。",
           "exampleEn": "",
@@ -41948,7 +41956,7 @@
         {
           "id": "grammar-pattern-77",
           "primary": "～ところだ",
-          "reading": "",
+          "reading": "ところだ",
           "meaning": "~하려던 참이다",
           "exampleJa": "仕事が終わって、これから帰るところだった。",
           "exampleEn": "",
@@ -41970,7 +41978,7 @@
         {
           "id": "grammar-pattern-78",
           "primary": "～には",
-          "reading": "",
+          "reading": "には",
           "meaning": "~하려면",
           "exampleJa": "この列車に乗るには予約をする必要があります。",
           "exampleEn": "",
@@ -41992,7 +42000,7 @@
         {
           "id": "grammar-pattern-79",
           "primary": "～ほうがいい",
-          "reading": "",
+          "reading": "ほうがいい",
           "meaning": "~하는 편이 좋다",
           "exampleJa": "このことは早く彼に言うほうがいい。",
           "exampleEn": "",
@@ -42014,7 +42022,7 @@
         {
           "id": "grammar-pattern-80",
           "primary": "～ほかない",
-          "reading": "",
+          "reading": "ほかない",
           "meaning": "~하는 수밖에 없다",
           "exampleJa": "この辺りはタクシーも来ないので、歩いて行くほかありません。",
           "exampleEn": "",
@@ -42036,7 +42044,7 @@
         {
           "id": "grammar-pattern-81",
           "primary": "～ものではない",
-          "reading": "",
+          "reading": "ものではない",
           "meaning": "~해서는 안 된다",
           "exampleJa": "うそを言うものではない。",
           "exampleEn": "",
@@ -42088,7 +42096,7 @@
         {
           "id": "grammar-pattern-83",
           "primary": "～ようとする",
-          "reading": "",
+          "reading": "ようとする",
           "meaning": "~하려고 하다",
           "exampleJa": "勉強しようとしたのに、母に呼ばれた。",
           "exampleEn": "",
@@ -42110,7 +42118,7 @@
         {
           "id": "grammar-pattern-84",
           "primary": "～ようにする",
-          "reading": "",
+          "reading": "ようにする",
           "meaning": "~하도록 하다",
           "exampleJa": "遅刻しないようにします。",
           "exampleEn": "",
@@ -42132,7 +42140,7 @@
         {
           "id": "grammar-pattern-85",
           "primary": "～ようになる",
-          "reading": "",
+          "reading": "ようになる",
           "meaning": "~하게 되다",
           "exampleJa": "歴史をもっと学びたいと思うようになった。",
           "exampleEn": "",
@@ -42154,7 +42162,7 @@
         {
           "id": "grammar-pattern-86",
           "primary": "～わけにはいかない",
-          "reading": "",
+          "reading": "わけにはいかない",
           "meaning": "~할 수는 없다",
           "exampleJa": "残念ですが、うちで犬を飼うわけにはいきません。",
           "exampleEn": "",
@@ -42176,7 +42184,7 @@
         {
           "id": "grammar-pattern-87",
           "primary": "～ことで",
-          "reading": "",
+          "reading": "ことで",
           "meaning": "~로 인해, ~(해서)",
           "exampleJa": "早く起きることでゆっくり朝食が食べられるようになった。",
           "exampleEn": "",
@@ -42198,7 +42206,7 @@
         {
           "id": "grammar-pattern-88",
           "primary": "～てもおかしくない",
-          "reading": "",
+          "reading": "てもおかしくない",
           "meaning": "~해도 이상하지 않다",
           "exampleJa": "最近、無理をしているから、いつ病気になってもおかしくないと思う。",
           "exampleEn": "",
@@ -42258,7 +42266,7 @@
         {
           "id": "grammar-pattern-90",
           "primary": "～わけだ",
-          "reading": "",
+          "reading": "わけだ",
           "meaning": "~인 것이다, ~인 셈이다 (부정 : ~일 리가 없다)",
           "exampleJa": "遊んでばかりいる彼が合格するわけがない。",
           "exampleEn": "",
@@ -42280,7 +42288,7 @@
         {
           "id": "grammar-pattern-91",
           "primary": "～たら",
-          "reading": "",
+          "reading": "たら",
           "meaning": "~하면",
           "exampleJa": "薬を飲んだら少し楽になりました。",
           "exampleEn": "",
@@ -42302,7 +42310,7 @@
         {
           "id": "grammar-pattern-92",
           "primary": "～だけあって",
-          "reading": "",
+          "reading": "だけあって",
           "meaning": "~인 만큼",
           "exampleJa": "Ａ大学を目指しているだけあって、山田さんは頭がいい。",
           "exampleEn": "",
@@ -42324,7 +42332,7 @@
         {
           "id": "grammar-pattern-93",
           "primary": "～だけだ",
-          "reading": "",
+          "reading": "だけだ",
           "meaning": "~뿐이다",
           "exampleJa": "このクッキーは材料を混ぜて焼くだけだから、難しくない。",
           "exampleEn": "",
@@ -42346,7 +42354,7 @@
         {
           "id": "grammar-pattern-94",
           "primary": "～だけでなく",
-          "reading": "",
+          "reading": "だけでなく",
           "meaning": "~뿐만 아니라",
           "exampleJa": "試合に勝つだけでなく、大会で優勝したいです。",
           "exampleEn": "",
@@ -42368,7 +42376,7 @@
         {
           "id": "grammar-pattern-95",
           "primary": "～だけでも",
-          "reading": "",
+          "reading": "だけでも",
           "meaning": "~만으로도",
           "exampleJa": "聞くだけでも恐ろしい話ですね。",
           "exampleEn": "",
@@ -42390,7 +42398,7 @@
         {
           "id": "grammar-pattern-96",
           "primary": "～だけでよければ",
-          "reading": "",
+          "reading": "だけでよければ",
           "meaning": "~만으로 좋다면",
           "exampleJa": "宣伝の紙を配るだけでよければ、私にも手伝わせてください。",
           "exampleEn": "",
@@ -42412,7 +42420,7 @@
         {
           "id": "grammar-pattern-97",
           "primary": "～だけに",
-          "reading": "",
+          "reading": "だけに",
           "meaning": "~인 만큼",
           "exampleJa": "よく旅行に行くだけに彼は英語が上手だ。",
           "exampleEn": "",
@@ -42434,7 +42442,7 @@
         {
           "id": "grammar-pattern-98",
           "primary": "～なら",
-          "reading": "",
+          "reading": "なら",
           "meaning": "~라면",
           "exampleJa": "ペットが飼えるなら毎日世話をすると約束します。",
           "exampleEn": "",
@@ -42456,7 +42464,7 @@
         {
           "id": "grammar-pattern-99",
           "primary": "～ようなら",
-          "reading": "",
+          "reading": "ようなら",
           "meaning": "~할 것 같으면",
           "exampleJa": "この服、サイズが合うようなら君にあげるよ。",
           "exampleEn": "",
@@ -42478,7 +42486,7 @@
         {
           "id": "grammar-pattern-100",
           "primary": "～と",
-          "reading": "",
+          "reading": "と",
           "meaning": "~하면",
           "exampleJa": "砂糖を入れると甘くなります。",
           "exampleEn": "",
@@ -42500,7 +42508,7 @@
         {
           "id": "grammar-pattern-101",
           "primary": "～ないと",
-          "reading": "",
+          "reading": "ないと",
           "meaning": "~하지 않으면",
           "exampleJa": "何でも積極的ではないとせっかくの機会を失ってしまう。",
           "exampleEn": "",
@@ -42522,7 +42530,7 @@
         {
           "id": "grammar-pattern-102",
           "primary": "～という",
-          "reading": "",
+          "reading": "という",
           "meaning": "~라는, ~라고 하는",
           "exampleJa": "林さんがやめるといううわさを聞きました。",
           "exampleEn": "",
@@ -42544,7 +42552,7 @@
         {
           "id": "grammar-pattern-103",
           "primary": "～ということだ",
-          "reading": "",
+          "reading": "ということだ",
           "meaning": "~라고 한다",
           "exampleJa": "この店はしばらく休業するということだ。",
           "exampleEn": "",
@@ -42566,7 +42574,7 @@
         {
           "id": "grammar-pattern-104",
           "primary": "～というのに",
-          "reading": "",
+          "reading": "というのに",
           "meaning": "~라고 하는데",
           "exampleJa": "来月友だちが結婚するというのに、なぜか少し悲しくなった。",
           "exampleEn": "",
@@ -42588,7 +42596,7 @@
         {
           "id": "grammar-pattern-105",
           "primary": "～というような",
-          "reading": "",
+          "reading": "というような",
           "meaning": "~와 같은",
           "exampleJa": "リムジンに乗るというようなすごい経験をしました。",
           "exampleEn": "",
@@ -42610,7 +42618,7 @@
         {
           "id": "grammar-pattern-106",
           "primary": "～といっても",
-          "reading": "",
+          "reading": "といっても",
           "meaning": "~라고 해도",
           "exampleJa": "中国語ができるといっても、あいさつぐらいです。",
           "exampleEn": "",
@@ -42632,7 +42640,7 @@
         {
           "id": "grammar-pattern-107",
           "primary": "～としたら",
-          "reading": "",
+          "reading": "としたら",
           "meaning": "~라고 하면",
           "exampleJa": "もし自分を色で表すとしたら、何色だと思う？",
           "exampleEn": "",
@@ -42654,7 +42662,7 @@
         {
           "id": "grammar-pattern-108",
           "primary": "～としても",
-          "reading": "",
+          "reading": "としても",
           "meaning": "~라고 해도",
           "exampleJa": "部屋を片付けたとしても、また散らかしてしまうと思います。",
           "exampleEn": "",
@@ -42706,7 +42714,7 @@
         {
           "id": "grammar-pattern-110",
           "primary": "～うえに",
-          "reading": "",
+          "reading": "うえに",
           "meaning": "~데다가",
           "exampleJa": "友達は宿題を早く終わらせたうえに、私の宿題も手伝ってくれた。",
           "exampleEn": "",
@@ -42728,7 +42736,7 @@
         {
           "id": "grammar-pattern-111",
           "primary": "～かわりに",
-          "reading": "",
+          "reading": "かわりに",
           "meaning": "~대신에",
           "exampleJa": "私が洗濯物をたたむかわりにあなたはお皿を洗ってね。",
           "exampleEn": "",
@@ -42750,7 +42758,7 @@
         {
           "id": "grammar-pattern-112",
           "primary": "～からといって",
-          "reading": "",
+          "reading": "からといって",
           "meaning": "~라고 해서, ~라고 하더라도",
           "exampleJa": "失敗したからといってあきらめる必要はない。",
           "exampleEn": "",
@@ -42772,7 +42780,7 @@
         {
           "id": "grammar-pattern-113",
           "primary": "～せいで",
-          "reading": "",
+          "reading": "せいで",
           "meaning": "~탓에, ~탓으로",
           "exampleJa": "寝坊したせいで、新幹線に乗れなかった。",
           "exampleEn": "",
@@ -42794,7 +42802,7 @@
         {
           "id": "grammar-pattern-114",
           "primary": "～ことに",
-          "reading": "",
+          "reading": "ことに",
           "meaning": "~마다",
           "exampleJa": "パンが焼けることに、すぐお店に出して売っています。",
           "exampleEn": "",
@@ -42846,7 +42854,7 @@
         {
           "id": "grammar-pattern-116",
           "primary": "～くせに",
-          "reading": "",
+          "reading": "くせに",
           "meaning": "~주제에",
           "exampleJa": "彼は遅れてきたくせに、席が悪いと文句を言った。",
           "exampleEn": "",
@@ -42868,7 +42876,7 @@
         {
           "id": "grammar-pattern-117",
           "primary": "～たびに",
-          "reading": "",
+          "reading": "たびに",
           "meaning": "~(할) 때마다",
           "exampleJa": "親に会うたびに、「いつ結婚するの」と聞かれるのがいやだ。",
           "exampleEn": "",
@@ -42890,7 +42898,7 @@
         {
           "id": "grammar-pattern-118",
           "primary": "～ために",
-          "reading": "",
+          "reading": "ために",
           "meaning": "~위해서",
           "exampleJa": "野菜をおいしく育てるためには水と太陽と土が必要です。",
           "exampleEn": "",
@@ -42912,7 +42920,7 @@
         {
           "id": "grammar-pattern-119",
           "primary": "～ついでに",
-          "reading": "",
+          "reading": "ついでに",
           "meaning": "~하는 김에",
           "exampleJa": "郵便局に行くついでに本屋によって雑誌を買って来てくれない？",
           "exampleEn": "",
@@ -42934,7 +42942,7 @@
         {
           "id": "grammar-pattern-120",
           "primary": "～とおりに",
-          "reading": "",
+          "reading": "とおりに",
           "meaning": "~대로",
           "exampleJa": "私の言うとおりにしてください。",
           "exampleEn": "",
@@ -42956,7 +42964,7 @@
         {
           "id": "grammar-pattern-121",
           "primary": "～とともに",
-          "reading": "",
+          "reading": "とともに",
           "meaning": "~와 함께, ~와 동시에",
           "exampleJa": "健康になるとともに体力もついた。",
           "exampleEn": "",
@@ -42978,7 +42986,7 @@
         {
           "id": "grammar-pattern-122",
           "primary": "～うちに",
-          "reading": "",
+          "reading": "うちに",
           "meaning": "~하는 동안에, ~일 때",
           "exampleJa": "英語を学ぶうちに留学に興味を持つようになった。",
           "exampleEn": "",
@@ -43000,7 +43008,7 @@
         {
           "id": "grammar-pattern-123",
           "primary": "～にしても",
-          "reading": "",
+          "reading": "にしても",
           "meaning": "~라고 해도, ~인 경우에도",
           "exampleJa": "遊ぶにしても宿題を済ませないと遊びに行けません。",
           "exampleEn": "",
@@ -43022,7 +43030,7 @@
         {
           "id": "grammar-pattern-124",
           "primary": "～につれ",
-          "reading": "",
+          "reading": "につれ",
           "meaning": "~(함)에 따라",
           "exampleJa": "発表する日が近づくにつれ緊張してきました。",
           "exampleEn": "",
@@ -43070,7 +43078,7 @@
         {
           "id": "grammar-pattern-126",
           "primary": "～ほか",
-          "reading": "",
+          "reading": "ほか",
           "meaning": "~외에",
           "exampleJa": "風邪予防には人の多い場所を避けるほかに、手を洗うのが大切だ。",
           "exampleEn": "",
@@ -43118,7 +43126,7 @@
         {
           "id": "grammar-pattern-128",
           "primary": "～まま",
-          "reading": "",
+          "reading": "まま",
           "meaning": "~한 채, ~대로",
           "exampleJa": "テレビをつけたまま、寝てしまった。",
           "exampleEn": "",
@@ -43140,7 +43148,7 @@
         {
           "id": "grammar-pattern-129",
           "primary": "～わりに",
-          "reading": "",
+          "reading": "わりに",
           "meaning": "~에 비해서",
           "exampleJa": "いつもお金がないって言ってるわりに、よく旅行に行くね。",
           "exampleEn": "",
@@ -43162,7 +43170,7 @@
         {
           "id": "grammar-pattern-130",
           "primary": "～おかげだ",
-          "reading": "",
+          "reading": "おかげだ",
           "meaning": "~덕분이다",
           "exampleJa": "外国人の友達がたくさんいるのは、海外で暮らしていたおかげだ。",
           "exampleEn": "",
@@ -43184,7 +43192,7 @@
         {
           "id": "grammar-pattern-131",
           "primary": "～かもしれない",
-          "reading": "",
+          "reading": "かもしれない",
           "meaning": "~일지도 모른다",
           "exampleJa": "犯人は事件現場にまた現れるかもしれない。",
           "exampleEn": "",
@@ -43206,7 +43214,7 @@
         {
           "id": "grammar-pattern-132",
           "primary": "～かどうか",
-          "reading": "",
+          "reading": "かどうか",
           "meaning": "~인지 어떤지",
           "exampleJa": "この仕事を新人に任せるかどうか、もう一度考えないといけない。",
           "exampleEn": "",
@@ -43228,7 +43236,7 @@
         {
           "id": "grammar-pattern-133",
           "primary": "～がる",
-          "reading": "",
+          "reading": "がる",
           "meaning": "~하고 싶어하다, ~해 하다",
           "exampleJa": "祖父は孫に会いたがっている。",
           "exampleEn": "",
@@ -43250,7 +43258,7 @@
         {
           "id": "grammar-pattern-134",
           "primary": "～すぎる",
-          "reading": "",
+          "reading": "すぎる",
           "meaning": "너무 ~하다",
           "exampleJa": "チョコレートは冷やしすぎると固くなりすぎる。",
           "exampleEn": "",
@@ -43272,7 +43280,7 @@
         {
           "id": "grammar-pattern-135",
           "primary": "～だろう",
-          "reading": "",
+          "reading": "だろう",
           "meaning": "~일 것이다, ~겠지",
           "exampleJa": "来週には桜が咲くだろう。",
           "exampleEn": "",
@@ -43384,7 +43392,7 @@
         {
           "id": "grammar-pattern-139",
           "primary": "～にしたがって",
-          "reading": "",
+          "reading": "にしたがって",
           "meaning": "~에 따라",
           "exampleJa": "高度が上昇するにしたがって気圧は下がる。",
           "exampleEn": "",
@@ -43406,7 +43414,7 @@
         {
           "id": "grammar-pattern-140",
           "primary": "～のです（～んです）",
-          "reading": "",
+          "reading": "のですんです",
           "meaning": "~인 것입니다, ~입니다",
           "exampleJa": "来週、試合なのにちっとも練習に来ないで何をやっていたのですか。",
           "exampleEn": "",
@@ -43440,7 +43448,7 @@
         {
           "id": "grammar-pattern-141",
           "primary": "～はずだ",
-          "reading": "",
+          "reading": "はずだ",
           "meaning": "~일 것이다",
           "exampleJa": "この地域は地震がよく起きるので普段から備えているはずです。",
           "exampleEn": "",
@@ -43462,7 +43470,7 @@
         {
           "id": "grammar-pattern-142",
           "primary": "～はずがない",
-          "reading": "",
+          "reading": "はずがない",
           "meaning": "~일 리가 없다",
           "exampleJa": "歴史に詳しい君が知らないはずがない。",
           "exampleEn": "",
@@ -43484,7 +43492,7 @@
         {
           "id": "grammar-pattern-143",
           "primary": "～ないといけない",
-          "reading": "",
+          "reading": "ないといけない",
           "meaning": "~(하)지 않으면 안된다",
           "exampleJa": "痛みがない時も薬を飲まないといけないのでしょうか。",
           "exampleEn": "",
@@ -43506,7 +43514,7 @@
         {
           "id": "grammar-pattern-144",
           "primary": "～なくて",
-          "reading": "",
+          "reading": "なくて",
           "meaning": "~(하)지 않아서",
           "exampleJa": "約束を守らなくて父にひどくしかられました。",
           "exampleEn": "",
@@ -43528,7 +43536,7 @@
         {
           "id": "grammar-pattern-145",
           "primary": "～なくてはならない（～なくちゃ）",
-          "reading": "",
+          "reading": "なくてはならないなくちゃ",
           "meaning": "~(하)지 않으면 안된다",
           "exampleJa": "急いで準備しなくちゃ。",
           "exampleEn": "",
@@ -43562,7 +43570,7 @@
         {
           "id": "grammar-pattern-146",
           "primary": "～なくなってから",
-          "reading": "",
+          "reading": "なくなってから",
           "meaning": "~않게 되고 나서",
           "exampleJa": "授業中に友達としゃべらなくなってからテストの点数が上がった。",
           "exampleEn": "",
@@ -43584,7 +43592,7 @@
         {
           "id": "grammar-pattern-147",
           "primary": "～なければならない",
-          "reading": "",
+          "reading": "なければならない",
           "meaning": "~(하)지 않으면 안된다",
           "exampleJa": "上司に報告する時は、話し方に気をつけなければならない。",
           "exampleEn": "",
@@ -43606,7 +43614,7 @@
         {
           "id": "grammar-pattern-148",
           "primary": "～ば",
-          "reading": "",
+          "reading": "ば",
           "meaning": "~(하)면",
           "exampleJa": "どの電車で行けばいちばん便利なのか知っていますか。",
           "exampleEn": "",
@@ -43628,7 +43636,7 @@
         {
           "id": "grammar-pattern-149",
           "primary": "～ば～ほど",
-          "reading": "",
+          "reading": "ばほど",
           "meaning": "~하면 할수록",
           "exampleJa": "考えれば考えるほどむずかしいね。",
           "exampleEn": "",
@@ -43658,7 +43666,7 @@
         {
           "id": "grammar-pattern-150",
           "primary": "～ばよかった",
-          "reading": "",
+          "reading": "ばよかった",
           "meaning": "~(할) 걸 그랬다",
           "exampleJa": "私も行けばよかった。",
           "exampleEn": "",
@@ -43680,7 +43688,7 @@
         {
           "id": "grammar-pattern-151",
           "primary": "～ばかりか",
-          "reading": "",
+          "reading": "ばかりか",
           "meaning": "~뿐만 아니라",
           "exampleJa": "親切な若者は道を教えてくれたばかりか荷物も運んでくれました。",
           "exampleEn": "",
@@ -43702,7 +43710,7 @@
         {
           "id": "grammar-pattern-152",
           "primary": "～さえ～ば",
-          "reading": "",
+          "reading": "さえば",
           "meaning": "~만 (한)다면",
           "exampleJa": "やせさえすればいいという考えはよくない。",
           "exampleEn": "",

@@ -599,6 +599,29 @@ rt {
   font-size: 13px;
 }
 
+.stage-preview-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.stage-preview-filter {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.stage-preview-filter.is-active {
+  background: rgba(20, 158, 163, 0.12);
+  border-color: rgba(20, 158, 163, 0.32);
+  color: var(--teal-deep);
+}
+
 .stage-preview-close {
   width: 38px;
   height: 38px;
@@ -615,6 +638,13 @@ rt {
   border: 1px solid var(--line);
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.82);
+}
+
+.stage-preview-empty {
+  padding: 22px 18px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
 }
 
 .stage-preview-table {

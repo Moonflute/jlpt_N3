@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "0.1.5";
+const APP_VERSION = "0.1.6";
 
 const GROUPS = [
   { id: "언지", title: "언지" },
@@ -510,6 +510,15 @@ function renderStagePreviewRows(track, items) {
     .join("");
 }
 
+function getFilteredStagePreviewItems(track, items) {
+  if (!state.stagePreview || state.stagePreview.filter !== "pending") {
+    return items;
+  }
+
+  const progress = getTrackProgress(track.id);
+  return items.filter((item) => progress.itemStates[item.id] !== "known");
+}
+
 function escapeHtml(value) {
   return String(value ?? "")
     .replaceAll("&", "&amp;")
@@ -715,6 +724,7 @@ function renderStage() {
 
   const previewStage = state.stagePreview ? stages[state.stagePreview.index] : null;
   const previewItems = previewStage ? getItemsForStage(track, previewStage.end) : [];
+  const filteredPreviewItems = getFilteredStagePreviewItems(track, previewItems);
   const previewTitle = track.mode === "kana_to_kanji"
     ? "히라가나 / 정답 표기"
     : track.mode === "synonym_pair"
@@ -755,12 +765,30 @@ function renderStage() {
           <div class="stage-preview-head">
             <div>
               <div class="stage-preview-title">${escapeHtml(track.title)} · ${escapeHtml(previewStage.label)} ${escapeHtml(previewStage.range)}</div>
-              <div class="stage-preview-subtitle">이 회독 범위에서 확인할 항목 목록</div>
+              <div class="stage-preview-subtitle">이 회독 범위에서 확인할 항목 목록 · ${filteredPreviewItems.length}개</div>
             </div>
             <button class="stage-preview-close" type="button" data-stage-preview-close aria-label="목록 닫기">\u2715</button>
           </div>
+          <div class="stage-preview-filters">
+            <button
+              class="stage-preview-filter${state.stagePreview.filter !== "pending" ? " is-active" : ""}"
+              type="button"
+              data-stage-preview-filter="all"
+            >
+              전체 목록
+            </button>
+            <button
+              class="stage-preview-filter${state.stagePreview.filter === "pending" ? " is-active" : ""}"
+              type="button"
+              data-stage-preview-filter="pending"
+            >
+              미완료만
+            </button>
+          </div>
           <div class="stage-preview-table-wrap">
-            <table class="stage-preview-table">
+            ${
+              filteredPreviewItems.length
+                ? `<table class="stage-preview-table">
               <thead>
                 <tr>
                   <th>${escapeHtml(previewTitle)}</th>
@@ -768,8 +796,10 @@ function renderStage() {
                   <th>메모 / 대상</th>
                 </tr>
               </thead>
-              <tbody>${renderStagePreviewRows(track, previewItems)}</tbody>
-            </table>
+              <tbody>${renderStagePreviewRows(track, filteredPreviewItems)}</tbody>
+            </table>`
+                : `<div class="stage-preview-empty">이 회독 범위에서 아직 미완료 항목이 없습니다.</div>`
+            }
           </div>
         </div>
       </div>`
@@ -1068,7 +1098,21 @@ function bindEvents() {
 
   document.querySelectorAll("[data-stage-preview]").forEach((button) => {
     button.addEventListener("click", () => {
-      state.stagePreview = { index: Number(button.dataset.stagePreview) };
+      state.stagePreview = { index: Number(button.dataset.stagePreview), filter: "all" };
+      render();
+    });
+  });
+
+  document.querySelectorAll("[data-stage-preview-filter]").forEach((button) => {
+    button.addEventListener("click", () => {
+      if (!state.stagePreview) {
+        return;
+      }
+
+      state.stagePreview = {
+        ...state.stagePreview,
+        filter: button.dataset.stagePreviewFilter === "pending" ? "pending" : "all",
+      };
       render();
     });
   });
