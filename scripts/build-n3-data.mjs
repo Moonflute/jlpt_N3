@@ -740,6 +740,21 @@ function shortDayLabel(dayTag) {
   return dayTag.split("::").pop() || dayTag;
 }
 
+function formatWordStageLabel(dayTag, part = "") {
+  const dayNumber = getDayNumber(dayTag);
+  const dayText = dayNumber ? `Day ${String(dayNumber).padStart(2, "0")}` : shortDayLabel(dayTag);
+
+  if (part === "A") {
+    return `${dayText} (1/2)`;
+  }
+
+  if (part === "B") {
+    return `${dayText} (2/2)`;
+  }
+
+  return dayText;
+}
+
 function buildWordStages(level, items) {
   const byDay = new Map();
 
@@ -765,7 +780,7 @@ function buildWordStages(level, items) {
 
       stages.push({
         id: `${dayLabel}-A`,
-        label: `${dayLabel}-A`,
+        label: formatWordStageLabel(dayTag, "A"),
         range: `${firstCount}개`,
         start: offset,
         end: offset + firstCount,
@@ -775,7 +790,7 @@ function buildWordStages(level, items) {
       if (secondCount > 0) {
         stages.push({
           id: `${dayLabel}-B`,
-          label: `${dayLabel}-B`,
+          label: formatWordStageLabel(dayTag, "B"),
           range: `${secondCount}개`,
           start: offset,
           end: offset + secondCount,
@@ -788,7 +803,7 @@ function buildWordStages(level, items) {
 
     stages.push({
       id: dayLabel,
-      label: dayLabel,
+      label: formatWordStageLabel(dayTag),
       range: `${dayItems.length}개`,
       start: offset,
       end: offset + dayItems.length,

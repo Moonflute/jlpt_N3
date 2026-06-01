@@ -1,6 +1,6 @@
 {
   "level": "N3",
-  "generatedAt": "2026-06-01T13:45:58.846Z",
+  "generatedAt": "2026-06-01T13:59:05.591Z",
   "stageSize": 25,
   "tracks": [
     {
@@ -85712,210 +85712,210 @@
       "stages": [
         {
           "id": "Day01-A",
-          "label": "Day01-A",
+          "label": "Day 01 (1/2)",
           "range": "38개",
           "start": 0,
           "end": 38
         },
         {
           "id": "Day01-B",
-          "label": "Day01-B",
+          "label": "Day 01 (2/2)",
           "range": "37개",
           "start": 38,
           "end": 75
         },
         {
           "id": "Day02-A",
-          "label": "Day02-A",
+          "label": "Day 02 (1/2)",
           "range": "38개",
           "start": 75,
           "end": 113
         },
         {
           "id": "Day02-B",
-          "label": "Day02-B",
+          "label": "Day 02 (2/2)",
           "range": "38개",
           "start": 113,
           "end": 151
         },
         {
           "id": "Day03-A",
-          "label": "Day03-A",
+          "label": "Day 03 (1/2)",
           "range": "38개",
           "start": 151,
           "end": 189
         },
         {
           "id": "Day03-B",
-          "label": "Day03-B",
+          "label": "Day 03 (2/2)",
           "range": "38개",
           "start": 189,
           "end": 227
         },
         {
           "id": "Day04-A",
-          "label": "Day04-A",
+          "label": "Day 04 (1/2)",
           "range": "38개",
           "start": 227,
           "end": 265
         },
         {
           "id": "Day04-B",
-          "label": "Day04-B",
+          "label": "Day 04 (2/2)",
           "range": "37개",
           "start": 265,
           "end": 302
         },
         {
           "id": "Day05-A",
-          "label": "Day05-A",
+          "label": "Day 05 (1/2)",
           "range": "39개",
           "start": 302,
           "end": 341
         },
         {
           "id": "Day05-B",
-          "label": "Day05-B",
+          "label": "Day 05 (2/2)",
           "range": "38개",
           "start": 341,
           "end": 379
         },
         {
           "id": "Day06-A",
-          "label": "Day06-A",
+          "label": "Day 06 (1/2)",
           "range": "38개",
           "start": 379,
           "end": 417
         },
         {
           "id": "Day06-B",
-          "label": "Day06-B",
+          "label": "Day 06 (2/2)",
           "range": "38개",
           "start": 417,
           "end": 455
         },
         {
           "id": "Day07-A",
-          "label": "Day07-A",
+          "label": "Day 07 (1/2)",
           "range": "37개",
           "start": 455,
           "end": 492
         },
         {
           "id": "Day07-B",
-          "label": "Day07-B",
+          "label": "Day 07 (2/2)",
           "range": "37개",
           "start": 492,
           "end": 529
         },
         {
           "id": "Day08-A",
-          "label": "Day08-A",
+          "label": "Day 08 (1/2)",
           "range": "38개",
           "start": 529,
           "end": 567
         },
         {
           "id": "Day08-B",
-          "label": "Day08-B",
+          "label": "Day 08 (2/2)",
           "range": "37개",
           "start": 567,
           "end": 604
         },
         {
           "id": "Day09-A",
-          "label": "Day09-A",
+          "label": "Day 09 (1/2)",
           "range": "40개",
           "start": 604,
           "end": 644
         },
         {
           "id": "Day09-B",
-          "label": "Day09-B",
+          "label": "Day 09 (2/2)",
           "range": "39개",
           "start": 644,
           "end": 683
         },
         {
           "id": "Day10-A",
-          "label": "Day10-A",
+          "label": "Day 10 (1/2)",
           "range": "37개",
           "start": 683,
           "end": 720
         },
         {
           "id": "Day10-B",
-          "label": "Day10-B",
+          "label": "Day 10 (2/2)",
           "range": "36개",
           "start": 720,
           "end": 756
         },
         {
           "id": "Day11-A",
-          "label": "Day11-A",
+          "label": "Day 11 (1/2)",
           "range": "40개",
           "start": 756,
           "end": 796
         },
         {
           "id": "Day11-B",
-          "label": "Day11-B",
+          "label": "Day 11 (2/2)",
           "range": "39개",
           "start": 796,
           "end": 835
         },
         {
           "id": "Day12-A",
-          "label": "Day12-A",
+          "label": "Day 12 (1/2)",
           "range": "40개",
           "start": 835,
           "end": 875
         },
         {
           "id": "Day12-B",
-          "label": "Day12-B",
+          "label": "Day 12 (2/2)",
           "range": "39개",
           "start": 875,
           "end": 914
         },
         {
           "id": "Day13-A",
-          "label": "Day13-A",
+          "label": "Day 13 (1/2)",
           "range": "39개",
           "start": 914,
           "end": 953
         },
         {
           "id": "Day13-B",
-          "label": "Day13-B",
+          "label": "Day 13 (2/2)",
           "range": "38개",
           "start": 953,
           "end": 991
         },
         {
           "id": "Day14-A",
-          "label": "Day14-A",
+          "label": "Day 14 (1/2)",
           "range": "39개",
           "start": 991,
           "end": 1030
         },
         {
           "id": "Day14-B",
-          "label": "Day14-B",
+          "label": "Day 14 (2/2)",
           "range": "38개",
           "start": 1030,
           "end": 1068
         },
         {
           "id": "Day15-A",
-          "label": "Day15-A",
+          "label": "Day 15 (1/2)",
           "range": "39개",
           "start": 1068,
           "end": 1107
         },
         {
           "id": "Day15-B",
-          "label": "Day15-B",
+          "label": "Day 15 (2/2)",
           "range": "38개",
           "start": 1107,
           "end": 1145
@@ -118162,210 +118162,210 @@
       "stages": [
         {
           "id": "Day16",
-          "label": "Day16",
+          "label": "Day 16",
           "range": "39개",
           "start": 0,
           "end": 39
         },
         {
           "id": "Day17",
-          "label": "Day17",
+          "label": "Day 17",
           "range": "39개",
           "start": 39,
           "end": 78
         },
         {
           "id": "Day18",
-          "label": "Day18",
+          "label": "Day 18",
           "range": "39개",
           "start": 78,
           "end": 117
         },
         {
           "id": "Day19",
-          "label": "Day19",
+          "label": "Day 19",
           "range": "39개",
           "start": 117,
           "end": 156
         },
         {
           "id": "Day20",
-          "label": "Day20",
+          "label": "Day 20",
           "range": "39개",
           "start": 156,
           "end": 195
         },
         {
           "id": "Day21",
-          "label": "Day21",
+          "label": "Day 21",
           "range": "39개",
           "start": 195,
           "end": 234
         },
         {
           "id": "Day22",
-          "label": "Day22",
+          "label": "Day 22",
           "range": "39개",
           "start": 234,
           "end": 273
         },
         {
           "id": "Day23",
-          "label": "Day23",
+          "label": "Day 23",
           "range": "39개",
           "start": 273,
           "end": 312
         },
         {
           "id": "Day24",
-          "label": "Day24",
+          "label": "Day 24",
           "range": "39개",
           "start": 312,
           "end": 351
         },
         {
           "id": "Day25",
-          "label": "Day25",
+          "label": "Day 25",
           "range": "39개",
           "start": 351,
           "end": 390
         },
         {
           "id": "Day26",
-          "label": "Day26",
+          "label": "Day 26",
           "range": "39개",
           "start": 390,
           "end": 429
         },
         {
           "id": "Day27",
-          "label": "Day27",
+          "label": "Day 27",
           "range": "39개",
           "start": 429,
           "end": 468
         },
         {
           "id": "Day28",
-          "label": "Day28",
+          "label": "Day 28",
           "range": "39개",
           "start": 468,
           "end": 507
         },
         {
           "id": "Day29",
-          "label": "Day29",
+          "label": "Day 29",
           "range": "39개",
           "start": 507,
           "end": 546
         },
         {
           "id": "Day30",
-          "label": "Day30",
+          "label": "Day 30",
           "range": "39개",
           "start": 546,
           "end": 585
         },
         {
           "id": "Day31",
-          "label": "Day31",
+          "label": "Day 31",
           "range": "39개",
           "start": 585,
           "end": 624
         },
         {
           "id": "Day32",
-          "label": "Day32",
+          "label": "Day 32",
           "range": "39개",
           "start": 624,
           "end": 663
         },
         {
           "id": "Day33",
-          "label": "Day33",
+          "label": "Day 33",
           "range": "39개",
           "start": 663,
           "end": 702
         },
         {
           "id": "Day34",
-          "label": "Day34",
+          "label": "Day 34",
           "range": "39개",
           "start": 702,
           "end": 741
         },
         {
           "id": "Day35",
-          "label": "Day35",
+          "label": "Day 35",
           "range": "39개",
           "start": 741,
           "end": 780
         },
         {
           "id": "Day36",
-          "label": "Day36",
+          "label": "Day 36",
           "range": "39개",
           "start": 780,
           "end": 819
         },
         {
           "id": "Day37",
-          "label": "Day37",
+          "label": "Day 37",
           "range": "39개",
           "start": 819,
           "end": 858
         },
         {
           "id": "Day38",
-          "label": "Day38",
+          "label": "Day 38",
           "range": "39개",
           "start": 858,
           "end": 897
         },
         {
           "id": "Day39",
-          "label": "Day39",
+          "label": "Day 39",
           "range": "39개",
           "start": 897,
           "end": 936
         },
         {
           "id": "Day40",
-          "label": "Day40",
+          "label": "Day 40",
           "range": "39개",
           "start": 936,
           "end": 975
         },
         {
           "id": "Day41",
-          "label": "Day41",
+          "label": "Day 41",
           "range": "39개",
           "start": 975,
           "end": 1014
         },
         {
           "id": "Day42",
-          "label": "Day42",
+          "label": "Day 42",
           "range": "39개",
           "start": 1014,
           "end": 1053
         },
         {
           "id": "Day43",
-          "label": "Day43",
+          "label": "Day 43",
           "range": "39개",
           "start": 1053,
           "end": 1092
         },
         {
           "id": "Day44",
-          "label": "Day44",
+          "label": "Day 44",
           "range": "39개",
           "start": 1092,
           "end": 1131
         },
         {
           "id": "Day45",
-          "label": "Day45",
+          "label": "Day 45",
           "range": "39개",
           "start": 1131,
           "end": 1170
@@ -122647,35 +122647,35 @@
       "stages": [
         {
           "id": "Day46",
-          "label": "Day46",
+          "label": "Day 46",
           "range": "39개",
           "start": 0,
           "end": 39
         },
         {
           "id": "Day47",
-          "label": "Day47",
+          "label": "Day 47",
           "range": "37개",
           "start": 39,
           "end": 76
         },
         {
           "id": "Day48",
-          "label": "Day48",
+          "label": "Day 48",
           "range": "36개",
           "start": 76,
           "end": 112
         },
         {
           "id": "Day49",
-          "label": "Day49",
+          "label": "Day 49",
           "range": "36개",
           "start": 112,
           "end": 148
         },
         {
           "id": "Day50",
-          "label": "Day50",
+          "label": "Day 50",
           "range": "37개",
           "start": 148,
           "end": 185

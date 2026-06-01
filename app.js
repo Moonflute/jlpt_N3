@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "0.1.7";
+const APP_VERSION = "0.1.8";
 
 const GROUPS = [
   { id: "언지", title: "언지" },
@@ -734,7 +734,7 @@ function renderStage() {
         return `
           <div class="stage-row">
             <button class="stage-button${index === progress.stageIndex ? " is-active" : ""}${completed ? " is-complete" : ""}" data-stage="${index}">
-              <div class="stage-button__title">${escapeHtml(stage.label)} ${escapeHtml(stage.range)}</div>
+              <div class="stage-button__title">${escapeHtml(stage.label)}</div>
               <div class="stage-button__meta">
                 <span>학습 범위 ${escapeHtml(stage.range)}</span>
                 ${completed ? '<span class="stage-badge">완료</span>' : ""}
