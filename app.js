@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "0.1.8";
+const APP_VERSION = "0.1.9";
 
 const GROUPS = [
   { id: "언지", title: "언지" },
@@ -73,6 +73,23 @@ function getStages(track) {
   });
 
   return stages;
+}
+
+function formatStageDisplayLabel(stage) {
+  const raw = String(stage?.label || stage?.id || "");
+  const splitMatch = raw.match(/^Day\s?(\d+)\s?\((1\/2|2\/2)\)$/i) || raw.match(/^Day(\d+)-([AB])$/i);
+  if (splitMatch) {
+    const dayNumber = String(splitMatch[1]).padStart(2, "0");
+    const part = splitMatch[2] === "A" ? "1/2" : splitMatch[2] === "B" ? "2/2" : splitMatch[2];
+    return `Day ${dayNumber} (${part})`;
+  }
+
+  const dayMatch = raw.match(/^Day\s?(\d+)$/i) || raw.match(/^Day(\d+)$/i);
+  if (dayMatch) {
+    return `Day ${String(dayMatch[1]).padStart(2, "0")}`;
+  }
+
+  return raw;
 }
 
 function getTrackProgress(trackId) {
@@ -734,7 +751,7 @@ function renderStage() {
         return `
           <div class="stage-row">
             <button class="stage-button${index === progress.stageIndex ? " is-active" : ""}${completed ? " is-complete" : ""}" data-stage="${index}">
-              <div class="stage-button__title">${escapeHtml(stage.label)}</div>
+              <div class="stage-button__title">${escapeHtml(formatStageDisplayLabel(stage))}</div>
               <div class="stage-button__meta">
                 <span>학습 범위 ${escapeHtml(stage.range)}</span>
                 ${completed ? '<span class="stage-badge">완료</span>' : ""}
@@ -772,7 +789,7 @@ function renderStage() {
           ? `<div class="modal-backdrop">
         <div class="modal-panel session-prompt stage-prompt">
           <div class="session-prompt__text">\uD559\uC2B5\uD55C \uD68C\uCC28\uC785\uB2C8\uB2E4. \uCD08\uAE30\uD654\uD558\uACE0 \uB2E4\uC2DC \uD559\uC2B5\uD558\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?</div>
-          <div class="stage-prompt__meta">${escapeHtml(state.stagePrompt.label)} ${escapeHtml(state.stagePrompt.range)}</div>
+          <div class="stage-prompt__meta">${escapeHtml(formatStageDisplayLabel(state.stagePrompt))} ${escapeHtml(state.stagePrompt.range)}</div>
           <div class="session-prompt__actions">
             <button class="prompt-button" data-stage-reset="yes">\uC608</button>
             <button class="prompt-button prompt-button--ghost" data-stage-reset="no">\uC544\uB2C8\uC624</button>
@@ -788,7 +805,7 @@ function renderStage() {
         <div class="modal-panel section-card stage-preview-modal">
           <div class="stage-preview-head">
             <div>
-              <div class="stage-preview-title">${escapeHtml(track.title)} · ${escapeHtml(previewStage.label)} ${escapeHtml(previewStage.range)}</div>
+              <div class="stage-preview-title">${escapeHtml(track.title)} · ${escapeHtml(formatStageDisplayLabel(previewStage))} ${escapeHtml(previewStage.range)}</div>
               <div class="stage-preview-subtitle">이 회독 범위에서 확인할 항목 목록 · ${filteredPreviewItems.length}개</div>
             </div>
             <button class="stage-preview-close" type="button" data-stage-preview-close aria-label="목록 닫기">\u2715</button>
