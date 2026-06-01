@@ -2,11 +2,23 @@ import fs from "node:fs";
 import path from "node:path";
 
 const rootDir = process.cwd();
-const sourcePath = path.join(rootDir, "_N3", "1 일본어___해커스 N3.txt");
+const sourceDir = path.join(rootDir, "_N3");
 const outputDir = path.join(rootDir, "data");
 const outputPath = path.join(outputDir, "n3.json");
 const overridePath = path.join(rootDir, "data", "furigana-overrides.json");
 const extraOverridePath = path.join(rootDir, "data", "furigana-overrides-extra.json");
+
+function findSourceFile(matcher) {
+  const entries = fs.readdirSync(sourceDir).filter((name) => name.endsWith(".txt"));
+  return entries.find(matcher) || "";
+}
+
+const sourceFileName = findSourceFile((name) => name.includes("해커스"));
+const vocabSourceFileName =
+  findSourceFile((name) => name !== sourceFileName && name.includes("JLPT")) ||
+  findSourceFile((name) => name !== sourceFileName);
+const sourcePath = path.join(sourceDir, sourceFileName);
+const vocabSourcePath = path.join(sourceDir, vocabSourceFileName);
 const READING_OVERRIDES = {
   "～に比べて": "～にくらべて",
   "～に加えて": "～にくわえて",
@@ -114,6 +126,30 @@ const TRACK_DEFS = {
   },
 };
 
+const WORD_TRACK_DEFS = {
+  N45: {
+    id: "word-n45",
+    group: "단어",
+    title: "N45",
+    description: "기초 단어를 Day 반 단위로 회독하는 트랙",
+    mode: "meaning_check",
+  },
+  N3: {
+    id: "word-n3",
+    group: "단어",
+    title: "N3",
+    description: "N3 단어를 Day 단위로 회독하는 트랙",
+    mode: "meaning_check",
+  },
+  katakana: {
+    id: "word-katakana",
+    group: "단어",
+    title: "가타가나",
+    description: "가타가나 어휘를 Day 단위로 회독하는 트랙",
+    mode: "meaning_check",
+  },
+};
+
 const KATAKANA_START = 0x30a1;
 const KATAKANA_END = 0x30f6;
 
@@ -138,11 +174,45 @@ function parseTsv(text) {
       c8: cols[7] ?? "",
       c11: cols[10] ?? "",
       c12: cols[11] ?? "",
+      c13: cols[12] ?? "",
       c14: cols[13] ?? "",
     });
   }
 
   return rows;
+}
+
+function parseTags(raw) {
+  return String(raw || "")
+    .replace(/^"|"$/g, "")
+    .split(/\s+/)
+    .filter(Boolean);
+}
+
+function extractDayTag(tags) {
+  return tags.find((tag) => /Day\d+/i.test(tag)) || "";
+}
+
+function getDayNumber(dayTag) {
+  const match = String(dayTag || "").match(/Day(\d+)/i);
+  return match ? Number(match[1]) : 0;
+}
+
+function extractWordLevel(tags) {
+  if (tags.some((tag) => tag.includes("#N45"))) {
+    return "N45";
+  }
+
+  if (tags.some((tag) => tag.includes("#N3"))) {
+    return "N3";
+  }
+
+  const dayNumber = getDayNumber(extractDayTag(tags));
+  if (dayNumber >= 46) {
+    return "katakana";
+  }
+
+  return "";
 }
 
 function isPlaceholderValue(text) {
@@ -631,7 +701,7 @@ function buildItem(track, row, index, candidateMap, overrides) {
     exampleKo: row.c8,
     note: row.c11,
     hint: row.c12,
-    sourceTag: row.c14,
+    sourceTag: row.c14 || row.c13,
     rubyParts,
   };
 
@@ -653,12 +723,123 @@ function buildItem(track, row, index, candidateMap, overrides) {
   return item;
 }
 
+function buildWordItem(track, row, index, candidateMap, overrides) {
+  const item = buildItem(track, row, index, candidateMap, overrides);
+  item.note = row.c12 || "";
+  item.hint = row.c11 || "";
+  item.tags = parseTags(row.c13 || row.c14);
+  item.dayTag = extractDayTag(item.tags);
+  return item;
+}
+
+function sortDayTags(tags) {
+  return [...tags].sort((left, right) => left.localeCompare(right, undefined, { numeric: true }));
+}
+
+function shortDayLabel(dayTag) {
+  return dayTag.split("::").pop() || dayTag;
+}
+
+function buildWordStages(level, items) {
+  const byDay = new Map();
+
+  for (const item of items) {
+    const dayTag = item.dayTag || "NO_DAY";
+    if (!byDay.has(dayTag)) {
+      byDay.set(dayTag, []);
+    }
+    byDay.get(dayTag).push(item);
+  }
+
+  const stages = [];
+  let offset = 0;
+
+  for (const dayTag of sortDayTags(byDay.keys())) {
+    const dayItems = byDay.get(dayTag);
+    const dayLabel = shortDayLabel(dayTag);
+
+    if (level === "N45") {
+      const splitIndex = Math.ceil(dayItems.length / 2);
+      const firstCount = splitIndex;
+      const secondCount = dayItems.length - splitIndex;
+
+      stages.push({
+        id: `${dayLabel}-A`,
+        label: `${dayLabel}-A`,
+        range: `${firstCount}개`,
+        start: offset,
+        end: offset + firstCount,
+      });
+      offset += firstCount;
+
+      if (secondCount > 0) {
+        stages.push({
+          id: `${dayLabel}-B`,
+          label: `${dayLabel}-B`,
+          range: `${secondCount}개`,
+          start: offset,
+          end: offset + secondCount,
+        });
+        offset += secondCount;
+      }
+
+      continue;
+    }
+
+    stages.push({
+      id: dayLabel,
+      label: dayLabel,
+      range: `${dayItems.length}개`,
+      start: offset,
+      end: offset + dayItems.length,
+    });
+    offset += dayItems.length;
+  }
+
+  return stages;
+}
+
+function buildWordTracks(rows, candidateMap, overrides) {
+  const bucketRows = {
+    N45: [],
+    N3: [],
+    katakana: [],
+  };
+
+  for (const row of rows) {
+    if (isPlaceholderValue(row.c2)) {
+      continue;
+    }
+
+    const tags = parseTags(row.c13 || row.c14);
+    const level = extractWordLevel(tags);
+    if (!level) {
+      continue;
+    }
+
+    bucketRows[level].push(row);
+  }
+
+  return Object.entries(WORD_TRACK_DEFS).map(([level, def]) => {
+    const items = bucketRows[level].map((row, index) => buildWordItem(def, row, index, candidateMap, overrides));
+    const stages = buildWordStages(level, items);
+    return {
+      ...def,
+      total: items.length,
+      items,
+      stages,
+    };
+  });
+}
+
 function main() {
   const text = fs.readFileSync(sourcePath, "utf8");
+  const vocabText = fs.readFileSync(vocabSourcePath, "utf8");
   const rows = parseTsv(text);
+  const vocabRows = parseTsv(vocabText);
   const tracks = [];
   const overrides = loadOverrides();
-  const candidateMap = buildExpandedCandidateMap(rows, overrides);
+  const candidateMap = buildExpandedCandidateMap([...rows, ...vocabRows], overrides);
 
   for (const [deck, def] of Object.entries(TRACK_DEFS)) {
     const trackRows = rows.filter((row) => row.deck === deck && !isPlaceholderValue(row.c2));
@@ -710,6 +891,8 @@ function main() {
       items,
     });
   }
+
+  tracks.push(...buildWordTracks(vocabRows, candidateMap, overrides));
 
   fs.mkdirSync(outputDir, { recursive: true });
   fs.writeFileSync(

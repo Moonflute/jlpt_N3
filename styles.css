@@ -64,6 +64,12 @@ button {
   justify-content: center;
 }
 
+.home-actions-stack {
+  width: min(520px, 100%);
+  display: grid;
+  gap: 14px;
+}
+
 .home-version {
   width: 100%;
   padding: 0 0 18px;
@@ -152,6 +158,11 @@ button {
   box-shadow: 0 12px 24px rgba(20, 158, 163, 0.1);
   text-align: center;
   padding: 18px 14px;
+}
+
+.big-button--single {
+  width: min(260px, 100%);
+  justify-self: center;
 }
 
 .big-button__title {

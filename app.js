@@ -1,11 +1,12 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "0.1.6";
+const APP_VERSION = "0.1.7";
 
 const GROUPS = [
   { id: "언지", title: "언지" },
   { id: "문법", title: "문법" },
   { id: "독해", title: "독해" },
   { id: "청해", title: "청해" },
+  { id: "단어", title: "단어" },
 ];
 
 const state = {
@@ -46,7 +47,12 @@ function getTracksByGroup(groupId) {
   return getTracks().filter((track) => track.group === groupId);
 }
 
-function getStages(total) {
+function getStages(track) {
+  if (Array.isArray(track.stages) && track.stages.length) {
+    return track.stages;
+  }
+
+  const total = track.total;
   const stageSize = state.dataset?.stageSize ?? 25;
   const stages = [];
   let end = stageSize;
@@ -148,17 +154,21 @@ function onSelectTrack(trackId) {
 }
 
 function getStageByIndex(track, index) {
-  const stages = getStages(track.total);
+  const stages = getStages(track);
   return stages[Math.min(index, stages.length - 1)];
 }
 
-function getStageKeyByEnd(track, end) {
-  return `${track.id}:${end}`;
+function getStageKeyByEnd(track, stageOrEnd) {
+  if (typeof stageOrEnd === "object" && stageOrEnd) {
+    return `${track.id}:${stageOrEnd.id ?? stageOrEnd.end}`;
+  }
+
+  return `${track.id}:${stageOrEnd}`;
 }
 
 function isStageCompleted(track, stage) {
   const progress = getTrackProgress(track.id);
-  return Boolean(progress.completedStages[getStageKeyByEnd(track, stage.end)]);
+  return Boolean(progress.completedStages[getStageKeyByEnd(track, stage)]);
 }
 
 function onSelectStage(index, options = {}) {
@@ -166,7 +176,7 @@ function onSelectStage(index, options = {}) {
   const progress = getTrackProgress(state.trackId);
   progress.stageIndex = index;
   const stage = getStageByIndex(track, index);
-  const stageKey = getStageKeyByEnd(track, stage.end);
+  const stageKey = getStageKeyByEnd(track, stage);
 
   if (isStageCompleted(track, stage) && !options.forceReset) {
     state.stagePrompt = { index, stageKey, label: stage.label, range: stage.range };
@@ -187,19 +197,23 @@ function onSelectStage(index, options = {}) {
 
 function getVisibleItems(track) {
   const progress = getTrackProgress(track.id);
-  const stages = getStages(track.total);
+  const stages = getStages(track);
   const stage = stages[Math.min(progress.stageIndex, stages.length - 1)];
-  return track.items.slice(0, stage.end);
+  return track.items.slice(stage.start ?? 0, stage.end);
 }
 
 function getItemsForStage(track, stageEnd) {
+  if (typeof stageEnd === "object" && stageEnd) {
+    return track.items.slice(stageEnd.start ?? 0, stageEnd.end);
+  }
+
   return track.items.slice(0, stageEnd);
 }
 
 function getStageKey(track) {
   const progress = getTrackProgress(track.id);
   const stage = getStageByIndex(track, progress.stageIndex);
-  return getStageKeyByEnd(track, stage.end);
+  return getStageKeyByEnd(track, stage);
 }
 
 function shuffleArray(items) {
@@ -653,20 +667,30 @@ function appShell(inner) {
 }
 
 function renderHome() {
-  const buttons = GROUPS.map(
+  const mainButtons = GROUPS.filter((group) => group.id !== "단어").map(
     (group) => `
       <button class="big-button" data-group="${group.id}">
         <div class="big-button__title">${group.title}</div>
       </button>
     `,
   ).join("");
+  const wordGroup = GROUPS.find((group) => group.id === "단어");
 
   return appShell(`
     <div class="title-block">
       <h1>JLPT N3 회독</h1>
     </div>
     <div class="home-actions">
-      <div class="grid-2">${buttons}</div>
+      <div class="home-actions-stack">
+        <div class="grid-2">${mainButtons}</div>
+        ${
+          wordGroup
+            ? `<button class="big-button big-button--single" data-group="${wordGroup.id}">
+          <div class="big-button__title">${wordGroup.title}</div>
+        </button>`
+            : ""
+        }
+      </div>
     </div>
     <div class="home-version">ver ${APP_VERSION}</div>
   `);
@@ -703,7 +727,7 @@ function renderTypes() {
 function renderStage() {
   const track = getTrack(state.trackId);
   const progress = getTrackProgress(track.id);
-  const stages = getStages(track.total);
+  const stages = getStages(track);
   const buttons = stages
     .map((stage, index) => {
       const completed = isStageCompleted(track, stage);
@@ -712,7 +736,7 @@ function renderStage() {
             <button class="stage-button${index === progress.stageIndex ? " is-active" : ""}${completed ? " is-complete" : ""}" data-stage="${index}">
               <div class="stage-button__title">${escapeHtml(stage.label)} ${escapeHtml(stage.range)}</div>
               <div class="stage-button__meta">
-                <span>누적 범위 ${escapeHtml(stage.range)}</span>
+                <span>학습 범위 ${escapeHtml(stage.range)}</span>
                 ${completed ? '<span class="stage-badge">완료</span>' : ""}
               </div>
             </button>
@@ -723,7 +747,7 @@ function renderStage() {
       .join("");
 
   const previewStage = state.stagePreview ? stages[state.stagePreview.index] : null;
-  const previewItems = previewStage ? getItemsForStage(track, previewStage.end) : [];
+  const previewItems = previewStage ? getItemsForStage(track, previewStage) : [];
   const filteredPreviewItems = getFilteredStagePreviewItems(track, previewItems);
   const previewTitle = track.mode === "kana_to_kanji"
     ? "히라가나 / 정답 표기"
@@ -811,7 +835,7 @@ function renderStage() {
 function renderStudy() {
   const track = getTrack(state.trackId);
   const progress = getTrackProgress(track.id);
-  const stages = getStages(track.total);
+  const stages = getStages(track);
   const stage = stages[Math.min(progress.stageIndex, stages.length - 1)];
   const session = getStageSession(track);
   const visibleItems = getVisibleItems(track);
