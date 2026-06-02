@@ -316,6 +316,29 @@ button {
   gap: 12px;
 }
 
+.study-mode-row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.study-mode-badge {
+  border: 1px solid rgba(20, 158, 163, 0.2);
+  border-radius: 999px;
+  padding: 6px 14px;
+  background: rgba(20, 158, 163, 0.08);
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.study-mode-badge.is-active {
+  background: rgba(20, 158, 163, 0.16);
+  color: var(--teal-deep);
+  border-color: rgba(20, 158, 163, 0.36);
+}
+
 .study-inline-meta {
   margin-top: 4px;
 }
@@ -821,6 +844,10 @@ rt {
 
 .session-prompt--complete {
   background: #f3fbf8;
+}
+
+.session-prompt--next {
+  background: #f5f8ff;
 }
 
 .session-prompt__text {

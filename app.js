@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "0.1.10";
+const APP_VERSION = "1.0.0";
 
 const GROUPS = [
   { id: "언지", title: "언지" },
@@ -17,6 +17,7 @@ const state = {
   stagePrompt: null,
   stagePreview: null,
   progressOverview: false,
+  continuousProgress: false,
   voicesLoaded: false,
   progress: loadProgress(),
   dataset: null,
@@ -152,20 +153,24 @@ function getTrackProgressScore(track) {
   return total ? known / total : 0;
 }
 
-function getPreferredStageIndex(track) {
+function getPreferredStageIndex(track, options = {}) {
   const progress = getTrackProgress(track.id);
   const stages = getStages(track);
+  const skipStageKey = options.skipStageKey || "";
 
   const activeIndex = stages.findIndex((stage) => {
     const stageKey = getStageKeyByEnd(track, stage);
-    return !progress.completedStages[stageKey] && progress.sessions?.[stageKey];
+    return stageKey !== skipStageKey && !progress.completedStages[stageKey] && progress.sessions?.[stageKey];
   });
 
   if (activeIndex >= 0) {
     return activeIndex;
   }
 
-  const incompleteIndex = stages.findIndex((stage) => !isStageCompleted(track, stage));
+  const incompleteIndex = stages.findIndex((stage) => {
+    const stageKey = getStageKeyByEnd(track, stage);
+    return stageKey !== skipStageKey && !isStageCompleted(track, stage);
+  });
   if (incompleteIndex >= 0) {
     return incompleteIndex;
   }
@@ -173,7 +178,9 @@ function getPreferredStageIndex(track) {
   return 0;
 }
 
-function getLeastProgressTarget() {
+function getLeastProgressTarget(options = {}) {
+  const skipTrackId = options.skipTrackId || "";
+  const skipStageKey = options.skipStageKey || "";
   const rankedGroups = GROUPS.map((group, index) => {
     const tracks = getTracksByGroup(group.id);
     const totals = tracks.reduce(
@@ -207,6 +214,16 @@ function getLeastProgressTarget() {
     return null;
   }
 
+  const hasRemainingStage = (track) =>
+    getStages(track).some((stage) => {
+      const stageKey = getStageKeyByEnd(track, stage);
+      if (track.id === skipTrackId && stageKey === skipStageKey) {
+        return false;
+      }
+
+      return !isStageCompleted(track, stage);
+    });
+
   const sortedTracks = [...targetGroup.tracks].sort((left, right) => {
     const leftScore = getTrackProgressScore(left);
     const rightScore = getTrackProgressScore(right);
@@ -218,15 +235,25 @@ function getLeastProgressTarget() {
     return left.title.localeCompare(right.title, "ko");
   });
 
-  const targetTrack = sortedTracks.find((track) => getTrackProgressScore(track) < 1) || sortedTracks[0];
+  const targetTrack =
+    sortedTracks.find((track) => hasRemainingStage(track) && getTrackProgressScore(track) < 1) ||
+    sortedTracks.find((track) => hasRemainingStage(track));
   if (!targetTrack) {
     return null;
   }
 
+  const stageIndex = getPreferredStageIndex(targetTrack, {
+    skipStageKey: targetTrack.id === skipTrackId ? skipStageKey : "",
+  });
+  const stage = getStages(targetTrack)[stageIndex];
+
   return {
     groupId: targetGroup.id,
     trackId: targetTrack.id,
-    stageIndex: getPreferredStageIndex(targetTrack),
+    stageIndex,
+    trackTitle: targetTrack.title,
+    stageLabel: formatStageDisplayLabel(stage),
+    stageRange: stage.range,
   };
 }
 
@@ -236,6 +263,7 @@ function continueLeastProgress() {
     return;
   }
 
+  state.continuousProgress = true;
   state.groupId = target.groupId;
   state.trackId = target.trackId;
   onSelectStage(target.stageIndex);
@@ -246,6 +274,7 @@ function currentRouteState() {
     route: state.route,
     groupId: state.groupId,
     trackId: state.trackId,
+    continuousProgress: state.continuousProgress,
   };
 }
 
@@ -253,6 +282,7 @@ function applyRouteState(routeState) {
   state.route = routeState.route ?? "home";
   state.groupId = routeState.groupId ?? null;
   state.trackId = routeState.trackId ?? null;
+  state.continuousProgress = Boolean(routeState.continuousProgress);
   state.reveal = {};
   state.stagePrompt = null;
   state.stagePreview = null;
@@ -276,6 +306,8 @@ function setRoute(route, payload = {}, options = {}) {
 }
 
 function onSelectGroup(groupId) {
+  state.continuousProgress = false;
+
   if (groupId === "독해" || groupId === "청해") {
     const track = getTracksByGroup(groupId)[0];
     state.groupId = groupId;
@@ -290,6 +322,7 @@ function onSelectGroup(groupId) {
 }
 
 function onSelectTrack(trackId) {
+  state.continuousProgress = false;
   state.trackId = trackId;
   setRoute("stage");
 }
@@ -454,9 +487,20 @@ function advanceCard(result) {
     session.pointer = getNextQueueIndex(track, session, session.pointer);
   } else {
     const retryIds = session.queueIds.filter((itemId) => session.statusMap[itemId] === "again");
-    session.prompt = retryIds.length
-      ? { type: "retry", itemIds: retryIds }
-      : { type: "complete" };
+    if (retryIds.length) {
+      session.prompt = { type: "retry", itemIds: retryIds };
+    } else if (state.continuousProgress) {
+      const stageKey = getStageKey(track);
+      const nextTarget = getLeastProgressTarget({
+        skipTrackId: track.id,
+        skipStageKey: stageKey,
+      });
+      session.prompt = nextTarget
+        ? { type: "next", target: nextTarget }
+        : { type: "complete" };
+    } else {
+      session.prompt = { type: "complete" };
+    }
   }
 
   saveProgress();
@@ -799,8 +843,32 @@ function handleCompletePrompt() {
   const progress = getTrackProgress(track.id);
   progress.completedStages[getStageKey(track)] = true;
   progress.sessions[getStageKey(track)] = null;
+  state.continuousProgress = false;
   saveProgress();
   setRoute("stage");
+}
+
+function handleNextProgressPrompt(shouldMove) {
+  const track = getTrack(state.trackId);
+  const progress = getTrackProgress(track.id);
+  const stageKey = getStageKey(track);
+  const session = getStageSession(track);
+  const target = session.prompt?.target ?? null;
+
+  progress.completedStages[stageKey] = true;
+  progress.sessions[stageKey] = null;
+
+  if (!shouldMove || !target) {
+    state.continuousProgress = false;
+    saveProgress();
+    setRoute("stage");
+    return;
+  }
+
+  saveProgress();
+  state.groupId = target.groupId;
+  state.trackId = target.trackId;
+  onSelectStage(target.stageIndex);
 }
 
 function appShell(inner) {
@@ -1130,6 +1198,11 @@ function renderStudy() {
       <button class="back-button" data-route="home">홈</button>
     </div>
     <div class="section-card">
+      <div class="study-mode-row">
+        <button class="study-mode-badge${state.continuousProgress ? " is-active" : ""}" type="button" data-continuous-toggle>
+          ${state.continuousProgress ? "[진행중]" : "[진행]"}
+        </button>
+      </div>
       <div class="study-head">
         <div>
           <h1 class="page-title page-title--study">${escapeHtml(track.title)}</h1>
@@ -1205,6 +1278,18 @@ function renderStudy() {
           <div class="session-prompt__text">완료했습니다!</div>
           <div class="session-prompt__actions">
             <button class="prompt-button" data-session-action="complete-ok">확인</button>
+          </div>
+        </div>`
+            : ""
+        }
+        ${
+          session.prompt?.type === "next"
+            ? `<div class="session-prompt session-prompt--next">
+          <div class="session-prompt__text">다음 진행 뭉치: ${escapeHtml(session.prompt.target.trackTitle)} · ${escapeHtml(session.prompt.target.stageLabel)}</div>
+          <div class="stage-prompt__meta">${escapeHtml(session.prompt.target.stageRange)} 이동하시겠습니까?</div>
+          <div class="session-prompt__actions">
+            <button class="prompt-button" data-session-action="next-yes">예</button>
+            <button class="prompt-button prompt-button--ghost" data-session-action="next-no">아니오</button>
           </div>
         </div>`
             : ""
@@ -1359,6 +1444,13 @@ function bindEvents() {
     button.addEventListener("click", continueLeastProgress);
   });
 
+  document.querySelectorAll("[data-continuous-toggle]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.continuousProgress = !state.continuousProgress;
+      render();
+    });
+  });
+
   document.querySelectorAll("[data-route]").forEach((button) => {
     button.addEventListener("click", () => {
       if (button.dataset.route === "home") {
@@ -1387,6 +1479,10 @@ function bindEvents() {
         handleRetryPrompt(true);
       } else if (button.dataset.sessionAction === "retry-no") {
         handleRetryPrompt(false);
+      } else if (button.dataset.sessionAction === "next-yes") {
+        handleNextProgressPrompt(true);
+      } else if (button.dataset.sessionAction === "next-no") {
+        handleNextProgressPrompt(false);
       } else if (button.dataset.sessionAction === "complete-ok") {
         handleCompletePrompt();
       }
