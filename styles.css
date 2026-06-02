@@ -51,10 +51,23 @@ button {
   gap: 12px;
 }
 
+.topbar--home {
+  justify-content: flex-end;
+  min-height: 42px;
+}
+
+.topbar__spacer {
+  flex: 1;
+}
+
 .title-block {
   text-align: center;
   width: 100%;
   padding-top: 28px;
+}
+
+.title-block--home {
+  padding-top: 8px;
 }
 
 .home-actions {
@@ -118,6 +131,18 @@ button {
   margin-left: auto;
 }
 
+.home-icon-button {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--teal-deep);
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+}
+
 .grid-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -158,6 +183,13 @@ button {
   box-shadow: 0 12px 24px rgba(20, 158, 163, 0.1);
   text-align: center;
   padding: 18px 14px;
+}
+
+.big-button--accent {
+  background: #eaf0ff;
+  color: #24406c;
+  border-color: #c6d5f7;
+  box-shadow: 0 12px 24px rgba(36, 64, 108, 0.12);
 }
 
 .big-button--single {
@@ -589,6 +621,83 @@ rt {
   display: flex;
   flex-direction: column;
   gap: 14px;
+}
+
+.progress-modal {
+  width: min(720px, calc(100vw - 28px));
+  max-height: min(82vh, 760px);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.progress-modal__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.progress-groups {
+  display: grid;
+  gap: 14px;
+  overflow: auto;
+}
+
+.progress-group {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.84);
+  padding: 14px;
+}
+
+.progress-group__title {
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--ink);
+}
+
+.progress-track-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.progress-track {
+  display: grid;
+  gap: 8px;
+}
+
+.progress-track__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.progress-track__title {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.progress-track__meta {
+  font-size: 12px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.progress-bar {
+  height: 10px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(20, 158, 163, 0.12);
+}
+
+.progress-bar__fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #27b7bf 0%, #108992 100%);
 }
 
 .stage-preview-head {

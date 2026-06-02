@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "0.1.9";
+const APP_VERSION = "0.1.10";
 
 const GROUPS = [
   { id: "언지", title: "언지" },
@@ -16,6 +16,7 @@ const state = {
   reveal: {},
   stagePrompt: null,
   stagePreview: null,
+  progressOverview: false,
   voicesLoaded: false,
   progress: loadProgress(),
   dataset: null,
@@ -119,6 +120,127 @@ function syncTrackTotals(progress) {
   progress.again = values.filter((value) => value === "again").length;
 }
 
+function getProgressOverviewGroups() {
+  return GROUPS.map((group) => {
+    const tracks = getTracksByGroup(group.id).map((track) => {
+      const progress = getTrackProgress(track.id);
+      const known = progress.known ?? 0;
+      const total = track.total ?? 0;
+      const percent = total ? Math.round((known / total) * 100) : 0;
+
+      return {
+        id: track.id,
+        title: track.title,
+        known,
+        total,
+        percent,
+      };
+    });
+
+    return {
+      id: group.id,
+      title: group.title,
+      tracks,
+    };
+  }).filter((group) => group.tracks.length);
+}
+
+function getTrackProgressScore(track) {
+  const progress = getTrackProgress(track.id);
+  const known = progress.known ?? 0;
+  const total = track.total ?? 0;
+  return total ? known / total : 0;
+}
+
+function getPreferredStageIndex(track) {
+  const progress = getTrackProgress(track.id);
+  const stages = getStages(track);
+
+  const activeIndex = stages.findIndex((stage) => {
+    const stageKey = getStageKeyByEnd(track, stage);
+    return !progress.completedStages[stageKey] && progress.sessions?.[stageKey];
+  });
+
+  if (activeIndex >= 0) {
+    return activeIndex;
+  }
+
+  const incompleteIndex = stages.findIndex((stage) => !isStageCompleted(track, stage));
+  if (incompleteIndex >= 0) {
+    return incompleteIndex;
+  }
+
+  return 0;
+}
+
+function getLeastProgressTarget() {
+  const rankedGroups = GROUPS.map((group, index) => {
+    const tracks = getTracksByGroup(group.id);
+    const totals = tracks.reduce(
+      (accumulator, track) => {
+        const progress = getTrackProgress(track.id);
+        accumulator.known += progress.known ?? 0;
+        accumulator.total += track.total ?? 0;
+        return accumulator;
+      },
+      { known: 0, total: 0 },
+    );
+
+    return {
+      id: group.id,
+      order: index,
+      tracks,
+      score: totals.total ? totals.known / totals.total : 0,
+    };
+  }).filter((group) => group.tracks.length);
+
+  rankedGroups.sort((left, right) => {
+    if (left.score !== right.score) {
+      return left.score - right.score;
+    }
+
+    return left.order - right.order;
+  });
+
+  const targetGroup = rankedGroups.find((group) => group.score < 1) || rankedGroups[0];
+  if (!targetGroup) {
+    return null;
+  }
+
+  const sortedTracks = [...targetGroup.tracks].sort((left, right) => {
+    const leftScore = getTrackProgressScore(left);
+    const rightScore = getTrackProgressScore(right);
+
+    if (leftScore !== rightScore) {
+      return leftScore - rightScore;
+    }
+
+    return left.title.localeCompare(right.title, "ko");
+  });
+
+  const targetTrack = sortedTracks.find((track) => getTrackProgressScore(track) < 1) || sortedTracks[0];
+  if (!targetTrack) {
+    return null;
+  }
+
+  return {
+    groupId: targetGroup.id,
+    trackId: targetTrack.id,
+    stageIndex: getPreferredStageIndex(targetTrack),
+  };
+}
+
+function continueLeastProgress() {
+  const target = getLeastProgressTarget();
+  if (!target) {
+    return;
+  }
+
+  state.groupId = target.groupId;
+  state.trackId = target.trackId;
+  onSelectStage(target.stageIndex);
+}
+
 function currentRouteState() {
   return {
     route: state.route,
@@ -134,6 +256,7 @@ function applyRouteState(routeState) {
   state.reveal = {};
   state.stagePrompt = null;
   state.stagePreview = null;
+  state.progressOverview = false;
 }
 
 function setRoute(route, payload = {}, options = {}) {
@@ -143,6 +266,7 @@ function setRoute(route, payload = {}, options = {}) {
   state.reveal = {};
   state.stagePrompt = null;
   state.stagePreview = null;
+  state.progressOverview = false;
 
   if (!options.skipHistory && !state.isPoppingState) {
     window.history.pushState(currentRouteState(), "");
@@ -684,32 +808,84 @@ function appShell(inner) {
 }
 
 function renderHome() {
-  const mainButtons = GROUPS.filter((group) => group.id !== "단어").map(
-    (group) => `
-      <button class="big-button" data-group="${group.id}">
-        <div class="big-button__title">${group.title}</div>
+  const homeButtons = [
+    ...GROUPS.map((group) => ({
+      kind: "group",
+      id: group.id,
+      title: group.title,
+    })),
+    {
+      kind: "continue",
+      id: "continue",
+      title: "진행",
+    },
+  ].map((button) => {
+    if (button.kind === "continue") {
+      return `
+        <button class="big-button big-button--accent" data-continue>
+          <div class="big-button__title">${button.title}</div>
+        </button>
+      `;
+    }
+
+    return `
+      <button class="big-button" data-group="${button.id}">
+        <div class="big-button__title">${button.title}</div>
       </button>
-    `,
-  ).join("");
-  const wordGroup = GROUPS.find((group) => group.id === "단어");
+    `;
+  }).join("");
+  const overviewGroups = getProgressOverviewGroups();
+  const overviewModal = state.progressOverview
+    ? `
+      <div class="modal-backdrop">
+        <div class="modal-panel section-card progress-modal">
+          <div class="progress-modal__head">
+            <div>
+              <div class="stage-preview-title">진행률</div>
+              <div class="stage-preview-subtitle">각 파트별 알고있음 기준 진행률</div>
+            </div>
+            <button class="stage-preview-close" type="button" data-progress-close aria-label="진행률 닫기">\u2715</button>
+          </div>
+          <div class="progress-groups">
+            ${overviewGroups.map((group) => `
+              <section class="progress-group">
+                <div class="progress-group__title">${escapeHtml(group.title)}</div>
+                <div class="progress-track-list">
+                  ${group.tracks.map((track) => `
+                    <div class="progress-track">
+                      <div class="progress-track__head">
+                        <div class="progress-track__title">${escapeHtml(track.title)}</div>
+                        <div class="progress-track__meta">${track.known}/${track.total} · ${track.percent}%</div>
+                      </div>
+                      <div class="progress-bar">
+                        <div class="progress-bar__fill" style="width: ${track.percent}%"></div>
+                      </div>
+                    </div>
+                  `).join("")}
+                </div>
+              </section>
+            `).join("")}
+          </div>
+        </div>
+      </div>
+    `
+    : "";
 
   return appShell(`
-    <div class="title-block">
+    <div class="topbar topbar--home">
+      <div class="topbar__spacer"></div>
+      <button class="home-icon-button" type="button" data-progress-open aria-label="진행률 보기">&#128202;</button>
+    </div>
+    <div class="title-block title-block--home">
       <h1>JLPT N3 회독</h1>
     </div>
     <div class="home-actions">
       <div class="home-actions-stack">
-        <div class="grid-2">${mainButtons}</div>
-        ${
-          wordGroup
-            ? `<button class="big-button big-button--single" data-group="${wordGroup.id}">
-          <div class="big-button__title">${wordGroup.title}</div>
-        </button>`
-            : ""
-        }
+        <div class="grid-2">${homeButtons}</div>
       </div>
     </div>
     <div class="home-version">ver ${APP_VERSION}</div>
+    ${overviewModal}
   `);
 }
 
@@ -1163,6 +1339,24 @@ function bindEvents() {
       state.stagePreview = null;
       render();
     });
+  });
+
+  document.querySelectorAll("[data-progress-open]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.progressOverview = true;
+      render();
+    });
+  });
+
+  document.querySelectorAll("[data-progress-close]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.progressOverview = false;
+      render();
+    });
+  });
+
+  document.querySelectorAll("[data-continue]").forEach((button) => {
+    button.addEventListener("click", continueLeastProgress);
   });
 
   document.querySelectorAll("[data-route]").forEach((button) => {
