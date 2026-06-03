@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "2.0.1";
+const APP_VERSION = "2.0.2";
 
 const LANGUAGES = [
   { id: "ja", title: "일본어", flag: "🇯🇵" },
@@ -28,6 +28,7 @@ const state = {
   progressOverview: false,
   continuousProgress: false,
   voicesLoaded: false,
+  backupNotice: "",
   progress: loadProgress(),
   dataset: null,
   error: "",
@@ -44,6 +45,74 @@ function loadProgress() {
 
 function saveProgress() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state.progress));
+}
+
+function buildProgressBackup() {
+  return {
+    app: "review-note",
+    version: APP_VERSION,
+    exportedAt: new Date().toISOString(),
+    storageKey: STORAGE_KEY,
+    progress: state.progress,
+  };
+}
+
+function exportProgress() {
+  try {
+    const backup = buildProgressBackup();
+    const blob = new Blob([JSON.stringify(backup, null, 2)], {
+      type: "application/json",
+    });
+    const date = backup.exportedAt.slice(0, 10);
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = `review-note-progress-${date}.json`;
+    document.body.append(anchor);
+    anchor.click();
+    anchor.remove();
+    URL.revokeObjectURL(url);
+    state.backupNotice = "진행기록을 백업했습니다.";
+    render();
+  } catch {
+    state.backupNotice = "백업 파일 생성에 실패했습니다.";
+    render();
+  }
+}
+
+function importProgress() {
+  const input = document.createElement("input");
+  input.type = "file";
+  input.accept = "application/json,.json";
+  input.addEventListener("change", async () => {
+    const file = input.files?.[0];
+    if (!file) {
+      return;
+    }
+
+    try {
+      const text = await file.text();
+      const parsed = JSON.parse(text);
+      if (!parsed || typeof parsed !== "object" || !parsed.progress || typeof parsed.progress !== "object") {
+        throw new Error("invalid");
+      }
+
+      const shouldReplace = window.confirm("현재 진행기록을 가져온 파일로 덮어쓸까요?");
+      if (!shouldReplace) {
+        return;
+      }
+
+      state.progress = parsed.progress;
+      saveProgress();
+      state.backupNotice = "진행기록을 불러왔습니다.";
+      render();
+    } catch {
+      state.backupNotice = "진행기록 불러오기에 실패했습니다.";
+      render();
+    }
+  });
+
+  input.click();
 }
 
 function getTracks() {
@@ -306,6 +375,7 @@ function applyRouteState(routeState) {
   state.stagePrompt = null;
   state.stagePreview = null;
   state.progressOverview = false;
+  state.backupNotice = "";
 }
 
 function setRoute(route, payload = {}, options = {}) {
@@ -317,6 +387,7 @@ function setRoute(route, payload = {}, options = {}) {
   state.stagePrompt = null;
   state.stagePreview = null;
   state.progressOverview = false;
+  state.backupNotice = "";
 
   if (!options.skipHistory && !state.isPoppingState) {
     window.history.pushState(currentRouteState(), "");
@@ -1088,7 +1159,27 @@ function renderHome() {
     `;
   }).join("");
 
+  const backupNotice = state.backupNotice
+    ? `
+      <div class="modal-backdrop">
+        <div class="modal-panel session-prompt session-prompt--modal">
+          <div class="session-prompt__text">${escapeHtml(state.backupNotice)}</div>
+          <div class="session-prompt__actions">
+            <button class="prompt-button" type="button" data-backup-notice-close>확인</button>
+          </div>
+        </div>
+      </div>
+    `
+    : "";
+
   return appShell(`
+    <div class="topbar topbar--home topbar--home-root">
+      <div class="topbar__spacer"></div>
+      <div class="home-utility-actions">
+        <button class="home-utility-button" type="button" data-export-progress>백업</button>
+        <button class="home-utility-button" type="button" data-import-progress>복원</button>
+      </div>
+    </div>
     <div class="title-block title-block--home title-block--home-root">
       <h1>회독노트</h1>
     </div>
@@ -1098,6 +1189,7 @@ function renderHome() {
       </div>
     </div>
     <div class="home-version">ver ${APP_VERSION}</div>
+    ${backupNotice}
   `);
 }
 
@@ -1689,6 +1781,21 @@ function bindEvents() {
 
   document.querySelectorAll("[data-continue]").forEach((button) => {
     button.addEventListener("click", continueLeastProgress);
+  });
+
+  document.querySelectorAll("[data-export-progress]").forEach((button) => {
+    button.addEventListener("click", exportProgress);
+  });
+
+  document.querySelectorAll("[data-import-progress]").forEach((button) => {
+    button.addEventListener("click", importProgress);
+  });
+
+  document.querySelectorAll("[data-backup-notice-close]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.backupNotice = "";
+      render();
+    });
   });
 
   document.querySelectorAll("[data-continuous-toggle]").forEach((button) => {
