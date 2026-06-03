@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "1.0.2";
+const APP_VERSION = "2.0.0 - beta";
 
 const GROUPS = [
   { id: "언지", title: "언지" },
@@ -1070,7 +1070,7 @@ function renderHome() {
       <button class="home-icon-button" type="button" data-progress-open aria-label="진행률 보기">&#128202;</button>
     </div>
     <div class="title-block title-block--home">
-      <h1>JLPT N3 회독</h1>
+      <h1>회독노트</h1>
     </div>
     <div class="home-actions">
       <div class="home-actions-stack">
@@ -1443,7 +1443,7 @@ function buildChoiceList(item) {
 function renderLoading() {
   return appShell(`
     <div class="title-block">
-      <h1>JLPT N3 회독</h1>
+      <h1>회독노트</h1>
     </div>
     <div class="section-card">
       <div class="muted-box">데이터를 불러오는 중입니다...</div>
@@ -1454,7 +1454,7 @@ function renderLoading() {
 function renderError() {
   return appShell(`
     <div class="title-block">
-      <h1>JLPT N3 회독</h1>
+      <h1>회독노트</h1>
     </div>
     <div class="section-card">
       <div class="muted-box">${escapeHtml(state.error || "데이터를 불러오지 못했습니다.")}</div>
