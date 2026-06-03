@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "2.0.2";
+const APP_VERSION = "2.0.3";
 
 const LANGUAGES = [
   { id: "ja", title: "일본어", flag: "🇯🇵" },
@@ -21,6 +21,7 @@ const state = {
   route: "home",
   languageId: null,
   groupId: null,
+  subgroupId: null,
   trackId: null,
   reveal: {},
   stagePrompt: null,
@@ -123,6 +124,46 @@ function getTrack(trackId) {
   return getTracks().find((track) => track.id === trackId) ?? null;
 }
 
+function getTrackDisplayTitle(track) {
+  if (!track) {
+    return "";
+  }
+
+  const englishWordTitles = {
+    "eng-word-green-main": "메인",
+    "eng-word-green-sub": "유의어",
+    "eng-word-yellow-core": "빈출",
+    "eng-word-yellow-basic": "기초",
+    "eng-word-yellow-800": "800",
+    "eng-word-yellow-900": "900",
+  };
+
+  return englishWordTitles[track.id] || track.title;
+}
+
+function getEnglishWordSubgroups() {
+  return [
+    { id: "green", title: "초록이" },
+    { id: "yellow", title: "노랭이" },
+  ];
+}
+
+function getTrackSubgroup(track) {
+  if (!track || (track.language ?? "ja") !== "en" || track.group !== "단어") {
+    return "";
+  }
+
+  if (track.id.startsWith("eng-word-green-")) {
+    return "green";
+  }
+
+  if (track.id.startsWith("eng-word-yellow-")) {
+    return "yellow";
+  }
+
+  return "";
+}
+
 function getLanguageGroups(languageId = state.languageId) {
   return GROUPS_BY_LANGUAGE[languageId] ?? [];
 }
@@ -133,6 +174,10 @@ function getTracksByLanguage(languageId = state.languageId) {
 
 function getTracksByGroup(groupId, languageId = state.languageId) {
   return getTracksByLanguage(languageId).filter((track) => track.group === groupId);
+}
+
+function getTracksBySubgroup(subgroupId, groupId = state.groupId, languageId = state.languageId) {
+  return getTracksByGroup(groupId, languageId).filter((track) => getTrackSubgroup(track) === subgroupId);
 }
 
 function getStages(track) {
@@ -337,7 +382,7 @@ function getLeastProgressTarget(options = {}, languageId = state.languageId) {
     groupId: targetGroup.id,
     trackId: targetTrack.id,
     stageIndex,
-    trackTitle: targetTrack.title,
+    trackTitle: getTrackDisplayTitle(targetTrack),
     stageLabel: formatStageDisplayLabel(stage),
     stageRange: stage.range,
   };
@@ -360,6 +405,7 @@ function currentRouteState() {
     route: state.route,
     languageId: state.languageId,
     groupId: state.groupId,
+    subgroupId: state.subgroupId,
     trackId: state.trackId,
     continuousProgress: state.continuousProgress,
   };
@@ -369,6 +415,7 @@ function applyRouteState(routeState) {
   state.route = routeState.route ?? "home";
   state.languageId = routeState.languageId ?? null;
   state.groupId = routeState.groupId ?? null;
+  state.subgroupId = routeState.subgroupId ?? null;
   state.trackId = routeState.trackId ?? null;
   state.continuousProgress = Boolean(routeState.continuousProgress);
   state.reveal = {};
@@ -382,6 +429,7 @@ function setRoute(route, payload = {}, options = {}) {
   state.route = route;
   state.languageId = payload.languageId ?? state.languageId;
   state.groupId = payload.groupId ?? state.groupId;
+  state.subgroupId = payload.subgroupId ?? state.subgroupId;
   state.trackId = payload.trackId ?? state.trackId;
   state.reveal = {};
   state.stagePrompt = null;
@@ -400,12 +448,14 @@ function onSelectLanguage(languageId) {
   state.continuousProgress = false;
   state.languageId = languageId;
   state.groupId = null;
+  state.subgroupId = null;
   state.trackId = null;
   setRoute("groups");
 }
 
 function onSelectGroup(groupId) {
   state.continuousProgress = false;
+  state.subgroupId = null;
 
   if (state.languageId === "ja" && (groupId === "독해" || groupId === "청해")) {
     const track = getTracksByGroup(groupId, state.languageId)[0];
@@ -415,8 +465,22 @@ function onSelectGroup(groupId) {
     return;
   }
 
+  if (state.languageId === "en" && groupId === "단어") {
+    state.groupId = groupId;
+    state.trackId = null;
+    setRoute("subgroups");
+    return;
+  }
+
   state.groupId = groupId;
   state.trackId = getTracksByGroup(groupId, state.languageId)[0]?.id ?? null;
+  setRoute("types");
+}
+
+function onSelectSubgroup(subgroupId) {
+  state.continuousProgress = false;
+  state.subgroupId = subgroupId;
+  state.trackId = getTracksBySubgroup(subgroupId)[0]?.id ?? null;
   setRoute("types");
 }
 
@@ -1243,7 +1307,7 @@ function renderGroups() {
                   ${group.tracks.map((track) => `
                     <div class="progress-track">
                       <div class="progress-track__head">
-                        <div class="progress-track__title">${escapeHtml(track.title)}</div>
+                        <div class="progress-track__title">${escapeHtml(getTrackDisplayTitle(track))}</div>
                         <div class="progress-track__meta">${track.known}/${track.total} · ${track.percent}%</div>
                       </div>
                       <div class="progress-bar">
@@ -1278,15 +1342,17 @@ function renderGroups() {
   `);
 }
 
-function renderTypes() {
-  const tracks = getTracksByGroup(state.groupId);
-  const buttons = tracks
-    .map((track) => {
-      const progress = getTrackProgress(track.id);
+function renderSubgroups() {
+  const buttons = getEnglishWordSubgroups()
+    .map((subgroup) => {
+      const tracks = getTracksBySubgroup(subgroup.id);
+      const total = tracks.reduce((sum, track) => sum + (track.total || 0), 0);
+      const known = tracks.reduce((sum, track) => sum + (getTrackProgress(track.id).known ?? 0), 0);
+
       return `
-        <button class="type-button${track.id === state.trackId ? " is-active" : ""}" data-track="${track.id}">
-          <div class="type-button__title">${escapeHtml(track.title)}</div>
-          <div class="type-button__meta">${track.total}개 · 알고있음 ${progress.known} · 공부하겠음 ${progress.again}</div>
+        <button class="type-button${subgroup.id === state.subgroupId ? " is-active" : ""}" data-subgroup="${subgroup.id}">
+          <div class="type-button__title">${escapeHtml(subgroup.title)}</div>
+          <div class="type-button__meta">${total}개 · 알고있음 ${known}</div>
         </button>
       `;
     })
@@ -1297,7 +1363,35 @@ function renderTypes() {
       <button class="back-button" data-route="groups">홈</button>
     </div>
     <div class="section-card">
-      <h1 class="page-title">${escapeHtml(state.groupId)}</h1>
+      <h1 class="page-title">단어</h1>
+      <p class="page-subtitle">교재를 먼저 고른 뒤 하위 분류로 들어갑니다.</p>
+    </div>
+    <div class="section-card">
+      <div class="type-list">${buttons}</div>
+    </div>
+  `);
+}
+
+function renderTypes() {
+  const tracks = state.subgroupId ? getTracksBySubgroup(state.subgroupId) : getTracksByGroup(state.groupId);
+  const buttons = tracks
+    .map((track) => {
+      const progress = getTrackProgress(track.id);
+      return `
+        <button class="type-button${track.id === state.trackId ? " is-active" : ""}" data-track="${track.id}">
+          <div class="type-button__title">${escapeHtml(getTrackDisplayTitle(track))}</div>
+          <div class="type-button__meta">${track.total}개 · 알고있음 ${progress.known} · 공부하겠음 ${progress.again}</div>
+        </button>
+      `;
+    })
+    .join("");
+
+  return appShell(`
+    <div class="topbar">
+      <button class="back-button" data-route="${state.subgroupId ? "subgroups" : "groups"}">홈</button>
+    </div>
+    <div class="section-card">
+      <h1 class="page-title">${escapeHtml(state.subgroupId ? getEnglishWordSubgroups().find((subgroup) => subgroup.id === state.subgroupId)?.title || state.groupId : state.groupId)}</h1>
       <p class="page-subtitle">유형 버튼을 눌러 회독 화면으로 이동합니다.</p>
     </div>
     <div class="section-card">
@@ -1342,7 +1436,7 @@ function renderStage() {
         <button class="back-button" data-route="groups">홈</button>
       </div>
     <div class="section-card">
-      <h1 class="page-title">${escapeHtml(track.title)}</h1>
+      <h1 class="page-title">${escapeHtml(getTrackDisplayTitle(track))}</h1>
       <p class="page-subtitle">${escapeHtml(track.description)}</p>
     </div>
     <div class="section-card">
@@ -1370,7 +1464,7 @@ function renderStage() {
         <div class="modal-panel section-card stage-preview-modal">
           <div class="stage-preview-head">
             <div>
-              <div class="stage-preview-title">${escapeHtml(track.title)} · ${escapeHtml(formatStageDisplayLabel(previewStage))} ${escapeHtml(previewStage.range)}</div>
+              <div class="stage-preview-title">${escapeHtml(getTrackDisplayTitle(track))} · ${escapeHtml(formatStageDisplayLabel(previewStage))} ${escapeHtml(previewStage.range)}</div>
               <div class="stage-preview-subtitle">이 회독 범위에서 확인할 항목 목록 · ${filteredPreviewItems.length}개</div>
             </div>
             <button class="stage-preview-close" type="button" data-stage-preview-close aria-label="목록 닫기">\u2715</button>
@@ -1548,7 +1642,7 @@ function renderStudy() {
       </div>
       <div class="study-head">
         <div>
-          <h1 class="page-title page-title--study">${escapeHtml(track.title)}</h1>
+          <h1 class="page-title page-title--study">${escapeHtml(getTrackDisplayTitle(track))}</h1>
           <div class="study-inline-meta">
             <span class="page-subtitle">${escapeHtml(modeText)}</span>
           </div>
@@ -1685,6 +1779,8 @@ function render() {
     app.innerHTML = renderHome();
   } else if (state.route === "groups") {
     app.innerHTML = renderGroups();
+  } else if (state.route === "subgroups") {
+    app.innerHTML = renderSubgroups();
   } else if (state.route === "types") {
     app.innerHTML = renderTypes();
   } else if (state.route === "stage") {
@@ -1727,6 +1823,10 @@ function bindEvents() {
 
   document.querySelectorAll("[data-group]").forEach((button) => {
     button.addEventListener("click", () => onSelectGroup(button.dataset.group));
+  });
+
+  document.querySelectorAll("[data-subgroup]").forEach((button) => {
+    button.addEventListener("click", () => onSelectSubgroup(button.dataset.subgroup));
   });
 
   document.querySelectorAll("[data-track]").forEach((button) => {
@@ -1808,9 +1908,11 @@ function bindEvents() {
   document.querySelectorAll("[data-route]").forEach((button) => {
     button.addEventListener("click", () => {
       if (button.dataset.route === "home") {
-        setRoute("home", { languageId: null, groupId: null, trackId: null });
+        setRoute("home", { languageId: null, groupId: null, subgroupId: null, trackId: null });
       } else if (button.dataset.route === "groups") {
-        setRoute("groups", { languageId: state.languageId, groupId: null, trackId: null });
+        setRoute("groups", { languageId: state.languageId, groupId: null, subgroupId: null, trackId: null });
+      } else if (button.dataset.route === "subgroups") {
+        setRoute("subgroups", { languageId: state.languageId, groupId: state.groupId, subgroupId: null, trackId: null });
       } else {
         setRoute("types");
       }
@@ -1865,7 +1967,7 @@ async function init() {
   window.addEventListener("popstate", (event) => {
     const routeState = event.state;
     state.isPoppingState = true;
-    applyRouteState(routeState ?? { route: "home", languageId: null, groupId: null, trackId: null });
+    applyRouteState(routeState ?? { route: "home", languageId: null, groupId: null, subgroupId: null, trackId: null });
     render();
     state.isPoppingState = false;
   });
