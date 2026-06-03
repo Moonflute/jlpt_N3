@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "1.0.0";
+const APP_VERSION = "1.0.1";
 
 const GROUPS = [
   { id: "언지", title: "언지" },
@@ -749,6 +749,125 @@ function renderRubyParts(parts, revealRuby, options = {}) {
     .join("");
 }
 
+function addTerm(target, value) {
+  const term = String(value || "").trim();
+  if (!term) {
+    return;
+  }
+
+  target.add(term);
+}
+
+function stripGrammarLabel(text) {
+  return String(text || "")
+    .replace(/\s*\(\d+\)\s*$/u, "")
+    .replace(/\s*\([^)]*\)\s*$/u, "")
+    .replace(/^[~\uFF5E\u301C]+\s*/u, "")
+    .trim();
+}
+
+function buildJapaneseVerbStem(term) {
+  const irregular = {
+    "\u3044\u3089\u3063\u3057\u3083\u308b": "\u3044\u3089\u3063\u3057\u3083\u3044",
+    "\u304f\u3060\u3055\u308b": "\u304f\u3060\u3055\u3044",
+    "\u306a\u3055\u308b": "\u306a\u3055\u3044",
+    "\u304a\u3063\u3057\u3083\u308b": "\u304a\u3063\u3057\u3083\u3044",
+    "\u3054\u3056\u308b": "\u3054\u3056\u3044",
+  };
+
+  if (irregular[term]) {
+    return irregular[term];
+  }
+
+  if (term.endsWith("\u3059\u308b")) {
+    return `${term.slice(0, -2)}\u3057`;
+  }
+
+  if (term.endsWith("\u304f\u308b")) {
+    return `${term.slice(0, -2)}\u304d`;
+  }
+
+  if (term.endsWith("\u308b")) {
+    const ichidanLike = /[\u3048\u3051\u3052\u305b\u305c\u3066\u3067\u306d\u3078\u3079\u307a\u3081\u308c\u3044\u304d\u304e\u3057\u3058\u3061\u3062\u306b\u3072\u3073\u3074\u307f\u308a]\u308b$/u.test(term);
+    if (ichidanLike) {
+      return term.slice(0, -1);
+    }
+  }
+
+  const godanMap = {
+    "\u3046": "\u3044",
+    "\u304f": "\u304d",
+    "\u3050": "\u304e",
+    "\u3059": "\u3057",
+    "\u3064": "\u3061",
+    "\u306c": "\u306b",
+    "\u3076": "\u3073",
+    "\u3080": "\u307f",
+    "\u308b": "\u308a",
+  };
+
+  const last = term.slice(-1);
+  if (godanMap[last]) {
+    return `${term.slice(0, -1)}${godanMap[last]}`;
+  }
+
+  return "";
+}
+
+function buildGrammarHighlightTerms(item) {
+  const terms = new Set();
+  const raw = String(item.primary || "").trim();
+  if (!raw) {
+    return [];
+  }
+
+  addTerm(terms, stripGrammarLabel(raw));
+
+  const plusMatch = raw.match(/\+\s*(.+)$/u);
+  if (plusMatch) {
+    addTerm(terms, stripGrammarLabel(plusMatch[1]));
+  }
+
+  const noLeadWave = stripGrammarLabel(raw).replace(/^[~\uFF5E\u301C]+\s*/u, "");
+  addTerm(terms, noLeadWave);
+  addTerm(terms, stripGrammarLabel(item.reading || ""));
+
+  for (const base of [...terms]) {
+    addTerm(terms, base.replace(/\s+/gu, ""));
+
+    if (base.endsWith("\u3060")) {
+      addTerm(terms, `${base.slice(0, -1)}\u3067\u3059`);
+      addTerm(terms, `${base.slice(0, -1)}\u3067\u3057\u305f`);
+    }
+
+    if (base.includes("\u3066\u3044\u308b")) {
+      addTerm(terms, base.replace("\u3066\u3044\u308b", "\u3066\u304a\u308a"));
+      addTerm(terms, base.replace("\u3066\u3044\u308b", "\u3066\u304a\u308a\u307e\u3059"));
+      addTerm(terms, base.replace("\u3066\u3044\u308b", "\u3066\u3044\u307e\u3059"));
+    }
+
+    const stem = buildJapaneseVerbStem(base);
+    if (stem) {
+      addTerm(terms, stem);
+      addTerm(terms, `${stem}\u307e\u3059`);
+      addTerm(terms, `${stem}\u307e\u3057\u305f`);
+      addTerm(terms, `${stem}\u307e\u3057\u3087\u3046`);
+      addTerm(terms, `${stem}\u305f\u3044`);
+      addTerm(terms, `${stem}\u305f`);
+      addTerm(terms, `${stem}\u3066`);
+    }
+
+    for (let cut = 1; cut <= 3; cut += 1) {
+      const shortened = base.slice(0, Math.max(0, base.length - cut));
+      if (shortened.length >= 2 || /[\u3400-\u4dbf\u4e00-\u9fff]/u.test(shortened)) {
+        addTerm(terms, shortened);
+      }
+    }
+  }
+
+  return [...terms].filter(Boolean).sort((left, right) => right.length - left.length);
+}
+
 function getExampleTerms(track, item) {
   const terms = new Set();
 
@@ -762,6 +881,12 @@ function getExampleTerms(track, item) {
 
   if (track.mode === "synonym_pair" && item.pairText) {
     terms.add(item.pairText);
+  }
+
+  if (track.id?.startsWith("grammar-")) {
+    for (const term of buildGrammarHighlightTerms(item)) {
+      addTerm(terms, term);
+    }
   }
 
   return [...terms].filter(Boolean).sort((left, right) => right.length - left.length);
