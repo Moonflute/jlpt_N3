@@ -491,11 +491,15 @@ button {
   max-width: 620px;
   color: var(--muted);
   line-height: 1.55;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .card-example {
   min-height: 38px;
+}
+
+.card-example--ko {
+  font-size: 14px;
 }
 
 .example-highlight {
@@ -619,6 +623,10 @@ rt {
   border-radius: 18px;
   background: #f9fbfc;
   border: 1px solid var(--line);
+}
+
+.session-prompt--modal {
+  margin-top: 0;
 }
 
 .modal-backdrop {

@@ -1,4 +1,4 @@
-const CACHE_NAME = "jlpt-n3-review-v13";
+const CACHE_NAME = "jlpt-n3-review-v14";
 const CORE_ASSETS = [
   "./",
   "./index.html",

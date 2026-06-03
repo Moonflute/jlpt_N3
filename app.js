@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "1.0.1";
+const APP_VERSION = "1.0.2";
 
 const GROUPS = [
   { id: "언지", title: "언지" },
@@ -1317,6 +1317,18 @@ function renderStudy() {
     (action) => action.key === "example" || action.key === "exampleKo",
   );
   const isPromptOpen = Boolean(session.prompt);
+  const retryPromptModal =
+    session.prompt?.type === "retry"
+      ? `<div class="modal-backdrop">
+        <div class="modal-panel session-prompt session-prompt--modal">
+          <div class="session-prompt__text">공부하겠음을 누른 단어들만 다시 띄울까요?</div>
+          <div class="session-prompt__actions">
+            <button class="prompt-button" data-session-action="retry-yes">예</button>
+            <button class="prompt-button prompt-button--ghost" data-session-action="retry-no">아니오</button>
+          </div>
+        </div>
+      </div>`
+      : "";
 
   return appShell(`
     <div class="topbar">
@@ -1387,17 +1399,6 @@ function renderStudy() {
           <button class="decision-button decision-button--known" data-decision="known"${isPromptOpen ? " disabled" : ""}>알고있음</button>
         </div>
         ${
-          session.prompt?.type === "retry"
-            ? `<div class="session-prompt">
-          <div class="session-prompt__text">공부하겠음을 누른 단어들만 다시 띄울까요?</div>
-          <div class="session-prompt__actions">
-            <button class="prompt-button" data-session-action="retry-yes">예</button>
-            <button class="prompt-button prompt-button--ghost" data-session-action="retry-no">아니오</button>
-          </div>
-        </div>`
-            : ""
-        }
-        ${
           session.prompt?.type === "complete"
             ? `<div class="session-prompt session-prompt--complete">
           <div class="session-prompt__text">완료했습니다!</div>
@@ -1421,6 +1422,7 @@ function renderStudy() {
         }
       </div>
     </div>
+    ${retryPromptModal}
   `);
 }
 
