@@ -52,7 +52,7 @@ button {
 }
 
 .topbar--home {
-  justify-content: flex-end;
+  justify-content: space-between;
   min-height: 42px;
 }
 
@@ -70,11 +70,20 @@ button {
   padding-top: 8px;
 }
 
+.title-block--home-root {
+  padding-top: 18px;
+}
+
 .home-actions {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.home-actions--root {
+  align-items: flex-start;
+  padding-top: 48px;
 }
 
 .home-actions-stack {
@@ -127,6 +136,10 @@ button {
   cursor: pointer;
 }
 
+.back-button--ghost {
+  background: rgba(255, 255, 255, 0.72);
+}
+
 .home-button {
   margin-left: auto;
 }
@@ -149,6 +162,10 @@ button {
   gap: 14px;
   width: min(520px, 100%);
   margin: 0 auto;
+}
+
+.grid-2--languages {
+  width: min(440px, 100%);
 }
 
 .big-button,
@@ -185,6 +202,13 @@ button {
   padding: 18px 14px;
 }
 
+.big-button--language {
+  min-height: 164px;
+  display: grid;
+  place-items: center;
+  gap: 10px;
+}
+
 .big-button--accent {
   background: #eaf0ff;
   color: #24406c;
@@ -200,6 +224,11 @@ button {
 .big-button__title {
   font-size: clamp(24px, 5vw, 28px);
   font-weight: 900;
+}
+
+.big-button__flag {
+  font-size: clamp(30px, 7vw, 40px);
+  line-height: 1;
 }
 
 .big-button__desc {

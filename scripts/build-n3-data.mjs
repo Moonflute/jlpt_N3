@@ -3,6 +3,7 @@ import path from "node:path";
 
 const rootDir = process.cwd();
 const sourceDir = path.join(rootDir, "_N3");
+const englishSourceDir = path.join(rootDir, "_Eng");
 const outputDir = path.join(rootDir, "data");
 const outputPath = path.join(outputDir, "n3.json");
 const overridePath = path.join(rootDir, "data", "furigana-overrides.json");
@@ -17,8 +18,12 @@ const sourceFileName = findSourceFile((name) => name.includes("해커스"));
 const vocabSourceFileName =
   findSourceFile((name) => name !== sourceFileName && name.includes("JLPT")) ||
   findSourceFile((name) => name !== sourceFileName);
+const englishSourceFileName = fs.existsSync(englishSourceDir)
+  ? fs.readdirSync(englishSourceDir).find((name) => name.endsWith(".txt")) || ""
+  : "";
 const sourcePath = path.join(sourceDir, sourceFileName);
 const vocabSourcePath = path.join(sourceDir, vocabSourceFileName);
+const englishSourcePath = path.join(englishSourceDir, englishSourceFileName);
 const READING_OVERRIDES = {
   "～に比べて": "～にくらべて",
   "～に加えて": "～にくわえて",
@@ -49,6 +54,7 @@ const READING_OVERRIDES = {
 const TRACK_DEFS = {
   "1 일본어::_해커스 N3::1 언지::문제 1 (한자읽기)": {
     id: "gengo-q1",
+    language: "ja",
     group: "언지",
     title: "문제 1 한자읽기",
     description: "한자를 보고 정확한 읽기를 떠올리는 연습",
@@ -56,6 +62,7 @@ const TRACK_DEFS = {
   },
   "1 일본어::_해커스 N3::1 언지::문제 2 (한자표기)": {
     id: "gengo-q2",
+    language: "ja",
     group: "언지",
     title: "문제 2 한자표기",
     description: "히라가나를 보고 알맞은 한자 표기를 구분하는 연습",
@@ -63,6 +70,7 @@ const TRACK_DEFS = {
   },
   "1 일본어::_해커스 N3::1 언지::문제 3 (문맥 규정)": {
     id: "gengo-q3",
+    language: "ja",
     group: "언지",
     title: "문제 3 문맥 규정",
     description: "문맥 속 의미를 빠르게 판별하는 연습",
@@ -70,6 +78,7 @@ const TRACK_DEFS = {
   },
   "1 일본어::_해커스 N3::1 언지::문제 4 (유의 표현)": {
     id: "gengo-q4",
+    language: "ja",
     group: "언지",
     title: "문제 4 유의 표현",
     description: "유의어 쌍을 양방향으로 익히는 연습",
@@ -77,6 +86,7 @@ const TRACK_DEFS = {
   },
   "1 일본어::_해커스 N3::1 언지::문제 5 (용법)": {
     id: "gengo-q5",
+    language: "ja",
     group: "언지",
     title: "문제 5 용법",
     description: "의미와 쓰임을 함께 확인하는 연습",
@@ -84,6 +94,7 @@ const TRACK_DEFS = {
   },
   "1 일본어::_해커스 N3::2 문법 ⭐::1 품사": {
     id: "grammar-pos",
+    language: "ja",
     group: "문법",
     title: "품사",
     description: "품사와 의미를 같이 익히는 연습",
@@ -91,6 +102,7 @@ const TRACK_DEFS = {
   },
   "1 일본어::_해커스 N3::2 문법 ⭐::2 표현": {
     id: "grammar-expression",
+    language: "ja",
     group: "문법",
     title: "표현",
     description: "비슷한 표현의 차이를 구분하는 연습",
@@ -98,6 +110,7 @@ const TRACK_DEFS = {
   },
   "1 일본어::_해커스 N3::2 문법 ⭐::2 표현::특수경어": {
     id: "grammar-sonkeigo",
+    language: "ja",
     group: "문법",
     title: "특수경어",
     description: "존경어와 겸양어를 표현 단위로 익히는 연습",
@@ -105,6 +118,7 @@ const TRACK_DEFS = {
   },
   "1 일본어::_해커스 N3::2 문법 ⭐::3 문형": {
     id: "grammar-pattern",
+    language: "ja",
     group: "문법",
     title: "문형",
     description: "문형의 의미와 접속을 묶어서 외우는 연습",
@@ -112,6 +126,7 @@ const TRACK_DEFS = {
   },
   "1 일본어::_해커스 N3::3 독해": {
     id: "reading",
+    language: "ja",
     group: "독해",
     title: "독해 회독",
     description: "지문 기반 어휘를 누적 회독하는 트랙",
@@ -119,6 +134,7 @@ const TRACK_DEFS = {
   },
   "1 일본어::_해커스 N3::4 청해 단어 ⭐": {
     id: "listening",
+    language: "ja",
     group: "청해",
     title: "청해 회독",
     description: "청해 단어를 누적 회독하는 트랙",
@@ -129,6 +145,7 @@ const TRACK_DEFS = {
 const WORD_TRACK_DEFS = {
   N45: {
     id: "word-n45",
+    language: "ja",
     group: "단어",
     title: "N45",
     description: "기초 단어를 Day 반 단위로 회독하는 트랙",
@@ -136,6 +153,7 @@ const WORD_TRACK_DEFS = {
   },
   N3: {
     id: "word-n3",
+    language: "ja",
     group: "단어",
     title: "N3",
     description: "N3 단어를 Day 단위로 회독하는 트랙",
@@ -143,12 +161,70 @@ const WORD_TRACK_DEFS = {
   },
   katakana: {
     id: "word-katakana",
+    language: "ja",
     group: "단어",
     title: "가타가나",
     description: "가타가나 어휘를 Day 단위로 회독하는 트랙",
     mode: "meaning_check",
   },
 };
+
+const ENGLISH_WORD_TRACK_DEFS = [
+  {
+    deck: "2 영어::단어::Hackers 초록이::main",
+    id: "eng-word-green-main",
+    language: "en",
+    group: "단어",
+    title: "초록이 메인",
+    description: "해커스 초록이 메인 단어를 Day 단위로 회독하는 트랙",
+    mode: "meaning_check",
+  },
+  {
+    deck: "2 영어::단어::Hackers 초록이::sub",
+    id: "eng-word-green-sub",
+    language: "en",
+    group: "단어",
+    title: "초록이 유의어",
+    description: "해커스 초록이 유의어/반의어 단어를 Day 단위로 회독하는 트랙",
+    mode: "meaning_check",
+  },
+  {
+    deck: "2 영어::단어::Hackers 노랭이::1 빈출단어",
+    id: "eng-word-yellow-core",
+    language: "en",
+    group: "단어",
+    title: "노랭이 빈출",
+    description: "해커스 노랭이 빈출단어를 Day 단위로 회독하는 트랙",
+    mode: "meaning_check",
+  },
+  {
+    deck: "2 영어::단어::Hackers 노랭이::2 기초단어",
+    id: "eng-word-yellow-basic",
+    language: "en",
+    group: "단어",
+    title: "노랭이 기초",
+    description: "해커스 노랭이 기초단어를 Day 단위로 회독하는 트랙",
+    mode: "meaning_check",
+  },
+  {
+    deck: "2 영어::단어::Hackers 노랭이::3 800단어",
+    id: "eng-word-yellow-800",
+    language: "en",
+    group: "단어",
+    title: "노랭이 800",
+    description: "해커스 노랭이 800단어를 Day 단위로 회독하는 트랙",
+    mode: "meaning_check",
+  },
+  {
+    deck: "2 영어::단어::Hackers 노랭이::4 900단어",
+    id: "eng-word-yellow-900",
+    language: "en",
+    group: "단어",
+    title: "노랭이 900",
+    description: "해커스 노랭이 900단어를 Day 단위로 회독하는 트랙",
+    mode: "meaning_check",
+  },
+];
 
 const KATAKANA_START = 0x30a1;
 const KATAKANA_END = 0x30f6;
@@ -182,6 +258,35 @@ function parseTsv(text) {
   return rows;
 }
 
+function parseEnglishTsv(text) {
+  const rows = [];
+  const lines = text.split(/\r?\n/);
+
+  for (const line of lines) {
+    if (!line || line.startsWith("#")) {
+      continue;
+    }
+
+    const cols = line.split("\t");
+    rows.push({
+      deck: cols[0] ?? "",
+      c2: cols[1] ?? "",
+      c3: cols[2] ?? "",
+      c4: cols[3] ?? "",
+      c5: cols[4] ?? "",
+      c6: cols[5] ?? "",
+      c7: cols[6] ?? "",
+      c8: cols[7] ?? "",
+      c11: cols[8] ?? "",
+      c12: cols[9] ?? "",
+      c13: cols[10] ?? "",
+      c14: "",
+    });
+  }
+
+  return rows;
+}
+
 function parseTags(raw) {
   return String(raw || "")
     .replace(/^"|"$/g, "")
@@ -190,11 +295,11 @@ function parseTags(raw) {
 }
 
 function extractDayTag(tags) {
-  return tags.find((tag) => /Day\d+/i.test(tag)) || "";
+  return tags.find((tag) => /Day[_ ]?\d+/i.test(tag)) || "";
 }
 
 function getDayNumber(dayTag) {
-  const match = String(dayTag || "").match(/Day(\d+)/i);
+  const match = String(dayTag || "").match(/Day[_ ]?(\d+)/i);
   return match ? Number(match[1]) : 0;
 }
 
@@ -847,11 +952,98 @@ function buildWordTracks(rows, candidateMap, overrides) {
   });
 }
 
+function makePlainRubyParts(text) {
+  return [{ base: text || "", ruby: "" }];
+}
+
+function formatEnglishDayStageLabel(dayTag) {
+  const raw = shortDayLabel(dayTag);
+  const topicMatch = raw.match(/^Day(\d+)_(.+)$/i);
+  if (topicMatch) {
+    return `Day ${String(topicMatch[1]).padStart(2, "0")} · ${topicMatch[2]}`;
+  }
+
+  const underscoredDayMatch = raw.match(/^Day_(\d+)$/i);
+  if (underscoredDayMatch) {
+    return `Day ${String(underscoredDayMatch[1]).padStart(2, "0")}`;
+  }
+
+  const dayMatch = raw.match(/^Day(\d+)$/i);
+  if (dayMatch) {
+    return `Day ${String(dayMatch[1]).padStart(2, "0")}`;
+  }
+
+  return raw;
+}
+
+function buildEnglishWordItem(track, row, index) {
+  const tags = parseTags(row.c13 || row.c14);
+  return {
+    id: `${track.id}-${index + 1}`,
+    primary: row.c2,
+    reading: row.c2,
+    meaning: row.c3,
+    exampleJa: row.c4,
+    exampleKo: row.c5,
+    note: row.c6 || "",
+    hint: row.c7 || "",
+    sourceTag: row.c8 || "",
+    rubyParts: makePlainRubyParts(row.c2),
+    tags,
+    dayTag: extractDayTag(tags),
+  };
+}
+
+function buildEnglishWordStages(items) {
+  const byDay = new Map();
+
+  for (const item of items) {
+    const dayTag = item.dayTag || "NO_DAY";
+    if (!byDay.has(dayTag)) {
+      byDay.set(dayTag, []);
+    }
+    byDay.get(dayTag).push(item);
+  }
+
+  const stages = [];
+  let offset = 0;
+
+  for (const dayTag of sortDayTags(byDay.keys())) {
+    const dayItems = byDay.get(dayTag) || [];
+    stages.push({
+      id: shortDayLabel(dayTag),
+      label: formatEnglishDayStageLabel(dayTag),
+      range: `${dayItems.length}개`,
+      start: offset,
+      end: offset + dayItems.length,
+    });
+    offset += dayItems.length;
+  }
+
+  return stages;
+}
+
+function buildEnglishWordTracks(rows) {
+  return ENGLISH_WORD_TRACK_DEFS.map((def) => {
+    const trackRows = rows.filter((row) => row.deck === def.deck && row.c2);
+    const items = trackRows.map((row, index) => buildEnglishWordItem(def, row, index));
+    const stages = buildEnglishWordStages(items);
+    return {
+      ...def,
+      total: items.length,
+      items,
+      stages,
+    };
+  }).filter((track) => track.total > 0);
+}
+
 function main() {
   const text = fs.readFileSync(sourcePath, "utf8");
   const vocabText = fs.readFileSync(vocabSourcePath, "utf8");
+  const englishText = englishSourceFileName ? fs.readFileSync(englishSourcePath, "utf8") : "";
   const rows = parseTsv(text);
   const vocabRows = parseTsv(vocabText);
+  const englishRows = englishText ? parseEnglishTsv(englishText) : [];
   const tracks = [];
   const overrides = loadOverrides();
   const candidateMap = buildExpandedCandidateMap([...rows, ...vocabRows], overrides);
@@ -908,6 +1100,7 @@ function main() {
   }
 
   tracks.push(...buildWordTracks(vocabRows, candidateMap, overrides));
+  tracks.push(...buildEnglishWordTracks(englishRows));
 
   fs.mkdirSync(outputDir, { recursive: true });
   fs.writeFileSync(

@@ -1,16 +1,25 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "2.0.0 - beta";
+const APP_VERSION = "2.0.1";
 
-const GROUPS = [
-  { id: "언지", title: "언지" },
-  { id: "문법", title: "문법" },
-  { id: "독해", title: "독해" },
-  { id: "청해", title: "청해" },
-  { id: "단어", title: "단어" },
+const LANGUAGES = [
+  { id: "ja", title: "일본어", flag: "🇯🇵" },
+  { id: "en", title: "영어", flag: "🇺🇸" },
 ];
+
+const GROUPS_BY_LANGUAGE = {
+  ja: [
+    { id: "언지", title: "언지" },
+    { id: "문법", title: "문법" },
+    { id: "독해", title: "독해" },
+    { id: "청해", title: "청해" },
+    { id: "단어", title: "단어" },
+  ],
+  en: [{ id: "단어", title: "단어" }],
+};
 
 const state = {
   route: "home",
+  languageId: null,
   groupId: null,
   trackId: null,
   reveal: {},
@@ -45,8 +54,16 @@ function getTrack(trackId) {
   return getTracks().find((track) => track.id === trackId) ?? null;
 }
 
-function getTracksByGroup(groupId) {
-  return getTracks().filter((track) => track.group === groupId);
+function getLanguageGroups(languageId = state.languageId) {
+  return GROUPS_BY_LANGUAGE[languageId] ?? [];
+}
+
+function getTracksByLanguage(languageId = state.languageId) {
+  return getTracks().filter((track) => (track.language ?? "ja") === languageId);
+}
+
+function getTracksByGroup(groupId, languageId = state.languageId) {
+  return getTracksByLanguage(languageId).filter((track) => track.group === groupId);
 }
 
 function getStages(track) {
@@ -121,8 +138,8 @@ function syncTrackTotals(progress) {
   progress.again = values.filter((value) => value === "again").length;
 }
 
-function getProgressOverviewGroups() {
-  return GROUPS.map((group) => {
+function getProgressOverviewGroups(languageId = state.languageId) {
+  return getLanguageGroups(languageId).map((group) => {
     const tracks = getTracksByGroup(group.id).map((track) => {
       const progress = getTrackProgress(track.id);
       const known = progress.known ?? 0;
@@ -178,11 +195,11 @@ function getPreferredStageIndex(track, options = {}) {
   return 0;
 }
 
-function getLeastProgressTarget(options = {}) {
+function getLeastProgressTarget(options = {}, languageId = state.languageId) {
   const skipTrackId = options.skipTrackId || "";
   const skipStageKey = options.skipStageKey || "";
-  const rankedGroups = GROUPS.map((group, index) => {
-    const tracks = getTracksByGroup(group.id);
+  const rankedGroups = getLanguageGroups(languageId).map((group, index) => {
+    const tracks = getTracksByGroup(group.id, languageId);
     const totals = tracks.reduce(
       (accumulator, track) => {
         const progress = getTrackProgress(track.id);
@@ -272,6 +289,7 @@ function continueLeastProgress() {
 function currentRouteState() {
   return {
     route: state.route,
+    languageId: state.languageId,
     groupId: state.groupId,
     trackId: state.trackId,
     continuousProgress: state.continuousProgress,
@@ -280,6 +298,7 @@ function currentRouteState() {
 
 function applyRouteState(routeState) {
   state.route = routeState.route ?? "home";
+  state.languageId = routeState.languageId ?? null;
   state.groupId = routeState.groupId ?? null;
   state.trackId = routeState.trackId ?? null;
   state.continuousProgress = Boolean(routeState.continuousProgress);
@@ -291,6 +310,7 @@ function applyRouteState(routeState) {
 
 function setRoute(route, payload = {}, options = {}) {
   state.route = route;
+  state.languageId = payload.languageId ?? state.languageId;
   state.groupId = payload.groupId ?? state.groupId;
   state.trackId = payload.trackId ?? state.trackId;
   state.reveal = {};
@@ -305,11 +325,19 @@ function setRoute(route, payload = {}, options = {}) {
   render();
 }
 
+function onSelectLanguage(languageId) {
+  state.continuousProgress = false;
+  state.languageId = languageId;
+  state.groupId = null;
+  state.trackId = null;
+  setRoute("groups");
+}
+
 function onSelectGroup(groupId) {
   state.continuousProgress = false;
 
-  if (groupId === "독해" || groupId === "청해") {
-    const track = getTracksByGroup(groupId)[0];
+  if (state.languageId === "ja" && (groupId === "독해" || groupId === "청해")) {
+    const track = getTracksByGroup(groupId, state.languageId)[0];
     state.groupId = groupId;
     state.trackId = track?.id ?? null;
     setRoute("stage");
@@ -317,7 +345,7 @@ function onSelectGroup(groupId) {
   }
 
   state.groupId = groupId;
-  state.trackId = getTracksByGroup(groupId)[0]?.id ?? null;
+  state.trackId = getTracksByGroup(groupId, state.languageId)[0]?.id ?? null;
   setRoute("types");
 }
 
@@ -562,6 +590,32 @@ function scoreJapaneseVoice(voice) {
   return score;
 }
 
+function scoreEnglishVoice(voice) {
+  const lang = voice.lang?.toLowerCase() ?? "";
+  const name = voice.name?.toLowerCase() ?? "";
+  let score = 0;
+
+  if (lang === "en-us") {
+    score += 60;
+  } else if (lang.startsWith("en")) {
+    score += 40;
+  }
+
+  if (voice.localService) {
+    score += 12;
+  }
+
+  if (/google|microsoft|samantha|zira|aria|jenny|davis|english/.test(name)) {
+    score += 24;
+  }
+
+  if (/japanese|korean|corean/.test(name)) {
+    score -= 80;
+  }
+
+  return score;
+}
+
 function pickJapaneseVoice(voices = null) {
   const synth = getSpeechSynth();
   if (!synth) {
@@ -575,6 +629,21 @@ function pickJapaneseVoice(voices = null) {
   }
 
   return [...japaneseVoices].sort((left, right) => scoreJapaneseVoice(right) - scoreJapaneseVoice(left))[0] ?? null;
+}
+
+function pickEnglishVoice(voices = null) {
+  const synth = getSpeechSynth();
+  if (!synth) {
+    return null;
+  }
+
+  const pool = voices ?? synth.getVoices();
+  const englishVoices = pool.filter((voice) => voice.lang?.toLowerCase().startsWith("en"));
+  if (!englishVoices.length) {
+    return null;
+  }
+
+  return [...englishVoices].sort((left, right) => scoreEnglishVoice(right) - scoreEnglishVoice(left))[0] ?? null;
 }
 
 function primeSpeechVoices() {
@@ -643,14 +712,15 @@ async function speakCurrentItem() {
   }
 
   const voices = await waitForSpeechVoices();
-  const voice = pickJapaneseVoice(voices);
+  const isEnglish = (track.language ?? "ja") === "en";
+  const voice = isEnglish ? pickEnglishVoice(voices) : pickJapaneseVoice(voices);
   if (!voice) {
     return;
   }
 
   const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = "ja-JP";
-  utterance.rate = 0.92;
+  utterance.lang = isEnglish ? "en-US" : "ja-JP";
+  utterance.rate = isEnglish ? 0.98 : 0.92;
   utterance.pitch = 1;
   utterance.voice = voice;
 
@@ -668,6 +738,10 @@ function getCurrentItem(track) {
 }
 
 function renderStagePreviewWord(track, item) {
+  if ((track.language ?? "ja") === "en") {
+    return escapeHtml(item.primary || "");
+  }
+
   if (track.mode === "kana_to_kanji") {
     return escapeHtml(item.primary || "");
   }
@@ -680,6 +754,10 @@ function renderStagePreviewWord(track, item) {
 }
 
 function renderStagePreviewTarget(track, item) {
+  if ((track.language ?? "ja") === "en") {
+    return escapeHtml(item.note || item.hint || "");
+  }
+
   if (track.mode === "kana_to_kanji") {
     return renderRubyParts(item.rubyParts, true, { padBlankRuby: true });
   }
@@ -1001,8 +1079,32 @@ function appShell(inner) {
 }
 
 function renderHome() {
+  const languageButtons = LANGUAGES.map((language) => {
+    return `
+      <button class="big-button big-button--language" data-language="${language.id}">
+        <div class="big-button__title">${language.title}</div>
+        <div class="big-button__flag" aria-hidden="true">${language.flag}</div>
+      </button>
+    `;
+  }).join("");
+
+  return appShell(`
+    <div class="title-block title-block--home title-block--home-root">
+      <h1>회독노트</h1>
+    </div>
+    <div class="home-actions home-actions--root">
+      <div class="home-actions-stack">
+        <div class="grid-2 grid-2--languages">${languageButtons}</div>
+      </div>
+    </div>
+    <div class="home-version">ver ${APP_VERSION}</div>
+  `);
+}
+
+function renderGroups() {
+  const groups = getLanguageGroups();
   const homeButtons = [
-    ...GROUPS.map((group) => ({
+    ...groups.map((group) => ({
       kind: "group",
       id: group.id,
       title: group.title,
@@ -1012,21 +1114,23 @@ function renderHome() {
       id: "continue",
       title: "진행",
     },
-  ].map((button) => {
-    if (button.kind === "continue") {
-      return `
+  ]
+    .map((button) => {
+      if (button.kind === "continue") {
+        return `
         <button class="big-button big-button--accent" data-continue>
           <div class="big-button__title">${button.title}</div>
         </button>
       `;
-    }
+      }
 
-    return `
+      return `
       <button class="big-button" data-group="${button.id}">
         <div class="big-button__title">${button.title}</div>
       </button>
     `;
-  }).join("");
+    })
+    .join("");
   const overviewGroups = getProgressOverviewGroups();
   const overviewModal = state.progressOverview
     ? `
@@ -1066,11 +1170,11 @@ function renderHome() {
 
   return appShell(`
     <div class="topbar topbar--home">
-      <div class="topbar__spacer"></div>
+      <button class="back-button back-button--ghost" data-route="home">홈</button>
       <button class="home-icon-button" type="button" data-progress-open aria-label="진행률 보기">&#128202;</button>
     </div>
     <div class="title-block title-block--home">
-      <h1>회독노트</h1>
+      <h1>${escapeHtml(state.languageId === "en" ? "영어" : "일본어")}</h1>
     </div>
     <div class="home-actions">
       <div class="home-actions-stack">
@@ -1098,7 +1202,7 @@ function renderTypes() {
 
   return appShell(`
     <div class="topbar">
-      <button class="back-button" data-route="home">홈</button>
+      <button class="back-button" data-route="groups">홈</button>
     </div>
     <div class="section-card">
       <h1 class="page-title">${escapeHtml(state.groupId)}</h1>
@@ -1143,7 +1247,7 @@ function renderStage() {
 
   return appShell(`
       <div class="topbar">
-        <button class="back-button" data-route="home">홈</button>
+        <button class="back-button" data-route="groups">홈</button>
       </div>
     <div class="section-card">
       <h1 class="page-title">${escapeHtml(track.title)}</h1>
@@ -1231,7 +1335,7 @@ function renderStudy() {
   if (!item) {
     return appShell(`
       <div class="topbar">
-        <button class="back-button" data-route="home">홈</button>
+        <button class="back-button" data-route="groups">홈</button>
       </div>
       <div class="section-card">
         <div class="muted-box">현재 표시할 카드가 없습니다.</div>
@@ -1244,6 +1348,7 @@ function renderStudy() {
   const metaText = escapeHtml(item.note || item.hint || "");
   const metaVisible = Boolean(state.reveal.meta && metaText);
   const metaButtonVisible = Boolean(metaText);
+  const isEnglish = (track.language ?? "ja") === "en";
 
   let primary = "";
   let secondary = "";
@@ -1255,7 +1360,16 @@ function renderStudy() {
   let tertiaryClass = "card-meaning";
   let choiceClass = "card-choice";
 
-  if (track.mode === "kanji_to_kana") {
+  if (isEnglish) {
+    modeText = "단어를 보고 뜻을 떠올린 뒤 확인";
+    primary = escapeHtml(item.primary);
+    secondary = state.reveal.meaning ? escapeHtml(item.meaning) : "";
+    actions = [
+      { key: "meaning", label: "뜻 보기" },
+      { key: "example", label: "예문 보기", enabled: Boolean(exampleJa) },
+      { key: "exampleKo", label: "예문 해석 보기", enabled: Boolean(exampleKo) },
+    ];
+  } else if (track.mode === "kanji_to_kana") {
     modeText = "한자를 보고 읽기를 떠올린 뒤 확인";
     primary = renderRubyParts(item.rubyParts, state.reveal.reading, { padBlankRuby: true });
     secondary = state.reveal.meaning ? escapeHtml(item.meaning) : "";
@@ -1332,7 +1446,7 @@ function renderStudy() {
 
   return appShell(`
     <div class="topbar">
-      <button class="back-button" data-route="home">홈</button>
+      <button class="back-button" data-route="groups">홈</button>
     </div>
     <div class="section-card">
       <div class="study-mode-row">
@@ -1477,6 +1591,8 @@ function render() {
 
   if (state.route === "home") {
     app.innerHTML = renderHome();
+  } else if (state.route === "groups") {
+    app.innerHTML = renderGroups();
   } else if (state.route === "types") {
     app.innerHTML = renderTypes();
   } else if (state.route === "stage") {
@@ -1513,6 +1629,10 @@ function normalizeStudyHeaderLayout() {
 }
 
 function bindEvents() {
+  document.querySelectorAll("[data-language]").forEach((button) => {
+    button.addEventListener("click", () => onSelectLanguage(button.dataset.language));
+  });
+
   document.querySelectorAll("[data-group]").forEach((button) => {
     button.addEventListener("click", () => onSelectGroup(button.dataset.group));
   });
@@ -1581,7 +1701,9 @@ function bindEvents() {
   document.querySelectorAll("[data-route]").forEach((button) => {
     button.addEventListener("click", () => {
       if (button.dataset.route === "home") {
-        setRoute("home", { groupId: null, trackId: null });
+        setRoute("home", { languageId: null, groupId: null, trackId: null });
+      } else if (button.dataset.route === "groups") {
+        setRoute("groups", { languageId: state.languageId, groupId: null, trackId: null });
       } else {
         setRoute("types");
       }
@@ -1636,7 +1758,7 @@ async function init() {
   window.addEventListener("popstate", (event) => {
     const routeState = event.state;
     state.isPoppingState = true;
-    applyRouteState(routeState ?? { route: "home", groupId: null, trackId: null });
+    applyRouteState(routeState ?? { route: "home", languageId: null, groupId: null, trackId: null });
     render();
     state.isPoppingState = false;
   });
