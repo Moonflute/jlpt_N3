@@ -103,8 +103,8 @@ button {
 }
 
 .home-actions--root {
-  align-items: flex-start;
-  padding-top: 48px;
+  align-items: stretch;
+  padding-top: 20px;
 }
 
 .home-actions-stack {
@@ -189,6 +189,12 @@ button {
   width: min(440px, 100%);
 }
 
+.grid-2--languages-stack {
+  grid-template-columns: 1fr;
+  gap: 16px;
+  min-height: min(560px, calc(100vh - 210px));
+}
+
 .big-button,
 .type-button,
 .stage-button,
@@ -224,7 +230,8 @@ button {
 }
 
 .big-button--language {
-  min-height: 164px;
+  min-height: 0;
+  height: 100%;
   display: grid;
   place-items: center;
   gap: 10px;

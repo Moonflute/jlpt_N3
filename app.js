@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "2.0.3";
+const APP_VERSION = "2.0.4";
 
 const LANGUAGES = [
   { id: "ja", title: "일본어", flag: "🇯🇵" },
@@ -124,7 +124,7 @@ function getTrack(trackId) {
   return getTracks().find((track) => track.id === trackId) ?? null;
 }
 
-function getTrackDisplayTitle(track) {
+function getTrackDisplayTitleLegacy(track) {
   if (!track) {
     return "";
   }
@@ -141,7 +141,7 @@ function getTrackDisplayTitle(track) {
   return englishWordTitles[track.id] || track.title;
 }
 
-function getEnglishWordSubgroups() {
+function getEnglishWordSubgroupsLegacy() {
   return [
     { id: "green", title: "초록이" },
     { id: "yellow", title: "노랭이" },
@@ -164,6 +164,30 @@ function getTrackSubgroup(track) {
   return "";
 }
 
+function getTrackDisplayTitle(track) {
+  if (!track) {
+    return "";
+  }
+
+  const englishWordTitles = {
+    "eng-word-green-main": "메인",
+    "eng-word-green-sub": "유의어",
+    "eng-word-yellow-core": "빈출단어",
+    "eng-word-yellow-basic": "기초단어",
+    "eng-word-yellow-800": "800점단어",
+    "eng-word-yellow-900": "900점단어",
+  };
+
+  return englishWordTitles[track.id] || track.title;
+}
+
+function getEnglishWordSubgroups() {
+  return [
+    { id: "yellow", title: "노랭이" },
+    { id: "green", title: "초록이" },
+  ];
+}
+
 function getLanguageGroups(languageId = state.languageId) {
   return GROUPS_BY_LANGUAGE[languageId] ?? [];
 }
@@ -178,6 +202,30 @@ function getTracksByGroup(groupId, languageId = state.languageId) {
 
 function getTracksBySubgroup(subgroupId, groupId = state.groupId, languageId = state.languageId) {
   return getTracksByGroup(groupId, languageId).filter((track) => getTrackSubgroup(track) === subgroupId);
+}
+
+function getTrackLabel(track) {
+  if (!track) {
+    return "";
+  }
+
+  const englishWordTitles = {
+    "eng-word-green-main": "\uBA54\uC778",
+    "eng-word-green-sub": "\uC720\uC758\uC5B4",
+    "eng-word-yellow-core": "\uBE48\uCD9C\uB2E8\uC5B4",
+    "eng-word-yellow-basic": "\uAE30\uCD08\uB2E8\uC5B4",
+    "eng-word-yellow-800": "800\uC810\uB2E8\uC5B4",
+    "eng-word-yellow-900": "900\uC810\uB2E8\uC5B4",
+  };
+
+  return englishWordTitles[track.id] || track.title;
+}
+
+function getEnglishWordSubgroupOptions() {
+  return [
+    { id: "yellow", title: "\uB178\uB791\uC774" },
+    { id: "green", title: "\uCD08\uB85D\uC774" },
+  ];
 }
 
 function getStages(track) {
@@ -382,7 +430,7 @@ function getLeastProgressTarget(options = {}, languageId = state.languageId) {
     groupId: targetGroup.id,
     trackId: targetTrack.id,
     stageIndex,
-    trackTitle: getTrackDisplayTitle(targetTrack),
+    trackTitle: getTrackLabel(targetTrack),
     stageLabel: formatStageDisplayLabel(stage),
     stageRange: stage.range,
   };
@@ -1249,7 +1297,7 @@ function renderHome() {
     </div>
     <div class="home-actions home-actions--root">
       <div class="home-actions-stack">
-        <div class="grid-2 grid-2--languages">${languageButtons}</div>
+        <div class="grid-2 grid-2--languages grid-2--languages-stack">${languageButtons}</div>
       </div>
     </div>
     <div class="home-version">ver ${APP_VERSION}</div>
@@ -1307,7 +1355,7 @@ function renderGroups() {
                   ${group.tracks.map((track) => `
                     <div class="progress-track">
                       <div class="progress-track__head">
-                        <div class="progress-track__title">${escapeHtml(getTrackDisplayTitle(track))}</div>
+                        <div class="progress-track__title">${escapeHtml(getTrackLabel(track))}</div>
                         <div class="progress-track__meta">${track.known}/${track.total} · ${track.percent}%</div>
                       </div>
                       <div class="progress-bar">
@@ -1343,7 +1391,7 @@ function renderGroups() {
 }
 
 function renderSubgroups() {
-  const buttons = getEnglishWordSubgroups()
+  const buttons = getEnglishWordSubgroupOptions()
     .map((subgroup) => {
       const tracks = getTracksBySubgroup(subgroup.id);
       const total = tracks.reduce((sum, track) => sum + (track.total || 0), 0);
@@ -1379,7 +1427,7 @@ function renderTypes() {
       const progress = getTrackProgress(track.id);
       return `
         <button class="type-button${track.id === state.trackId ? " is-active" : ""}" data-track="${track.id}">
-          <div class="type-button__title">${escapeHtml(getTrackDisplayTitle(track))}</div>
+          <div class="type-button__title">${escapeHtml(getTrackLabel(track))}</div>
           <div class="type-button__meta">${track.total}개 · 알고있음 ${progress.known} · 공부하겠음 ${progress.again}</div>
         </button>
       `;
@@ -1391,7 +1439,7 @@ function renderTypes() {
       <button class="back-button" data-route="${state.subgroupId ? "subgroups" : "groups"}">홈</button>
     </div>
     <div class="section-card">
-      <h1 class="page-title">${escapeHtml(state.subgroupId ? getEnglishWordSubgroups().find((subgroup) => subgroup.id === state.subgroupId)?.title || state.groupId : state.groupId)}</h1>
+      <h1 class="page-title">${escapeHtml(state.subgroupId ? getEnglishWordSubgroupOptions().find((subgroup) => subgroup.id === state.subgroupId)?.title || state.groupId : state.groupId)}</h1>
       <p class="page-subtitle">유형 버튼을 눌러 회독 화면으로 이동합니다.</p>
     </div>
     <div class="section-card">
@@ -1436,7 +1484,7 @@ function renderStage() {
         <button class="back-button" data-route="groups">홈</button>
       </div>
     <div class="section-card">
-      <h1 class="page-title">${escapeHtml(getTrackDisplayTitle(track))}</h1>
+      <h1 class="page-title">${escapeHtml(getTrackLabel(track))}</h1>
       <p class="page-subtitle">${escapeHtml(track.description)}</p>
     </div>
     <div class="section-card">
@@ -1464,7 +1512,7 @@ function renderStage() {
         <div class="modal-panel section-card stage-preview-modal">
           <div class="stage-preview-head">
             <div>
-              <div class="stage-preview-title">${escapeHtml(getTrackDisplayTitle(track))} · ${escapeHtml(formatStageDisplayLabel(previewStage))} ${escapeHtml(previewStage.range)}</div>
+              <div class="stage-preview-title">${escapeHtml(getTrackLabel(track))} · ${escapeHtml(formatStageDisplayLabel(previewStage))} ${escapeHtml(previewStage.range)}</div>
               <div class="stage-preview-subtitle">이 회독 범위에서 확인할 항목 목록 · ${filteredPreviewItems.length}개</div>
             </div>
             <button class="stage-preview-close" type="button" data-stage-preview-close aria-label="목록 닫기">\u2715</button>
@@ -1642,7 +1690,7 @@ function renderStudy() {
       </div>
       <div class="study-head">
         <div>
-          <h1 class="page-title page-title--study">${escapeHtml(getTrackDisplayTitle(track))}</h1>
+          <h1 class="page-title page-title--study">${escapeHtml(getTrackLabel(track))}</h1>
           <div class="study-inline-meta">
             <span class="page-subtitle">${escapeHtml(modeText)}</span>
           </div>
