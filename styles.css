@@ -34,11 +34,11 @@ button {
 .app-shell {
   width: min(760px, calc(100vw - 18px));
   margin: 0 auto;
-  padding: 14px 0 28px;
+  padding: 14px 0 12px;
 }
 
 .screen {
-  min-height: calc(100vh - 42px);
+  min-height: calc(100dvh - 26px);
   display: flex;
   flex-direction: column;
   gap: 18px;
@@ -115,7 +115,7 @@ button {
 
 .home-version {
   width: 100%;
-  padding: 0 0 18px;
+  padding: 0 0 6px;
   text-align: center;
   color: #9aa4ad;
   font-size: 12px;
