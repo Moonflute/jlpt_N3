@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "2.0.7";
+const APP_VERSION = "2.0.8";
 
 const LANGUAGES = [
   { id: "ja", title: "일본어", flag: "🇯🇵" },
@@ -760,25 +760,25 @@ function handleGamepadStudyAction(action) {
 
   const session = getStageSession(track);
   if (session.prompt?.type === "retry") {
-    if (action === "known") {
+    if (action === "again") {
       handleRetryPrompt(true);
-    } else if (action === "again") {
+    } else if (action === "known") {
       handleRetryPrompt(false);
     }
     return;
   }
 
   if (session.prompt?.type === "next") {
-    if (action === "known") {
+    if (action === "again") {
       handleNextProgressPrompt(true);
-    } else if (action === "again") {
+    } else if (action === "known") {
       handleNextProgressPrompt(false);
     }
     return;
   }
 
   if (session.prompt?.type === "complete") {
-    if (action === "known") {
+    if (action === "again") {
       handleCompletePrompt();
     }
     return;
@@ -815,8 +815,8 @@ function pollGamepad() {
 
   if (pad && state.route === "study") {
     const mapping = [
-      [0, "known"],
-      [1, "again"],
+      [0, "again"],
+      [1, "known"],
       [2, "reading"],
       [3, "meaning"],
       [4, "example"],
