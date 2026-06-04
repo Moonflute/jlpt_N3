@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "2.0.6";
+const APP_VERSION = "2.0.7";
 
 const LANGUAGES = [
   { id: "ja", title: "일본어", flag: "🇯🇵" },
@@ -30,6 +30,7 @@ const state = {
   continuousProgress: false,
   voicesLoaded: false,
   backupNotice: "",
+  gamepadButtons: {},
   progress: loadProgress(),
   dataset: null,
   error: "",
@@ -729,6 +730,110 @@ function reveal(key) {
 
   state.reveal[key] = !state.reveal[key];
   render();
+}
+
+function getPrimaryGamepad() {
+  if (!("getGamepads" in navigator)) {
+    return null;
+  }
+
+  return [...(navigator.getGamepads?.() ?? [])].find(Boolean) ?? null;
+}
+
+function isGamepadButtonPressed(button) {
+  if (!button) {
+    return false;
+  }
+
+  if (typeof button === "number") {
+    return button > 0.5;
+  }
+
+  return Boolean(button.pressed) || button.value > 0.5;
+}
+
+function handleGamepadStudyAction(action) {
+  const track = getTrack(state.trackId);
+  if (!track || state.route !== "study") {
+    return;
+  }
+
+  const session = getStageSession(track);
+  if (session.prompt?.type === "retry") {
+    if (action === "known") {
+      handleRetryPrompt(true);
+    } else if (action === "again") {
+      handleRetryPrompt(false);
+    }
+    return;
+  }
+
+  if (session.prompt?.type === "next") {
+    if (action === "known") {
+      handleNextProgressPrompt(true);
+    } else if (action === "again") {
+      handleNextProgressPrompt(false);
+    }
+    return;
+  }
+
+  if (session.prompt?.type === "complete") {
+    if (action === "known") {
+      handleCompletePrompt();
+    }
+    return;
+  }
+
+  if (action === "known" || action === "again") {
+    advanceCard(action);
+    return;
+  }
+
+  if (action === "reading" && (track.language ?? "ja") === "ja") {
+    reveal("reading");
+    return;
+  }
+
+  if (action === "meaning") {
+    reveal("meaning");
+    return;
+  }
+
+  if (action === "example") {
+    reveal("example");
+    return;
+  }
+
+  if (action === "exampleKo") {
+    reveal("exampleKo");
+  }
+}
+
+function pollGamepad() {
+  const pad = getPrimaryGamepad();
+  const nextStates = {};
+
+  if (pad && state.route === "study") {
+    const mapping = [
+      [0, "known"],
+      [1, "again"],
+      [2, "reading"],
+      [3, "meaning"],
+      [4, "example"],
+      [5, "exampleKo"],
+    ];
+
+    for (const [index, action] of mapping) {
+      const pressed = isGamepadButtonPressed(pad.buttons?.[index]);
+      nextStates[index] = pressed;
+      if (pressed && !state.gamepadButtons[index]) {
+        handleGamepadStudyAction(action);
+      }
+    }
+  }
+
+  state.gamepadButtons = nextStates;
+  window.requestAnimationFrame(pollGamepad);
 }
 
 function getSpeechText(item, track) {
@@ -2018,6 +2123,7 @@ function bindEvents() {
 async function init() {
   window.history.replaceState(currentRouteState(), "");
   primeSpeechVoices();
+  window.requestAnimationFrame(pollGamepad);
 
   window.addEventListener("popstate", (event) => {
     const routeState = event.state;
