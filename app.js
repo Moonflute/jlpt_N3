@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "2.0.5";
+const APP_VERSION = "2.0.6";
 
 const LANGUAGES = [
   { id: "ja", title: "일본어", flag: "🇯🇵" },
@@ -1203,12 +1203,15 @@ function findNextSynonymCursor(items, currentCursor, recentPairIds) {
 
 function handleRetryPrompt(shouldRetry) {
   const track = getTrack(state.trackId);
-  const progress = getTrackProgress(track.id);
   const session = getStageSession(track);
   const retryIds = session.prompt?.itemIds ?? [];
 
   if (!shouldRetry) {
-    progress.sessions[getStageKey(track)] = null;
+    session.queueIds = shuffleArray(retryIds);
+    session.pointer = 0;
+    session.round += 1;
+    session.prompt = null;
+    session.recentPairIds = [];
     saveProgress();
     setRoute("stage");
     return;
@@ -1677,6 +1680,30 @@ function renderStudy() {
         </div>
       </div>`
       : "";
+  const completePromptModal =
+    session.prompt?.type === "complete"
+      ? `<div class="modal-backdrop">
+        <div class="modal-panel session-prompt session-prompt--modal">
+          <div class="session-prompt__text">완료했습니다!</div>
+          <div class="session-prompt__actions">
+            <button class="prompt-button" data-session-action="complete-ok">확인</button>
+          </div>
+        </div>
+      </div>`
+      : "";
+  const nextPromptModal =
+    session.prompt?.type === "next"
+      ? `<div class="modal-backdrop">
+        <div class="modal-panel session-prompt session-prompt--modal">
+          <div class="session-prompt__text">다음 진행 뭉치: ${escapeHtml(session.prompt.target.trackTitle)} · ${escapeHtml(session.prompt.target.stageLabel)}</div>
+          <div class="stage-prompt__meta">${escapeHtml(session.prompt.target.stageRange)} 이동하시겠습니까?</div>
+          <div class="session-prompt__actions">
+            <button class="prompt-button" data-session-action="next-yes">예</button>
+            <button class="prompt-button prompt-button--ghost" data-session-action="next-no">아니오</button>
+          </div>
+        </div>
+      </div>`
+      : "";
 
   return appShell(`
     <div class="topbar">
@@ -1746,31 +1773,11 @@ function renderStudy() {
           <button class="decision-button decision-button--again" data-decision="again"${isPromptOpen ? " disabled" : ""}>공부하겠음</button>
           <button class="decision-button decision-button--known" data-decision="known"${isPromptOpen ? " disabled" : ""}>알고있음</button>
         </div>
-        ${
-          session.prompt?.type === "complete"
-            ? `<div class="session-prompt session-prompt--complete">
-          <div class="session-prompt__text">완료했습니다!</div>
-          <div class="session-prompt__actions">
-            <button class="prompt-button" data-session-action="complete-ok">확인</button>
-          </div>
-        </div>`
-            : ""
-        }
-        ${
-          session.prompt?.type === "next"
-            ? `<div class="session-prompt session-prompt--next">
-          <div class="session-prompt__text">다음 진행 뭉치: ${escapeHtml(session.prompt.target.trackTitle)} · ${escapeHtml(session.prompt.target.stageLabel)}</div>
-          <div class="stage-prompt__meta">${escapeHtml(session.prompt.target.stageRange)} 이동하시겠습니까?</div>
-          <div class="session-prompt__actions">
-            <button class="prompt-button" data-session-action="next-yes">예</button>
-            <button class="prompt-button prompt-button--ghost" data-session-action="next-no">아니오</button>
-          </div>
-        </div>`
-            : ""
-        }
       </div>
     </div>
     ${retryPromptModal}
+    ${completePromptModal}
+    ${nextPromptModal}
   `);
 }
 
