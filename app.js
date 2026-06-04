@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "2.0.8";
+const APP_VERSION = "2.0.9";
 
 const LANGUAGES = [
   { id: "ja", title: "일본어", flag: "🇯🇵" },
@@ -1002,15 +1002,14 @@ async function speakCurrentItem() {
   const voices = await waitForSpeechVoices();
   const isEnglish = (track.language ?? "ja") === "en";
   const voice = isEnglish ? pickEnglishVoice(voices) : pickJapaneseVoice(voices);
-  if (!voice) {
-    return;
-  }
 
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = isEnglish ? "en-US" : "ja-JP";
   utterance.rate = isEnglish ? 0.98 : 0.92;
   utterance.pitch = 1;
-  utterance.voice = voice;
+  if (voice) {
+    utterance.voice = voice;
+  }
 
   synth.cancel();
   synth.speak(utterance);
