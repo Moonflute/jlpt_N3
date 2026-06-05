@@ -775,17 +775,29 @@ rt {
   white-space: nowrap;
 }
 
-.progress-bar {
-  height: 10px;
-  border-radius: 999px;
-  overflow: hidden;
-  background: rgba(20, 158, 163, 0.12);
+.progress-cells {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(13px, 13px));
+  gap: 6px;
 }
 
-.progress-bar__fill {
-  height: 100%;
-  border-radius: 999px;
-  background: linear-gradient(90deg, #27b7bf 0%, #108992 100%);
+.progress-cell {
+  width: 13px;
+  height: 13px;
+  border-radius: 4px;
+  background: #eef1f4;
+}
+
+.progress-cell--idle {
+  background: #eef1f4;
+}
+
+.progress-cell--active {
+  background: #9fd9d2;
+}
+
+.progress-cell--complete {
+  background: #1f9aa3;
 }
 
 .stage-preview-head {

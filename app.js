@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "2.0.10";
+const APP_VERSION = "2.0.11";
 
 const LANGUAGES = [
   { id: "ja", title: "일본어", flag: "🇯🇵" },
@@ -301,6 +301,27 @@ function syncTrackTotals(progress) {
   progress.again = values.filter((value) => value === "again").length;
 }
 
+function getStageCellState(track, stage) {
+  const progress = getTrackProgress(track.id);
+  const stageKey = getStageKeyByEnd(track, stage);
+
+  if (progress.completedStages?.[stageKey]) {
+    return "complete";
+  }
+
+  if (progress.sessions?.[stageKey]) {
+    return "active";
+  }
+
+  const stageItems = getItemsForStage(track, stage);
+  const hasTouchedItem = stageItems.some((item) => {
+    const value = progress.itemStates?.[item.id];
+    return value === "known" || value === "again";
+  });
+
+  return hasTouchedItem ? "active" : "idle";
+}
+
 function getProgressOverviewGroups(languageId = state.languageId) {
   return getLanguageGroups(languageId).map((group) => {
     const tracks = getTracksByGroup(group.id).map((track) => {
@@ -308,13 +329,22 @@ function getProgressOverviewGroups(languageId = state.languageId) {
       const known = progress.known ?? 0;
       const total = track.total ?? 0;
       const percent = total ? Math.round((known / total) * 100) : 0;
+      const stageCells = getStages(track).map((stage, index) => ({
+        id: `${track.id}:${stage.id ?? stage.end ?? index}`,
+        label: formatStageDisplayLabel(stage),
+        state: getStageCellState(track, stage),
+      }));
+      const completedCount = stageCells.filter((cell) => cell.state === "complete").length;
 
       return {
         id: track.id,
-        title: track.title,
+        title: getTrackLabel(track),
         known,
         total,
         percent,
+        completedCount,
+        stageCount: stageCells.length,
+        stageCells,
       };
     });
 
@@ -1463,10 +1493,15 @@ function renderGroups() {
                     <div class="progress-track">
                       <div class="progress-track__head">
                         <div class="progress-track__title">${escapeHtml(getTrackLabel(track))}</div>
-                        <div class="progress-track__meta">${track.known}/${track.total} · ${track.percent}%</div>
+                        <div class="progress-track__meta">${track.completedCount}/${track.stageCount} 뭉치 완료 · ${track.known}/${track.total}</div>
                       </div>
-                      <div class="progress-bar">
-                        <div class="progress-bar__fill" style="width: ${track.percent}%"></div>
+                      <div class="progress-cells" aria-label="${escapeHtml(track.title)} 진행 셀">
+                        ${track.stageCells
+                          .map(
+                            (cell) =>
+                              `<span class="progress-cell progress-cell--${cell.state}" title="${escapeHtml(cell.label)}"></span>`,
+                          )
+                          .join("")}
                       </div>
                     </div>
                   `).join("")}
