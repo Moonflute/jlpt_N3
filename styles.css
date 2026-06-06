@@ -303,13 +303,30 @@ button {
 
 .stage-button--day {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 12px;
-  align-items: center;
+  grid-template-columns: minmax(0, 1fr) 176px;
+  gap: 16px;
+  align-items: stretch;
 }
 
 .stage-button__main {
   min-width: 0;
+}
+
+.stage-button__sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+}
+
+.stage-button__sidebar-top {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.stage-button__sidebar-actions {
+  display: grid;
+  gap: 12px;
 }
 
 .type-button,
@@ -393,9 +410,10 @@ button {
 }
 
 .stage-action-button--compact {
-  min-width: 72px;
-  padding: 10px 12px;
-  font-size: 13px;
+  min-width: 0;
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 15px;
 }
 
 .stage-preview-button {
@@ -416,6 +434,7 @@ button {
 .stage-preview-button--compact {
   width: 48px;
   min-width: 48px;
+  height: 48px;
 }
 
 .stage-badge {
@@ -1065,12 +1084,15 @@ rt {
   }
 
   .stage-button--day {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr) 152px;
   }
 
-  .stage-row__actions--inline {
-    grid-template-columns: repeat(3, minmax(0, auto));
-    justify-content: flex-start;
+  .stage-button__sidebar {
+    gap: 10px;
+  }
+
+  .stage-button__sidebar-actions {
+    gap: 10px;
   }
 
   .card-panel {

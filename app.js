@@ -1657,10 +1657,14 @@ function renderStage() {
                 </div>
                 <div class="stage-button__submeta">복습 후보 ${reviewCount}개</div>
               </div>
-              <div class="stage-row__actions stage-row__actions--inline">
-                <button class="stage-action-button stage-action-button--compact" type="button" data-stage-day="${index}">단일</button>
-                <button class="stage-action-button stage-action-button--compact stage-action-button--ghost" type="button" data-stage-review="${index}">복습</button>
-                <button class="stage-preview-button stage-preview-button--compact" type="button" data-stage-preview="${index}" aria-label="Day 목록 보기">&#9776;</button>
+              <div class="stage-button__sidebar">
+                <div class="stage-button__sidebar-top">
+                  <button class="stage-preview-button stage-preview-button--compact" type="button" data-stage-preview="${index}" aria-label="Day 목록 보기">&#9776;</button>
+                </div>
+                <div class="stage-button__sidebar-actions">
+                  <button class="stage-action-button stage-action-button--compact" type="button" data-stage-day="${index}">단일</button>
+                  <button class="stage-action-button stage-action-button--compact stage-action-button--ghost" type="button" data-stage-review="${index}">복습</button>
+                </div>
               </div>
             </div>
           </div>
