@@ -312,6 +312,13 @@ button {
   min-width: 0;
 }
 
+.stage-button__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
 .stage-button__sidebar {
   display: flex;
   flex-direction: column;
@@ -319,15 +326,11 @@ button {
   gap: 8px;
 }
 
-.stage-button__sidebar-top {
-  display: flex;
-  justify-content: flex-start;
-}
-
 .stage-button__sidebar-actions {
   display: grid;
   gap: 8px;
   justify-items: stretch;
+  align-content: start;
 }
 
 .type-button,
