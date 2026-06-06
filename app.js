@@ -1648,18 +1648,20 @@ function renderStage() {
 
         return `
           <div class="stage-row stage-row--day">
-            <div class="stage-button${index === progress.stageIndex ? " is-active" : ""}${completed ? " is-complete" : ""}">
-              <div class="stage-button__title">${escapeHtml(formatStageDisplayLabel(stage))}</div>
-              <div class="stage-button__meta">
-                <span>학습 범위 ${escapeHtml(stage.range)}</span>
-                ${completed ? '<span class="stage-badge">완료</span>' : ""}
+            <div class="stage-button stage-button--day${index === progress.stageIndex ? " is-active" : ""}${completed ? " is-complete" : ""}">
+              <div class="stage-button__main">
+                <div class="stage-button__title">${escapeHtml(formatStageDisplayLabel(stage))}</div>
+                <div class="stage-button__meta">
+                  <span>학습 범위 ${escapeHtml(stage.range)}</span>
+                  ${completed ? '<span class="stage-badge">완료</span>' : ""}
+                </div>
+                <div class="stage-button__submeta">복습 후보 ${reviewCount}개</div>
               </div>
-              <div class="stage-button__submeta">복습 후보 ${reviewCount}개</div>
-            </div>
-            <div class="stage-row__actions">
-              <button class="stage-action-button" type="button" data-stage-day="${index}">단일 학습</button>
-              <button class="stage-action-button stage-action-button--ghost" type="button" data-stage-review="${index}">누적 복습</button>
-              <button class="stage-preview-button" type="button" data-stage-preview="${index}" aria-label="Day 목록 보기">&#9776;</button>
+              <div class="stage-row__actions stage-row__actions--inline">
+                <button class="stage-action-button stage-action-button--compact" type="button" data-stage-day="${index}">단일</button>
+                <button class="stage-action-button stage-action-button--compact stage-action-button--ghost" type="button" data-stage-review="${index}">복습</button>
+                <button class="stage-preview-button stage-preview-button--compact" type="button" data-stage-preview="${index}" aria-label="Day 목록 보기">&#9776;</button>
+              </div>
             </div>
           </div>
         `;

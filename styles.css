@@ -301,6 +301,17 @@ button {
   grid-template-columns: 1fr;
 }
 
+.stage-button--day {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+}
+
+.stage-button__main {
+  min-width: 0;
+}
+
 .type-button,
 .stage-button {
   width: 100%;
@@ -356,6 +367,11 @@ button {
   align-items: stretch;
 }
 
+.stage-row__actions--inline {
+  grid-template-columns: auto auto 48px;
+  align-items: center;
+}
+
 .stage-action-button {
   border: 1px solid rgba(20, 158, 163, 0.25);
   border-radius: 16px;
@@ -376,6 +392,12 @@ button {
   background: rgba(231, 245, 243, 0.95);
 }
 
+.stage-action-button--compact {
+  min-width: 72px;
+  padding: 10px 12px;
+  font-size: 13px;
+}
+
 .stage-preview-button {
   border: 1px solid var(--line);
   border-radius: 18px;
@@ -389,6 +411,11 @@ button {
 
 .stage-preview-button:hover {
   transform: translateY(-1px);
+}
+
+.stage-preview-button--compact {
+  width: 48px;
+  min-width: 48px;
 }
 
 .stage-badge {
@@ -1035,6 +1062,15 @@ rt {
 
   .stage-row__actions {
     grid-template-columns: 1fr;
+  }
+
+  .stage-button--day {
+    grid-template-columns: 1fr;
+  }
+
+  .stage-row__actions--inline {
+    grid-template-columns: repeat(3, minmax(0, auto));
+    justify-content: flex-start;
   }
 
   .card-panel {
