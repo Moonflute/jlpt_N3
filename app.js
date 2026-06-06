@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "2.0.11";
+const APP_VERSION = "2.0.12";
 
 const LANGUAGES = [
   { id: "ja", title: "일본어", flag: "🇯🇵" },
@@ -23,6 +23,7 @@ const state = {
   groupId: null,
   subgroupId: null,
   trackId: null,
+  sessionMode: "day",
   reveal: {},
   stagePrompt: null,
   stagePreview: null,
@@ -482,6 +483,7 @@ function continueLeastProgress() {
 function currentRouteState() {
   return {
     route: state.route,
+    sessionMode: state.sessionMode,
     languageId: state.languageId,
     groupId: state.groupId,
     subgroupId: state.subgroupId,
@@ -492,6 +494,7 @@ function currentRouteState() {
 
 function applyRouteState(routeState) {
   state.route = routeState.route ?? "home";
+  state.sessionMode = routeState.sessionMode ?? "day";
   state.languageId = routeState.languageId ?? null;
   state.groupId = routeState.groupId ?? null;
   state.subgroupId = routeState.subgroupId ?? null;
@@ -565,8 +568,14 @@ function onSelectSubgroup(subgroupId) {
 
 function onSelectTrack(trackId) {
   state.continuousProgress = false;
+  state.sessionMode = "day";
   state.trackId = trackId;
   setRoute("stage");
+}
+
+function isDayBasedTrack(track) {
+  const stages = getStages(track);
+  return stages.length > 0 && stages.every((stage) => /^Day\b/i.test(String(stage.label || "")));
 }
 
 function getStageByIndex(track, index) {
@@ -590,31 +599,56 @@ function isStageCompleted(track, stage) {
 function onSelectStage(index, options = {}) {
   const track = getTrack(state.trackId);
   const progress = getTrackProgress(state.trackId);
+  const mode = options.mode ?? "day";
+  state.sessionMode = mode;
   progress.stageIndex = index;
   const stage = getStageByIndex(track, index);
   const stageKey = getStageKeyByEnd(track, stage);
 
-  if (isStageCompleted(track, stage) && !options.forceReset) {
+  if (mode === "day" && isStageCompleted(track, stage) && !options.forceReset) {
     state.stagePrompt = { index, stageKey, label: stage.label, range: stage.range };
     saveProgress();
     render();
     return;
   }
 
-  if (options.forceReset) {
+  if (options.forceReset && mode === "day") {
     delete progress.completedStages[stageKey];
-    progress.sessions[stageKey] = null;
+    progress.sessions[getSessionKey(track, stage, mode)] = null;
   }
 
-  initializeStageSession(track, Boolean(options.forceReset));
+  initializeStageSession(track, Boolean(options.forceReset), mode);
   saveProgress();
   setRoute("study");
 }
 
-function getVisibleItems(track) {
+function getReviewItems(track) {
   const progress = getTrackProgress(track.id);
   const stages = getStages(track);
   const stage = stages[Math.min(progress.stageIndex, stages.length - 1)];
+  const learnedItems = track.items.slice(0, stage.end);
+  const reviewedItems = learnedItems.filter((item) => {
+    const itemState = progress.itemStates?.[item.id];
+    return itemState === "known" || itemState === "again";
+  });
+
+  if (reviewedItems.length) {
+    const againItems = reviewedItems.filter((item) => progress.itemStates?.[item.id] === "again");
+    return againItems.length ? againItems : reviewedItems;
+  }
+
+  return learnedItems.slice(0, stage.start ?? 0);
+}
+
+function getVisibleItems(track, mode = state.sessionMode ?? "day") {
+  const progress = getTrackProgress(track.id);
+  const stages = getStages(track);
+  const stage = stages[Math.min(progress.stageIndex, stages.length - 1)];
+
+  if (mode === "review" && isDayBasedTrack(track)) {
+    return getReviewItems(track);
+  }
+
   return track.items.slice(stage.start ?? 0, stage.end);
 }
 
@@ -632,6 +666,10 @@ function getStageKey(track) {
   return getStageKeyByEnd(track, stage);
 }
 
+function getSessionKey(track, stage, mode = state.sessionMode ?? "day") {
+  return `${getStageKeyByEnd(track, stage)}:${mode}`;
+}
+
 function shuffleArray(items) {
   const copied = [...items];
   for (let index = copied.length - 1; index > 0; index -= 1) {
@@ -641,18 +679,20 @@ function shuffleArray(items) {
   return copied;
 }
 
-function initializeStageSession(track, reset = false) {
+function initializeStageSession(track, reset = false, mode = state.sessionMode ?? "day") {
   const progress = getTrackProgress(track.id);
-  const stageKey = getStageKey(track);
+  const stage = getStageByIndex(track, progress.stageIndex);
+  const sessionKey = getSessionKey(track, stage, mode);
   progress.sessions ??= {};
 
-  if (!reset && progress.sessions[stageKey]) {
-    return progress.sessions[stageKey];
+  if (!reset && progress.sessions[sessionKey]) {
+    return progress.sessions[sessionKey];
   }
 
-  const items = getVisibleItems(track);
+  const items = getVisibleItems(track, mode);
   const sourceIds = items.map((item) => item.id);
-  progress.sessions[stageKey] = {
+  progress.sessions[sessionKey] = {
+    mode,
     sourceIds,
     queueIds: shuffleArray(sourceIds),
     pointer: 0,
@@ -661,11 +701,11 @@ function initializeStageSession(track, reset = false) {
     prompt: null,
     recentPairIds: [],
   };
-  return progress.sessions[stageKey];
+  return progress.sessions[sessionKey];
 }
 
 function getStageSession(track) {
-  return initializeStageSession(track, false);
+  return initializeStageSession(track, false, state.sessionMode ?? "day");
 }
 
 function getItemById(track, itemId) {
@@ -1594,23 +1634,51 @@ function renderStage() {
   const track = getTrack(state.trackId);
   const progress = getTrackProgress(track.id);
   const stages = getStages(track);
+  const isDayTrack = isDayBasedTrack(track);
   const buttons = stages
     .map((stage, index) => {
       const completed = isStageCompleted(track, stage);
+      if (isDayTrack) {
+        const reviewCount = track.items
+          .slice(0, stage.end)
+          .filter((item) => {
+            const itemState = progress.itemStates?.[item.id];
+            return itemState === "known" || itemState === "again";
+          }).length;
+
         return `
-          <div class="stage-row">
-            <button class="stage-button${index === progress.stageIndex ? " is-active" : ""}${completed ? " is-complete" : ""}" data-stage="${index}">
+          <div class="stage-row stage-row--day">
+            <div class="stage-button${index === progress.stageIndex ? " is-active" : ""}${completed ? " is-complete" : ""}">
               <div class="stage-button__title">${escapeHtml(formatStageDisplayLabel(stage))}</div>
               <div class="stage-button__meta">
                 <span>학습 범위 ${escapeHtml(stage.range)}</span>
                 ${completed ? '<span class="stage-badge">완료</span>' : ""}
               </div>
-            </button>
-            <button class="stage-preview-button" type="button" data-stage-preview="${index}" aria-label="회독 목록 보기">&#9776;</button>
+              <div class="stage-button__submeta">복습 후보 ${reviewCount}개</div>
+            </div>
+            <div class="stage-row__actions">
+              <button class="stage-action-button" type="button" data-stage-day="${index}">단일 학습</button>
+              <button class="stage-action-button stage-action-button--ghost" type="button" data-stage-review="${index}">누적 복습</button>
+              <button class="stage-preview-button" type="button" data-stage-preview="${index}" aria-label="Day 목록 보기">&#9776;</button>
+            </div>
           </div>
         `;
-      })
-      .join("");
+      }
+
+      return `
+        <div class="stage-row">
+          <button class="stage-button${index === progress.stageIndex ? " is-active" : ""}${completed ? " is-complete" : ""}" data-stage="${index}">
+            <div class="stage-button__title">${escapeHtml(formatStageDisplayLabel(stage))}</div>
+            <div class="stage-button__meta">
+              <span>학습 범위 ${escapeHtml(stage.range)}</span>
+              ${completed ? '<span class="stage-badge">완료</span>' : ""}
+            </div>
+          </button>
+          <button class="stage-preview-button" type="button" data-stage-preview="${index}" aria-label="회독 목록 보기">&#9776;</button>
+        </div>
+      `;
+    })
+    .join("");
 
   const previewStage = state.stagePreview ? stages[state.stagePreview.index] : null;
   const previewItems = previewStage ? getItemsForStage(track, previewStage) : [];
@@ -1704,9 +1772,13 @@ function renderStudy() {
   const stages = getStages(track);
   const stage = stages[Math.min(progress.stageIndex, stages.length - 1)];
   const session = getStageSession(track);
-  const visibleItems = getVisibleItems(track);
   const item = getCurrentItem(track);
   const stats = getSessionStats(session);
+  const isReviewMode = session.mode === "review";
+  const modeLabel = isReviewMode ? "누적 복습" : "단일 학습";
+  const modeDescription = isReviewMode
+    ? `${formatStageDisplayLabel(stage)}까지의 누적 복습`
+    : `${formatStageDisplayLabel(stage)} 단일 학습`;
 
   if (!item) {
     return appShell(`
@@ -1863,9 +1935,12 @@ function renderStudy() {
         </div>
         <div class="study-progress">${Math.min(session.pointer + 1, session.queueIds.length)} / ${session.queueIds.length}</div>
       </div>
+      <div class="study-mode-row">
+        <div class="study-mode-badge is-active">${escapeHtml(modeLabel)}</div>
+      </div>
       <div class="study-summary-row">
         <div class="study-summary-left">
-          <span class="page-subtitle">${escapeHtml(stage.label)} ${escapeHtml(stage.range)} · ${session.round}라운드</span>
+          <span class="page-subtitle">${escapeHtml(modeDescription)} · ${escapeHtml(stage.range)} · ${session.round}라운드</span>
         </div>
         <div class="study-summary-stats">
           <span class="study-stat-chip">알고있음 <strong>${stats.known}</strong></span>
@@ -2029,6 +2104,14 @@ function bindEvents() {
 
   document.querySelectorAll("[data-stage]").forEach((button) => {
     button.addEventListener("click", () => onSelectStage(Number(button.dataset.stage)));
+  });
+
+  document.querySelectorAll("[data-stage-day]").forEach((button) => {
+    button.addEventListener("click", () => onSelectStage(Number(button.dataset.stageDay), { mode: "day" }));
+  });
+
+  document.querySelectorAll("[data-stage-review]").forEach((button) => {
+    button.addEventListener("click", () => onSelectStage(Number(button.dataset.stageReview), { mode: "review" }));
   });
 
   document.querySelectorAll("[data-stage-preview]").forEach((button) => {

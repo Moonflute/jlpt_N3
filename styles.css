@@ -297,6 +297,10 @@ button {
   align-items: stretch;
 }
 
+.stage-row--day {
+  grid-template-columns: 1fr;
+}
+
 .type-button,
 .stage-button {
   width: 100%;
@@ -334,8 +338,42 @@ button {
   gap: 10px;
 }
 
+.stage-button__submeta {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
 .stage-button.is-complete {
   border-color: rgba(20, 158, 163, 0.38);
+}
+
+.stage-row__actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 48px;
+  gap: 10px;
+  align-items: stretch;
+}
+
+.stage-action-button {
+  border: 1px solid rgba(20, 158, 163, 0.25);
+  border-radius: 16px;
+  background: rgba(20, 158, 163, 0.12);
+  color: var(--teal-deep);
+  font-size: 14px;
+  font-weight: 800;
+  padding: 12px 14px;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+}
+
+.stage-action-button:hover {
+  transform: translateY(-1px);
+}
+
+.stage-action-button--ghost {
+  background: rgba(231, 245, 243, 0.95);
 }
 
 .stage-preview-button {
@@ -993,6 +1031,10 @@ rt {
   .study-summary-stats {
     gap: 14px;
     justify-content: flex-start;
+  }
+
+  .stage-row__actions {
+    grid-template-columns: 1fr;
   }
 
   .card-panel {
