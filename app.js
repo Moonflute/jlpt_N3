@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "2.0.12";
+const APP_VERSION = "2.1.0";
 
 const LANGUAGES = [
   { id: "ja", title: "일본어", flag: "🇯🇵" },
