@@ -303,9 +303,9 @@ button {
 
 .stage-button--day {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 176px;
-  gap: 16px;
-  align-items: stretch;
+  grid-template-columns: minmax(0, 1fr) 124px;
+  gap: 14px;
+  align-items: start;
 }
 
 .stage-button__main {
@@ -316,7 +316,7 @@ button {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 12px;
+  gap: 8px;
 }
 
 .stage-button__sidebar-top {
@@ -326,7 +326,8 @@ button {
 
 .stage-button__sidebar-actions {
   display: grid;
-  gap: 12px;
+  gap: 8px;
+  justify-items: stretch;
 }
 
 .type-button,
@@ -412,8 +413,9 @@ button {
 .stage-action-button--compact {
   min-width: 0;
   width: 100%;
-  padding: 12px 14px;
-  font-size: 15px;
+  padding: 8px 10px;
+  font-size: 14px;
+  border-radius: 14px;
 }
 
 .stage-preview-button {
@@ -432,9 +434,9 @@ button {
 }
 
 .stage-preview-button--compact {
-  width: 48px;
-  min-width: 48px;
-  height: 48px;
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
 }
 
 .stage-badge {
@@ -1084,15 +1086,15 @@ rt {
   }
 
   .stage-button--day {
-    grid-template-columns: minmax(0, 1fr) 152px;
+    grid-template-columns: minmax(0, 1fr) 112px;
   }
 
   .stage-button__sidebar {
-    gap: 10px;
+    gap: 8px;
   }
 
   .stage-button__sidebar-actions {
-    gap: 10px;
+    gap: 8px;
   }
 
   .card-panel {
