@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "3.0.0";
+const APP_VERSION = "3.0.1";
 
 const LANGUAGES = [
   { id: "ja", title: "일본어", flag: "🇯🇵" },
@@ -613,6 +613,73 @@ function onSelectTrack(trackId) {
   state.sessionMode = "day";
   state.trackId = trackId;
   setRoute("stage");
+}
+
+function enterGroup(groupId) {
+  state.continuousProgress = false;
+
+  if (state.languageId === "ja" && (groupId === "?낇빐" || groupId === "泥?빐")) {
+    const track = getTracksByGroup(groupId, state.languageId)[0];
+    if (!track) {
+      return;
+    }
+
+    setRoute("stage", {
+      languageId: state.languageId,
+      groupId,
+      subgroupId: null,
+      trackId: track.id,
+    });
+    return;
+  }
+
+  if (state.languageId === "en" && groupId === "?⑥뼱") {
+    setRoute("subgroups", {
+      languageId: state.languageId,
+      groupId,
+      subgroupId: null,
+      trackId: null,
+    });
+    return;
+  }
+
+  const firstTrack = getTracksByGroup(groupId, state.languageId)[0];
+  if (!firstTrack) {
+    return;
+  }
+
+  setRoute("types", {
+    languageId: state.languageId,
+    groupId,
+    subgroupId: null,
+    trackId: firstTrack.id,
+  });
+}
+
+function enterSubgroup(subgroupId) {
+  state.continuousProgress = false;
+  const firstTrack = getTracksBySubgroup(subgroupId)[0];
+  if (!firstTrack) {
+    return;
+  }
+
+  setRoute("types", {
+    languageId: state.languageId,
+    groupId: state.groupId,
+    subgroupId,
+    trackId: firstTrack.id,
+  });
+}
+
+function enterTrack(trackId) {
+  state.continuousProgress = false;
+  state.sessionMode = "day";
+  setRoute("stage", {
+    languageId: state.languageId,
+    groupId: state.groupId,
+    subgroupId: state.subgroupId,
+    trackId,
+  });
 }
 
 function isDayBasedTrack(track) {
@@ -2438,15 +2505,15 @@ function bindEvents() {
   });
 
   document.querySelectorAll("[data-group]").forEach((button) => {
-    button.addEventListener("click", () => onSelectGroup(button.dataset.group));
+    button.addEventListener("click", () => enterGroup(button.dataset.group));
   });
 
   document.querySelectorAll("[data-subgroup]").forEach((button) => {
-    button.addEventListener("click", () => onSelectSubgroup(button.dataset.subgroup));
+    button.addEventListener("click", () => enterSubgroup(button.dataset.subgroup));
   });
 
   document.querySelectorAll("[data-track]").forEach((button) => {
-    button.addEventListener("click", () => onSelectTrack(button.dataset.track));
+    button.addEventListener("click", () => enterTrack(button.dataset.track));
   });
 
   document.querySelectorAll("[data-stage]").forEach((button) => {
