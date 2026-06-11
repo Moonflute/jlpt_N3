@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "3.0.2";
+const APP_VERSION = "3.0.3";
 
 const LANGUAGES = [
   { id: "ja", title: "일본어", flag: "🇯🇵" },
@@ -1973,6 +1973,7 @@ function renderGroups() {
 }
 
 function renderCustomMenu() {
+  const isCustomStudy = isCustomStudyRoute();
   return appShell(`
     <div class="topbar">
       <button class="back-button" data-route="${isCustomStudy ? "custom-select" : "groups"}">홈</button>
@@ -2039,6 +2040,7 @@ function renderCustomSelect() {
 }
 
 function renderSubgroups() {
+  const isCustomStudy = isCustomStudyRoute();
   const buttons = getEnglishWordSubgroupOptions()
     .map((subgroup) => {
       const tracks = getTracksBySubgroup(subgroup.id);
@@ -2097,7 +2099,18 @@ function renderTypes() {
 }
 
 function renderStage() {
+  const isCustomStudy = isCustomStudyRoute();
   const track = getTrack(state.trackId);
+  if (!track) {
+    return appShell(`
+      <div class="topbar">
+        <button class="back-button" data-route="${isCustomStudy ? "custom-select" : "groups"}">홈</button>
+      </div>
+      <div class="section-card">
+        <div class="muted-box">학습 트랙을 찾지 못했습니다.</div>
+      </div>
+    `);
+  }
   const progress = getTrackProgress(track.id);
   const stages = getStages(track);
   const buttons = stages
