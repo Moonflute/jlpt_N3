@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "3.0.1";
+const APP_VERSION = "3.0.2";
 
 const LANGUAGES = [
   { id: "ja", title: "일본어", flag: "🇯🇵" },
@@ -679,6 +679,62 @@ function enterTrack(trackId) {
     groupId: state.groupId,
     subgroupId: state.subgroupId,
     trackId,
+  });
+}
+
+function enterGroupSafe(groupId) {
+  state.continuousProgress = false;
+
+  if (state.languageId === "ja" && (groupId === "\uB3C5\uD574" || groupId === "\uCCAD\uD574")) {
+    const track = getTracksByGroup(groupId, state.languageId)[0];
+    if (!track) {
+      return;
+    }
+
+    setRoute("stage", {
+      languageId: state.languageId,
+      groupId,
+      subgroupId: null,
+      trackId: track.id,
+    });
+    return;
+  }
+
+  if (state.languageId === "en" && groupId === "\uB2E8\uC5B4") {
+    setRoute("subgroups", {
+      languageId: state.languageId,
+      groupId,
+      subgroupId: null,
+      trackId: null,
+    });
+    return;
+  }
+
+  const firstTrack = getTracksByGroup(groupId, state.languageId)[0];
+  if (!firstTrack) {
+    return;
+  }
+
+  setRoute("types", {
+    languageId: state.languageId,
+    groupId,
+    subgroupId: null,
+    trackId: firstTrack.id,
+  });
+}
+
+function enterSubgroupSafe(subgroupId) {
+  state.continuousProgress = false;
+  const firstTrack = getTracksBySubgroup(subgroupId)[0];
+  if (!firstTrack) {
+    return;
+  }
+
+  setRoute("types", {
+    languageId: state.languageId,
+    groupId: state.groupId,
+    subgroupId,
+    trackId: firstTrack.id,
   });
 }
 
@@ -2505,11 +2561,11 @@ function bindEvents() {
   });
 
   document.querySelectorAll("[data-group]").forEach((button) => {
-    button.addEventListener("click", () => enterGroup(button.dataset.group));
+    button.addEventListener("click", () => enterGroupSafe(button.dataset.group));
   });
 
   document.querySelectorAll("[data-subgroup]").forEach((button) => {
-    button.addEventListener("click", () => enterSubgroup(button.dataset.subgroup));
+    button.addEventListener("click", () => enterSubgroupSafe(button.dataset.subgroup));
   });
 
   document.querySelectorAll("[data-track]").forEach((button) => {
