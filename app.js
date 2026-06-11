@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "2.1.1";
+const APP_VERSION = "3.0.0";
 
 const LANGUAGES = [
   { id: "ja", title: "일본어", flag: "🇯🇵" },
@@ -24,6 +24,11 @@ const state = {
   subgroupId: null,
   trackId: null,
   sessionMode: "day",
+  customConfig: {
+    batchSize: 20,
+    selectedStageKeys: [],
+  },
+  customSession: null,
   reveal: {},
   stagePrompt: null,
   stagePreview: null,
@@ -238,22 +243,19 @@ function getStages(track) {
   const total = track.total;
   const stageSize = state.dataset?.stageSize ?? 25;
   const stages = [];
-  let end = stageSize;
+  let start = 0;
 
-  while (end < total) {
+  while (start < total) {
+    const end = Math.min(start + stageSize, total);
     stages.push({
+      id: `block-${start + 1}-${end}`,
       label: `${stages.length + 1}회독`,
-      range: `1~${end}`,
+      range: `${start + 1}~${end}`,
+      start,
       end,
     });
-    end += stageSize;
+    start = end;
   }
-
-  stages.push({
-    label: `${stages.length + 1}회독`,
-    range: `1~${total}`,
-    end: total,
-  });
 
   return stages;
 }
@@ -293,6 +295,7 @@ function getTrackProgress(trackId) {
   state.progress[trackId].completedStages ??= {};
   state.progress[trackId].sessions ??= {};
   syncTrackTotals(state.progress[trackId]);
+  normalizeTrackProgress(trackId);
   return state.progress[trackId];
 }
 
@@ -300,6 +303,41 @@ function syncTrackTotals(progress) {
   const values = Object.values(progress.itemStates ?? {});
   progress.known = values.filter((value) => value === "known").length;
   progress.again = values.filter((value) => value === "again").length;
+}
+
+function getProgressSchemaVersion(track) {
+  return Array.isArray(track?.stages) && track.stages.length ? "native-v1" : "block-v1";
+}
+
+function getStageSessionPresence(progress, track, stage) {
+  const daySession = progress.sessions?.[getSessionKey(track, stage, "day")];
+  const reviewSession = progress.sessions?.[getSessionKey(track, stage, "review")];
+  return Boolean(daySession || reviewSession);
+}
+
+function normalizeTrackProgress(trackId) {
+  const progress = state.progress[trackId];
+  const track = getTrack(trackId);
+  if (!progress || !track) {
+    return;
+  }
+
+  const schemaVersion = getProgressSchemaVersion(track);
+  if (progress.stageSchemaVersion !== schemaVersion) {
+    progress.sessions = {};
+    progress.stageSchemaVersion = schemaVersion;
+  }
+
+  const nextCompletedStages = {};
+  for (const stage of getStages(track)) {
+    const items = getItemsForStage(track, stage);
+    if (items.length && items.every((item) => progress.itemStates?.[item.id] === "known")) {
+      nextCompletedStages[getStageKeyByEnd(track, stage)] = true;
+    }
+  }
+
+  progress.completedStages = nextCompletedStages;
+  progress.stageIndex = Math.min(progress.stageIndex ?? 0, Math.max(0, getStages(track).length - 1));
 }
 
 function getStageCellState(track, stage) {
@@ -310,7 +348,7 @@ function getStageCellState(track, stage) {
     return "complete";
   }
 
-  if (progress.sessions?.[stageKey]) {
+  if (getStageSessionPresence(progress, track, stage)) {
     return "active";
   }
 
@@ -371,7 +409,7 @@ function getPreferredStageIndex(track, options = {}) {
 
   const activeIndex = stages.findIndex((stage) => {
     const stageKey = getStageKeyByEnd(track, stage);
-    return stageKey !== skipStageKey && !progress.completedStages[stageKey] && progress.sessions?.[stageKey];
+    return stageKey !== skipStageKey && !progress.completedStages[stageKey] && getStageSessionPresence(progress, track, stage);
   });
 
   if (activeIndex >= 0) {
@@ -489,6 +527,7 @@ function currentRouteState() {
     subgroupId: state.subgroupId,
     trackId: state.trackId,
     continuousProgress: state.continuousProgress,
+    customConfig: state.customConfig,
   };
 }
 
@@ -500,6 +539,7 @@ function applyRouteState(routeState) {
   state.subgroupId = routeState.subgroupId ?? null;
   state.trackId = routeState.trackId ?? null;
   state.continuousProgress = Boolean(routeState.continuousProgress);
+  state.customConfig = routeState.customConfig ?? { batchSize: 20, selectedStageKeys: [] };
   state.reveal = {};
   state.stagePrompt = null;
   state.stagePreview = null;
@@ -532,6 +572,8 @@ function onSelectLanguage(languageId) {
   state.groupId = null;
   state.subgroupId = null;
   state.trackId = null;
+  state.customConfig = { batchSize: 20, selectedStageKeys: [] };
+  state.customSession = null;
   setRoute("groups");
 }
 
@@ -626,7 +668,7 @@ function getReviewItems(track) {
   const progress = getTrackProgress(track.id);
   const stages = getStages(track);
   const stage = stages[Math.min(progress.stageIndex, stages.length - 1)];
-  const learnedItems = track.items.slice(0, stage.end);
+  const learnedItems = getItemsForStage(track, stage);
   const reviewedItems = learnedItems.filter((item) => {
     const itemState = progress.itemStates?.[item.id];
     return itemState === "known" || itemState === "again";
@@ -637,18 +679,17 @@ function getReviewItems(track) {
     return againItems.length ? againItems : reviewedItems;
   }
 
-  return learnedItems.slice(0, stage.start ?? 0);
+  return learnedItems;
 }
 
 function getVisibleItems(track, mode = state.sessionMode ?? "day") {
-  const progress = getTrackProgress(track.id);
-  const stages = getStages(track);
-  const stage = stages[Math.min(progress.stageIndex, stages.length - 1)];
-
-  if (mode === "review" && isDayBasedTrack(track)) {
+  if (mode === "review") {
     return getReviewItems(track);
   }
 
+  const progress = getTrackProgress(track.id);
+  const stages = getStages(track);
+  const stage = stages[Math.min(progress.stageIndex, stages.length - 1)];
   return track.items.slice(stage.start ?? 0, stage.end);
 }
 
@@ -745,7 +786,25 @@ function getNextQueueIndex(track, session, currentIndex) {
   return currentIndex + 1;
 }
 
+function isCustomStudyRoute() {
+  return state.route === "custom-study";
+}
+
+function getActiveStudyTrack() {
+  if (isCustomStudyRoute()) {
+    const entry = getCurrentCustomEntry();
+    return entry ? getTrack(entry.trackId) : null;
+  }
+
+  return getTrack(state.trackId);
+}
+
 function advanceCard(result) {
+  if (isCustomStudyRoute()) {
+    advanceCustomCard(result);
+    return;
+  }
+
   const track = getTrack(state.trackId);
   const progress = getTrackProgress(state.trackId);
   const session = getStageSession(track);
@@ -823,12 +882,12 @@ function isGamepadButtonPressed(button) {
 }
 
 function handleGamepadStudyAction(action) {
-  const track = getTrack(state.trackId);
-  if (!track || state.route !== "study") {
+  const track = getActiveStudyTrack();
+  if (!track || (state.route !== "study" && state.route !== "custom-study")) {
     return;
   }
 
-  const session = getStageSession(track);
+  const session = isCustomStudyRoute() ? state.customSession : getStageSession(track);
   if (session.prompt?.type === "retry") {
     if (action === "known") {
       handleRetryPrompt(true);
@@ -843,6 +902,13 @@ function handleGamepadStudyAction(action) {
       handleNextProgressPrompt(true);
     } else if (action === "again") {
       handleNextProgressPrompt(false);
+    }
+    return;
+  }
+
+  if (session.prompt?.type === "refresh") {
+    if (action === "known") {
+      handleCustomRefreshPrompt();
     }
     return;
   }
@@ -883,7 +949,7 @@ function pollGamepad() {
   const pad = getPrimaryGamepad();
   const nextStates = {};
 
-  if (pad && state.route === "study") {
+  if (pad && (state.route === "study" || state.route === "custom-study")) {
     const mapping = [
       [0, "known"],
       [1, "meaning"],
@@ -1057,7 +1123,7 @@ function waitForSpeechVoices(timeout = 800) {
 }
 
 async function speakCurrentItem() {
-  const track = getTrack(state.trackId);
+  const track = getActiveStudyTrack();
   const synth = getSpeechSynth();
   if (!track || !synth) {
     return;
@@ -1086,6 +1152,10 @@ async function speakCurrentItem() {
 }
 
 function getCurrentItem(track) {
+  if (isCustomStudyRoute()) {
+    return getCurrentCustomItem();
+  }
+
   const session = getStageSession(track);
   if (!session.queueIds.length) {
     return null;
@@ -1151,6 +1221,155 @@ function getFilteredStagePreviewItems(track, items) {
 
   const progress = getTrackProgress(track.id);
   return items.filter((item) => progress.itemStates[item.id] !== "known");
+}
+
+function getSelectableStageOptions(languageId = state.languageId) {
+  return getTracksByLanguage(languageId).flatMap((track) =>
+    getStages(track).map((stage, index) => ({
+      id: `${track.id}::${getStageKeyByEnd(track, stage)}`,
+      trackId: track.id,
+      groupId: track.group,
+      trackTitle: getTrackLabel(track),
+      stageIndex: index,
+      stageKey: getStageKeyByEnd(track, stage),
+      stageLabel: formatStageDisplayLabel(stage),
+      stageRange: stage.range,
+      itemCount: getItemsForStage(track, stage).length,
+    })),
+  );
+}
+
+function getSelectedCustomStageOptions() {
+  const selected = new Set(state.customConfig.selectedStageKeys ?? []);
+  return getSelectableStageOptions().filter((option) => selected.has(option.id));
+}
+
+function toggleCustomStageSelection(optionId) {
+  const selected = new Set(state.customConfig.selectedStageKeys ?? []);
+  if (selected.has(optionId)) {
+    selected.delete(optionId);
+  } else {
+    selected.add(optionId);
+  }
+
+  state.customConfig = {
+    ...state.customConfig,
+    selectedStageKeys: [...selected],
+  };
+  render();
+}
+
+function setCustomBatchSize(batchSize) {
+  state.customConfig = {
+    ...state.customConfig,
+    batchSize,
+  };
+  render();
+}
+
+function shuffleEntries(entries) {
+  return shuffleArray(entries);
+}
+
+function getCustomSessionStats(session) {
+  if (!session) {
+    return { known: 0, again: 0 };
+  }
+
+  let known = 0;
+  let again = 0;
+
+  for (const entry of session.activeEntries) {
+    const value = session.statusMap[entry.id];
+    if (value === "known") {
+      known += 1;
+    } else if (value === "again") {
+      again += 1;
+    }
+  }
+
+  return { known, again };
+}
+
+function buildCustomSessionEntries() {
+  const selectedOptions = getSelectedCustomStageOptions();
+  const seen = new Set();
+  const entries = [];
+
+  for (const option of selectedOptions) {
+    const track = getTrack(option.trackId);
+    const stage = getStages(track)[option.stageIndex];
+    for (const item of getItemsForStage(track, stage)) {
+      const entryId = `${track.id}:${item.id}`;
+      if (seen.has(entryId)) {
+        continue;
+      }
+
+      seen.add(entryId);
+      entries.push({
+        id: entryId,
+        trackId: track.id,
+        itemId: item.id,
+        groupId: option.groupId,
+        trackTitle: option.trackTitle,
+        stageLabel: option.stageLabel,
+        stageRange: option.stageRange,
+      });
+    }
+  }
+
+  return shuffleEntries(entries);
+}
+
+function refillCustomSession(session) {
+  const retryEntries = session.activeEntries.filter((entry) => session.statusMap[entry.id] === "again");
+  const nextEntries = [...retryEntries];
+
+  while (nextEntries.length < session.batchSize && session.remainingEntries.length) {
+    nextEntries.push(session.remainingEntries.shift());
+  }
+
+  session.activeEntries = shuffleEntries(nextEntries);
+  session.pointer = 0;
+  session.round += 1;
+  session.statusMap = {};
+  session.prompt = null;
+}
+
+function startCustomStudy() {
+  const entries = buildCustomSessionEntries();
+  if (!entries.length) {
+    return;
+  }
+
+  const batchSize = state.customConfig.batchSize ?? 20;
+  const activeEntries = entries.splice(0, batchSize);
+  state.customSession = {
+    batchSize,
+    round: 1,
+    pointer: 0,
+    activeEntries: shuffleEntries(activeEntries),
+    remainingEntries: entries,
+    statusMap: {},
+    prompt: null,
+  };
+  state.reveal = {};
+  setRoute("custom-study");
+}
+
+function getCurrentCustomEntry() {
+  const session = state.customSession;
+  if (!session?.activeEntries?.length) {
+    return null;
+  }
+
+  return session.activeEntries[session.pointer] ?? null;
+}
+
+function getCurrentCustomItem() {
+  const entry = getCurrentCustomEntry();
+  const track = entry ? getTrack(entry.trackId) : null;
+  return entry && track ? getItemById(track, entry.itemId) : null;
 }
 
 function escapeHtml(value) {
@@ -1375,7 +1594,52 @@ function findNextSynonymCursor(items, currentCursor, recentPairIds) {
   return (currentCursor + 1) % items.length;
 }
 
+function advanceCustomCard(result) {
+  const session = state.customSession;
+  const entry = getCurrentCustomEntry();
+  if (!session || !entry) {
+    return;
+  }
+
+  const track = getTrack(entry.trackId);
+  const progress = getTrackProgress(entry.trackId);
+  session.statusMap[entry.id] = result;
+  progress.itemStates[entry.itemId] = result;
+  syncTrackTotals(progress);
+  normalizeTrackProgress(entry.trackId);
+
+  if (session.pointer < session.activeEntries.length - 1) {
+    session.pointer += 1;
+  } else {
+    const retryEntries = session.activeEntries.filter((activeEntry) => session.statusMap[activeEntry.id] === "again");
+    if (retryEntries.length || session.remainingEntries.length) {
+      session.prompt = { type: "refresh" };
+    } else {
+      session.prompt = { type: "complete" };
+    }
+  }
+
+  saveProgress();
+  state.reveal = {};
+  render();
+}
+
+function handleCustomRefreshPrompt() {
+  if (!state.customSession) {
+    return;
+  }
+
+  refillCustomSession(state.customSession);
+  state.reveal = {};
+  saveProgress();
+  render();
+}
+
 function handleRetryPrompt(shouldRetry) {
+  if (isCustomStudyRoute()) {
+    return;
+  }
+
   const track = getTrack(state.trackId);
   const session = getStageSession(track);
   const retryIds = session.prompt?.itemIds ?? [];
@@ -1402,24 +1666,37 @@ function handleRetryPrompt(shouldRetry) {
 }
 
 function handleCompletePrompt() {
+  if (isCustomStudyRoute()) {
+    state.customSession = null;
+    saveProgress();
+    setRoute("custom-select");
+    return;
+  }
+
   const track = getTrack(state.trackId);
   const progress = getTrackProgress(track.id);
+  const stage = getStageByIndex(track, progress.stageIndex);
   progress.completedStages[getStageKey(track)] = true;
-  progress.sessions[getStageKey(track)] = null;
+  progress.sessions[getSessionKey(track, stage, state.sessionMode ?? "day")] = null;
   state.continuousProgress = false;
   saveProgress();
   setRoute("stage");
 }
 
 function handleNextProgressPrompt(shouldMove) {
+  if (isCustomStudyRoute()) {
+    return;
+  }
+
   const track = getTrack(state.trackId);
   const progress = getTrackProgress(track.id);
   const stageKey = getStageKey(track);
   const session = getStageSession(track);
   const target = session.prompt?.target ?? null;
+  const stage = getStageByIndex(track, progress.stageIndex);
 
   progress.completedStages[stageKey] = true;
-  progress.sessions[stageKey] = null;
+  progress.sessions[getSessionKey(track, stage, state.sessionMode ?? "day")] = null;
 
   if (!shouldMove || !target) {
     state.continuousProgress = false;
@@ -1491,15 +1768,15 @@ function renderGroups() {
       title: group.title,
     })),
     {
-      kind: "continue",
-      id: "continue",
-      title: "진행",
+      kind: "custom",
+      id: "custom",
+      title: "맞춤",
     },
   ]
     .map((button) => {
-      if (button.kind === "continue") {
+      if (button.kind === "custom") {
         return `
-        <button class="big-button big-button--accent" data-continue>
+        <button class="big-button big-button--accent" data-custom-menu>
           <div class="big-button__title">${button.title}</div>
         </button>
       `;
@@ -1572,6 +1849,72 @@ function renderGroups() {
   `);
 }
 
+function renderCustomMenu() {
+  return appShell(`
+    <div class="topbar">
+      <button class="back-button" data-route="${isCustomStudy ? "custom-select" : "groups"}">홈</button>
+    </div>
+    <div class="section-card">
+      <h1 class="page-title">맞춤</h1>
+      <p class="page-subtitle">진행 추천 또는 여러 뭉치를 직접 골라 학습합니다.</p>
+    </div>
+    <div class="section-card">
+      <div class="type-list">
+        <button class="type-button" data-continue>
+          <div class="type-button__title">진행</div>
+          <div class="type-button__meta">가장 덜 진행된 뭉치부터 이어서 학습</div>
+        </button>
+        <button class="type-button" data-custom-select-open>
+          <div class="type-button__title">선택</div>
+          <div class="type-button__meta">여러 뭉치를 골라 섞어서 학습</div>
+        </button>
+      </div>
+    </div>
+  `);
+}
+
+function renderCustomSelect() {
+  const options = getSelectableStageOptions();
+  const selected = new Set(state.customConfig.selectedStageKeys ?? []);
+  const batchSize = state.customConfig.batchSize ?? 20;
+
+  return appShell(`
+    <div class="topbar">
+      <button class="back-button" data-route="custom">홈</button>
+    </div>
+    <div class="section-card">
+      <h1 class="page-title">선택</h1>
+      <p class="page-subtitle">뭉치를 여러 개 고르고, 한 번에 볼 개수를 정한 뒤 시작합니다.</p>
+    </div>
+    <div class="section-card">
+      <div class="custom-batch-picker">
+        <button class="stage-preview-filter${batchSize === 7 ? " is-active" : ""}" type="button" data-custom-batch="7">7개</button>
+        <button class="stage-preview-filter${batchSize === 20 ? " is-active" : ""}" type="button" data-custom-batch="20">20개</button>
+      </div>
+      <div class="page-subtitle">선택된 뭉치 ${selected.size}개</div>
+    </div>
+    <div class="section-card">
+      <div class="type-list">
+        ${options
+          .map(
+            (option) => `
+              <button class="type-button${selected.has(option.id) ? " is-active" : ""}" data-custom-stage="${option.id}">
+                <div class="type-button__title">${escapeHtml(option.trackTitle)} · ${escapeHtml(option.stageLabel)}</div>
+                <div class="type-button__meta">${escapeHtml(option.groupId)} · ${escapeHtml(option.stageRange)} · ${option.itemCount}개</div>
+              </button>
+            `,
+          )
+          .join("")}
+      </div>
+    </div>
+    <div class="section-card">
+      <button class="big-button big-button--accent big-button--single" data-custom-start${selected.size ? "" : " disabled"}>
+        <div class="big-button__title">시작</div>
+      </button>
+    </div>
+  `);
+}
+
 function renderSubgroups() {
   const buttons = getEnglishWordSubgroupOptions()
     .map((subgroup) => {
@@ -1590,7 +1933,7 @@ function renderSubgroups() {
 
   return appShell(`
     <div class="topbar">
-      <button class="back-button" data-route="groups">홈</button>
+      <button class="back-button" data-route="${isCustomStudy ? "custom-select" : "groups"}">홈</button>
     </div>
     <div class="section-card">
       <h1 class="page-title">단어</h1>
@@ -1634,53 +1977,35 @@ function renderStage() {
   const track = getTrack(state.trackId);
   const progress = getTrackProgress(track.id);
   const stages = getStages(track);
-  const isDayTrack = isDayBasedTrack(track);
   const buttons = stages
     .map((stage, index) => {
       const completed = isStageCompleted(track, stage);
-      if (isDayTrack) {
-        const reviewCount = track.items
-          .slice(0, stage.end)
-          .filter((item) => {
-            const itemState = progress.itemStates?.[item.id];
-            return itemState === "known" || itemState === "again";
-          }).length;
+      const reviewCount = getItemsForStage(track, stage).filter((item) => {
+        const itemState = progress.itemStates?.[item.id];
+        return itemState === "known" || itemState === "again";
+      }).length;
 
-        return `
-          <div class="stage-row stage-row--day">
-            <div class="stage-button stage-button--day${index === progress.stageIndex ? " is-active" : ""}${completed ? " is-complete" : ""}">
-              <div class="stage-button__main">
-                <div class="stage-button__head">
-                  <div class="stage-button__title">${escapeHtml(formatStageDisplayLabel(stage))}</div>
-                  <button class="stage-preview-button stage-preview-button--compact" type="button" data-stage-preview="${index}" aria-label="Day 목록 보기">&#9776;</button>
-                </div>
-                <div class="stage-button__meta">
-                  <span>학습 범위 ${escapeHtml(stage.range)}</span>
-                  ${completed ? '<span class="stage-badge">완료</span>' : ""}
-                </div>
-                <div class="stage-button__submeta">복습 후보 ${reviewCount}개</div>
+      return `
+        <div class="stage-row stage-row--day">
+          <div class="stage-button stage-button--day${index === progress.stageIndex ? " is-active" : ""}${completed ? " is-complete" : ""}">
+            <div class="stage-button__main">
+              <div class="stage-button__head">
+                <div class="stage-button__title">${escapeHtml(formatStageDisplayLabel(stage))}</div>
+                <button class="stage-preview-button stage-preview-button--compact" type="button" data-stage-preview="${index}" aria-label="Day 목록 보기">&#9776;</button>
               </div>
-              <div class="stage-button__sidebar">
-                <div class="stage-button__sidebar-actions">
-                  <button class="stage-action-button stage-action-button--compact" type="button" data-stage-day="${index}">단일</button>
-                  <button class="stage-action-button stage-action-button--compact stage-action-button--ghost" type="button" data-stage-review="${index}">복습</button>
-                </div>
+              <div class="stage-button__meta">
+                <span>학습 범위 ${escapeHtml(stage.range)}</span>
+                ${completed ? '<span class="stage-badge">완료</span>' : ""}
+              </div>
+              <div class="stage-button__submeta">복습 후보 ${reviewCount}개</div>
+            </div>
+            <div class="stage-button__sidebar">
+              <div class="stage-button__sidebar-actions">
+                <button class="stage-action-button stage-action-button--compact" type="button" data-stage-day="${index}">단일</button>
+                <button class="stage-action-button stage-action-button--compact stage-action-button--ghost" type="button" data-stage-review="${index}">복습</button>
               </div>
             </div>
           </div>
-        `;
-      }
-
-      return `
-        <div class="stage-row">
-          <button class="stage-button${index === progress.stageIndex ? " is-active" : ""}${completed ? " is-complete" : ""}" data-stage="${index}">
-            <div class="stage-button__title">${escapeHtml(formatStageDisplayLabel(stage))}</div>
-            <div class="stage-button__meta">
-              <span>학습 범위 ${escapeHtml(stage.range)}</span>
-              ${completed ? '<span class="stage-badge">완료</span>' : ""}
-            </div>
-          </button>
-          <button class="stage-preview-button" type="button" data-stage-preview="${index}" aria-label="회독 목록 보기">&#9776;</button>
         </div>
       `;
     })
@@ -1697,7 +2022,7 @@ function renderStage() {
 
   return appShell(`
       <div class="topbar">
-        <button class="back-button" data-route="groups">홈</button>
+        <button class="back-button" data-route="${isCustomStudy ? "custom-select" : "groups"}">홈</button>
       </div>
     <div class="section-card">
       <h1 class="page-title">${escapeHtml(getTrackLabel(track))}</h1>
@@ -1773,14 +2098,20 @@ function renderStage() {
 }
 
 function renderStudy() {
-  const track = getTrack(state.trackId);
-  const progress = getTrackProgress(track.id);
-  const stages = getStages(track);
-  const stage = stages[Math.min(progress.stageIndex, stages.length - 1)];
-  const session = getStageSession(track);
-  const item = getCurrentItem(track);
-  const stats = getSessionStats(session);
-  const modeDescription = `${stage.range} · ${session.round}라운드`;
+  const isCustomStudy = isCustomStudyRoute();
+  const customEntry = isCustomStudy ? getCurrentCustomEntry() : null;
+  const track = isCustomStudy ? getTrack(customEntry?.trackId) : getTrack(state.trackId);
+  const progress = track ? getTrackProgress(track.id) : null;
+  const stages = track ? getStages(track) : [];
+  const stage = isCustomStudy
+    ? { range: customEntry?.stageRange ?? "", label: customEntry?.stageLabel ?? "" }
+    : stages[Math.min(progress.stageIndex, stages.length - 1)];
+  const session = isCustomStudy ? state.customSession : getStageSession(track);
+  const item = track ? getCurrentItem(track) : null;
+  const stats = isCustomStudy ? getCustomSessionStats(session) : getSessionStats(session);
+  const modeDescription = isCustomStudy
+    ? `${customEntry?.groupId ?? ""} · ${customEntry?.stageLabel ?? ""} · ${customEntry?.stageRange ?? ""} · ${session?.round ?? 1}라운드`
+    : `${stage.range} · ${session.round}라운드`;
 
   if (!item) {
     return appShell(`
@@ -1882,7 +2213,7 @@ function renderStudy() {
   );
   const isPromptOpen = Boolean(session.prompt);
   const retryPromptModal =
-    session.prompt?.type === "retry"
+    !isCustomStudy && session.prompt?.type === "retry"
       ? `<div class="modal-backdrop">
         <div class="modal-panel session-prompt session-prompt--modal">
           <div class="session-prompt__text">공부하겠음을 누른 단어들만 다시 띄울까요?</div>
@@ -1893,11 +2224,23 @@ function renderStudy() {
         </div>
       </div>`
       : "";
+  const refreshPromptModal =
+    isCustomStudy && session.prompt?.type === "refresh"
+      ? `<div class="modal-backdrop">
+        <div class="modal-panel session-prompt session-prompt--modal">
+          <div class="session-prompt__text">뭉치를 갱신합니다.</div>
+          <div class="stage-prompt__meta">공부하겠음 항목은 유지하고 새 항목을 보충합니다.</div>
+          <div class="session-prompt__actions">
+            <button class="prompt-button" data-session-action="custom-refresh">확인</button>
+          </div>
+        </div>
+      </div>`
+      : "";
   const completePromptModal =
     session.prompt?.type === "complete"
       ? `<div class="modal-backdrop">
         <div class="modal-panel session-prompt session-prompt--modal">
-          <div class="session-prompt__text">완료했습니다!</div>
+          <div class="session-prompt__text">${isCustomStudy ? "선택한 뭉치 학습을 완료했습니다!" : "완료했습니다!"}</div>
           <div class="session-prompt__actions">
             <button class="prompt-button" data-session-action="complete-ok">확인</button>
           </div>
@@ -1905,7 +2248,7 @@ function renderStudy() {
       </div>`
       : "";
   const nextPromptModal =
-    session.prompt?.type === "next"
+    !isCustomStudy && session.prompt?.type === "next"
       ? `<div class="modal-backdrop">
         <div class="modal-panel session-prompt session-prompt--modal">
           <div class="session-prompt__text">다음 진행 뭉치: ${escapeHtml(session.prompt.target.trackTitle)} · ${escapeHtml(session.prompt.target.stageLabel)}</div>
@@ -1923,19 +2266,19 @@ function renderStudy() {
       <button class="back-button" data-route="groups">홈</button>
     </div>
     <div class="section-card">
-      <div class="study-mode-row">
+      ${isCustomStudy ? "" : `<div class="study-mode-row">
         <button class="study-mode-badge${state.continuousProgress ? " is-active" : ""}" type="button" data-continuous-toggle>
           ${state.continuousProgress ? "[진행중]" : "[진행]"}
         </button>
-      </div>
+      </div>`}
       <div class="study-head">
         <div>
-          <h1 class="page-title page-title--study">${escapeHtml(getTrackLabel(track))}</h1>
+          <h1 class="page-title page-title--study">${escapeHtml(isCustomStudy ? `${getTrackLabel(track)} · ${customEntry?.stageLabel ?? ""}` : getTrackLabel(track))}</h1>
           <div class="study-inline-meta">
             <span class="page-subtitle">${escapeHtml(modeText)}</span>
           </div>
         </div>
-        <div class="study-progress">${Math.min(session.pointer + 1, session.queueIds.length)} / ${session.queueIds.length}</div>
+        <div class="study-progress">${Math.min(session.pointer + 1, isCustomStudy ? session.activeEntries.length : session.queueIds.length)} / ${isCustomStudy ? session.activeEntries.length : session.queueIds.length}</div>
       </div>
       <div class="study-summary-row">
         <div class="study-summary-left">
@@ -1989,6 +2332,7 @@ function renderStudy() {
       </div>
     </div>
     ${retryPromptModal}
+    ${refreshPromptModal}
     ${completePromptModal}
     ${nextPromptModal}
   `);
@@ -2047,6 +2391,10 @@ function render() {
     app.innerHTML = renderHome();
   } else if (state.route === "groups") {
     app.innerHTML = renderGroups();
+  } else if (state.route === "custom") {
+    app.innerHTML = renderCustomMenu();
+  } else if (state.route === "custom-select") {
+    app.innerHTML = renderCustomSelect();
   } else if (state.route === "subgroups") {
     app.innerHTML = renderSubgroups();
   } else if (state.route === "types") {
@@ -2155,6 +2503,26 @@ function bindEvents() {
     });
   });
 
+  document.querySelectorAll("[data-custom-menu]").forEach((button) => {
+    button.addEventListener("click", () => setRoute("custom"));
+  });
+
+  document.querySelectorAll("[data-custom-select-open]").forEach((button) => {
+    button.addEventListener("click", () => setRoute("custom-select"));
+  });
+
+  document.querySelectorAll("[data-custom-stage]").forEach((button) => {
+    button.addEventListener("click", () => toggleCustomStageSelection(button.dataset.customStage));
+  });
+
+  document.querySelectorAll("[data-custom-batch]").forEach((button) => {
+    button.addEventListener("click", () => setCustomBatchSize(Number(button.dataset.customBatch)));
+  });
+
+  document.querySelectorAll("[data-custom-start]").forEach((button) => {
+    button.addEventListener("click", startCustomStudy);
+  });
+
   document.querySelectorAll("[data-continue]").forEach((button) => {
     button.addEventListener("click", continueLeastProgress);
   });
@@ -2185,6 +2553,10 @@ function bindEvents() {
     button.addEventListener("click", () => {
       if (button.dataset.route === "home") {
         setRoute("home", { languageId: null, groupId: null, subgroupId: null, trackId: null });
+      } else if (button.dataset.route === "custom") {
+        setRoute("custom");
+      } else if (button.dataset.route === "custom-select") {
+        setRoute("custom-select");
       } else if (button.dataset.route === "groups") {
         setRoute("groups", { languageId: state.languageId, groupId: null, subgroupId: null, trackId: null });
       } else if (button.dataset.route === "subgroups") {
@@ -2213,6 +2585,8 @@ function bindEvents() {
         handleRetryPrompt(true);
       } else if (button.dataset.sessionAction === "retry-no") {
         handleRetryPrompt(false);
+      } else if (button.dataset.sessionAction === "custom-refresh") {
+        handleCustomRefreshPrompt();
       } else if (button.dataset.sessionAction === "next-yes") {
         handleNextProgressPrompt(true);
       } else if (button.dataset.sessionAction === "next-no") {
@@ -2282,6 +2656,10 @@ async function init() {
     }
 
     state.dataset = await response.json();
+    for (const track of state.dataset.tracks ?? []) {
+      getTrackProgress(track.id);
+    }
+    saveProgress();
     primeSpeechVoices();
     render();
   } catch (error) {

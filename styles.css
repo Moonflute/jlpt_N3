@@ -218,6 +218,12 @@ button {
   transform: translateY(-1px);
 }
 
+.big-button:disabled {
+  opacity: 0.5;
+  cursor: default;
+  transform: none;
+}
+
 .big-button {
   min-height: 112px;
   border-radius: 24px;
@@ -288,6 +294,13 @@ button {
 .summary-list {
   display: grid;
   gap: 10px;
+}
+
+.custom-batch-picker {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
 }
 
 .stage-row {
