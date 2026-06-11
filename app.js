@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "2.1.0";
+const APP_VERSION = "2.1.1";
 
 const LANGUAGES = [
   { id: "ja", title: "일본어", flag: "🇯🇵" },
@@ -830,25 +830,25 @@ function handleGamepadStudyAction(action) {
 
   const session = getStageSession(track);
   if (session.prompt?.type === "retry") {
-    if (action === "again") {
+    if (action === "known") {
       handleRetryPrompt(true);
-    } else if (action === "known") {
+    } else if (action === "again") {
       handleRetryPrompt(false);
     }
     return;
   }
 
   if (session.prompt?.type === "next") {
-    if (action === "again") {
+    if (action === "known") {
       handleNextProgressPrompt(true);
-    } else if (action === "known") {
+    } else if (action === "again") {
       handleNextProgressPrompt(false);
     }
     return;
   }
 
   if (session.prompt?.type === "complete") {
-    if (action === "again") {
+    if (action === "known") {
       handleCompletePrompt();
     }
     return;
@@ -885,10 +885,10 @@ function pollGamepad() {
 
   if (pad && state.route === "study") {
     const mapping = [
-      [0, "again"],
-      [1, "known"],
-      [2, "reading"],
-      [3, "meaning"],
+      [0, "known"],
+      [1, "meaning"],
+      [2, "again"],
+      [3, "reading"],
       [4, "example"],
       [5, "exampleKo"],
     ];
@@ -1780,11 +1780,7 @@ function renderStudy() {
   const session = getStageSession(track);
   const item = getCurrentItem(track);
   const stats = getSessionStats(session);
-  const isReviewMode = session.mode === "review";
-  const modeLabel = isReviewMode ? "누적 복습" : "단일 학습";
-  const modeDescription = isReviewMode
-    ? `${formatStageDisplayLabel(stage)}까지의 누적 복습`
-    : `${formatStageDisplayLabel(stage)} 단일 학습`;
+  const modeDescription = `${stage.range} · ${session.round}라운드`;
 
   if (!item) {
     return appShell(`
@@ -1941,12 +1937,9 @@ function renderStudy() {
         </div>
         <div class="study-progress">${Math.min(session.pointer + 1, session.queueIds.length)} / ${session.queueIds.length}</div>
       </div>
-      <div class="study-mode-row">
-        <div class="study-mode-badge is-active">${escapeHtml(modeLabel)}</div>
-      </div>
       <div class="study-summary-row">
         <div class="study-summary-left">
-          <span class="page-subtitle">${escapeHtml(modeDescription)} · ${escapeHtml(stage.range)} · ${session.round}라운드</span>
+          <span class="page-subtitle">${escapeHtml(modeDescription)}</span>
         </div>
         <div class="study-summary-stats">
           <span class="study-stat-chip">알고있음 <strong>${stats.known}</strong></span>
