@@ -1,5 +1,6 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
 const APP_VERSION = "3.2.0";
+let transientNoticeTimer = null;
 
 function createDefaultCustomConfig() {
   return {
@@ -37,6 +38,7 @@ const state = {
   stagePrompt: null,
   stagePreview: null,
   stageStats: null,
+  transientNotice: null,
   progressOverview: false,
   continuousProgress: false,
   voicesLoaded: false,
@@ -568,6 +570,7 @@ function applyRouteState(routeState) {
   state.stagePrompt = null;
   state.stagePreview = null;
   state.stageStats = null;
+  state.transientNotice = null;
   state.progressOverview = false;
   state.backupNotice = "";
 }
@@ -582,6 +585,7 @@ function setRoute(route, payload = {}, options = {}) {
   state.stagePrompt = null;
   state.stagePreview = null;
   state.stageStats = null;
+  state.transientNotice = null;
   state.progressOverview = false;
   state.backupNotice = "";
 
@@ -897,6 +901,22 @@ function buildStageStats(record) {
     worst: Math.max(...roundsList),
     recent: history.slice().reverse(),
   };
+}
+
+function showTransientNotice(text, duration = 1100) {
+  if (transientNoticeTimer) {
+    window.clearTimeout(transientNoticeTimer);
+    transientNoticeTimer = null;
+  }
+
+  state.transientNotice = { text };
+  render();
+
+  transientNoticeTimer = window.setTimeout(() => {
+    state.transientNotice = null;
+    transientNoticeTimer = null;
+    render();
+  }, duration);
 }
 
 function getSessionKey(track, stage, mode = state.sessionMode ?? "day") {
@@ -1867,7 +1887,11 @@ function advanceCustomCard(result) {
   } else {
     const retryEntries = session.activeEntries.filter((activeEntry) => session.statusMap[activeEntry.id] === "again");
     if (retryEntries.length || session.remainingEntries.length) {
-      session.prompt = { type: "refresh" };
+      refillCustomSession(session);
+      saveProgress();
+      state.reveal = {};
+      showTransientNotice("새로 채웁니다");
+      return;
     } else {
       session.prompt = { type: "complete" };
     }
@@ -2617,6 +2641,9 @@ function renderStudy() {
         </div>
       </div>`
       : "";
+  const transientNotice = state.transientNotice
+    ? `<div class="transient-notice" aria-live="polite">${escapeHtml(state.transientNotice.text)}</div>`
+    : "";
   const nextPromptModal =
     !isCustomStudy && session.prompt?.type === "next"
       ? `<div class="modal-backdrop">
@@ -2777,6 +2804,7 @@ function render() {
 
   normalizeStudyHeaderLayout();
   normalizeStageRecordMeta();
+  normalizeTransientNotice();
   bindEvents();
 }
 
@@ -2855,6 +2883,25 @@ function normalizeStageRecordMeta() {
   });
 
   renderStageStatsModal(track, stages);
+}
+
+function normalizeTransientNotice() {
+  document.querySelector(".transient-notice")?.remove();
+
+  if (!state.transientNotice || state.route !== "study" && state.route !== "custom-study") {
+    return;
+  }
+
+  const cardPanel = document.querySelector(".card-panel");
+  if (!cardPanel) {
+    return;
+  }
+
+  const notice = document.createElement("div");
+  notice.className = "transient-notice";
+  notice.setAttribute("aria-live", "polite");
+  notice.textContent = state.transientNotice.text;
+  cardPanel.prepend(notice);
 }
 
 function renderStageStatsModal(track, stages) {
