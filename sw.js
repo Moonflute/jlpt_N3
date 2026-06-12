@@ -1,4 +1,4 @@
-const CACHE_NAME = "review-note-v33";
+const CACHE_NAME = "review-note-v34";
 const CORE_ASSETS = [
   "./",
   "./index.html",

@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "3.2.0";
+const APP_VERSION = "3.2.1";
 let transientNoticeTimer = null;
 
 function createDefaultCustomConfig() {
@@ -903,6 +903,47 @@ function buildStageStats(record) {
   };
 }
 
+function getStageByKey(track, stageKey) {
+  return getStages(track).find((stage) => getStageKeyByEnd(track, stage) === stageKey) ?? null;
+}
+
+function tryRecordCustomStageCompletion(session, entry) {
+  if (!session || !entry?.stageKey) {
+    return;
+  }
+
+  const completedStageMap = session.completedStageMap ?? {};
+  const completionKey = `${entry.trackId}:${entry.stageKey}`;
+  if (completedStageMap[completionKey]) {
+    return;
+  }
+
+  const allEntries = session.allEntries ?? [];
+  const stageEntries = allEntries.filter(
+    (candidate) => candidate.trackId === entry.trackId && candidate.stageKey === entry.stageKey,
+  );
+  if (!stageEntries.length) {
+    return;
+  }
+
+  const finalResultMap = session.finalResultMap ?? {};
+  if (!stageEntries.every((candidate) => finalResultMap[candidate.id] === "known")) {
+    return;
+  }
+
+  const attemptMap = session.attemptMap ?? {};
+  const rounds = Math.max(1, ...stageEntries.map((candidate) => attemptMap[candidate.id] ?? 1));
+  const track = getTrack(entry.trackId);
+  const stage = track ? getStageByKey(track, entry.stageKey) : null;
+  if (!track || !stage) {
+    return;
+  }
+
+  recordStageCompletion(track, stage, { round: rounds });
+  completedStageMap[completionKey] = true;
+  session.completedStageMap = completedStageMap;
+}
+
 function showTransientNotice(text, duration = 1100) {
   if (transientNoticeTimer) {
     window.clearTimeout(transientNoticeTimer);
@@ -1571,6 +1612,7 @@ function buildCustomSessionEntries() {
         id: entryId,
         trackId: track.id,
         itemId: item.id,
+        stageKey: option.stageKey,
         groupId: option.groupId,
         trackTitle: option.trackTitle,
         stageLabel: option.stageLabel,
@@ -1612,6 +1654,7 @@ function startCustomStudy() {
 
   const batchSize = state.customConfig.batchSize ?? 20;
   const totalEntries = entries.length;
+  const allEntries = [...entries];
   const activeEntries = entries.splice(0, batchSize);
   state.customSession = {
     batchSize,
@@ -1619,10 +1662,14 @@ function startCustomStudy() {
     pointer: 0,
     totalEntries,
     selectionSignature,
+    allEntries,
     activeEntries: shuffleEntries(activeEntries),
     remainingEntries: entries,
     statusMap: {},
     completedEntryMap: {},
+    finalResultMap: {},
+    attemptMap: {},
+    completedStageMap: {},
     prompt: null,
   };
   state.reveal = {};
@@ -1878,9 +1925,14 @@ function advanceCustomCard(result) {
   const progress = getTrackProgress(entry.trackId);
   session.statusMap[entry.id] = result;
   session.completedEntryMap[entry.id] = true;
+  session.finalResultMap ??= {};
+  session.finalResultMap[entry.id] = result;
+  session.attemptMap ??= {};
+  session.attemptMap[entry.id] = (session.attemptMap[entry.id] ?? 0) + 1;
   progress.itemStates[entry.itemId] = result;
   syncTrackTotals(progress);
   normalizeTrackProgress(entry.trackId);
+  tryRecordCustomStageCompletion(session, entry);
 
   if (session.pointer < session.activeEntries.length - 1) {
     session.pointer += 1;
