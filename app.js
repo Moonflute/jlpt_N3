@@ -1424,7 +1424,7 @@ function shuffleEntries(entries) {
 
 function getCustomSessionStats(session) {
   if (!session) {
-    return { known: 0, again: 0 };
+    return { known: 0, again: 0, overallDone: 0, overallTotal: 0 };
   }
 
   let known = 0;
@@ -1439,7 +1439,12 @@ function getCustomSessionStats(session) {
     }
   }
 
-  return { known, again };
+  return {
+    known,
+    again,
+    overallDone: Object.keys(session.completedEntryMap ?? {}).length,
+    overallTotal: session.totalEntries ?? 0,
+  };
 }
 
 function buildCustomSessionEntries() {
@@ -1494,14 +1499,17 @@ function startCustomStudy() {
   }
 
   const batchSize = state.customConfig.batchSize ?? 20;
+  const totalEntries = entries.length;
   const activeEntries = entries.splice(0, batchSize);
   state.customSession = {
     batchSize,
     round: 1,
     pointer: 0,
+    totalEntries,
     activeEntries: shuffleEntries(activeEntries),
     remainingEntries: entries,
     statusMap: {},
+    completedEntryMap: {},
     prompt: null,
   };
   state.reveal = {};
@@ -1755,6 +1763,7 @@ function advanceCustomCard(result) {
   const track = getTrack(entry.trackId);
   const progress = getTrackProgress(entry.trackId);
   session.statusMap[entry.id] = result;
+  session.completedEntryMap[entry.id] = true;
   progress.itemStates[entry.itemId] = result;
   syncTrackTotals(progress);
   normalizeTrackProgress(entry.trackId);
@@ -2080,15 +2089,6 @@ function renderCustomSelectCompact() {
       <h1 class="page-title">\uC120\uD0DD</h1>
       <p class="page-subtitle">\uB2E8\uC6D0\uC744 \uACE0\uB974\uACE0 \uD55C \uBC88\uC5D0 \uD559\uC2B5\uC744 \uC2DC\uC791\uD569\uB2C8\uB2E4.</p>
     </div>
-    <div class="section-card section-card--compact">
-      <div class="custom-select-toolbar">
-        <div class="custom-batch-picker">
-          <button class="stage-preview-filter${batchSize === 7 ? " is-active" : ""}" type="button" data-custom-batch="7">7\uAC1C</button>
-          <button class="stage-preview-filter${batchSize === 20 ? " is-active" : ""}" type="button" data-custom-batch="20">20\uAC1C</button>
-        </div>
-        <div class="custom-select-summary">\uC120\uD0DD ${selected.size}\uAC1C</div>
-      </div>
-    </div>
     <div class="section-card section-card--compact custom-select-board">
       ${groups
         .map(
@@ -2130,6 +2130,10 @@ function renderCustomSelectCompact() {
     </div>
     <div class="section-card section-card--compact custom-select-footer">
       <div class="custom-select-footer__summary">\uC120\uD0DD\uD55C \uBB49\uCE58 ${selected.size}\uAC1C</div>
+      <div class="custom-batch-picker custom-batch-picker--footer">
+        <button class="stage-preview-filter${batchSize === 7 ? " is-active" : ""}" type="button" data-custom-batch="7">7\uAC1C</button>
+        <button class="stage-preview-filter${batchSize === 20 ? " is-active" : ""}" type="button" data-custom-batch="20">20\uAC1C</button>
+      </div>
       <button class="big-button big-button--accent big-button--single custom-select-start" data-custom-start${selected.size ? "" : " disabled"}>
         <div class="big-button__title">\uC2DC\uC791</div>
       </button>
@@ -2343,6 +2347,9 @@ function renderStudy() {
   const session = isCustomStudy ? state.customSession : getStageSession(track);
   const item = track ? getCurrentItem(track) : null;
   const stats = isCustomStudy ? getCustomSessionStats(session) : getSessionStats(session);
+  const unitProgressText = `${Math.min(session.pointer + 1, isCustomStudy ? session.activeEntries.length : session.queueIds.length)}/${isCustomStudy ? session.activeEntries.length : session.queueIds.length}`;
+  const totalProgressText = isCustomStudy ? `${stats.overallDone}/${stats.overallTotal}` : "";
+  const studyProgressText = isCustomStudy ? `단위 : ${unitProgressText}   총 : ${totalProgressText}` : unitProgressText;
   const modeDescription = isCustomStudy
     ? `${customEntry?.groupId ?? ""} · ${customEntry?.stageLabel ?? ""} · ${customEntry?.stageRange ?? ""} · ${session?.round ?? 1}라운드`
     : `${stage.range} · ${session.round}라운드`;
@@ -2512,7 +2519,7 @@ function renderStudy() {
             <span class="page-subtitle">${escapeHtml(modeText)}</span>
           </div>
         </div>
-        <div class="study-progress">${Math.min(session.pointer + 1, isCustomStudy ? session.activeEntries.length : session.queueIds.length)} / ${isCustomStudy ? session.activeEntries.length : session.queueIds.length}</div>
+        <div class="study-progress">${studyProgressText}</div>
       </div>
       <div class="study-summary-row">
         <div class="study-summary-left">

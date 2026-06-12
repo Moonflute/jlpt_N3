@@ -307,17 +307,6 @@ button {
   margin-bottom: 10px;
 }
 
-.custom-select-toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-.custom-select-toolbar .custom-batch-picker {
-  margin-bottom: 0;
-}
-
 .custom-select-summary,
 .custom-select-footer__summary {
   color: var(--muted);
@@ -409,9 +398,14 @@ button {
 
 .custom-select-footer {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 132px;
+  grid-template-columns: minmax(0, 1fr) auto 132px;
   align-items: center;
   gap: 12px;
+}
+
+.custom-batch-picker--footer {
+  margin-bottom: 0;
+  justify-content: flex-end;
 }
 
 .custom-select-start {
