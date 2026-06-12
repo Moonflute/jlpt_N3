@@ -379,13 +379,13 @@ button {
 }
 
 .custom-stage-chip {
-  min-width: 42px;
-  height: 32px;
-  border-radius: 10px;
+  min-width: 32px;
+  height: 24px;
+  border-radius: 8px;
   border: 1px solid var(--line);
   background: rgba(255, 255, 255, 0.96);
   color: var(--ink);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.02em;
   cursor: pointer;
