@@ -280,6 +280,10 @@ button {
   padding: 18px;
 }
 
+.section-card--compact {
+  padding: 12px;
+}
+
 .section-label {
   margin-bottom: 10px;
   color: var(--muted);
@@ -301,6 +305,117 @@ button {
   gap: 8px;
   flex-wrap: wrap;
   margin-bottom: 10px;
+}
+
+.custom-select-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.custom-select-toolbar .custom-batch-picker {
+  margin-bottom: 0;
+}
+
+.custom-select-summary,
+.custom-select-footer__summary {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.custom-select-board {
+  display: grid;
+  gap: 14px;
+}
+
+.custom-select-group {
+  display: grid;
+  gap: 8px;
+}
+
+.custom-select-group__title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.custom-select-track {
+  display: grid;
+  gap: 6px;
+}
+
+.custom-select-track + .custom-select-track {
+  margin-top: 2px;
+}
+
+.custom-select-track__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.custom-select-track__title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.custom-select-track__meta {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.custom-stage-chip-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.custom-stage-chip {
+  min-width: 42px;
+  height: 32px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+}
+
+.custom-stage-chip.is-active {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: #fff;
+}
+
+.custom-stage-chip.is-complete {
+  border-color: rgba(20, 158, 163, 0.38);
+  box-shadow: inset 0 0 0 1px rgba(20, 158, 163, 0.08);
+}
+
+.custom-stage-chip.is-active.is-complete {
+  background: var(--teal-deep);
+  border-color: var(--teal-deep);
+}
+
+.custom-select-footer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 132px;
+  align-items: center;
+  gap: 12px;
+}
+
+.custom-select-start {
+  min-height: 48px;
 }
 
 .stage-row {

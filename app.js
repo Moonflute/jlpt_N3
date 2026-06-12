@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "3.0.3";
+const APP_VERSION = "3.1.0";
 
 const LANGUAGES = [
   { id: "ja", title: "일본어", flag: "🇯🇵" },
@@ -1362,6 +1362,34 @@ function getSelectableStageOptions(languageId = state.languageId) {
   );
 }
 
+function getCustomStageGroups(languageId = state.languageId) {
+  return getLanguageGroups(languageId)
+    .map((group) => {
+      const tracks = getTracksByGroup(group.id, languageId)
+        .map((track) => ({
+          groupId: group.id,
+          trackId: track.id,
+          trackTitle: getTrackLabel(track),
+          options: getStages(track).map((stage, index) => ({
+            id: `${track.id}::${getStageKeyByEnd(track, stage)}`,
+            trackId: track.id,
+            stageIndex: index,
+            stageLabel: formatStageDisplayLabel(stage),
+            stageRange: stage.range,
+            isCompleted: isStageCompleted(track, stage),
+          })),
+        }))
+        .filter((track) => track.options.length);
+
+      return {
+        groupId: group.id,
+        groupTitle: group.title,
+        tracks,
+      };
+    })
+    .filter((group) => group.tracks.length);
+}
+
 function getSelectedCustomStageOptions() {
   const selected = new Set(state.customConfig.selectedStageKeys ?? []);
   return getSelectableStageOptions().filter((option) => selected.has(option.id));
@@ -2039,6 +2067,76 @@ function renderCustomSelect() {
   `);
 }
 
+function renderCustomSelectCompact() {
+  const selected = new Set(state.customConfig.selectedStageKeys ?? []);
+  const batchSize = state.customConfig.batchSize ?? 20;
+  const groups = getCustomStageGroups();
+
+  return appShell(`
+    <div class="topbar">
+      <button class="back-button" data-route="custom">\uD648</button>
+    </div>
+    <div class="section-card section-card--compact">
+      <h1 class="page-title">\uC120\uD0DD</h1>
+      <p class="page-subtitle">\uB2E8\uC6D0\uC744 \uACE0\uB974\uACE0 \uD55C \uBC88\uC5D0 \uD559\uC2B5\uC744 \uC2DC\uC791\uD569\uB2C8\uB2E4.</p>
+    </div>
+    <div class="section-card section-card--compact">
+      <div class="custom-select-toolbar">
+        <div class="custom-batch-picker">
+          <button class="stage-preview-filter${batchSize === 7 ? " is-active" : ""}" type="button" data-custom-batch="7">7\uAC1C</button>
+          <button class="stage-preview-filter${batchSize === 20 ? " is-active" : ""}" type="button" data-custom-batch="20">20\uAC1C</button>
+        </div>
+        <div class="custom-select-summary">\uC120\uD0DD ${selected.size}\uAC1C</div>
+      </div>
+    </div>
+    <div class="section-card section-card--compact custom-select-board">
+      ${groups
+        .map(
+          (group) => `
+            <section class="custom-select-group">
+              <h2 class="custom-select-group__title">${escapeHtml(group.groupTitle)}</h2>
+              ${group.tracks
+                .map((track) => {
+                  const selectedCount = track.options.filter((option) => selected.has(option.id)).length;
+                  return `
+                    <div class="custom-select-track">
+                      <div class="custom-select-track__head">
+                        <h3 class="custom-select-track__title">${escapeHtml(track.trackTitle)}</h3>
+                        <div class="custom-select-track__meta">${selectedCount}/${track.options.length}</div>
+                      </div>
+                      <div class="custom-stage-chip-grid">
+                        ${track.options
+                          .map(
+                            (option, index) => `
+                              <button
+                                class="custom-stage-chip${selected.has(option.id) ? " is-active" : ""}${option.isCompleted ? " is-complete" : ""}"
+                                type="button"
+                                data-custom-stage="${option.id}"
+                                title="${escapeHtml(`${track.trackTitle} ${option.stageLabel} · ${option.stageRange}`)}"
+                                aria-label="${escapeHtml(`${track.trackTitle} ${option.stageLabel} ${option.stageRange}`)}"
+                              >${String(index + 1).padStart(2, "0")}</button>
+                            `,
+                          )
+                          .join("")}
+                      </div>
+                    </div>
+                  `;
+                })
+                .join("")}
+            </section>
+          `,
+        )
+        .join("")}
+    </div>
+    <div class="section-card section-card--compact custom-select-footer">
+      <div class="custom-select-footer__summary">\uC120\uD0DD\uD55C \uBB49\uCE58 ${selected.size}\uAC1C</div>
+      <button class="big-button big-button--accent big-button--single custom-select-start" data-custom-start${selected.size ? "" : " disabled"}>
+        <div class="big-button__title">\uC2DC\uC791</div>
+      </button>
+    </div>
+  `);
+}
+
 function renderSubgroups() {
   const isCustomStudy = isCustomStudyRoute();
   const buttons = getEnglishWordSubgroupOptions()
@@ -2530,7 +2628,7 @@ function render() {
   } else if (state.route === "custom") {
     app.innerHTML = renderCustomMenu();
   } else if (state.route === "custom-select") {
-    app.innerHTML = renderCustomSelect();
+    app.innerHTML = renderCustomSelectCompact();
   } else if (state.route === "subgroups") {
     app.innerHTML = renderSubgroups();
   } else if (state.route === "types") {
