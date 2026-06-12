@@ -1,5 +1,12 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "3.1.0";
+const APP_VERSION = "3.2.0";
+
+function createDefaultCustomConfig() {
+  return {
+    batchSize: 20,
+    selectedStageKeys: [],
+  };
+}
 
 const LANGUAGES = [
   { id: "ja", title: "일본어", flag: "🇯🇵" },
@@ -24,14 +31,12 @@ const state = {
   subgroupId: null,
   trackId: null,
   sessionMode: "day",
-  customConfig: {
-    batchSize: 20,
-    selectedStageKeys: [],
-  },
+  customConfig: createDefaultCustomConfig(),
   customSession: null,
   reveal: {},
   stagePrompt: null,
   stagePreview: null,
+  stageStats: null,
   progressOverview: false,
   continuousProgress: false,
   voicesLoaded: false,
@@ -43,6 +48,21 @@ const state = {
   isPoppingState: false,
 };
 
+function restoreAppStateFromProgress() {
+  const persisted = state.progress?.__appState ?? {};
+  state.customConfig = persisted.customConfig ?? createDefaultCustomConfig();
+  state.customSession = persisted.customSession ?? null;
+}
+
+function syncAppStateToProgress() {
+  state.progress.__appState = {
+    customConfig: state.customConfig,
+    customSession: state.customSession,
+  };
+}
+
+restoreAppStateFromProgress();
+
 function loadProgress() {
   try {
     return JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "{}");
@@ -52,6 +72,7 @@ function loadProgress() {
 }
 
 function saveProgress() {
+  syncAppStateToProgress();
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state.progress));
 }
 
@@ -111,6 +132,7 @@ function importProgress() {
       }
 
       state.progress = parsed.progress;
+      restoreAppStateFromProgress();
       saveProgress();
       state.backupNotice = "진행기록을 불러왔습니다.";
       render();
@@ -286,6 +308,7 @@ function getTrackProgress(trackId) {
       cursor: 0,
       itemStates: {},
       completedStages: {},
+      stageRecords: {},
       recentPairIds: [],
       sessions: {},
     };
@@ -293,6 +316,7 @@ function getTrackProgress(trackId) {
 
   state.progress[trackId].itemStates ??= {};
   state.progress[trackId].completedStages ??= {};
+  state.progress[trackId].stageRecords ??= {};
   state.progress[trackId].sessions ??= {};
   syncTrackTotals(state.progress[trackId]);
   normalizeTrackProgress(trackId);
@@ -539,10 +563,11 @@ function applyRouteState(routeState) {
   state.subgroupId = routeState.subgroupId ?? null;
   state.trackId = routeState.trackId ?? null;
   state.continuousProgress = Boolean(routeState.continuousProgress);
-  state.customConfig = routeState.customConfig ?? { batchSize: 20, selectedStageKeys: [] };
+  state.customConfig = routeState.customConfig ?? createDefaultCustomConfig();
   state.reveal = {};
   state.stagePrompt = null;
   state.stagePreview = null;
+  state.stageStats = null;
   state.progressOverview = false;
   state.backupNotice = "";
 }
@@ -556,6 +581,7 @@ function setRoute(route, payload = {}, options = {}) {
   state.reveal = {};
   state.stagePrompt = null;
   state.stagePreview = null;
+  state.stageStats = null;
   state.progressOverview = false;
   state.backupNotice = "";
 
@@ -572,8 +598,6 @@ function onSelectLanguage(languageId) {
   state.groupId = null;
   state.subgroupId = null;
   state.trackId = null;
-  state.customConfig = { batchSize: 20, selectedStageKeys: [] };
-  state.customSession = null;
   setRoute("groups");
 }
 
@@ -828,6 +852,51 @@ function getStageKey(track) {
   const progress = getTrackProgress(track.id);
   const stage = getStageByIndex(track, progress.stageIndex);
   return getStageKeyByEnd(track, stage);
+}
+
+function getStageRecord(track, stage) {
+  const progress = getTrackProgress(track.id);
+  return progress.stageRecords?.[getStageKeyByEnd(track, stage)] ?? null;
+}
+
+function recordStageCompletion(track, stage, session) {
+  const progress = getTrackProgress(track.id);
+  progress.stageRecords ??= {};
+  const stageKey = getStageKeyByEnd(track, stage);
+  const current = progress.stageRecords[stageKey] ?? { history: [] };
+  const entry = {
+    rounds: session?.round ?? 1,
+    completedAt: new Date().toISOString(),
+  };
+  const history = [...(current.history ?? []), entry].slice(-10);
+  progress.stageRecords[stageKey] = {
+    lastRounds: entry.rounds,
+    completedAt: entry.completedAt,
+    history,
+  };
+}
+
+function buildStageStats(record) {
+  const history = record?.history ?? [];
+  if (!history.length) {
+    return {
+      count: 0,
+      average: 0,
+      best: 0,
+      worst: 0,
+      recent: [],
+    };
+  }
+
+  const roundsList = history.map((entry) => Number(entry.rounds) || 0).filter((value) => value > 0);
+  const total = roundsList.reduce((sum, value) => sum + value, 0);
+  return {
+    count: roundsList.length,
+    average: total / roundsList.length,
+    best: Math.min(...roundsList),
+    worst: Math.max(...roundsList),
+    recent: history.slice().reverse(),
+  };
 }
 
 function getSessionKey(track, stage, mode = state.sessionMode ?? "day") {
@@ -1395,6 +1464,20 @@ function getSelectedCustomStageOptions() {
   return getSelectableStageOptions().filter((option) => selected.has(option.id));
 }
 
+function buildCustomSelectionSignature(config = state.customConfig) {
+  return JSON.stringify({
+    batchSize: config?.batchSize ?? 20,
+    selectedStageKeys: [...(config?.selectedStageKeys ?? [])].sort(),
+  });
+}
+
+function abortCustomSession() {
+  state.customSession = null;
+  state.reveal = {};
+  saveProgress();
+  setRoute("custom-select");
+}
+
 function toggleCustomStageSelection(optionId) {
   const selected = new Set(state.customConfig.selectedStageKeys ?? []);
   if (selected.has(optionId)) {
@@ -1407,6 +1490,7 @@ function toggleCustomStageSelection(optionId) {
     ...state.customConfig,
     selectedStageKeys: [...selected],
   };
+  saveProgress();
   render();
 }
 
@@ -1415,6 +1499,7 @@ function setCustomBatchSize(batchSize) {
     ...state.customConfig,
     batchSize,
   };
+  saveProgress();
   render();
 }
 
@@ -1493,6 +1578,13 @@ function refillCustomSession(session) {
 }
 
 function startCustomStudy() {
+  const selectionSignature = buildCustomSelectionSignature();
+  if (state.customSession?.selectionSignature === selectionSignature && state.customSession.activeEntries?.length) {
+    state.reveal = {};
+    setRoute("custom-study");
+    return;
+  }
+
   const entries = buildCustomSessionEntries();
   if (!entries.length) {
     return;
@@ -1506,6 +1598,7 @@ function startCustomStudy() {
     round: 1,
     pointer: 0,
     totalEntries,
+    selectionSignature,
     activeEntries: shuffleEntries(activeEntries),
     remainingEntries: entries,
     statusMap: {},
@@ -1513,6 +1606,7 @@ function startCustomStudy() {
     prompt: null,
   };
   state.reveal = {};
+  saveProgress();
   setRoute("custom-study");
 }
 
@@ -1836,6 +1930,8 @@ function handleCompletePrompt() {
   const track = getTrack(state.trackId);
   const progress = getTrackProgress(track.id);
   const stage = getStageByIndex(track, progress.stageIndex);
+  const session = getStageSession(track);
+  recordStageCompletion(track, stage, session);
   progress.completedStages[getStageKey(track)] = true;
   progress.sessions[getSessionKey(track, stage, state.sessionMode ?? "day")] = null;
   state.continuousProgress = false;
@@ -1855,6 +1951,7 @@ function handleNextProgressPrompt(shouldMove) {
   const target = session.prompt?.target ?? null;
   const stage = getStageByIndex(track, progress.stageIndex);
 
+  recordStageCompletion(track, stage, session);
   progress.completedStages[stageKey] = true;
   progress.sessions[getSessionKey(track, stage, state.sessionMode ?? "day")] = null;
 
@@ -2029,6 +2126,36 @@ function renderCustomMenu() {
           <div class="type-button__title">선택</div>
           <div class="type-button__meta">여러 뭉치를 골라 섞어서 학습</div>
         </button>
+      </div>
+    </div>
+  `);
+}
+
+function renderCustomMenuResume() {
+  const isCustomStudy = isCustomStudyRoute();
+  const hasActiveCustomSession = Boolean(state.customSession?.activeEntries?.length);
+
+  return appShell(`
+    <div class="topbar">
+      <button class="back-button" data-route="${isCustomStudy ? "custom-select" : "groups"}">\uD648</button>
+    </div>
+    <div class="section-card">
+      <h1 class="page-title">\uB9DE\uCDA4</h1>
+      <p class="page-subtitle">\uC9C4\uD589 \uCD94\uCC9C \uB610\uB294 \uC120\uD0DD \uD559\uC2B5\uC744 \uC9C4\uD589\uD569\uB2C8\uB2E4.</p>
+    </div>
+    <div class="section-card">
+      <div class="type-list">
+        <button class="type-button" data-continue>
+          <div class="type-button__title">\uC9C4\uD589</div>
+          <div class="type-button__meta">\uAC00\uC7A5 \uC9C4\uB3C4\uAC00 \uB35C \uB195\uCE58\uB97C \uC774\uC5B4\uC11C \uD559\uC2B5</div>
+        </button>
+        <div class="custom-menu-select-row">
+          <button class="type-button custom-menu-select-button" data-custom-select-open>
+            <div class="type-button__title">${hasActiveCustomSession ? "\uC120\uD0DD [\uD559\uC2B5\uC911]" : "\uC120\uD0DD"}</div>
+            <div class="type-button__meta">${hasActiveCustomSession ? "\uD559\uC2B5 \uC911\uC774\uB358 \uC120\uD0DD \uC138\uC158\uC73C\uB85C \uBC14\uB85C \uB4E4\uC5B4\uAC11\uB2C8\uB2E4." : "\uC5EC\uB7EC \uBB49\uCE58\uB97C \uACE0\uB974\uACE0 \uBB36\uC5B4\uC11C \uD559\uC2B5"}</div>
+          </button>
+          ${hasActiveCustomSession ? `<button class="custom-abort-button" type="button" data-custom-abort>[\uC870\uAE30\uC885\uB8CC]</button>` : ""}
+        </div>
       </div>
     </div>
   `);
@@ -2218,14 +2345,16 @@ function renderStage() {
   const buttons = stages
     .map((stage, index) => {
       const completed = isStageCompleted(track, stage);
+      const record = getStageRecord(track, stage);
       const reviewCount = getItemsForStage(track, stage).filter((item) => {
         const itemState = progress.itemStates?.[item.id];
         return itemState === "known" || itemState === "again";
       }).length;
+      const submetaText = `복습 후보 ${reviewCount}개${record ? ` · 최근 ${record.lastRounds}R` : ""}`;
 
       return `
         <div class="stage-row stage-row--day">
-          <div class="stage-button stage-button--day${index === progress.stageIndex ? " is-active" : ""}${completed ? " is-complete" : ""}">
+          <div class="stage-button stage-button--day${index === progress.stageIndex ? " is-active" : ""}${completed ? " is-complete" : ""}" data-stage-row-index="${index}">
             <div class="stage-button__main">
               <div class="stage-button__head">
                 <div class="stage-button__title">${escapeHtml(formatStageDisplayLabel(stage))}</div>
@@ -2633,7 +2762,7 @@ function render() {
   } else if (state.route === "groups") {
     app.innerHTML = renderGroups();
   } else if (state.route === "custom") {
-    app.innerHTML = renderCustomMenu();
+    app.innerHTML = renderCustomMenuResume();
   } else if (state.route === "custom-select") {
     app.innerHTML = renderCustomSelectCompact();
   } else if (state.route === "subgroups") {
@@ -2647,6 +2776,7 @@ function render() {
   }
 
   normalizeStudyHeaderLayout();
+  normalizeStageRecordMeta();
   bindEvents();
 }
 
@@ -2671,6 +2801,113 @@ function normalizeStudyHeaderLayout() {
   statsRow.className = "study-summary-row study-summary-row--stats";
   statsRow.append(progress, stats);
   summaryRow.insertAdjacentElement("afterend", statsRow);
+}
+
+function normalizeStageRecordMeta() {
+  if (state.route !== "stage" || !state.trackId) {
+    return;
+  }
+
+  const track = getTrack(state.trackId);
+  if (!track) {
+    return;
+  }
+
+  const progress = getTrackProgress(track.id);
+  const stages = getStages(track);
+  document.querySelectorAll("[data-stage-row-index]").forEach((row) => {
+    const index = Number(row.getAttribute("data-stage-row-index"));
+    const stage = stages[index];
+    const submeta = row.querySelector(".stage-button__submeta");
+    const head = row.querySelector(".stage-button__head");
+    if (!stage || !submeta) {
+      return;
+    }
+
+    const reviewCount = getItemsForStage(track, stage).filter((item) => {
+      const itemState = progress.itemStates?.[item.id];
+      return itemState === "known" || itemState === "again";
+    }).length;
+    const record = getStageRecord(track, stage);
+    submeta.textContent = `복습 후보 ${reviewCount}개${record ? ` · 최근 ${record.lastRounds}R` : ""}`;
+
+    if (head && !head.querySelector("[data-stage-stats]")) {
+      const previewButton = head.querySelector("[data-stage-preview]");
+      const actionWrap = document.createElement("div");
+      actionWrap.className = "stage-head-actions";
+
+      const statsButton = document.createElement("button");
+      statsButton.className = "stage-preview-button stage-preview-button--compact";
+      statsButton.type = "button";
+      statsButton.setAttribute("data-stage-stats", String(index));
+      statsButton.setAttribute("aria-label", "회독 통계 보기");
+      statsButton.innerHTML = "&#128202;";
+
+      if (previewButton) {
+        previewButton.remove();
+        actionWrap.append(statsButton, previewButton);
+      } else {
+        actionWrap.append(statsButton);
+      }
+
+      head.append(actionWrap);
+    }
+  });
+
+  renderStageStatsModal(track, stages);
+}
+
+function renderStageStatsModal(track, stages) {
+  const existing = document.querySelector(".stage-stats-modal-backdrop");
+  existing?.remove();
+
+  if (!state.stageStats) {
+    return;
+  }
+
+  const stage = stages[state.stageStats.index];
+  if (!stage) {
+    return;
+  }
+
+  const record = getStageRecord(track, stage);
+  const stats = buildStageStats(record);
+  const backdrop = document.createElement("div");
+  backdrop.className = "modal-backdrop stage-stats-modal-backdrop";
+
+  const bars = stats.recent.length
+    ? stats.recent
+        .map((entry) => {
+          const height = Math.max(18, (entry.rounds / Math.max(stats.worst, 1)) * 88);
+          return `
+            <div class="stage-stats-bar-item">
+              <div class="stage-stats-bar" style="height:${height}px"><span>${entry.rounds}R</span></div>
+            </div>
+          `;
+        })
+        .join("")
+    : `<div class="stage-preview-empty">아직 완료 기록이 없습니다.</div>`;
+
+  backdrop.innerHTML = `
+    <div class="modal-panel section-card stage-preview-modal stage-stats-modal">
+      <div class="stage-preview-head">
+        <div>
+          <div class="stage-preview-title">${escapeHtml(getTrackLabel(track))} · ${escapeHtml(formatStageDisplayLabel(stage))} ${escapeHtml(stage.range)}</div>
+          <div class="stage-preview-subtitle">최근 완료 기록과 라운드 통계</div>
+        </div>
+        <button class="stage-preview-close" type="button" data-stage-stats-close aria-label="통계 닫기">\u2715</button>
+      </div>
+      <div class="stage-stats-summary">
+        <span class="study-stat-chip">완료 <strong>${stats.count}회</strong></span>
+        <span class="study-stat-chip">평균 <strong>${stats.count ? stats.average.toFixed(1) : "0.0"}R</strong></span>
+        <span class="study-stat-chip">최고 <strong>${stats.worst || 0}R</strong></span>
+        <span class="study-stat-chip">최저 <strong>${stats.best || 0}R</strong></span>
+      </div>
+      <div class="stage-stats-bars">${bars}</div>
+    </div>
+  `;
+
+  document.querySelector(".screen")?.append(backdrop);
 }
 
 function bindEvents() {
@@ -2730,6 +2967,20 @@ function bindEvents() {
     });
   });
 
+  document.querySelectorAll("[data-stage-stats]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.stageStats = { index: Number(button.dataset.stageStats) };
+      render();
+    });
+  });
+
+  document.querySelectorAll("[data-stage-stats-close]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.stageStats = null;
+      render();
+    });
+  });
+
   document.querySelectorAll("[data-progress-open]").forEach((button) => {
     button.addEventListener("click", () => {
       state.progressOverview = true;
@@ -2749,7 +3000,19 @@ function bindEvents() {
   });
 
   document.querySelectorAll("[data-custom-select-open]").forEach((button) => {
-    button.addEventListener("click", () => setRoute("custom-select"));
+    button.addEventListener("click", () => {
+      if (state.customSession?.activeEntries?.length) {
+        state.reveal = {};
+        setRoute("custom-study");
+        return;
+      }
+
+      setRoute("custom-select");
+    });
+  });
+
+  document.querySelectorAll("[data-custom-abort]").forEach((button) => {
+    button.addEventListener("click", abortCustomSession);
   });
 
   document.querySelectorAll("[data-custom-stage]").forEach((button) => {
