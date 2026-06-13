@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "3.2.1";
+const APP_VERSION = "3.2.2";
 let transientNoticeTimer = null;
 
 function createDefaultCustomConfig() {
@@ -1788,6 +1788,261 @@ function buildJapaneseVerbStem(term) {
   return "";
 }
 
+const JAPANESE_TERM_ALIASES = {
+  "アイデア": ["アイディア"],
+  "交代": ["交替"],
+  "怖い": ["恐い", "恐かった", "恐く", "恐くない"],
+  "片付ける": ["片づける", "片づけ", "片づけて", "片づけた"],
+  "眼鏡": ["メガネ"],
+  "ぎりぎり": ["ギリギリ"],
+  "ぴかぴか": ["ピカピカ"],
+  "ぶらぶら": ["ブラブラ"],
+  "早い": ["速い", "速かった", "速く", "速くない"],
+  "止まる": ["留まる"],
+  "頭がいい": ["頭がよい", "頭がよく", "頭がよかった", "頭がよくない"],
+  "夜が明ける": ["夜があける"],
+};
+
+function toKatakana(text) {
+  return String(text || "").replace(/[\u3041-\u3096]/gu, (char) =>
+    String.fromCodePoint(char.codePointAt(0) + 0x60),
+  );
+}
+
+function toHiragana(text) {
+  return String(text || "").replace(/[\u30A1-\u30F6]/gu, (char) =>
+    String.fromCodePoint(char.codePointAt(0) - 0x60),
+  );
+}
+
+function buildJapaneseVerbForms(term) {
+  const forms = new Set();
+  const value = String(term || "").trim();
+  if (!value) {
+    return [];
+  }
+
+  const addForms = (...items) => items.forEach((item) => addTerm(forms, item));
+  addForms(value);
+
+  if (value.endsWith("する")) {
+    const root = value.slice(0, -2);
+    addForms(
+      `${root}し`,
+      `${root}します`,
+      `${root}しました`,
+      `${root}しません`,
+      `${root}しましょう`,
+      `${root}したい`,
+      `${root}して`,
+      `${root}した`,
+      `${root}しない`,
+      `${root}しなかった`,
+      `${root}しなければ`,
+      `${root}しよう`,
+      `${root}できる`,
+      `${root}できない`,
+      `${root}される`,
+      `${root}された`,
+      `${root}されて`,
+      `${root}させる`,
+      `${root}させた`,
+      `${root}させて`,
+    );
+    return [...forms];
+  }
+
+  if (value.endsWith("くる")) {
+    const root = value.slice(0, -2);
+    addForms(
+      `${root}き`,
+      `${root}きます`,
+      `${root}きました`,
+      `${root}きません`,
+      `${root}きましょう`,
+      `${root}きたい`,
+      `${root}きて`,
+      `${root}きた`,
+      `${root}こない`,
+      `${root}こなかった`,
+      `${root}こよう`,
+      `${root}こられる`,
+      `${root}こられない`,
+      `${root}こさせる`,
+    );
+    return [...forms];
+  }
+
+  if (value.endsWith("る")) {
+    const ichidanLike = /[\u3048\u3051\u3052\u305b\u305c\u3066\u3067\u306d\u3078\u3079\u307a\u3081\u308c\u3044\u304d\u304e\u3057\u3058\u3061\u3062\u306b\u3072\u3073\u3074\u307f\u308a]\u308b$/u.test(value);
+    if (ichidanLike) {
+      const root = value.slice(0, -1);
+      addForms(
+        root,
+        `${root}ます`,
+        `${root}ました`,
+        `${root}ません`,
+        `${root}ましょう`,
+        `${root}たい`,
+        `${root}て`,
+        `${root}た`,
+        `${root}ない`,
+        `${root}なかった`,
+        `${root}なければ`,
+        `${root}よう`,
+        `${root}られる`,
+        `${root}られない`,
+        `${root}られた`,
+        `${root}られて`,
+        `${root}させる`,
+        `${root}させた`,
+        `${root}させて`,
+      );
+      return [...forms];
+    }
+  }
+
+  const ending = value.slice(-1);
+  const root = value.slice(0, -1);
+  const godanMap = {
+    う: { i: "い", a: "わ", e: "え", o: "お", te: "って", ta: "った" },
+    く: { i: "き", a: "か", e: "け", o: "こ", te: "いて", ta: "いた" },
+    ぐ: { i: "ぎ", a: "が", e: "げ", o: "ご", te: "いで", ta: "いだ" },
+    す: { i: "し", a: "さ", e: "せ", o: "そ", te: "して", ta: "した" },
+    つ: { i: "ち", a: "た", e: "て", o: "と", te: "って", ta: "った" },
+    ぬ: { i: "に", a: "な", e: "ね", o: "の", te: "んで", ta: "んだ" },
+    ぶ: { i: "び", a: "ば", e: "べ", o: "ぼ", te: "んで", ta: "んだ" },
+    む: { i: "み", a: "ま", e: "め", o: "も", te: "んで", ta: "んだ" },
+    る: { i: "り", a: "ら", e: "れ", o: "ろ", te: "って", ta: "った" },
+  };
+  const info = godanMap[ending];
+  if (!info) {
+    return [...forms];
+  }
+
+  const stem = `${root}${info.i}`;
+  const negativeRoot = `${root}${info.a}`;
+  const potentialRoot = `${root}${info.e}`;
+  const volitional = `${root}${info.o}う`;
+  const teForm = value === "行く" ? `${root}って` : `${root}${info.te}`;
+  const taForm = value === "行く" ? `${root}った` : `${root}${info.ta}`;
+
+  addForms(
+    stem,
+    `${stem}ます`,
+    `${stem}ました`,
+    `${stem}ません`,
+    `${stem}ましょう`,
+    `${stem}たい`,
+    teForm,
+    taForm,
+    `${negativeRoot}ない`,
+    `${negativeRoot}なかった`,
+    `${negativeRoot}なければ`,
+    `${negativeRoot}ねば`,
+    volitional,
+    `${potentialRoot}る`,
+    `${potentialRoot}ない`,
+    `${potentialRoot}ます`,
+    `${potentialRoot}ません`,
+    `${negativeRoot}れる`,
+    `${negativeRoot}れた`,
+    `${negativeRoot}れて`,
+    `${negativeRoot}せる`,
+    `${negativeRoot}せた`,
+    `${negativeRoot}せて`,
+  );
+
+  return [...forms];
+}
+
+function getRubyBaseText(parts) {
+  return Array.isArray(parts) ? parts.map((part) => part.base || "").join("") : "";
+}
+
+function getRubyReadingText(parts) {
+  return Array.isArray(parts) ? parts.map((part) => part.ruby || "").join("") : "";
+}
+
+function expandJapaneseExampleTerms(seed) {
+  const terms = new Set();
+  const baseSeed = String(seed || "").trim();
+  if (!baseSeed) {
+    return [];
+  }
+
+  addTerm(terms, baseSeed);
+  addTerm(terms, baseSeed.replace(/\s+/gu, ""));
+  addTerm(terms, toKatakana(baseSeed));
+  addTerm(terms, toHiragana(baseSeed));
+
+  const aliases = JAPANESE_TERM_ALIASES[baseSeed] || [];
+  for (const alias of aliases) {
+    addTerm(terms, alias);
+    addTerm(terms, toKatakana(alias));
+    addTerm(terms, toHiragana(alias));
+  }
+
+  for (const base of [...terms]) {
+    const normalized = String(base || "").trim();
+    if (!normalized) {
+      continue;
+    }
+
+    for (const form of buildJapaneseVerbForms(normalized)) {
+      addTerm(terms, form);
+    }
+
+    if (normalized.endsWith("い") && normalized.length >= 2) {
+      const root = normalized.slice(0, -1);
+      [
+        root,
+        `${root}い`,
+        `${root}く`,
+        `${root}くて`,
+        `${root}かった`,
+        `${root}くない`,
+        `${root}くなかった`,
+        `${root}すぎる`,
+        `${root}すぎた`,
+        `${root}さ`,
+        `${root}そう`,
+      ].forEach((term) => addTerm(terms, term));
+    }
+
+    if (normalized.endsWith("いい")) {
+      const root = normalized.slice(0, -2);
+      [
+        `${root}よい`,
+        `${root}よく`,
+        `${root}よかった`,
+        `${root}よくない`,
+        `${root}よくて`,
+      ].forEach((term) => addTerm(terms, term));
+    }
+
+    if (normalized.endsWith("て")) {
+      addTerm(terms, `${normalized.slice(0, -1)}た`);
+    }
+
+    if (normalized.endsWith("で")) {
+      addTerm(terms, `${normalized.slice(0, -1)}だ`);
+    }
+
+    if (normalized.endsWith("ない")) {
+      const root = normalized.slice(0, -2);
+      [
+        `${root}なかった`,
+        `${root}なくて`,
+        `${root}ていない`,
+        `${root}ていなかった`,
+      ].forEach((term) => addTerm(terms, term));
+    }
+  }
+
+  return [...terms].filter(Boolean).sort((left, right) => right.length - left.length);
+}
+
 function buildGrammarHighlightTerms(item) {
   const terms = new Set();
   const raw = String(item.primary || "").trim();
@@ -1844,17 +2099,22 @@ function buildGrammarHighlightTerms(item) {
 
 function getExampleTerms(track, item) {
   const terms = new Set();
+  const seeds = [
+    item.primary,
+    item.answer,
+    item.reading,
+    item.pairText,
+    item.pairReading,
+    getRubyBaseText(item.rubyParts),
+    getRubyReadingText(item.rubyParts),
+    getRubyBaseText(item.pairRubyParts),
+    getRubyReadingText(item.pairRubyParts),
+  ];
 
-  if (item.primary) {
-    terms.add(item.primary);
-  }
-
-  if (track.mode === "kana_to_kanji" && item.answer) {
-    terms.add(item.answer);
-  }
-
-  if (track.mode === "synonym_pair" && item.pairText) {
-    terms.add(item.pairText);
+  for (const seed of seeds) {
+    for (const term of expandJapaneseExampleTerms(seed)) {
+      addTerm(terms, term);
+    }
   }
 
   if (track.id?.startsWith("grammar-")) {
