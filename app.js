@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "3.2.3";
+const APP_VERSION = "3.2.4";
 let transientNoticeTimer = null;
 
 function createDefaultCustomConfig() {
@@ -1506,6 +1506,7 @@ function getCustomStageGroups(languageId = state.languageId) {
             stageIndex: index,
             stageLabel: formatStageDisplayLabel(stage),
             stageRange: stage.range,
+            itemCount: getItemsForStage(track, stage).length,
             isCompleted: isStageCompleted(track, stage),
           })),
         }))
