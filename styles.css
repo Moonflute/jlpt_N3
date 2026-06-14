@@ -315,6 +315,11 @@ button {
   white-space: nowrap;
 }
 
+.custom-select-footer__summary-wrap {
+  display: grid;
+  gap: 4px;
+}
+
 .custom-select-board {
   display: grid;
   gap: 14px;
@@ -437,7 +442,14 @@ button {
 }
 
 .custom-select-start {
-  min-height: 48px;
+  width: min(124px, 100%);
+  min-height: 42px;
+  padding: 10px 12px;
+  border-radius: 16px;
+}
+
+.custom-select-start .big-button__title {
+  font-size: 20px;
 }
 
 .stage-row {

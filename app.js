@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "3.2.2";
+const APP_VERSION = "3.2.3";
 let transientNoticeTimer = null;
 
 function createDefaultCustomConfig() {
@@ -2543,6 +2543,20 @@ function renderCustomSelectCompact() {
   const selected = new Set(state.customConfig.selectedStageKeys ?? []);
   const batchSize = state.customConfig.batchSize ?? 20;
   const groups = getCustomStageGroups();
+  const selectedCardCount = groups.reduce(
+    (sum, group) =>
+      sum +
+      group.tracks.reduce(
+        (trackSum, track) =>
+          trackSum +
+          track.options.reduce(
+            (optionSum, option) => optionSum + (selected.has(option.id) ? option.itemCount : 0),
+            0,
+          ),
+        0,
+      ),
+    0,
+  );
 
   return appShell(`
     <div class="topbar">
@@ -2592,7 +2606,10 @@ function renderCustomSelectCompact() {
         .join("")}
     </div>
     <div class="section-card section-card--compact custom-select-footer">
-      <div class="custom-select-footer__summary">\uC120\uD0DD\uD55C \uBB49\uCE58 ${selected.size}\uAC1C</div>
+      <div class="custom-select-footer__summary-wrap">
+        <div class="custom-select-footer__summary">\uC120\uD0DD\uD55C \uBB49\uCE58 ${selected.size}\uAC1C</div>
+        <div class="custom-select-footer__summary">\uC120\uD0DD\uD55C \uCE74\uB4DC ${selectedCardCount}\uAC1C</div>
+      </div>
       <div class="custom-batch-picker custom-batch-picker--footer">
         <button class="stage-preview-filter${batchSize === 7 ? " is-active" : ""}" type="button" data-custom-batch="7">7\uAC1C</button>
         <button class="stage-preview-filter${batchSize === 20 ? " is-active" : ""}" type="button" data-custom-batch="20">20\uAC1C</button>
