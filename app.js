@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "3.2.4";
+const APP_VERSION = "3.2.5";
 let transientNoticeTimer = null;
 
 function createDefaultCustomConfig() {
@@ -868,13 +868,21 @@ function recordStageCompletion(track, stage, session) {
   progress.stageRecords ??= {};
   const stageKey = getStageKeyByEnd(track, stage);
   const current = progress.stageRecords[stageKey] ?? { history: [] };
+  const stageItems = getItemsForStage(track, stage);
+  const againCountMap = session?.againCountMap ?? {};
+  const cardAgainCounts = stageItems.map((item) => ({
+    itemId: item.id,
+    count: Math.max(0, Number(againCountMap[item.id]) || 0),
+  }));
   const entry = {
     rounds: session?.round ?? 1,
+    cardAgainCounts,
     completedAt: new Date().toISOString(),
   };
   const history = [...(current.history ?? []), entry].slice(-10);
   progress.stageRecords[stageKey] = {
     lastRounds: entry.rounds,
+    lastCardAgainCounts: cardAgainCounts,
     completedAt: entry.completedAt,
     history,
   };
@@ -882,24 +890,41 @@ function recordStageCompletion(track, stage, session) {
 
 function buildStageStats(record) {
   const history = record?.history ?? [];
-  if (!history.length) {
+  const latestEntry = history.at(-1) ?? null;
+  const cardAgainCounts = Array.isArray(latestEntry?.cardAgainCounts)
+    ? latestEntry.cardAgainCounts
+    : Array.isArray(record?.lastCardAgainCounts)
+      ? record.lastCardAgainCounts
+      : [];
+
+  if (!history.length && !cardAgainCounts.length) {
     return {
-      count: 0,
-      average: 0,
-      best: 0,
-      worst: 0,
-      recent: [],
+      completionCount: 0,
+      cardCount: 0,
+      averageAgain: 0,
+      maxAgain: 0,
+      directKnownCount: 0,
+      bins: [],
     };
   }
 
-  const roundsList = history.map((entry) => Number(entry.rounds) || 0).filter((value) => value > 0);
-  const total = roundsList.reduce((sum, value) => sum + value, 0);
+  const counts = cardAgainCounts
+    .map((entry) => Math.max(0, Number(entry?.count) || 0))
+    .filter((value) => Number.isFinite(value));
+  const totalAgain = counts.reduce((sum, value) => sum + value, 0);
+  const maxAgain = counts.length ? Math.max(...counts) : 0;
+  const bins = Array.from({ length: maxAgain + 1 }, (_, againCount) => ({
+    againCount,
+    cardCount: counts.filter((value) => value === againCount).length,
+  }));
+
   return {
-    count: roundsList.length,
-    average: total / roundsList.length,
-    best: Math.min(...roundsList),
-    worst: Math.max(...roundsList),
-    recent: history.slice().reverse(),
+    completionCount: history.length,
+    cardCount: counts.length,
+    averageAgain: counts.length ? totalAgain / counts.length : 0,
+    maxAgain,
+    directKnownCount: counts.filter((value) => value === 0).length,
+    bins,
   };
 }
 
@@ -992,6 +1017,7 @@ function initializeStageSession(track, reset = false, mode = state.sessionMode ?
     pointer: 0,
     round: 1,
     statusMap: {},
+    againCountMap: {},
     prompt: null,
     recentPairIds: [],
   };
@@ -1070,6 +1096,10 @@ function advanceCard(result) {
   const currentItem = getItemById(track, currentItemId);
 
   session.statusMap[currentItemId] = result;
+  session.againCountMap ??= {};
+  if (result === "again") {
+    session.againCountMap[currentItemId] = (session.againCountMap[currentItemId] ?? 0) + 1;
+  }
   progress.itemStates[currentItemId] = result;
   syncTrackTotals(progress);
 
@@ -1670,6 +1700,7 @@ function startCustomStudy() {
     completedEntryMap: {},
     finalResultMap: {},
     attemptMap: {},
+    againCountMap: {},
     completedStageMap: {},
     prompt: null,
   };
@@ -2190,6 +2221,10 @@ function advanceCustomCard(result) {
   session.finalResultMap[entry.id] = result;
   session.attemptMap ??= {};
   session.attemptMap[entry.id] = (session.attemptMap[entry.id] ?? 0) + 1;
+  session.againCountMap ??= {};
+  if (result === "again") {
+    session.againCountMap[entry.itemId] = (session.againCountMap[entry.itemId] ?? 0) + 1;
+  }
   progress.itemStates[entry.itemId] = result;
   syncTrackTotals(progress);
   normalizeTrackProgress(entry.trackId);
@@ -3252,13 +3287,17 @@ function renderStageStatsModal(track, stages) {
   const backdrop = document.createElement("div");
   backdrop.className = "modal-backdrop stage-stats-modal-backdrop";
 
-  const bars = stats.recent.length
-    ? stats.recent
+  const maxBinCardCount = Math.max(1, ...stats.bins.map((entry) => entry.cardCount));
+  const bars = stats.bins.length
+    ? stats.bins
         .map((entry) => {
-          const height = Math.max(18, (entry.rounds / Math.max(stats.worst, 1)) * 88);
+          const height = entry.cardCount
+            ? Math.max(18, (entry.cardCount / maxBinCardCount) * 88)
+            : 10;
           return `
             <div class="stage-stats-bar-item">
-              <div class="stage-stats-bar" style="height:${height}px"><span>${entry.rounds}R</span></div>
+              <div class="stage-stats-bar" style="height:${height}px"><span>${entry.cardCount}</span></div>
+              <div class="stage-stats-bar-label">${entry.againCount}회</div>
             </div>
           `;
         })
@@ -3270,17 +3309,18 @@ function renderStageStatsModal(track, stages) {
       <div class="stage-preview-head">
         <div>
           <div class="stage-preview-title">${escapeHtml(getTrackLabel(track))} · ${escapeHtml(formatStageDisplayLabel(stage))} ${escapeHtml(stage.range)}</div>
-          <div class="stage-preview-subtitle">최근 완료 기록과 라운드 통계</div>
+          <div class="stage-preview-subtitle">카드별 공부하겠음 횟수 분포</div>
         </div>
         <button class="stage-preview-close" type="button" data-stage-stats-close aria-label="통계 닫기">\u2715</button>
       </div>
       <div class="stage-stats-summary">
-        <span class="study-stat-chip">완료 <strong>${stats.count}회</strong></span>
-        <span class="study-stat-chip">평균 <strong>${stats.count ? stats.average.toFixed(1) : "0.0"}R</strong></span>
-        <span class="study-stat-chip">최고 <strong>${stats.worst || 0}R</strong></span>
-        <span class="study-stat-chip">최저 <strong>${stats.best || 0}R</strong></span>
+        <span class="study-stat-chip">카드 <strong>${stats.cardCount}개</strong></span>
+        <span class="study-stat-chip">직행 <strong>${stats.directKnownCount}개</strong></span>
+        <span class="study-stat-chip">평균 <strong>${stats.averageAgain.toFixed(1)}회</strong></span>
+        <span class="study-stat-chip">최대 <strong>${stats.maxAgain}회</strong></span>
       </div>
       <div class="stage-stats-bars">${bars}</div>
+      <div class="stage-preview-subtitle">완료 기록 ${stats.completionCount}회 기준 최신 스냅샷</div>
     </div>
   `;
 
