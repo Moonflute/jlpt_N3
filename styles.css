@@ -643,6 +643,28 @@ button {
   margin-top: 10px;
 }
 
+.stage-stats-mode,
+.stage-stats-nav,
+.stage-stats-window {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.stage-stats-nav--single {
+  justify-content: center;
+}
+
+.stage-stats-nav__label {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  min-width: 86px;
+  text-align: center;
+}
+
 .stage-stats-bars {
   margin-top: 16px;
   display: flex;

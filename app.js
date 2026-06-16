@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "3.2.5";
+const APP_VERSION = "3.2.6";
 let transientNoticeTimer = null;
 
 function createDefaultCustomConfig() {
@@ -888,43 +888,92 @@ function recordStageCompletion(track, stage, session) {
   };
 }
 
-function buildStageStats(record) {
-  const history = record?.history ?? [];
-  const latestEntry = history.at(-1) ?? null;
-  const cardAgainCounts = Array.isArray(latestEntry?.cardAgainCounts)
-    ? latestEntry.cardAgainCounts
-    : Array.isArray(record?.lastCardAgainCounts)
-      ? record.lastCardAgainCounts
-      : [];
+function normalizeCardAgainCounts(list) {
+  return (Array.isArray(list) ? list : [])
+    .map((entry) => Math.max(0, Number(entry?.count) || 0))
+    .filter((value) => Number.isFinite(value));
+}
 
-  if (!history.length && !cardAgainCounts.length) {
+function buildHistogramBins(counts) {
+  const maxAgain = counts.length ? Math.max(...counts) : 0;
+  return Array.from({ length: maxAgain + 1 }, (_, againCount) => ({
+    againCount,
+    cardCount: counts.filter((value) => value === againCount).length,
+  }));
+}
+
+function buildStageStats(record, options = {}) {
+  const history = record?.history ?? [];
+  const mode = options.mode === "average" ? "average" : "recent";
+  const historyIndex = Math.max(0, Number(options.historyIndex) || 0);
+  const averageWindow = Math.max(1, Number(options.averageWindow) || 3);
+  const fallbackCounts = normalizeCardAgainCounts(record?.lastCardAgainCounts);
+
+  let counts = [];
+  let sourceLabel = "";
+  let selectedHistoryIndex = historyIndex;
+
+  if (mode === "recent") {
+    const safeIndex = history.length ? Math.min(historyIndex, history.length - 1) : 0;
+    const selectedEntry = history.length ? history[history.length - 1 - safeIndex] : null;
+    counts = normalizeCardAgainCounts(selectedEntry?.cardAgainCounts);
+    if (!counts.length) {
+      counts = fallbackCounts;
+    }
+    sourceLabel = history.length
+      ? `최근 ${safeIndex + 1}회차`
+      : "최신 스냅샷";
+    selectedHistoryIndex = safeIndex;
+  } else {
+    const recentEntries = history.slice(-averageWindow);
+    const snapshots = recentEntries
+      .map((entry) => normalizeCardAgainCounts(entry?.cardAgainCounts))
+      .filter((snapshot) => snapshot.length);
+
+    if (snapshots.length) {
+      const cardCount = Math.max(...snapshots.map((snapshot) => snapshot.length));
+      counts = Array.from({ length: cardCount }, (_, index) => {
+        const values = snapshots.map((snapshot) => snapshot[index] ?? 0);
+        return values.reduce((sum, value) => sum + value, 0) / values.length;
+      });
+    } else {
+      counts = fallbackCounts;
+    }
+
+    sourceLabel = history.length
+      ? `최근 ${Math.min(averageWindow, history.length)}회 평균`
+      : "평균 스냅샷";
+  }
+
+  if (!history.length && !counts.length) {
     return {
+      mode,
+      sourceLabel,
       completionCount: 0,
       cardCount: 0,
       averageAgain: 0,
       maxAgain: 0,
       directKnownCount: 0,
       bins: [],
+      historyLength: 0,
+      historyIndex: 0,
     };
   }
 
-  const counts = cardAgainCounts
-    .map((entry) => Math.max(0, Number(entry?.count) || 0))
-    .filter((value) => Number.isFinite(value));
   const totalAgain = counts.reduce((sum, value) => sum + value, 0);
-  const maxAgain = counts.length ? Math.max(...counts) : 0;
-  const bins = Array.from({ length: maxAgain + 1 }, (_, againCount) => ({
-    againCount,
-    cardCount: counts.filter((value) => value === againCount).length,
-  }));
+  const bins = buildHistogramBins(counts);
 
   return {
+    mode,
+    sourceLabel,
     completionCount: history.length,
     cardCount: counts.length,
     averageAgain: counts.length ? totalAgain / counts.length : 0,
-    maxAgain,
+    maxAgain: counts.length ? Math.max(...counts) : 0,
     directKnownCount: counts.filter((value) => value === 0).length,
     bins,
+    historyLength: history.length,
+    historyIndex: selectedHistoryIndex,
   };
 }
 
@@ -3283,7 +3332,14 @@ function renderStageStatsModal(track, stages) {
   }
 
   const record = getStageRecord(track, stage);
-  const stats = buildStageStats(record);
+  const statsMode = state.stageStats.mode === "average" ? "average" : "recent";
+  const historyIndex = Math.max(0, Number(state.stageStats.historyIndex) || 0);
+  const averageWindow = Math.max(1, Number(state.stageStats.averageWindow) || 3);
+  const stats = buildStageStats(record, {
+    mode: statsMode,
+    historyIndex,
+    averageWindow,
+  });
   const backdrop = document.createElement("div");
   backdrop.className = "modal-backdrop stage-stats-modal-backdrop";
 
@@ -3304,6 +3360,27 @@ function renderStageStatsModal(track, stages) {
         .join("")
     : `<div class="stage-preview-empty">아직 완료 기록이 없습니다.</div>`;
 
+  const recentModeClass = statsMode === "recent" ? " is-active" : "";
+  const averageModeClass = statsMode === "average" ? " is-active" : "";
+  const navControls = statsMode === "recent" && stats.historyLength > 1
+    ? `
+      <div class="stage-stats-nav">
+        <button class="stage-preview-filter" type="button" data-stage-stats-nav="prev"${stats.historyIndex >= stats.historyLength - 1 ? " disabled" : ""}>이전</button>
+        <div class="stage-stats-nav__label">${stats.sourceLabel}</div>
+        <button class="stage-preview-filter" type="button" data-stage-stats-nav="next"${stats.historyIndex <= 0 ? " disabled" : ""}>다음</button>
+      </div>
+    `
+    : `<div class="stage-stats-nav stage-stats-nav--single"><div class="stage-stats-nav__label">${stats.sourceLabel}</div></div>`;
+  const averageControls = statsMode === "average"
+    ? `
+      <div class="stage-stats-window">
+        <button class="stage-preview-filter${averageWindow === 3 ? " is-active" : ""}" type="button" data-stage-stats-window="3">3회</button>
+        <button class="stage-preview-filter${averageWindow === 5 ? " is-active" : ""}" type="button" data-stage-stats-window="5">5회</button>
+        <button class="stage-preview-filter${averageWindow >= Math.max(stats.historyLength, 1) ? " is-active" : ""}" type="button" data-stage-stats-window="all">전체</button>
+      </div>
+    `
+    : "";
+
   backdrop.innerHTML = `
     <div class="modal-panel section-card stage-preview-modal stage-stats-modal">
       <div class="stage-preview-head">
@@ -3313,6 +3390,12 @@ function renderStageStatsModal(track, stages) {
         </div>
         <button class="stage-preview-close" type="button" data-stage-stats-close aria-label="통계 닫기">\u2715</button>
       </div>
+      <div class="stage-stats-mode">
+        <button class="stage-preview-filter${recentModeClass}" type="button" data-stage-stats-mode="recent">회차별</button>
+        <button class="stage-preview-filter${averageModeClass}" type="button" data-stage-stats-mode="average">평균</button>
+      </div>
+      ${navControls}
+      ${averageControls}
       <div class="stage-stats-summary">
         <span class="study-stat-chip">카드 <strong>${stats.cardCount}개</strong></span>
         <span class="study-stat-chip">직행 <strong>${stats.directKnownCount}개</strong></span>
@@ -3320,7 +3403,7 @@ function renderStageStatsModal(track, stages) {
         <span class="study-stat-chip">최대 <strong>${stats.maxAgain}회</strong></span>
       </div>
       <div class="stage-stats-bars">${bars}</div>
-      <div class="stage-preview-subtitle">완료 기록 ${stats.completionCount}회 기준 최신 스냅샷</div>
+      <div class="stage-preview-subtitle">완료 기록 ${stats.completionCount}회 기준</div>
     </div>
   `;
 
@@ -3386,7 +3469,55 @@ function bindEvents() {
 
   document.querySelectorAll("[data-stage-stats]").forEach((button) => {
     button.addEventListener("click", () => {
-      state.stageStats = { index: Number(button.dataset.stageStats) };
+      state.stageStats = {
+        index: Number(button.dataset.stageStats),
+        mode: "recent",
+        historyIndex: 0,
+        averageWindow: 3,
+      };
+      render();
+    });
+  });
+
+  document.querySelectorAll("[data-stage-stats-mode]").forEach((button) => {
+    button.addEventListener("click", () => {
+      if (!state.stageStats) {
+        return;
+      }
+
+      state.stageStats = {
+        ...state.stageStats,
+        mode: button.dataset.stageStatsMode === "average" ? "average" : "recent",
+      };
+      render();
+    });
+  });
+
+  document.querySelectorAll("[data-stage-stats-nav]").forEach((button) => {
+    button.addEventListener("click", () => {
+      if (!state.stageStats) {
+        return;
+      }
+
+      const currentIndex = Math.max(0, Number(state.stageStats.historyIndex) || 0);
+      state.stageStats = {
+        ...state.stageStats,
+        historyIndex: button.dataset.stageStatsNav === "prev" ? currentIndex + 1 : Math.max(0, currentIndex - 1),
+      };
+      render();
+    });
+  });
+
+  document.querySelectorAll("[data-stage-stats-window]").forEach((button) => {
+    button.addEventListener("click", () => {
+      if (!state.stageStats) {
+        return;
+      }
+
+      state.stageStats = {
+        ...state.stageStats,
+        averageWindow: button.dataset.stageStatsWindow === "all" ? 999 : Number(button.dataset.stageStatsWindow) || 3,
+      };
       render();
     });
   });
