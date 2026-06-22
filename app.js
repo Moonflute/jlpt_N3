@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "3.2.7";
+const APP_VERSION = "3.2.8";
 let transientNoticeTimer = null;
 
 function createDefaultCustomConfig() {
@@ -2541,7 +2541,7 @@ function renderCustomMenu() {
       <div class="type-list">
         <button class="type-button" data-continue>
           <div class="type-button__title">진행</div>
-          <div class="type-button__meta">가장 덜 진행된 뭉치부터 이어서 학습</div>
+          <div class="type-button__meta">가장 덜 진행된 뭉치부터 이어서 학습합니다.</div>
         </button>
         <button class="type-button" data-custom-select-open>
           <div class="type-button__title">선택</div>
