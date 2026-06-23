@@ -318,6 +318,11 @@ button {
 .custom-select-footer__summary-wrap {
   display: grid;
   gap: 4px;
+  justify-items: start;
+}
+
+.custom-select-clear {
+  margin-top: 2px;
 }
 
 .custom-select-board {

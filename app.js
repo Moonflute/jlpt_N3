@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "3.2.9";
+const APP_VERSION = "3.2.10";
 let transientNoticeTimer = null;
 
 function createDefaultCustomConfig() {
@@ -1635,6 +1635,15 @@ function toggleCustomStageSelection(optionId) {
   render();
 }
 
+function clearCustomStageSelection() {
+  state.customConfig = {
+    ...state.customConfig,
+    selectedStageKeys: [],
+  };
+  saveProgress();
+  render();
+}
+
 function setCustomBatchSize(batchSize) {
   state.customConfig = {
     ...state.customConfig,
@@ -2694,6 +2703,7 @@ function renderCustomSelectCompact() {
       <div class="custom-select-footer__summary-wrap">
         <div class="custom-select-footer__summary">\uC120\uD0DD\uD55C \uBB49\uCE58 ${selected.size}\uAC1C</div>
         <div class="custom-select-footer__summary">\uC120\uD0DD\uD55C \uCE74\uB4DC ${selectedCardCount}\uAC1C</div>
+        <button class="stage-preview-filter custom-select-clear" type="button" data-custom-clear${selected.size ? "" : " disabled"}>\uC804\uCCB4\uD574\uC81C</button>
       </div>
       <div class="custom-batch-picker custom-batch-picker--footer">
         <button class="stage-preview-filter${batchSize === 7 ? " is-active" : ""}" type="button" data-custom-batch="7">7\uAC1C</button>
@@ -3569,6 +3579,10 @@ function bindEvents() {
 
   document.querySelectorAll("[data-custom-batch]").forEach((button) => {
     button.addEventListener("click", () => setCustomBatchSize(Number(button.dataset.customBatch)));
+  });
+
+  document.querySelectorAll("[data-custom-clear]").forEach((button) => {
+    button.addEventListener("click", clearCustomStageSelection);
   });
 
   document.querySelectorAll("[data-custom-start]").forEach((button) => {
