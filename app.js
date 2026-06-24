@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "3.2.10";
+const APP_VERSION = "3.2.11";
 let transientNoticeTimer = null;
 
 function createDefaultCustomConfig() {
@@ -2577,7 +2577,7 @@ function renderCustomMenuResume() {
       <div class="type-list">
         <button class="type-button" data-continue>
           <div class="type-button__title">\uC9C4\uD589</div>
-          <div class="type-button__meta">\uAC00\uC7A5 \uC9C4\uB3C4\uAC00 \uB35C \uB195\uCE58\uB97C \uC774\uC5B4\uC11C \uD559\uC2B5</div>
+          <div class="type-button__meta">\uAC00\uC7A5 \uB35C \uC9C4\uD589\uB41C \uBB49\uCE58\uBD80\uD130 \uCC28\uB840\uB300\uB85C \uD559\uC2B5\uD569\uB2C8\uB2E4.</div>
         </button>
         <div class="custom-menu-select-row">
           <button class="type-button custom-menu-select-button" data-custom-select-open>
