@@ -395,6 +395,11 @@ button {
   cursor: pointer;
 }
 
+.custom-abort-button:disabled {
+  opacity: 0.46;
+  cursor: default;
+}
+
 .custom-abort-button:hover {
   background: rgba(20, 158, 163, 0.14);
 }
@@ -912,7 +917,7 @@ button {
   visibility: hidden;
 }
 
-.card-meta-button {
+.card-bookmark-button {
   position: absolute;
   top: 12px;
   right: 12px;
@@ -923,6 +928,12 @@ button {
   background: #f5f7f8;
   box-shadow: 0 4px 12px rgba(20, 29, 38, 0.08);
   cursor: pointer;
+  color: var(--muted);
+}
+
+.card-bookmark-button.is-active {
+  background: rgba(20, 158, 163, 0.14);
+  color: var(--teal-deep);
 }
 
 .card-speak-button {
