@@ -776,13 +776,13 @@ function extractBracketReading(raw) {
 }
 
 function resolveReading(row) {
+  if (row.c3 && !/[一-龯々ヶ]/.test(row.c3)) {
+    return row.c3;
+  }
+
   const bracketReading = extractBracketReading(row.c4);
   if (bracketReading) {
     return bracketReading;
-  }
-
-  if (row.c3 && !/[一-龯々ヶ]/.test(row.c3)) {
-    return row.c3;
   }
 
   return READING_OVERRIDES[row.c2] || row.c3 || "";
@@ -793,9 +793,10 @@ function buildItem(track, row, index, candidateMap, overrides) {
   const override = overrides[row.c2];
   const annotatedRubyParts = parseAnnotatedRuby(row.c4);
   const rubyParts = override || annotatedRubyParts || segmentReadingByKanji(row.c2, effectiveReading, candidateMap);
-  const normalizedReading = effectiveReading && !/[一-龯々ヶ]/.test(effectiveReading)
+  const sourceReading = row.c3 && !/[一-龯々ヶ]/.test(row.c3) ? row.c3 : "";
+  const normalizedReading = sourceReading || (effectiveReading && !/[?�]/.test(effectiveReading)
     ? effectiveReading
-    : partsToReading(rubyParts);
+    : partsToReading(rubyParts));
   const item = {
     id: `${track.id}-${index + 1}`,
     primary: row.c2,

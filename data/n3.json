@@ -1,6 +1,6 @@
 {
   "level": "N3",
-  "generatedAt": "2026-06-03T13:37:12.271Z",
+  "generatedAt": "2026-06-28T17:16:05.144Z",
   "stageSize": 25,
   "tracks": [
     {
@@ -1757,7 +1757,7 @@
         {
           "id": "gengo-q1-80",
           "primary": "売買",
-          "reading": "ばいばい",
+          "reading": "かんばい",
           "meaning": "매매",
           "exampleJa": "彼は革製品の売買をしている。",
           "exampleEn": "He buys and sells leather goods.  ",
@@ -1768,7 +1768,7 @@
           "rubyParts": [
             {
               "base": "売",
-              "ruby": "ばい"
+              "ruby": "かん"
             },
             {
               "base": "買",
@@ -6501,11 +6501,11 @@
         {
           "id": "gengo-q1-294",
           "primary": "疑う",
-          "reading": "うたが",
+          "reading": "うたがう",
           "meaning": "의심하다",
-          "exampleJa": "彼はその話を疑っていた。",
-          "exampleEn": "He doubted that story.",
-          "exampleKo": "그는 그 이야기를 의심하고 있었다.",
+          "exampleJa": "「何時だろうか」と彼は思った。",
+          "exampleEn": "\"\"\"What time is it?\"\" he wondered.  \"",
+          "exampleKo": "\"\"\"몇시입니까?\"\" 그는 궁금해했다.\"",
           "note": "[한자 읽기에 자주 출제되는 동사]",
           "hint": "우따가 뒀냐",
           "sourceTag": "JLPT_N3_암기장::8p",
@@ -9177,7 +9177,7 @@
         {
           "id": "gengo-q1-414",
           "primary": "一般的だ",
-          "reading": "いっぱん的だ",
+          "reading": "いっぱんてきだ",
           "meaning": "일반적이다",
           "exampleJa": "",
           "exampleEn": "",
@@ -9187,16 +9187,12 @@
           "sourceTag": "JLPT_N3_암기장::11p",
           "rubyParts": [
             {
-              "base": "一",
-              "ruby": "いっ"
-            },
-            {
-              "base": "般",
-              "ruby": "ぱん"
+              "base": "一般",
+              "ruby": "いっぱん"
             },
             {
               "base": "的",
-              "ruby": "的"
+              "ruby": "てき"
             },
             {
               "base": "だ",
@@ -14434,12 +14430,12 @@
         },
         {
           "id": "gengo-q2-131",
-          "primary": "ふくしゅう",
-          "reading": "ふくしゅう",
+          "primary": "ふくすう",
+          "reading": "ふくすう",
           "meaning": "복수",
-          "exampleJa": "複数の案から一つを選んだ。",
-          "exampleEn": "I chose one from several options.",
-          "exampleKo": "여러 안 가운데 하나를 골랐다.",
+          "exampleJa": "その課の復習をしましたか。",
+          "exampleEn": "Have you gone over the lesson?  ",
+          "exampleKo": "수업을 살펴 ​​보셨습니까?",
           "note": "[모양이 비슷한 한자를 포함하는 단어]",
           "hint": "複(겹치다 복), 復(회복할 복)",
           "sourceTag": "JLPT_N3_암기장::16p JLPT_N3_암기장::기존 JLPT_N3_암기장::한자연습",
@@ -14450,7 +14446,7 @@
             },
             {
               "base": "数",
-              "ruby": "しゅう"
+              "ruby": "すう"
             }
           ],
           "answer": "複数",
@@ -17523,12 +17519,12 @@
         },
         {
           "id": "gengo-q2-244",
-          "primary": "ゆうがた",
-          "reading": "ゆうがた",
+          "primary": "ゆうかん",
+          "reading": "ゆうかん",
           "meaning": "석간",
-          "exampleJa": "駅で夕刊を買った。",
-          "exampleEn": "I bought the evening paper at the station.",
-          "exampleKo": "역에서 석간을 샀다.",
+          "exampleJa": "ひょっとすると夕方前に雨になるかもしれない。",
+          "exampleEn": "It might rain before evening.  ",
+          "exampleKo": "저녁 전에 비가 올 수 있습니다.",
           "note": "[의미가 같거나 비슷한 한자를 포함하는 단어]",
           "hint": "夕(저녁 석), 夜(밤 야)",
           "sourceTag": "JLPT_N3_암기장::19p JLPT_N3_암기장::기존 JLPT_N3_암기장::한자연습",
@@ -17539,7 +17535,7 @@
             },
             {
               "base": "刊",
-              "ruby": "がた"
+              "ruby": "かん"
             }
           ],
           "answer": "夕刊",
@@ -19719,7 +19715,7 @@
           "exampleEn": "The roses gave off a nice smell.  ",
           "exampleKo": "장미는 좋은 냄새를 맡았습니다.",
           "note": "[문맥 규정에 자주 출제되는 명사]",
-          "hint": "",
+          "hint": "臭い[におい]",
           "sourceTag": "JLPT_N3_암기장::21p",
           "rubyParts": [
             {
@@ -22297,9 +22293,9 @@
           "primary": "振る",
           "reading": "ふる",
           "meaning": "흔들다",
-          "exampleJa": "彼は手を振って別れた。",
-          "exampleEn": "He waved his hand and said goodbye.",
-          "exampleKo": "그는 손을 흔들며 작별했다.",
+          "exampleJa": "彼は学者ぶっている。",
+          "exampleEn": "He set up for learning.",
+          "exampleKo": "그는 학습을 시작했습니다.",
           "note": "[문맥 규정에 자주 출제되는 동사]",
           "hint": "",
           "sourceTag": "JLPT_N3_암기장::24p",
@@ -24110,7 +24106,7 @@
         {
           "id": "gengo-q4-7",
           "primary": "全てうる",
-          "reading": "すべ",
+          "reading": "すべてうる",
           "meaning": "전부 팔다",
           "exampleJa": "",
           "exampleEn": "",
@@ -24196,7 +24192,7 @@
         {
           "id": "gengo-q4-9",
           "primary": "渡ってはいけない",
-          "reading": "わた",
+          "reading": "わたってはいけない",
           "meaning": "건너서는 안 된다",
           "exampleJa": "",
           "exampleEn": "",
@@ -24307,7 +24303,7 @@
           "exampleEn": "",
           "exampleKo": "",
           "note": "[자주 출제되는 명사와 유의 표현]",
-          "hint": "におい[臭い]",
+          "hint": "臭い[におい]",
           "sourceTag": "JLPT_N3_암기장::27p",
           "rubyParts": [
             {
@@ -24319,11 +24315,15 @@
               "ruby": ""
             }
           ],
-          "pairText": "におい",
-          "pairReading": "臭い",
+          "pairText": "臭い",
+          "pairReading": "におい",
           "pairRubyParts": [
             {
-              "base": "におい",
+              "base": "臭",
+              "ruby": "にお"
+            },
+            {
+              "base": "い",
               "ruby": ""
             }
           ],
@@ -24338,7 +24338,7 @@
           "exampleEn": "That flower has a powerful smell.  ",
           "exampleKo": "그 꽃은 강력한 냄새가납니다.",
           "note": "[자주 출제되는 명사와 유의 표현]",
-          "hint": "かおり[香り]",
+          "hint": "香り[かおり]",
           "sourceTag": "JLPT_N3_암기장::27p",
           "rubyParts": [
             {
@@ -24350,15 +24350,19 @@
               "ruby": ""
             }
           ],
-          "pairText": "かおり",
-          "pairReading": "香り",
+          "pairText": "香り",
+          "pairReading": "かおり",
           "pairRubyParts": [
             {
-              "base": "かおり",
+              "base": "香",
+              "ruby": "かお"
+            },
+            {
+              "base": "り",
               "ruby": ""
             }
           ],
-          "pairId": "pair-8"
+          "pairId": "pair-7"
         },
         {
           "id": "gengo-q4-14",
@@ -24397,7 +24401,7 @@
               "ruby": "れい"
             }
           ],
-          "pairId": "pair-9"
+          "pairId": "pair-8"
         },
         {
           "id": "gengo-q4-15",
@@ -24436,7 +24440,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-9"
+          "pairId": "pair-8"
         },
         {
           "id": "gengo-q4-16",
@@ -24467,7 +24471,7 @@
               "ruby": "かい"
             }
           ],
-          "pairId": "pair-10"
+          "pairId": "pair-9"
         },
         {
           "id": "gengo-q4-17",
@@ -24502,7 +24506,7 @@
               "ruby": "そく"
             }
           ],
-          "pairId": "pair-11"
+          "pairId": "pair-10"
         },
         {
           "id": "gengo-q4-18",
@@ -24533,7 +24537,7 @@
               "ruby": "どころ"
             }
           ],
-          "pairId": "pair-12"
+          "pairId": "pair-11"
         },
         {
           "id": "gengo-q4-19",
@@ -24564,7 +24568,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-12"
+          "pairId": "pair-11"
         },
         {
           "id": "gengo-q4-20",
@@ -24595,7 +24599,7 @@
               "ruby": "たい"
             }
           ],
-          "pairId": "pair-13"
+          "pairId": "pair-12"
         },
         {
           "id": "gengo-q4-21",
@@ -24634,7 +24638,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-14"
+          "pairId": "pair-13"
         },
         {
           "id": "gengo-q4-22",
@@ -24673,7 +24677,7 @@
               "ruby": "てん"
             }
           ],
-          "pairId": "pair-14"
+          "pairId": "pair-13"
         },
         {
           "id": "gengo-q4-23",
@@ -24708,7 +24712,7 @@
               "ruby": "まん"
             }
           ],
-          "pairId": "pair-15"
+          "pairId": "pair-14"
         },
         {
           "id": "gengo-q4-24",
@@ -24743,7 +24747,7 @@
               "ruby": "じょう"
             }
           ],
-          "pairId": "pair-15"
+          "pairId": "pair-14"
         },
         {
           "id": "gengo-q4-25",
@@ -24778,7 +24782,7 @@
               "ruby": "かつ"
             }
           ],
-          "pairId": "pair-16"
+          "pairId": "pair-15"
         },
         {
           "id": "gengo-q4-26",
@@ -24813,7 +24817,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-16"
+          "pairId": "pair-15"
         },
         {
           "id": "gengo-q4-27",
@@ -24844,7 +24848,7 @@
               "ruby": "たい"
             }
           ],
-          "pairId": "pair-17"
+          "pairId": "pair-16"
         },
         {
           "id": "gengo-q4-28",
@@ -24875,7 +24879,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-17"
+          "pairId": "pair-16"
         },
         {
           "id": "gengo-q4-29",
@@ -24910,7 +24914,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-18"
+          "pairId": "pair-17"
         },
         {
           "id": "gengo-q4-30",
@@ -24941,7 +24945,7 @@
               "ruby": "てん"
             }
           ],
-          "pairId": "pair-19"
+          "pairId": "pair-18"
         },
         {
           "id": "gengo-q4-31",
@@ -24976,7 +24980,7 @@
               "ruby": "きん"
             }
           ],
-          "pairId": "pair-20"
+          "pairId": "pair-19"
         },
         {
           "id": "gengo-q4-32",
@@ -25011,7 +25015,7 @@
               "ruby": "ごろ"
             }
           ],
-          "pairId": "pair-20"
+          "pairId": "pair-19"
         },
         {
           "id": "gengo-q4-33",
@@ -25042,12 +25046,12 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-21"
+          "pairId": "pair-20"
         },
         {
           "id": "gengo-q4-34",
           "primary": "大きさ",
-          "reading": "おお",
+          "reading": "おおきさ",
           "meaning": "크기",
           "exampleJa": "その運河は１５０、０００重量トンの大きさの船を収容できる。",
           "exampleEn": "The canal can accommodate ships as large as 150,000 dead weight tons.  ",
@@ -25073,7 +25077,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-21"
+          "pairId": "pair-20"
         },
         {
           "id": "gengo-q4-35",
@@ -25112,7 +25116,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-22"
+          "pairId": "pair-21"
         },
         {
           "id": "gengo-q4-36",
@@ -25151,12 +25155,12 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-22"
+          "pairId": "pair-21"
         },
         {
           "id": "gengo-q4-37",
           "primary": "やり方",
-          "reading": "かた",
+          "reading": "やりかた",
           "meaning": "하는 방식",
           "exampleJa": "これが僕のやり方だ。",
           "exampleEn": "This is how I go about it.  ",
@@ -25186,7 +25190,7 @@
               "ruby": "だん"
             }
           ],
-          "pairId": "pair-23"
+          "pairId": "pair-22"
         },
         {
           "id": "gengo-q4-38",
@@ -25217,7 +25221,7 @@
               "ruby": "てい"
             }
           ],
-          "pairId": "pair-24"
+          "pairId": "pair-23"
         },
         {
           "id": "gengo-q4-39",
@@ -25248,7 +25252,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-24"
+          "pairId": "pair-23"
         },
         {
           "id": "gengo-q4-40",
@@ -25283,7 +25287,7 @@
               "ruby": "ぶ"
             }
           ],
-          "pairId": "pair-25"
+          "pairId": "pair-24"
         },
         {
           "id": "gengo-q4-41",
@@ -25318,7 +25322,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-25"
+          "pairId": "pair-24"
         },
         {
           "id": "gengo-q4-42",
@@ -25357,7 +25361,7 @@
               "ruby": "やく"
             }
           ],
-          "pairId": "pair-26"
+          "pairId": "pair-25"
         },
         {
           "id": "gengo-q4-43",
@@ -25400,7 +25404,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-27"
+          "pairId": "pair-26"
         },
         {
           "id": "gengo-q4-44",
@@ -25443,7 +25447,7 @@
               "ruby": "し"
             }
           ],
-          "pairId": "pair-27"
+          "pairId": "pair-26"
         },
         {
           "id": "gengo-q4-45",
@@ -25482,7 +25486,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-28"
+          "pairId": "pair-27"
         },
         {
           "id": "gengo-q4-46",
@@ -25521,7 +25525,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-29"
+          "pairId": "pair-28"
         },
         {
           "id": "gengo-q4-47",
@@ -25560,7 +25564,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-29"
+          "pairId": "pair-28"
         },
         {
           "id": "gengo-q4-48",
@@ -25591,7 +25595,7 @@
               "ruby": "せい"
             }
           ],
-          "pairId": "pair-30"
+          "pairId": "pair-29"
         },
         {
           "id": "gengo-q4-49",
@@ -25622,7 +25626,7 @@
               "ruby": "しゅう"
             }
           ],
-          "pairId": "pair-31"
+          "pairId": "pair-30"
         },
         {
           "id": "gengo-q4-50",
@@ -25653,7 +25657,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-31"
+          "pairId": "pair-30"
         },
         {
           "id": "gengo-q4-51",
@@ -25688,7 +25692,7 @@
               "ruby": "よう"
             }
           ],
-          "pairId": "pair-32"
+          "pairId": "pair-31"
         },
         {
           "id": "gengo-q4-52",
@@ -25723,7 +25727,7 @@
               "ruby": "み"
             }
           ],
-          "pairId": "pair-32"
+          "pairId": "pair-31"
         },
         {
           "id": "gengo-q4-53",
@@ -25750,7 +25754,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-33"
+          "pairId": "pair-32"
         },
         {
           "id": "gengo-q4-54",
@@ -25777,7 +25781,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-33"
+          "pairId": "pair-32"
         },
         {
           "id": "gengo-q4-55",
@@ -25816,7 +25820,7 @@
               "ruby": "まご"
             }
           ],
-          "pairId": "pair-34"
+          "pairId": "pair-33"
         },
         {
           "id": "gengo-q4-56",
@@ -25863,7 +25867,7 @@
               "ruby": "りょう"
             }
           ],
-          "pairId": "pair-35"
+          "pairId": "pair-34"
         },
         {
           "id": "gengo-q4-57",
@@ -25894,7 +25898,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-36"
+          "pairId": "pair-35"
         },
         {
           "id": "gengo-q4-58",
@@ -25925,7 +25929,7 @@
               "ruby": "りょう"
             }
           ],
-          "pairId": "pair-36"
+          "pairId": "pair-35"
         },
         {
           "id": "gengo-q4-59",
@@ -25964,7 +25968,7 @@
               "ruby": "とし"
             }
           ],
-          "pairId": "pair-37"
+          "pairId": "pair-36"
         },
         {
           "id": "gengo-q4-60",
@@ -26003,7 +26007,7 @@
               "ruby": "ねん"
             }
           ],
-          "pairId": "pair-37"
+          "pairId": "pair-36"
         },
         {
           "id": "gengo-q4-61",
@@ -26034,7 +26038,7 @@
               "ruby": "ゆう"
             }
           ],
-          "pairId": "pair-38"
+          "pairId": "pair-37"
         },
         {
           "id": "gengo-q4-62",
@@ -26065,7 +26069,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-38"
+          "pairId": "pair-37"
         },
         {
           "id": "gengo-q4-63",
@@ -26112,7 +26116,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-39"
+          "pairId": "pair-38"
         },
         {
           "id": "gengo-q4-64",
@@ -26147,7 +26151,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-40"
+          "pairId": "pair-39"
         },
         {
           "id": "gengo-q4-65",
@@ -26182,7 +26186,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-40"
+          "pairId": "pair-39"
         },
         {
           "id": "gengo-q4-66",
@@ -26225,7 +26229,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-41"
+          "pairId": "pair-40"
         },
         {
           "id": "gengo-q4-67",
@@ -26268,7 +26272,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-41"
+          "pairId": "pair-40"
         },
         {
           "id": "gengo-q4-68",
@@ -26307,7 +26311,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-42"
+          "pairId": "pair-41"
         },
         {
           "id": "gengo-q4-69",
@@ -26338,7 +26342,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-43"
+          "pairId": "pair-42"
         },
         {
           "id": "gengo-q4-70",
@@ -26369,7 +26373,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-43"
+          "pairId": "pair-42"
         },
         {
           "id": "gengo-q4-71",
@@ -26408,7 +26412,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-44"
+          "pairId": "pair-43"
         },
         {
           "id": "gengo-q4-72",
@@ -26447,7 +26451,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-44"
+          "pairId": "pair-43"
         },
         {
           "id": "gengo-q4-73",
@@ -26482,7 +26486,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-45"
+          "pairId": "pair-44"
         },
         {
           "id": "gengo-q4-74",
@@ -26517,7 +26521,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-45"
+          "pairId": "pair-44"
         },
         {
           "id": "gengo-q4-75",
@@ -26560,7 +26564,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-46"
+          "pairId": "pair-45"
         },
         {
           "id": "gengo-q4-76",
@@ -26603,7 +26607,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-46"
+          "pairId": "pair-45"
         },
         {
           "id": "gengo-q4-77",
@@ -26634,7 +26638,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-47"
+          "pairId": "pair-46"
         },
         {
           "id": "gengo-q4-78",
@@ -26673,7 +26677,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-48"
+          "pairId": "pair-47"
         },
         {
           "id": "gengo-q4-79",
@@ -26712,7 +26716,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-48"
+          "pairId": "pair-47"
         },
         {
           "id": "gengo-q4-80",
@@ -26743,7 +26747,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-49"
+          "pairId": "pair-48"
         },
         {
           "id": "gengo-q4-81",
@@ -26774,7 +26778,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-49"
+          "pairId": "pair-48"
         },
         {
           "id": "gengo-q4-82",
@@ -26813,7 +26817,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-50"
+          "pairId": "pair-49"
         },
         {
           "id": "gengo-q4-83",
@@ -26848,7 +26852,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-51"
+          "pairId": "pair-50"
         },
         {
           "id": "gengo-q4-84",
@@ -26883,7 +26887,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-52"
+          "pairId": "pair-51"
         },
         {
           "id": "gengo-q4-85",
@@ -26918,7 +26922,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-53"
+          "pairId": "pair-52"
         },
         {
           "id": "gengo-q4-86",
@@ -26953,7 +26957,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-53"
+          "pairId": "pair-52"
         },
         {
           "id": "gengo-q4-87",
@@ -26996,7 +27000,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-54"
+          "pairId": "pair-53"
         },
         {
           "id": "gengo-q4-88",
@@ -27039,7 +27043,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-54"
+          "pairId": "pair-53"
         },
         {
           "id": "gengo-q4-89",
@@ -27070,7 +27074,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-55"
+          "pairId": "pair-54"
         },
         {
           "id": "gengo-q4-90",
@@ -27101,7 +27105,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-55"
+          "pairId": "pair-54"
         },
         {
           "id": "gengo-q4-91",
@@ -27136,7 +27140,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-56"
+          "pairId": "pair-55"
         },
         {
           "id": "gengo-q4-92",
@@ -27171,7 +27175,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-56"
+          "pairId": "pair-55"
         },
         {
           "id": "gengo-q4-93",
@@ -27214,7 +27218,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-57"
+          "pairId": "pair-56"
         },
         {
           "id": "gengo-q4-94",
@@ -27257,7 +27261,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-57"
+          "pairId": "pair-56"
         },
         {
           "id": "gengo-q4-95",
@@ -27288,7 +27292,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-58"
+          "pairId": "pair-57"
         },
         {
           "id": "gengo-q4-96",
@@ -27319,7 +27323,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-58"
+          "pairId": "pair-57"
         },
         {
           "id": "gengo-q4-97",
@@ -27354,7 +27358,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-59"
+          "pairId": "pair-58"
         },
         {
           "id": "gengo-q4-98",
@@ -27405,7 +27409,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-60"
+          "pairId": "pair-59"
         },
         {
           "id": "gengo-q4-99",
@@ -27444,7 +27448,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-61"
+          "pairId": "pair-60"
         },
         {
           "id": "gengo-q4-100",
@@ -27483,7 +27487,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-61"
+          "pairId": "pair-60"
         },
         {
           "id": "gengo-q4-101",
@@ -27522,7 +27526,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-62"
+          "pairId": "pair-61"
         },
         {
           "id": "gengo-q4-102",
@@ -27573,7 +27577,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-63"
+          "pairId": "pair-62"
         },
         {
           "id": "gengo-q4-103",
@@ -27624,7 +27628,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-63"
+          "pairId": "pair-62"
         },
         {
           "id": "gengo-q4-104",
@@ -27675,7 +27679,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-64"
+          "pairId": "pair-63"
         },
         {
           "id": "gengo-q4-105",
@@ -27726,7 +27730,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-64"
+          "pairId": "pair-63"
         },
         {
           "id": "gengo-q4-106",
@@ -27761,7 +27765,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-65"
+          "pairId": "pair-64"
         },
         {
           "id": "gengo-q4-107",
@@ -27792,7 +27796,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-66"
+          "pairId": "pair-65"
         },
         {
           "id": "gengo-q4-108",
@@ -27823,7 +27827,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-66"
+          "pairId": "pair-65"
         },
         {
           "id": "gengo-q4-109",
@@ -27858,7 +27862,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-67"
+          "pairId": "pair-66"
         },
         {
           "id": "gengo-q4-110",
@@ -27893,7 +27897,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-67"
+          "pairId": "pair-66"
         },
         {
           "id": "gengo-q4-111",
@@ -27948,7 +27952,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-68"
+          "pairId": "pair-67"
         },
         {
           "id": "gengo-q4-112",
@@ -27983,7 +27987,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-69"
+          "pairId": "pair-68"
         },
         {
           "id": "gengo-q4-113",
@@ -28018,7 +28022,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-69"
+          "pairId": "pair-68"
         },
         {
           "id": "gengo-q4-114",
@@ -28065,7 +28069,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-70"
+          "pairId": "pair-69"
         },
         {
           "id": "gengo-q4-115",
@@ -28112,7 +28116,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-70"
+          "pairId": "pair-69"
         },
         {
           "id": "gengo-q4-116",
@@ -28151,7 +28155,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-71"
+          "pairId": "pair-70"
         },
         {
           "id": "gengo-q4-117",
@@ -28190,7 +28194,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-71"
+          "pairId": "pair-70"
         },
         {
           "id": "gengo-q4-118",
@@ -28221,7 +28225,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-72"
+          "pairId": "pair-71"
         },
         {
           "id": "gengo-q4-119",
@@ -28252,7 +28256,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-72"
+          "pairId": "pair-71"
         },
         {
           "id": "gengo-q4-120",
@@ -28283,7 +28287,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-73"
+          "pairId": "pair-72"
         },
         {
           "id": "gengo-q4-121",
@@ -28322,7 +28326,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-74"
+          "pairId": "pair-73"
         },
         {
           "id": "gengo-q4-122",
@@ -28361,7 +28365,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-74"
+          "pairId": "pair-73"
         },
         {
           "id": "gengo-q4-123",
@@ -28400,7 +28404,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-75"
+          "pairId": "pair-74"
         },
         {
           "id": "gengo-q4-124",
@@ -28427,7 +28431,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-76"
+          "pairId": "pair-75"
         },
         {
           "id": "gengo-q4-125",
@@ -28458,7 +28462,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-77"
+          "pairId": "pair-76"
         },
         {
           "id": "gengo-q4-126",
@@ -28489,7 +28493,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-77"
+          "pairId": "pair-76"
         },
         {
           "id": "gengo-q4-127",
@@ -28524,7 +28528,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-78"
+          "pairId": "pair-77"
         },
         {
           "id": "gengo-q4-128",
@@ -28567,7 +28571,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-79"
+          "pairId": "pair-78"
         },
         {
           "id": "gengo-q4-129",
@@ -28594,7 +28598,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-80"
+          "pairId": "pair-79"
         },
         {
           "id": "gengo-q4-130",
@@ -28621,7 +28625,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-80"
+          "pairId": "pair-79"
         },
         {
           "id": "gengo-q4-131",
@@ -28656,7 +28660,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-81"
+          "pairId": "pair-80"
         },
         {
           "id": "gengo-q4-132",
@@ -28691,7 +28695,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-81"
+          "pairId": "pair-80"
         },
         {
           "id": "gengo-q4-133",
@@ -28718,7 +28722,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-82"
+          "pairId": "pair-81"
         },
         {
           "id": "gengo-q4-134",
@@ -28745,7 +28749,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-82"
+          "pairId": "pair-81"
         },
         {
           "id": "gengo-q4-135",
@@ -28780,7 +28784,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-83"
+          "pairId": "pair-82"
         },
         {
           "id": "gengo-q4-136",
@@ -28815,7 +28819,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-83"
+          "pairId": "pair-82"
         },
         {
           "id": "gengo-q4-137",
@@ -28850,7 +28854,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-84"
+          "pairId": "pair-83"
         },
         {
           "id": "gengo-q4-138",
@@ -28877,7 +28881,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-85"
+          "pairId": "pair-84"
         },
         {
           "id": "gengo-q4-139",
@@ -28908,7 +28912,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-86"
+          "pairId": "pair-85"
         },
         {
           "id": "gengo-q4-140",
@@ -28939,7 +28943,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-87"
+          "pairId": "pair-86"
         },
         {
           "id": "gengo-q4-141",
@@ -28966,7 +28970,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-88"
+          "pairId": "pair-87"
         },
         {
           "id": "gengo-q4-142",
@@ -28993,7 +28997,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-88"
+          "pairId": "pair-87"
         },
         {
           "id": "gengo-q4-143",
@@ -29020,16 +29024,16 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-89"
+          "pairId": "pair-88"
         },
         {
           "id": "gengo-q4-144",
           "primary": "すく",
           "reading": "すく",
           "meaning": "비다",
-          "exampleJa": "朝の電車はまだすいている。",
-          "exampleEn": "The train is still not crowded in the morning.",
-          "exampleKo": "아침 전철은 아직 한산하다.",
+          "exampleJa": "その猫はマイクに好かれている。",
+          "exampleEn": "The cat is liked by Mike.",
+          "exampleKo": "고양이는 마이크가 좋아합니다.",
           "note": "[자주 출제되는 형용사와 유의 표현]",
           "hint": "がらがらだ[がらがらだ]",
           "sourceTag": "JLPT_N3_암기장::30p",
@@ -29047,7 +29051,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-90"
+          "pairId": "pair-89"
         },
         {
           "id": "gengo-q4-145",
@@ -29090,7 +29094,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-91"
+          "pairId": "pair-90"
         },
         {
           "id": "gengo-q4-146",
@@ -29125,7 +29129,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-92"
+          "pairId": "pair-91"
         },
         {
           "id": "gengo-q4-147",
@@ -29160,7 +29164,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-92"
+          "pairId": "pair-91"
         },
         {
           "id": "gengo-q4-148",
@@ -29191,7 +29195,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-93"
+          "pairId": "pair-92"
         },
         {
           "id": "gengo-q4-149",
@@ -29226,7 +29230,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-94"
+          "pairId": "pair-93"
         },
         {
           "id": "gengo-q4-150",
@@ -29261,7 +29265,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-94"
+          "pairId": "pair-93"
         },
         {
           "id": "gengo-q4-151",
@@ -29304,7 +29308,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-95"
+          "pairId": "pair-94"
         },
         {
           "id": "gengo-q4-152",
@@ -29347,7 +29351,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-95"
+          "pairId": "pair-94"
         },
         {
           "id": "gengo-q4-153",
@@ -29386,7 +29390,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-96"
+          "pairId": "pair-95"
         },
         {
           "id": "gengo-q4-154",
@@ -29425,7 +29429,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-96"
+          "pairId": "pair-95"
         },
         {
           "id": "gengo-q4-155",
@@ -29468,7 +29472,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-97"
+          "pairId": "pair-96"
         },
         {
           "id": "gengo-q4-156",
@@ -29511,7 +29515,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-98"
+          "pairId": "pair-97"
         },
         {
           "id": "gengo-q4-157",
@@ -29554,7 +29558,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-99"
+          "pairId": "pair-98"
         },
         {
           "id": "gengo-q4-158",
@@ -29597,7 +29601,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-99"
+          "pairId": "pair-98"
         },
         {
           "id": "gengo-q4-159",
@@ -29632,7 +29636,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-100"
+          "pairId": "pair-99"
         },
         {
           "id": "gengo-q4-160",
@@ -29663,7 +29667,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-101"
+          "pairId": "pair-100"
         },
         {
           "id": "gengo-q4-161",
@@ -29694,7 +29698,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-101"
+          "pairId": "pair-100"
         },
         {
           "id": "gengo-q4-162",
@@ -29721,7 +29725,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-102"
+          "pairId": "pair-101"
         },
         {
           "id": "gengo-q4-163",
@@ -29748,7 +29752,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-102"
+          "pairId": "pair-101"
         },
         {
           "id": "gengo-q4-164",
@@ -29779,7 +29783,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-103"
+          "pairId": "pair-102"
         },
         {
           "id": "gengo-q4-165",
@@ -29826,7 +29830,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-104"
+          "pairId": "pair-103"
         },
         {
           "id": "gengo-q4-166",
@@ -29873,7 +29877,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-104"
+          "pairId": "pair-103"
         },
         {
           "id": "gengo-q4-167",
@@ -29916,7 +29920,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-105"
+          "pairId": "pair-104"
         },
         {
           "id": "gengo-q4-168",
@@ -29959,7 +29963,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-105"
+          "pairId": "pair-104"
         },
         {
           "id": "gengo-q4-169",
@@ -30006,7 +30010,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-106"
+          "pairId": "pair-105"
         },
         {
           "id": "gengo-q4-170",
@@ -30053,7 +30057,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-106"
+          "pairId": "pair-105"
         },
         {
           "id": "gengo-q4-171",
@@ -30088,7 +30092,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-107"
+          "pairId": "pair-106"
         },
         {
           "id": "gengo-q4-172",
@@ -30123,7 +30127,7 @@
               "ruby": "がい"
             }
           ],
-          "pairId": "pair-107"
+          "pairId": "pair-106"
         },
         {
           "id": "gengo-q4-173",
@@ -30154,7 +30158,7 @@
               "ruby": "ぜん"
             }
           ],
-          "pairId": "pair-108"
+          "pairId": "pair-107"
         },
         {
           "id": "gengo-q4-174",
@@ -30185,7 +30189,7 @@
               "ruby": "たい"
             }
           ],
-          "pairId": "pair-109"
+          "pairId": "pair-108"
         },
         {
           "id": "gengo-q4-175",
@@ -30216,7 +30220,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-109"
+          "pairId": "pair-108"
         },
         {
           "id": "gengo-q4-176",
@@ -30255,7 +30259,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-110"
+          "pairId": "pair-109"
         },
         {
           "id": "gengo-q4-177",
@@ -30294,7 +30298,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-110"
+          "pairId": "pair-109"
         },
         {
           "id": "gengo-q4-178",
@@ -30329,7 +30333,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-111"
+          "pairId": "pair-110"
         },
         {
           "id": "gengo-q4-179",
@@ -30364,7 +30368,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-111"
+          "pairId": "pair-110"
         },
         {
           "id": "gengo-q4-180",
@@ -30391,7 +30395,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-112"
+          "pairId": "pair-111"
         },
         {
           "id": "gengo-q4-181",
@@ -30422,7 +30426,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-113"
+          "pairId": "pair-112"
         },
         {
           "id": "gengo-q4-182",
@@ -30453,7 +30457,7 @@
               "ruby": "じき"
             }
           ],
-          "pairId": "pair-114"
+          "pairId": "pair-113"
         },
         {
           "id": "gengo-q4-183",
@@ -30488,7 +30492,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-115"
+          "pairId": "pair-114"
         },
         {
           "id": "gengo-q4-184",
@@ -30519,7 +30523,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-116"
+          "pairId": "pair-115"
         },
         {
           "id": "gengo-q4-185",
@@ -30550,7 +30554,7 @@
               "ruby": "とう"
             }
           ],
-          "pairId": "pair-116"
+          "pairId": "pair-115"
         },
         {
           "id": "gengo-q4-186",
@@ -30581,7 +30585,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-117"
+          "pairId": "pair-116"
         },
         {
           "id": "gengo-q4-187",
@@ -30620,7 +30624,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-118"
+          "pairId": "pair-117"
         },
         {
           "id": "gengo-q4-188",
@@ -30659,7 +30663,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-118"
+          "pairId": "pair-117"
         },
         {
           "id": "gengo-q4-189",
@@ -30690,7 +30694,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-119"
+          "pairId": "pair-118"
         },
         {
           "id": "gengo-q4-190",
@@ -30721,7 +30725,7 @@
               "ruby": "ぶん"
             }
           ],
-          "pairId": "pair-119"
+          "pairId": "pair-118"
         },
         {
           "id": "gengo-q4-191",
@@ -30752,7 +30756,7 @@
               "ruby": "ぶん"
             }
           ],
-          "pairId": "pair-120"
+          "pairId": "pair-119"
         },
         {
           "id": "gengo-q4-192",
@@ -30783,7 +30787,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-120"
+          "pairId": "pair-119"
         },
         {
           "id": "gengo-q4-193",
@@ -30818,7 +30822,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-121"
+          "pairId": "pair-120"
         },
         {
           "id": "gengo-q4-194",
@@ -30853,7 +30857,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-121"
+          "pairId": "pair-120"
         },
         {
           "id": "gengo-q4-195",
@@ -30880,7 +30884,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-122"
+          "pairId": "pair-121"
         },
         {
           "id": "gengo-q4-196",
@@ -30907,7 +30911,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-122"
+          "pairId": "pair-121"
         },
         {
           "id": "gengo-q4-197",
@@ -30938,7 +30942,7 @@
               "ruby": "ぜん"
             }
           ],
-          "pairId": "pair-123"
+          "pairId": "pair-122"
         },
         {
           "id": "gengo-q4-198",
@@ -30969,7 +30973,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-123"
+          "pairId": "pair-122"
         },
         {
           "id": "gengo-q4-199",
@@ -31008,7 +31012,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-124"
+          "pairId": "pair-123"
         },
         {
           "id": "gengo-q4-200",
@@ -31047,7 +31051,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-124"
+          "pairId": "pair-123"
         },
         {
           "id": "gengo-q4-201",
@@ -31074,7 +31078,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-125"
+          "pairId": "pair-124"
         },
         {
           "id": "gengo-q4-202",
@@ -31101,7 +31105,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-125"
+          "pairId": "pair-124"
         },
         {
           "id": "gengo-q4-203",
@@ -31132,7 +31136,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-126"
+          "pairId": "pair-125"
         },
         {
           "id": "gengo-q4-204",
@@ -31163,7 +31167,7 @@
               "ruby": "ぜん"
             }
           ],
-          "pairId": "pair-126"
+          "pairId": "pair-125"
         },
         {
           "id": "gengo-q4-205",
@@ -31190,7 +31194,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-127"
+          "pairId": "pair-126"
         },
         {
           "id": "gengo-q4-206",
@@ -31221,7 +31225,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-128"
+          "pairId": "pair-127"
         },
         {
           "id": "gengo-q4-207",
@@ -31252,7 +31256,7 @@
               "ruby": "じゅう"
             }
           ],
-          "pairId": "pair-128"
+          "pairId": "pair-127"
         },
         {
           "id": "gengo-q4-208",
@@ -31279,7 +31283,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-129"
+          "pairId": "pair-128"
         },
         {
           "id": "gengo-q4-209",
@@ -31306,7 +31310,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-129"
+          "pairId": "pair-128"
         },
         {
           "id": "gengo-q4-210",
@@ -31341,7 +31345,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-130"
+          "pairId": "pair-129"
         },
         {
           "id": "gengo-q4-211",
@@ -31376,7 +31380,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-130"
+          "pairId": "pair-129"
         },
         {
           "id": "gengo-q4-212",
@@ -31407,7 +31411,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-131"
+          "pairId": "pair-130"
         },
         {
           "id": "gengo-q4-213",
@@ -31446,7 +31450,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-132"
+          "pairId": "pair-131"
         },
         {
           "id": "gengo-q4-214",
@@ -31485,7 +31489,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-132"
+          "pairId": "pair-131"
         },
         {
           "id": "gengo-q4-215",
@@ -31512,7 +31516,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-133"
+          "pairId": "pair-132"
         },
         {
           "id": "gengo-q4-216",
@@ -31539,7 +31543,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-133"
+          "pairId": "pair-132"
         },
         {
           "id": "gengo-q4-217",
@@ -31570,7 +31574,7 @@
               "ruby": "ばん"
             }
           ],
-          "pairId": "pair-134"
+          "pairId": "pair-133"
         },
         {
           "id": "gengo-q4-218",
@@ -31601,7 +31605,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-134"
+          "pairId": "pair-133"
         },
         {
           "id": "gengo-q4-219",
@@ -31632,7 +31636,7 @@
               "ruby": "たい"
             }
           ],
-          "pairId": "pair-135"
+          "pairId": "pair-134"
         },
         {
           "id": "gengo-q4-220",
@@ -31659,7 +31663,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-136"
+          "pairId": "pair-135"
         },
         {
           "id": "gengo-q4-221",
@@ -31686,7 +31690,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-136"
+          "pairId": "pair-135"
         },
         {
           "id": "gengo-q4-222",
@@ -31713,7 +31717,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-137"
+          "pairId": "pair-136"
         },
         {
           "id": "gengo-q4-223",
@@ -31740,7 +31744,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-137"
+          "pairId": "pair-136"
         },
         {
           "id": "gengo-q4-224",
@@ -31799,7 +31803,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-138"
+          "pairId": "pair-137"
         },
         {
           "id": "gengo-q4-225",
@@ -31858,7 +31862,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-138"
+          "pairId": "pair-137"
         },
         {
           "id": "gengo-q4-226",
@@ -31921,7 +31925,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-139"
+          "pairId": "pair-138"
         },
         {
           "id": "gengo-q4-227",
@@ -31984,7 +31988,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-139"
+          "pairId": "pair-138"
         },
         {
           "id": "gengo-q4-228",
@@ -32039,7 +32043,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-140"
+          "pairId": "pair-139"
         },
         {
           "id": "gengo-q4-229",
@@ -32094,7 +32098,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-140"
+          "pairId": "pair-139"
         },
         {
           "id": "gengo-q4-230",
@@ -32137,7 +32141,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-141"
+          "pairId": "pair-140"
         },
         {
           "id": "gengo-q4-231",
@@ -32180,7 +32184,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-141"
+          "pairId": "pair-140"
         },
         {
           "id": "gengo-q4-232",
@@ -32211,7 +32215,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-142"
+          "pairId": "pair-141"
         },
         {
           "id": "gengo-q4-233",
@@ -32242,7 +32246,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-142"
+          "pairId": "pair-141"
         },
         {
           "id": "gengo-q4-234",
@@ -32277,7 +32281,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-143"
+          "pairId": "pair-142"
         },
         {
           "id": "gengo-q4-235",
@@ -32312,7 +32316,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-143"
+          "pairId": "pair-142"
         },
         {
           "id": "gengo-q4-236",
@@ -32355,7 +32359,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-144"
+          "pairId": "pair-143"
         },
         {
           "id": "gengo-q4-237",
@@ -32398,7 +32402,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-144"
+          "pairId": "pair-143"
         },
         {
           "id": "gengo-q4-238",
@@ -32441,7 +32445,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-145"
+          "pairId": "pair-144"
         },
         {
           "id": "gengo-q4-239",
@@ -32484,7 +32488,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-145"
+          "pairId": "pair-144"
         },
         {
           "id": "gengo-q4-240",
@@ -32515,7 +32519,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-146"
+          "pairId": "pair-145"
         },
         {
           "id": "gengo-q4-241",
@@ -32546,7 +32550,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-146"
+          "pairId": "pair-145"
         },
         {
           "id": "gengo-q4-242",
@@ -32577,7 +32581,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-147"
+          "pairId": "pair-146"
         },
         {
           "id": "gengo-q4-243",
@@ -32608,7 +32612,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-147"
+          "pairId": "pair-146"
         },
         {
           "id": "gengo-q4-244",
@@ -32667,7 +32671,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-148"
+          "pairId": "pair-147"
         },
         {
           "id": "gengo-q4-245",
@@ -32726,7 +32730,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-148"
+          "pairId": "pair-147"
         },
         {
           "id": "gengo-q4-246",
@@ -32769,7 +32773,7 @@
               "ruby": "かお"
             }
           ],
-          "pairId": "pair-149"
+          "pairId": "pair-148"
         },
         {
           "id": "gengo-q4-247",
@@ -32812,7 +32816,7 @@
               "ruby": "かお"
             }
           ],
-          "pairId": "pair-149"
+          "pairId": "pair-148"
         },
         {
           "id": "gengo-q4-248",
@@ -32859,7 +32863,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-150"
+          "pairId": "pair-149"
         },
         {
           "id": "gengo-q4-249",
@@ -32906,7 +32910,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-150"
+          "pairId": "pair-149"
         },
         {
           "id": "gengo-q4-250",
@@ -32949,7 +32953,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-151"
+          "pairId": "pair-150"
         },
         {
           "id": "gengo-q4-251",
@@ -32992,7 +32996,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-151"
+          "pairId": "pair-150"
         },
         {
           "id": "gengo-q4-252",
@@ -33035,7 +33039,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-152"
+          "pairId": "pair-151"
         },
         {
           "id": "gengo-q4-253",
@@ -33078,7 +33082,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-152"
+          "pairId": "pair-151"
         },
         {
           "id": "gengo-q4-254",
@@ -33121,7 +33125,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-153"
+          "pairId": "pair-152"
         },
         {
           "id": "gengo-q4-255",
@@ -33168,7 +33172,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-154"
+          "pairId": "pair-153"
         },
         {
           "id": "gengo-q4-256",
@@ -33215,7 +33219,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-154"
+          "pairId": "pair-153"
         },
         {
           "id": "gengo-q4-257",
@@ -33254,7 +33258,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-155"
+          "pairId": "pair-154"
         },
         {
           "id": "gengo-q4-258",
@@ -33293,7 +33297,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-155"
+          "pairId": "pair-154"
         },
         {
           "id": "gengo-q4-259",
@@ -33340,7 +33344,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-156"
+          "pairId": "pair-155"
         },
         {
           "id": "gengo-q4-260",
@@ -33387,7 +33391,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-156"
+          "pairId": "pair-155"
         },
         {
           "id": "gengo-q4-261",
@@ -33426,7 +33430,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-157"
+          "pairId": "pair-156"
         },
         {
           "id": "gengo-q4-262",
@@ -33465,7 +33469,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-157"
+          "pairId": "pair-156"
         },
         {
           "id": "gengo-q4-263",
@@ -33508,7 +33512,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-158"
+          "pairId": "pair-157"
         },
         {
           "id": "gengo-q4-264",
@@ -33551,7 +33555,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-158"
+          "pairId": "pair-157"
         },
         {
           "id": "gengo-q4-265",
@@ -33594,7 +33598,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-159"
+          "pairId": "pair-158"
         },
         {
           "id": "gengo-q4-266",
@@ -33637,7 +33641,7 @@
               "ruby": ""
             }
           ],
-          "pairId": "pair-159"
+          "pairId": "pair-158"
         }
       ]
     },
@@ -36958,7 +36962,7 @@
         {
           "id": "grammar-pos-33",
           "primary": "少し",
-          "reading": "少し",
+          "reading": "すこし",
           "meaning": "조금",
           "exampleJa": "少し待って。",
           "exampleEn": "",
@@ -36969,7 +36973,7 @@
           "rubyParts": [
             {
               "base": "少",
-              "ruby": "少"
+              "ruby": "すこ"
             },
             {
               "base": "し",
@@ -36980,7 +36984,7 @@
         {
           "id": "grammar-pos-34",
           "primary": "少しも〜ない",
-          "reading": "少しもない",
+          "reading": "すこしも〜ない",
           "meaning": "조금도~않는다",
           "exampleJa": "少しも知らない。",
           "exampleEn": "",
@@ -36991,7 +36995,7 @@
           "rubyParts": [
             {
               "base": "少",
-              "ruby": "少"
+              "ruby": "すこ"
             },
             {
               "base": "しも",
@@ -37010,7 +37014,7 @@
         {
           "id": "grammar-pos-35",
           "primary": "絶対に",
-          "reading": "絶対に",
+          "reading": "ぜったいに",
           "meaning": "절대로",
           "exampleJa": "絶対に負けない。",
           "exampleEn": "",
@@ -37020,8 +37024,12 @@
           "sourceTag": "",
           "rubyParts": [
             {
-              "base": "絶対",
-              "ruby": "絶対"
+              "base": "絶",
+              "ruby": "ぜっ"
+            },
+            {
+              "base": "対",
+              "ruby": "たい"
             },
             {
               "base": "に",
@@ -37228,7 +37236,7 @@
         {
           "id": "grammar-pos-46",
           "primary": "先に",
-          "reading": "先に",
+          "reading": "さきに",
           "meaning": "먼저",
           "exampleJa": "先に帰るね。",
           "exampleEn": "",
@@ -37239,7 +37247,7 @@
           "rubyParts": [
             {
               "base": "先",
-              "ruby": "先"
+              "ruby": "さき"
             },
             {
               "base": "に",
@@ -37268,7 +37276,7 @@
         {
           "id": "grammar-pos-48",
           "primary": "次第に",
-          "reading": "次第に",
+          "reading": "しだいに",
           "meaning": "점점",
           "exampleJa": "次第に寒くなった。",
           "exampleEn": "",
@@ -37279,7 +37287,7 @@
           "rubyParts": [
             {
               "base": "次第",
-              "ruby": "次第"
+              "ruby": "しだい"
             },
             {
               "base": "に",
@@ -37506,7 +37514,7 @@
         {
           "id": "grammar-pos-61",
           "primary": "必ず",
-          "reading": "かなら",
+          "reading": "かならず",
           "meaning": "반드시",
           "exampleJa": "必ず来てね。",
           "exampleEn": "",
@@ -37528,7 +37536,7 @@
         {
           "id": "grammar-pos-62",
           "primary": "必ずしも〜ない",
-          "reading": "必ずしもない",
+          "reading": "かならずしも〜ない",
           "meaning": "반드시~인 것은 아니다",
           "exampleJa": "必ずしも正しくない。",
           "exampleEn": "",
@@ -37539,7 +37547,7 @@
           "rubyParts": [
             {
               "base": "必",
-              "ruby": "必"
+              "ruby": "かなら"
             },
             {
               "base": "ずしも",
@@ -37792,7 +37800,7 @@
         {
           "id": "grammar-pos-76",
           "primary": "確かに",
-          "reading": "確かに",
+          "reading": "たしかに",
           "meaning": "확실히",
           "exampleJa": "確かにそうだ。",
           "exampleEn": "",
@@ -37803,7 +37811,7 @@
           "rubyParts": [
             {
               "base": "確",
-              "ruby": "確"
+              "ruby": "たし"
             },
             {
               "base": "かに",
@@ -38853,7 +38861,7 @@
         {
           "id": "grammar-expression-16",
           "primary": "書かれる (1그룹)",
-          "reading": "書かれる",
+          "reading": "かかれる",
           "meaning": "쓰이다 (수동) / [u단 → a단 + れる] / 書く → 書かれる",
           "exampleJa": "この本は英語で書かれている。",
           "exampleEn": "",
@@ -38864,7 +38872,7 @@
           "rubyParts": [
             {
               "base": "書",
-              "ruby": "書"
+              "ruby": "か"
             },
             {
               "base": "かれる",
@@ -38879,7 +38887,7 @@
         {
           "id": "grammar-expression-17",
           "primary": "食べられる (2그룹)",
-          "reading": "食べられる",
+          "reading": "たべられる",
           "meaning": "먹히다 (수동) / [る 탈락 + られる] / 食べる → 食べられる",
           "exampleJa": "弟にケーキを食べられた。",
           "exampleEn": "",
@@ -38890,7 +38898,7 @@
           "rubyParts": [
             {
               "base": "食",
-              "ruby": "食"
+              "ruby": "た"
             },
             {
               "base": "べられる",
@@ -38905,7 +38913,7 @@
         {
           "id": "grammar-expression-18",
           "primary": "注意される (3그룹)",
-          "reading": "注意される",
+          "reading": "ちゅういされる",
           "meaning": "주의받다, 혼나다 (수동) / [する → される] / 注意する → 注意される",
           "exampleJa": "先生に注意された。",
           "exampleEn": "",
@@ -38915,8 +38923,12 @@
           "sourceTag": "",
           "rubyParts": [
             {
-              "base": "注意",
-              "ruby": "注意"
+              "base": "注",
+              "ruby": "ちゅう"
+            },
+            {
+              "base": "意",
+              "ruby": "い"
             },
             {
               "base": "される",
@@ -38931,7 +38943,7 @@
         {
           "id": "grammar-expression-19",
           "primary": "待たせる (1그룹)",
-          "reading": "待たせる",
+          "reading": "またせる",
           "meaning": "기다리게 하다 (사역) / [u단 → a단 + せる] / 待つ → 待たせる",
           "exampleJa": "友達を1時間も待たせた。",
           "exampleEn": "",
@@ -38942,7 +38954,7 @@
           "rubyParts": [
             {
               "base": "待",
-              "ruby": "待"
+              "ruby": "ま"
             },
             {
               "base": "たせる",
@@ -38957,7 +38969,7 @@
         {
           "id": "grammar-expression-20",
           "primary": "食べさせる (2그룹)",
-          "reading": "食べさせる",
+          "reading": "たべさせる",
           "meaning": "먹게 하다 (사역) / [る 탈락 + させる] / 食べる → 食べさせる",
           "exampleJa": "子供に野菜を食べさせる。",
           "exampleEn": "",
@@ -38968,7 +38980,7 @@
           "rubyParts": [
             {
               "base": "食",
-              "ruby": "食"
+              "ruby": "た"
             },
             {
               "base": "べさせる",
@@ -38983,7 +38995,7 @@
         {
           "id": "grammar-expression-21",
           "primary": "勉強させる (3그룹)",
-          "reading": "勉強させる",
+          "reading": "べんきょうさせる",
           "meaning": "공부시키다 (사역) / [する → させる] / 勉強する → 勉強させる",
           "exampleJa": "親は子供に勉強させる。",
           "exampleEn": "",
@@ -38993,8 +39005,12 @@
           "sourceTag": "",
           "rubyParts": [
             {
-              "base": "勉強",
-              "ruby": "勉強"
+              "base": "勉",
+              "ruby": "べん"
+            },
+            {
+              "base": "強",
+              "ruby": "きょう"
             },
             {
               "base": "させる",
@@ -39009,7 +39025,7 @@
         {
           "id": "grammar-expression-22",
           "primary": "飲まされる (1그룹)",
-          "reading": "飲まされる",
+          "reading": "のまされる",
           "meaning": "억지로 마시다 (사역수동) / [u단 → a단 + される] / 飲む → 飲まされる",
           "exampleJa": "先輩に酒を飲まされた。",
           "exampleEn": "",
@@ -39020,7 +39036,7 @@
           "rubyParts": [
             {
               "base": "飲",
-              "ruby": "飲"
+              "ruby": "の"
             },
             {
               "base": "まされる",
@@ -39035,7 +39051,7 @@
         {
           "id": "grammar-expression-23",
           "primary": "食べさせられる (2그룹)",
-          "reading": "食べさせられる",
+          "reading": "たべさせられる",
           "meaning": "억지로 먹다 (사역수동) / [る 탈락 + させられる] / 食べる → 食べさせられる",
           "exampleJa": "嫌いな料理を食べさせられた。",
           "exampleEn": "",
@@ -39046,7 +39062,7 @@
           "rubyParts": [
             {
               "base": "食",
-              "ruby": "食"
+              "ruby": "た"
             },
             {
               "base": "べさせられる",
@@ -39061,7 +39077,7 @@
         {
           "id": "grammar-expression-24",
           "primary": "残業させられる (3그룹)",
-          "reading": "残業させられる",
+          "reading": "ざんぎょうさせられる",
           "meaning": "억지로 야근하다 (사역수동) / [する → させられる] / 残業する → 残業させられる",
           "exampleJa": "毎日残業させられる。",
           "exampleEn": "",
@@ -39071,8 +39087,12 @@
           "sourceTag": "",
           "rubyParts": [
             {
-              "base": "残業",
-              "ruby": "残業"
+              "base": "残",
+              "ruby": "ざん"
+            },
+            {
+              "base": "業",
+              "ruby": "ぎょう"
             },
             {
               "base": "させられる",
@@ -39087,7 +39107,7 @@
         {
           "id": "grammar-expression-25",
           "primary": "使われますか (1그룹)",
-          "reading": "使われますか",
+          "reading": "つかわれますか",
           "meaning": "사용하시겠어요? (존경) / [u단 → a단 + れる] / 使う → 使われる",
           "exampleJa": "コピー機を使われますか。",
           "exampleEn": "",
@@ -39098,7 +39118,7 @@
           "rubyParts": [
             {
               "base": "使",
-              "ruby": "使"
+              "ruby": "つか"
             },
             {
               "base": "われますか",
@@ -39113,7 +39133,7 @@
         {
           "id": "grammar-expression-26",
           "primary": "行かれましたか (1그룹)",
-          "reading": "行かれましたか",
+          "reading": "いかれましたか",
           "meaning": "가셨나요? (존경) / [u단 → a단 + れる] / 行く → 行かれる",
           "exampleJa": "先生はいつ行かれましたか。",
           "exampleEn": "",
@@ -39124,7 +39144,7 @@
           "rubyParts": [
             {
               "base": "行",
-              "ruby": "行"
+              "ruby": "い"
             },
             {
               "base": "かれましたか",
@@ -39139,7 +39159,7 @@
         {
           "id": "grammar-expression-27",
           "primary": "出られる (2그룹)",
-          "reading": "出られる",
+          "reading": "でられる",
           "meaning": "나가시다 (존경) / [る 탈락 + られる] / 出る → 出られる",
           "exampleJa": "社長はマラソン大会に出られる。",
           "exampleEn": "",
@@ -39150,7 +39170,7 @@
           "rubyParts": [
             {
               "base": "出",
-              "ruby": "出"
+              "ruby": "で"
             },
             {
               "base": "られる",
@@ -39165,7 +39185,7 @@
         {
           "id": "grammar-expression-28",
           "primary": "来られます (3그룹)",
-          "reading": "来られます",
+          "reading": "こられます",
           "meaning": "오십니다 (존경) / [くる → こられる] / 来る → 来られる",
           "exampleJa": "田中さんはすぐこちらに来られます。",
           "exampleEn": "",
@@ -39176,7 +39196,7 @@
           "rubyParts": [
             {
               "base": "来",
-              "ruby": "来"
+              "ruby": "こ"
             },
             {
               "base": "られます",
@@ -39191,7 +39211,7 @@
         {
           "id": "grammar-expression-29",
           "primary": "書けます (1그룹)",
-          "reading": "書けます",
+          "reading": "かけます",
           "meaning": "쓸 수 있다 (가능) / [u단 → e단 + る] / 書く → 書ける",
           "exampleJa": "私は韓国語が書けます。",
           "exampleEn": "",
@@ -39202,7 +39222,7 @@
           "rubyParts": [
             {
               "base": "書",
-              "ruby": "書"
+              "ruby": "か"
             },
             {
               "base": "けます",
@@ -39217,7 +39237,7 @@
         {
           "id": "grammar-expression-30",
           "primary": "走れます (1그룹)",
-          "reading": "走れます",
+          "reading": "はしれます",
           "meaning": "달릴 수 있다 (가능) / [u단 → e단 + る] / 走る → 走れる",
           "exampleJa": "100メートルを15秒で走れます。",
           "exampleEn": "",
@@ -39228,7 +39248,7 @@
           "rubyParts": [
             {
               "base": "走",
-              "ruby": "走"
+              "ruby": "はし"
             },
             {
               "base": "れます",
@@ -39243,7 +39263,7 @@
         {
           "id": "grammar-expression-31",
           "primary": "見られた (2그룹)",
-          "reading": "見られた",
+          "reading": "みられた",
           "meaning": "볼 수 있었다 (가능) / [る 탈락 + られる] / 見る → 見られる",
           "exampleJa": "星が見られた。",
           "exampleEn": "",
@@ -39254,7 +39274,7 @@
           "rubyParts": [
             {
               "base": "見",
-              "ruby": "見"
+              "ruby": "み"
             },
             {
               "base": "られた",
@@ -39528,7 +39548,7 @@
         {
           "id": "grammar-sonkeigo-1",
           "primary": "お目にかかる",
-          "reading": "お目にかかる",
+          "reading": "おめにかかる",
           "meaning": "'만나다(会う)'의 겸양어",
           "exampleJa": "社長にお目にかかりたいです。",
           "exampleEn": "",
@@ -39543,7 +39563,7 @@
             },
             {
               "base": "目",
-              "ruby": "目"
+              "ruby": "め"
             },
             {
               "base": "にかかる",
@@ -39598,7 +39618,7 @@
         {
           "id": "grammar-sonkeigo-4",
           "primary": "参る",
-          "reading": "まい",
+          "reading": "まいる",
           "meaning": "'가다/오다(行く/来る)'의 겸양어",
           "exampleJa": "明日、そちらに参ります。",
           "exampleEn": "",
@@ -39638,7 +39658,7 @@
         {
           "id": "grammar-sonkeigo-6",
           "primary": "ご存じだ",
-          "reading": "ご存じだ",
+          "reading": "ごぞんじだ",
           "meaning": "'알고 있다(知っている)'의 존경어",
           "exampleJa": "そのニュース、ご存じですか。",
           "exampleEn": "",
@@ -39653,7 +39673,7 @@
             },
             {
               "base": "存",
-              "ruby": "存"
+              "ruby": "ぞん"
             },
             {
               "base": "じだ",
@@ -39664,7 +39684,7 @@
         {
           "id": "grammar-sonkeigo-7",
           "primary": "存じている",
-          "reading": "存じている",
+          "reading": "ぞんじている",
           "meaning": "'알고 있다(知っている)'의 겸양어",
           "exampleJa": "はい、存じております。",
           "exampleEn": "",
@@ -39675,7 +39695,7 @@
           "rubyParts": [
             {
               "base": "存",
-              "ruby": "存"
+              "ruby": "ぞん"
             },
             {
               "base": "じている",
@@ -39740,7 +39760,7 @@
         {
           "id": "grammar-sonkeigo-11",
           "primary": "申す (もうす)",
-          "reading": "申すもうす",
+          "reading": "もうす",
           "meaning": "'말하다(言う)'의 겸양어",
           "exampleJa": "田中と申します。",
           "exampleEn": "",
@@ -39751,7 +39771,7 @@
           "rubyParts": [
             {
               "base": "申",
-              "ruby": "申"
+              "ruby": "もう"
             },
             {
               "base": "す",
@@ -39774,7 +39794,7 @@
         {
           "id": "grammar-sonkeigo-12",
           "primary": "申し上げる",
-          "reading": "申し上げる",
+          "reading": "もうしあげる",
           "meaning": "'말하다(言う)'의 겸양어 (대상에게)",
           "exampleJa": "先生に申し上げました。",
           "exampleEn": "",
@@ -39785,7 +39805,7 @@
           "rubyParts": [
             {
               "base": "申",
-              "ruby": "申"
+              "ruby": "もう"
             },
             {
               "base": "し",
@@ -39793,7 +39813,7 @@
             },
             {
               "base": "上",
-              "ruby": "上"
+              "ruby": "あ"
             },
             {
               "base": "げる",
@@ -39804,7 +39824,7 @@
         {
           "id": "grammar-sonkeigo-13",
           "primary": "伺う (うかがう) (1)",
-          "reading": "伺ううかがう",
+          "reading": "うかがう",
           "meaning": "'듣다/묻다(聞く)'의 겸양어",
           "exampleJa": "お話を伺いたいです。",
           "exampleEn": "",
@@ -39815,7 +39835,7 @@
           "rubyParts": [
             {
               "base": "伺",
-              "ruby": "伺"
+              "ruby": ""
             },
             {
               "base": "う",
@@ -39838,7 +39858,7 @@
         {
           "id": "grammar-sonkeigo-14",
           "primary": "伺う (うかがう) (2)",
-          "reading": "伺ううかがう",
+          "reading": "うかがう",
           "meaning": "'방문하다(訪ねる)'의 겸양어",
           "exampleJa": "3時にそちらへ伺います。",
           "exampleEn": "",
@@ -39849,7 +39869,7 @@
           "rubyParts": [
             {
               "base": "伺",
-              "ruby": "伺"
+              "ruby": ""
             },
             {
               "base": "う",
@@ -39872,7 +39892,7 @@
         {
           "id": "grammar-sonkeigo-15",
           "primary": "ご覧になる",
-          "reading": "ご覧になる",
+          "reading": "ごらんになる",
           "meaning": "'보다(見る)'의 존경어 보시다",
           "exampleJa": "資料はもうご覧になりましたか。",
           "exampleEn": "",
@@ -39887,7 +39907,7 @@
             },
             {
               "base": "覧",
-              "ruby": "覧"
+              "ruby": "らん"
             },
             {
               "base": "になる",
@@ -39920,7 +39940,7 @@
         {
           "id": "grammar-sonkeigo-17",
           "primary": "差し上げる",
-          "reading": "さあ",
+          "reading": "さしあげる",
           "meaning": "'주다(あげる)'의 겸양어",
           "exampleJa": "お客様に記念品を差し上げます。",
           "exampleEn": "",
@@ -39935,10 +39955,6 @@
             },
             {
               "base": "し",
-              "ruby": ""
-            },
-            {
-              "base": " ",
               "ruby": ""
             },
             {
@@ -39994,7 +40010,7 @@
         {
           "id": "grammar-sonkeigo-20",
           "primary": "召し上がる",
-          "reading": "めあ",
+          "reading": "めしあがる",
           "meaning": "'먹다/마시다'의 존경어",
           "exampleJa": "どうぞ、召し上がってください。",
           "exampleEn": "",
@@ -40009,10 +40025,6 @@
             },
             {
               "base": "し",
-              "ruby": ""
-            },
-            {
-              "base": " ",
               "ruby": ""
             },
             {
@@ -40050,7 +40062,7 @@
         {
           "id": "grammar-sonkeigo-22",
           "primary": "お休みになる",
-          "reading": "お休みになる",
+          "reading": "おやすみになる",
           "meaning": "'자다(寝る/休む)'의 존경어 주무시다",
           "exampleJa": "父はもうお休みになりました。",
           "exampleEn": "",
@@ -40065,7 +40077,7 @@
             },
             {
               "base": "休",
-              "ruby": "休"
+              "ruby": "やす"
             },
             {
               "base": "みになる",
@@ -40076,7 +40088,7 @@
         {
           "id": "grammar-sonkeigo-23",
           "primary": "ご存じ上げる",
-          "reading": "ご存じ上げる",
+          "reading": "ごぞんじあげる",
           "meaning": "'알다(知る)'의 겸양어 (사람 대상)",
           "exampleJa": "先生のことはよくご存じ上げております。",
           "exampleEn": "",
@@ -40091,7 +40103,7 @@
             },
             {
               "base": "存",
-              "ruby": "存"
+              "ruby": "ぞん"
             },
             {
               "base": "じ",
@@ -40099,7 +40111,7 @@
             },
             {
               "base": "上",
-              "ruby": "上"
+              "ruby": "あ"
             },
             {
               "base": "げる",
@@ -40110,7 +40122,7 @@
         {
           "id": "grammar-sonkeigo-24",
           "primary": "お見えになる",
-          "reading": "お見えになる",
+          "reading": "おみえになる",
           "meaning": "'오시다(来る)'의 존경어",
           "exampleJa": "田中様がお見えになりました。",
           "exampleEn": "",
@@ -40125,7 +40137,7 @@
             },
             {
               "base": "見",
-              "ruby": "見"
+              "ruby": "み"
             },
             {
               "base": "えになる",
@@ -40136,7 +40148,7 @@
         {
           "id": "grammar-sonkeigo-25",
           "primary": "お越(こ)しになる",
-          "reading": "お越(こしになる",
+          "reading": "おこしになる",
           "meaning": "'오다(来る)'의 존경어 오시다",
           "exampleJa": "わざわざお越しになり、ありがとうございます。",
           "exampleEn": "",
@@ -40151,7 +40163,7 @@
             },
             {
               "base": "越",
-              "ruby": "越("
+              "ruby": ""
             },
             {
               "base": "(",
@@ -44606,7 +44618,7 @@
         {
           "id": "reading-36",
           "primary": "考える",
-          "reading": "かんが",
+          "reading": "かんがえる",
           "meaning": "생각하다",
           "exampleJa": "あなたは家族の事を考えるべきです。",
           "exampleEn": "You must think of your family.  ",
@@ -55398,7 +55410,7 @@
         {
           "id": "word-n45-17",
           "primary": "数える",
-          "reading": "かぞ",
+          "reading": "かぞえる",
           "meaning": "세다",
           "exampleJa": "あの子は２０まで数えられる。",
           "exampleEn": "That child can count to twenty. ",
@@ -55579,7 +55591,7 @@
         {
           "id": "word-n45-24",
           "primary": "夕べ",
-          "reading": "ゆう",
+          "reading": "ゆうべ",
           "meaning": "저녁때",
           "exampleJa": "夕べジェーンとデートした。",
           "exampleEn": "I had a date with Jane last night.",
@@ -56657,7 +56669,7 @@
         {
           "id": "word-n45-65",
           "primary": "毎月",
-          "reading": "まいつき",
+          "reading": "まいつき / まいげつ",
           "meaning": "매월",
           "exampleJa": "私は両親には必ず毎月手紙を書きます。",
           "exampleEn": "I never fail to write to my parents every month. ",
@@ -56672,7 +56684,7 @@
             },
             {
               "base": "月",
-              "ruby": "つき"
+              "ruby": "つき / まいげつ"
             }
           ],
           "tags": [
@@ -56738,7 +56750,7 @@
         {
           "id": "word-n45-68",
           "primary": "眠い",
-          "reading": "ねむ",
+          "reading": "ねむい",
           "meaning": "졸리다",
           "exampleJa": "彼は眠くて瞼が重かった。",
           "exampleEn": "His eyes were heavy with sleep. ",
@@ -56927,7 +56939,7 @@
         {
           "id": "word-n45-75",
           "primary": "届く",
-          "reading": "とど",
+          "reading": "とどく",
           "meaning": "도착하다, 도달하다",
           "exampleJa": "ここからでも声は届くよ。",
           "exampleEn": "You can make yourself heard even from here. ",
@@ -57512,7 +57524,7 @@
         {
           "id": "word-n45-98",
           "primary": "奥さん",
-          "reading": "おく",
+          "reading": "おくさん",
           "meaning": "부인",
           "exampleJa": "あなたの奥さんによろしくお伝え下さい。",
           "exampleEn": "Please say hello to your wife. ",
@@ -57752,7 +57764,7 @@
         {
           "id": "word-n45-107",
           "primary": "訪ねる",
-          "reading": "たず",
+          "reading": "たずねる",
           "meaning": "방문하다",
           "exampleJa": "いつでも私のオフィスを訪ねなさい。",
           "exampleEn": "Call at my office at any time. ",
@@ -57962,7 +57974,7 @@
         {
           "id": "word-n45-115",
           "primary": "遊ぶ",
-          "reading": "あそ",
+          "reading": "あそぶ",
           "meaning": "놀다",
           "exampleJa": "子供の頃ひとりで遊ぶのが常だった。",
           "exampleEn": "I used to play alone when I was a child.",
@@ -58293,7 +58305,7 @@
         {
           "id": "word-n45-127",
           "primary": "付ける",
-          "reading": "つ",
+          "reading": "つける",
           "meaning": "붙이다, (전등을) 켜다",
           "exampleJa": "テレビを付けて下さい。",
           "exampleEn": "Please turn on the TV.",
@@ -58425,7 +58437,7 @@
         {
           "id": "word-n45-132",
           "primary": "拾う",
-          "reading": "ひろ",
+          "reading": "ひろう",
           "meaning": "줍다",
           "exampleJa": "この財布はどこで拾ったのですか。",
           "exampleEn": "Where did you find this wallet? ",
@@ -58480,7 +58492,7 @@
         {
           "id": "word-n45-134",
           "primary": "並べる",
-          "reading": "なら",
+          "reading": "ならべる",
           "meaning": "늘어놓다",
           "exampleJa": "彼は肩をならべていた。",
           "exampleEn": "He shrugged his shoulders.",
@@ -58721,7 +58733,7 @@
         {
           "id": "word-n45-143",
           "primary": "返す",
-          "reading": "かえ",
+          "reading": "かえす",
           "meaning": "돌려주다",
           "exampleJa": "お金は明日返すよ。",
           "exampleEn": "I'll give you back the money tomorrow. ",
@@ -59492,7 +59504,7 @@
         {
           "id": "word-n45-173",
           "primary": "高い",
-          "reading": "たか",
+          "reading": "たかい",
           "meaning": "비싸다, 높다",
           "exampleJa": "銀行はリスクの高い顧客へのローンには高い金利をつける。",
           "exampleEn": "Banks charge higher interest on loans to risky customers. ",
@@ -59520,7 +59532,7 @@
         {
           "id": "word-n45-174",
           "primary": "安い",
-          "reading": "やす",
+          "reading": "やすい",
           "meaning": "싸다",
           "exampleJa": "もう少し安いのはありますか。",
           "exampleEn": "Could you give me a better price?",
@@ -59547,7 +59559,7 @@
         {
           "id": "word-n45-175",
           "primary": "珍しい",
-          "reading": "めずら",
+          "reading": "めずらしい",
           "meaning": "드물다, 희귀하다",
           "exampleJa": "これは珍しい種類の魚です。",
           "exampleEn": "This is a strange kind of fish. ",
@@ -59574,7 +59586,7 @@
         {
           "id": "word-n45-176",
           "primary": "新しい",
-          "reading": "あたら",
+          "reading": "あたらしい",
           "meaning": "새롭다",
           "exampleJa": "あなたの新しい車は調子よく動いていますか。",
           "exampleEn": "Is your new car behaving well? ",
@@ -59601,7 +59613,7 @@
         {
           "id": "word-n45-177",
           "primary": "薄い",
-          "reading": "うす",
+          "reading": "うすい",
           "meaning": "얇다, (색, 맛이) 연하다",
           "exampleJa": "私は成功の望みが薄い。",
           "exampleEn": "There is little hope of my success. ",
@@ -59629,7 +59641,7 @@
         {
           "id": "word-n45-178",
           "primary": "柔らかい",
-          "reading": "やわ",
+          "reading": "やわらかい",
           "meaning": "부드럽다",
           "exampleJa": "私は柔らかいベッドで眠るのが好きです。",
           "exampleEn": "I like to sleep on a soft bed. ",
@@ -60080,7 +60092,7 @@
         {
           "id": "word-n45-195",
           "primary": "かき冰",
-          "reading": "ごおり",
+          "reading": "かきごおり",
           "meaning": "빙수",
           "exampleJa": "",
           "exampleEn": "",
@@ -60369,7 +60381,7 @@
         {
           "id": "word-n45-207",
           "primary": "飲み物",
-          "reading": "のもの",
+          "reading": "のみもの",
           "meaning": "음료",
           "exampleJa": "何か飲み物をいただけますか。",
           "exampleEn": "May I have something to drink? ",
@@ -60539,7 +60551,7 @@
         {
           "id": "word-n45-213",
           "primary": "食べる",
-          "reading": "た",
+          "reading": "たべる",
           "meaning": "먹다",
           "exampleJa": "エジプトでは何を食べて生活していますか。",
           "exampleEn": "What do they live on in Egypt? ",
@@ -60566,7 +60578,7 @@
         {
           "id": "word-n45-214",
           "primary": "甘い",
-          "reading": "あま",
+          "reading": "あまい",
           "meaning": "달다",
           "exampleJa": "そのリンゴは甘い味がする。",
           "exampleEn": "The apple tastes sweet.",
@@ -60593,7 +60605,7 @@
         {
           "id": "word-n45-215",
           "primary": "辛い",
-          "reading": "つら",
+          "reading": "からい",
           "meaning": "맵다/고통스럽다",
           "exampleJa": "トムは辛いカレーが好きだ。",
           "exampleEn": "Tom likes hot curry.",
@@ -60604,7 +60616,7 @@
           "rubyParts": [
             {
               "base": "辛",
-              "ruby": "つら"
+              "ruby": "から"
             },
             {
               "base": "い",
@@ -60848,7 +60860,7 @@
         {
           "id": "word-n45-225",
           "primary": "手軽だ",
-          "reading": "てがる",
+          "reading": "てがるだ",
           "meaning": "손쉽다",
           "exampleJa": "",
           "exampleEn": "",
@@ -60879,7 +60891,7 @@
         {
           "id": "word-n45-226",
           "primary": "滑る",
-          "reading": "すべ",
+          "reading": "すべる",
           "meaning": "미끄러지다",
           "exampleJa": "私はすべって足首をねんざした。",
           "exampleEn": "I slipped and twisted my ankle.",
@@ -61529,7 +61541,7 @@
         {
           "id": "word-n45-250",
           "primary": "頼む",
-          "reading": "たの",
+          "reading": "たのむ",
           "meaning": "주문하다, 부탁하다",
           "exampleJa": "田中さんのことを頼むよ。",
           "exampleEn": "Take care of Mr. Tanaka for me! ",
@@ -61583,7 +61595,7 @@
         {
           "id": "word-n45-252",
           "primary": "払う",
-          "reading": "はら",
+          "reading": "はらう",
           "meaning": "지불하다",
           "exampleJa": "私が払います。",
           "exampleEn": "I'll pay.",
@@ -61612,7 +61624,7 @@
         {
           "id": "word-n45-253",
           "primary": "並ぶ",
-          "reading": "なら",
+          "reading": "ならぶ",
           "meaning": "줄을 서다",
           "exampleJa": "彼は古今に並ぶ者のない偉大な政治家である。",
           "exampleEn": "He is the greatest statesman that ever lived. ",
@@ -61713,7 +61725,7 @@
         {
           "id": "word-n45-257",
           "primary": "ご飯を食べる",
-          "reading": "ごはんを たべる",
+          "reading": "ごはんをたべる",
           "meaning": "밥을 먹다",
           "exampleJa": "",
           "exampleEn": "",
@@ -62304,7 +62316,7 @@
         {
           "id": "word-n45-278",
           "primary": "申し込む",
-          "reading": "もうこ",
+          "reading": "もうしこむ",
           "meaning": "신청하다",
           "exampleJa": "あなたはあの勤め口に申し込むべきだ。",
           "exampleEn": "You should apply for that post. ",
@@ -62397,7 +62409,7 @@
         {
           "id": "word-n45-281",
           "primary": "伝える",
-          "reading": "つた",
+          "reading": "つたえる",
           "meaning": "전달하다",
           "exampleJa": "あなたの奥さんによろしくお伝え下さい。",
           "exampleEn": "Please say hello to your wife. ",
@@ -62425,7 +62437,7 @@
         {
           "id": "word-n45-282",
           "primary": "探す",
-          "reading": "さが",
+          "reading": "さがす",
           "meaning": "찾다",
           "exampleJa": "彼は鍵を探した。",
           "exampleEn": "He looked for the key.",
@@ -62491,7 +62503,7 @@
         {
           "id": "word-n45-284",
           "primary": "係り",
-          "reading": "かか",
+          "reading": "かかり",
           "meaning": "담당",
           "exampleJa": "今、誰か係りの者を差し向けます。",
           "exampleEn": "I'll send someone up to help you now. ",
@@ -62685,7 +62697,7 @@
         {
           "id": "word-n45-291",
           "primary": "始まる",
-          "reading": "はじ",
+          "reading": "はじまる",
           "meaning": "시작되다",
           "exampleJa": "その試合は何時に始まりますか。",
           "exampleEn": "What time does the game start? ",
@@ -62781,7 +62793,7 @@
         {
           "id": "word-n45-295",
           "primary": "行う",
-          "reading": "おこな",
+          "reading": "おこなう",
           "meaning": "행하다 (do)",
           "exampleJa": "自分の責任において何でも行いなさい。",
           "exampleEn": "Do everything at your own risk. ",
@@ -62809,7 +62821,7 @@
         {
           "id": "word-n45-296",
           "primary": "開く",
-          "reading": "ひら",
+          "reading": "ひらく",
           "meaning": "열리다",
           "exampleJa": "その店は一年中ずっと開いている。",
           "exampleEn": "The store is open all the year round.",
@@ -63361,7 +63373,7 @@
         {
           "id": "word-n45-317",
           "primary": "寒い",
-          "reading": "さむ",
+          "reading": "さむい",
           "meaning": "춥다",
           "exampleJa": "今朝は寒く感じる。",
           "exampleEn": "I feel cold this morning.",
@@ -63389,7 +63401,7 @@
         {
           "id": "word-n45-318",
           "primary": "少し",
-          "reading": "すこ",
+          "reading": "すこし",
           "meaning": "조금",
           "exampleJa": "少しテレビを見てもいいですか。",
           "exampleEn": "Do you mind if I watch TV for a while? ",
@@ -63416,7 +63428,7 @@
         {
           "id": "word-n45-319",
           "primary": "涼しい",
-          "reading": "すず",
+          "reading": "すずしい",
           "meaning": "시원하다, 선선하다",
           "exampleJa": "日増しに涼しくなっていく。",
           "exampleEn": "It's getting cooler day by day. ",
@@ -63444,7 +63456,7 @@
         {
           "id": "word-n45-320",
           "primary": "温かい",
-          "reading": "あたた",
+          "reading": "あたたかい",
           "meaning": "따뜻하다",
           "exampleJa": "温かいスープが飲みたい。",
           "exampleEn": "I want to eat warm soup.",
@@ -63471,7 +63483,7 @@
         {
           "id": "word-n45-321",
           "primary": "暑い",
-          "reading": "あつ",
+          "reading": "あつい",
           "meaning": "덥다",
           "exampleJa": "この夏最高の暑さだ。",
           "exampleEn": "It is the hottest this summer. ",
@@ -63498,7 +63510,7 @@
         {
           "id": "word-n45-322",
           "primary": "蒸し暑い",
-          "reading": "むあつ",
+          "reading": "むしあつい",
           "meaning": "무덥다",
           "exampleJa": "その晩はとてもむし暑かった。",
           "exampleEn": "It was very sultry that night. ",
@@ -63560,7 +63572,7 @@
         {
           "id": "word-n45-324",
           "primary": "晴れる",
-          "reading": "は",
+          "reading": "はれる",
           "meaning": "맑다, 날이 개다",
           "exampleJa": "あすは晴れるだろう。",
           "exampleEn": "It will be fine tomorrow. ",
@@ -63587,7 +63599,7 @@
         {
           "id": "word-n45-325",
           "primary": "曇る",
-          "reading": "くも",
+          "reading": "くもる",
           "meaning": "흐리다",
           "exampleJa": "曇っています。",
           "exampleEn": "It's cloudy.",
@@ -63865,7 +63877,7 @@
         {
           "id": "word-n45-336",
           "primary": "濡れる",
-          "reading": "ぬ",
+          "reading": "ぬれる",
           "meaning": "젖다",
           "exampleJa": "ぬれた衣装が彼女の体にくっついていた。",
           "exampleEn": "Wet clothes clung to her body. ",
@@ -63893,7 +63905,7 @@
         {
           "id": "word-n45-337",
           "primary": "冷たい",
-          "reading": "つめ",
+          "reading": "つめたい",
           "meaning": "차갑다",
           "exampleJa": "冷たいなあ。",
           "exampleEn": "That's a bit cold.",
@@ -64230,7 +64242,7 @@
         {
           "id": "word-n45-349",
           "primary": "お手洗い",
-          "reading": "てあら",
+          "reading": "おてあらい",
           "meaning": "화장실",
           "exampleJa": "お手洗いはどこですか。",
           "exampleEn": "Where's the restroom? ",
@@ -64269,7 +64281,7 @@
         {
           "id": "word-n45-350",
           "primary": "広い",
-          "reading": "ひろ",
+          "reading": "ひろい",
           "meaning": "넓다",
           "exampleJa": "ジョンソンさんのは広い部屋だ。",
           "exampleEn": "Mr Johnson's was a large room. ",
@@ -64296,7 +64308,7 @@
         {
           "id": "word-n45-351",
           "primary": "狭い",
-          "reading": "せま",
+          "reading": "せまい",
           "meaning": "좁다",
           "exampleJa": "この部屋は私たちにとって狭すぎる。",
           "exampleEn": "This room is too small for us. ",
@@ -64323,7 +64335,7 @@
         {
           "id": "word-n45-352",
           "primary": "暗い",
-          "reading": "くら",
+          "reading": "くらい",
           "meaning": "어둡다",
           "exampleJa": "部屋の中は暗かった。",
           "exampleEn": "It was dark in the room.",
@@ -65324,7 +65336,7 @@
         {
           "id": "word-n45-390",
           "primary": "後ろ",
-          "reading": "うし",
+          "reading": "うしろ",
           "meaning": "뒤",
           "exampleJa": "後ろを刈り上げてください。",
           "exampleEn": "I want it tapered in the back. ",
@@ -65545,7 +65557,7 @@
         {
           "id": "word-n45-399",
           "primary": "行き方",
-          "reading": "いかた",
+          "reading": "いきかた / ゆきかた",
           "meaning": "가는 방법, 하는 방법",
           "exampleJa": "あなたに公園の行き方を教えましょう。",
           "exampleEn": "I will show you how to go to the park. ",
@@ -65608,7 +65620,7 @@
         {
           "id": "word-n45-401",
           "primary": "近く",
-          "reading": "ちか",
+          "reading": "ちかく",
           "meaning": "근처",
           "exampleJa": "クリスマスが近くなってきた。",
           "exampleEn": "Christmas is fast approaching. ",
@@ -65708,7 +65720,7 @@
         {
           "id": "word-n45-405",
           "primary": "渡る",
-          "reading": "わた",
+          "reading": "わたる",
           "meaning": "건너다",
           "exampleJa": "私達は氷の上を歩いて渡った。",
           "exampleEn": "We walked across the ice.",
@@ -65848,7 +65860,7 @@
         {
           "id": "word-n45-410",
           "primary": "進む",
-          "reading": "すす",
+          "reading": "すすむ",
           "meaning": "나아가다",
           "exampleJa": "あの時計は１分進んでいます。",
           "exampleEn": "That clock is one minute fast. ",
@@ -65875,7 +65887,7 @@
         {
           "id": "word-n45-411",
           "primary": "遠い",
-          "reading": "はや",
+          "reading": "はやい",
           "meaning": "빠르다",
           "exampleJa": "彼の家はここから遠くない。",
           "exampleEn": "His house is not far from here. ",
@@ -65929,7 +65941,7 @@
         {
           "id": "word-n45-413",
           "primary": "危ない",
-          "reading": "あぶ",
+          "reading": "あぶない",
           "meaning": "위험하다",
           "exampleJa": "彼は命が危ない。",
           "exampleEn": "His life is in danger. ",
@@ -65956,7 +65968,7 @@
         {
           "id": "word-n45-414",
           "primary": "遅れる",
-          "reading": "おく",
+          "reading": "おくれる",
           "meaning": "늦다, 늦어지다",
           "exampleJa": "アンディはけっしてデートにおくれたことはない。",
           "exampleEn": "Andy is never late for a date. ",
@@ -66127,7 +66139,7 @@
         {
           "id": "word-n45-420",
           "primary": "動き出す",
-          "reading": "うごだ",
+          "reading": "うごきだす",
           "meaning": "움직이기 시작하다",
           "exampleJa": "つり革につかまりなさい。電車がすぐ動き出すだろうから。",
           "exampleEn": "Hold on to the strap. The train will start to move soon. ",
@@ -66166,7 +66178,7 @@
         {
           "id": "word-n45-421",
           "primary": "乗り物",
-          "reading": "のもの",
+          "reading": "のりもの",
           "meaning": "탈 것, 교통수단",
           "exampleJa": "乗り物は子供向けである。",
           "exampleEn": "Rides in the cars are for kids. ",
@@ -66715,7 +66727,7 @@
         {
           "id": "word-n45-441",
           "primary": "静かだ",
-          "reading": "しず",
+          "reading": "しずかだ",
           "meaning": "조용하다",
           "exampleJa": "",
           "exampleEn": "",
@@ -66797,7 +66809,7 @@
         {
           "id": "word-n45-444",
           "primary": "答える",
-          "reading": "こた",
+          "reading": "こたえる",
           "meaning": "대답하다",
           "exampleJa": "「はい、ありません」とジョーダンさんは答えた。",
           "exampleEn": "\"\"\"No, I don't,\"\" said Mr Jordan. \"",
@@ -66847,7 +66859,7 @@
         {
           "id": "word-n45-446",
           "primary": "分かる",
-          "reading": "わ",
+          "reading": "わかる",
           "meaning": "알다, 이해하다",
           "exampleJa": "「博、君の気持ちは分かるよ」とマイクが言います。",
           "exampleEn": "\"\"\"I understand how you feel, Hiroshi,\"\" says Mike. \"",
@@ -66925,7 +66937,7 @@
         {
           "id": "word-n45-449",
           "primary": "話す",
-          "reading": "はな",
+          "reading": "はなす",
           "meaning": "이야기하다",
           "exampleJa": "彼はフランス語を話します。",
           "exampleEn": "He speaks French.",
@@ -66952,7 +66964,7 @@
         {
           "id": "word-n45-450",
           "primary": "願う",
-          "reading": "ねが",
+          "reading": "ねがう",
           "meaning": "바라다, 원하다",
           "exampleJa": "私達は平和を願う。",
           "exampleEn": "We long for peace. ",
@@ -66979,7 +66991,7 @@
         {
           "id": "word-n45-451",
           "primary": "祝う",
-          "reading": "いわ",
+          "reading": "いわう",
           "meaning": "축하하다",
           "exampleJa": "今年タイ航空は５０周年記念を祝います。",
           "exampleEn": "Thai Air celebrates its 50th anniversary this year. ",
@@ -67034,7 +67046,7 @@
         {
           "id": "word-n45-453",
           "primary": "書き方",
-          "reading": "かかた",
+          "reading": "かきかた",
           "meaning": "쓰는 법",
           "exampleJa": "彼は私に詩の書き方を教えてくれた。",
           "exampleEn": "He taught me how to write a poem. ",
@@ -67146,7 +67158,7 @@
         {
           "id": "word-n45-457",
           "primary": "男の人",
-          "reading": "おとこひと",
+          "reading": "おとこのひと",
           "meaning": "남자",
           "exampleJa": "",
           "exampleEn": "",
@@ -67231,7 +67243,7 @@
         {
           "id": "word-n45-460",
           "primary": "女の人",
-          "reading": "おんなひと",
+          "reading": "おんなのひと",
           "meaning": "여자",
           "exampleJa": "今１人の女の人が入っていきましたよ。",
           "exampleEn": "A woman is going into it now. ",
@@ -67289,7 +67301,7 @@
         {
           "id": "word-n45-462",
           "primary": "女の子",
-          "reading": "おんなこ",
+          "reading": "おんなのこ",
           "meaning": "여자 아이",
           "exampleJa": "その女のこ達は、とても忙しい。",
           "exampleEn": "The girls are as busy as bees. ",
@@ -67405,7 +67417,7 @@
         {
           "id": "word-n45-466",
           "primary": "お年寄り",
-          "reading": "としよ",
+          "reading": "おとしより",
           "meaning": "노인",
           "exampleJa": "",
           "exampleEn": "",
@@ -67540,7 +67552,7 @@
         {
           "id": "word-n45-471",
           "primary": "誘う",
-          "reading": "さそ",
+          "reading": "さそう",
           "meaning": "권유하다",
           "exampleJa": "彼らは僕をトランプに誘った。",
           "exampleEn": "They invited me to play cards.",
@@ -67665,7 +67677,7 @@
         {
           "id": "word-n45-476",
           "primary": "謝る",
-          "reading": "あやま",
+          "reading": "あやまる",
           "meaning": "사과하다",
           "exampleJa": "私は彼女に謝らなければならない。",
           "exampleEn": "I must make an apology to her. ",
@@ -67719,7 +67731,7 @@
         {
           "id": "word-n45-478",
           "primary": "お礼",
-          "reading": "れい",
+          "reading": "おれい",
           "meaning": "감사의 말, 사례",
           "exampleJa": "息子に成り代わってお礼を申し上げます。",
           "exampleEn": "I thank you on behalf of my son. ",
@@ -67746,7 +67758,7 @@
         {
           "id": "word-n45-479",
           "primary": "お礼を言う",
-          "reading": "れいい",
+          "reading": "おれいをいう",
           "meaning": "감사의 말을 말하다",
           "exampleJa": "",
           "exampleEn": "",
@@ -67962,7 +67974,7 @@
         {
           "id": "word-n45-487",
           "primary": "叱る",
-          "reading": "しか",
+          "reading": "しかる",
           "meaning": "꾸짖다, 혼내다",
           "exampleJa": "彼は不注意だと私をしかった。",
           "exampleEn": "He reproached me for carelessness.",
@@ -67989,7 +68001,7 @@
         {
           "id": "word-n45-488",
           "primary": "怒る",
-          "reading": "おこ",
+          "reading": "おこる",
           "meaning": "화내다, 꾸짖다",
           "exampleJa": "彼はそれほど怒っていた。",
           "exampleEn": "So angry was he.",
@@ -68063,7 +68075,7 @@
         {
           "id": "word-n45-491",
           "primary": "早く",
-          "reading": "はや",
+          "reading": "はやく",
           "meaning": "일찍이",
           "exampleJa": "あなたが早くよくなるように祈っています。",
           "exampleEn": "We are hoping for your quick recovery. ",
@@ -68136,7 +68148,7 @@
         {
           "id": "word-n45-494",
           "primary": "申し上げる",
-          "reading": "もうあ",
+          "reading": "もうしあげる",
           "meaning": "말씀드리다",
           "exampleJa": "皆様にご連絡申し上げます。",
           "exampleEn": "May I have your attention, please?",
@@ -68175,7 +68187,7 @@
         {
           "id": "word-n45-495",
           "primary": "声をかける",
-          "reading": "こえ",
+          "reading": "こえをかける",
           "meaning": "말을 걸다",
           "exampleJa": "",
           "exampleEn": "",
@@ -68283,7 +68295,7 @@
         {
           "id": "word-n45-499",
           "primary": "忙しい",
-          "reading": "いそが",
+          "reading": "いそがしい",
           "meaning": "바쁘다",
           "exampleJa": "あいつはのらりくらりの仕事にお忙しい事だ。",
           "exampleEn": "He is busy loafing on the job. ",
@@ -68311,7 +68323,7 @@
         {
           "id": "word-n45-500",
           "primary": "厳しい",
-          "reading": "きび",
+          "reading": "きびしい",
           "meaning": "엄하다, 엄격하다",
           "exampleJa": "彼は厳しい試練を受けた。",
           "exampleEn": "He was subjected to severe trials. ",
@@ -68411,7 +68423,7 @@
         {
           "id": "word-n45-504",
           "primary": "細かい",
-          "reading": "こま",
+          "reading": "こまかい",
           "meaning": "상세하다, 작다",
           "exampleJa": "必ずしも成長段階の子供たちを、あまり細かい神経をつかって扱うべきでない。",
           "exampleEn": "Growing children should not always be handled with kid gloves. ",
@@ -68438,7 +68450,7 @@
         {
           "id": "word-n45-505",
           "primary": "恥ずかしい",
-          "reading": "は",
+          "reading": "はずかしい",
           "meaning": "부끄럽다, 창피하다",
           "exampleJa": "彼らははずかしくてうなだれた。",
           "exampleEn": "They hung their heads in shame. ",
@@ -68565,7 +68577,7 @@
         {
           "id": "word-n45-510",
           "primary": "強い",
-          "reading": "つよ",
+          "reading": "つよい",
           "meaning": "강하다, 세다",
           "exampleJa": "より強く",
           "exampleEn": "Stronger.",
@@ -68615,7 +68627,7 @@
         {
           "id": "word-n45-512",
           "primary": "大人しい",
-          "reading": "おとな",
+          "reading": "おとなしい",
           "meaning": "조용하다, 얌전하다",
           "exampleJa": "牛は大きくて、おとなしく見えました。",
           "exampleEn": "The cows looked big and docile. ",
@@ -68682,7 +68694,7 @@
         {
           "id": "word-n45-514",
           "primary": "若い",
-          "reading": "わか",
+          "reading": "わかい",
           "meaning": "젊다",
           "exampleJa": "「彼女は若いですか」「はい」",
           "exampleEn": "\"\"\"Is she young?\"\" \"\"Yes, she is.\"\" \"",
@@ -68709,7 +68721,7 @@
         {
           "id": "word-n45-515",
           "primary": "明るい",
-          "reading": "あか",
+          "reading": "あかるい",
           "meaning": "밝다",
           "exampleJa": "君はなかなか地理に明るいな。",
           "exampleEn": "You're pretty good with the lay of the land. ",
@@ -68813,7 +68825,7 @@
         {
           "id": "word-n45-519",
           "primary": "一生懸命だ",
-          "reading": "いっしょうけんめい",
+          "reading": "いっしょうけんめいだ",
           "meaning": "열심히 하다",
           "exampleJa": "",
           "exampleEn": "",
@@ -68875,7 +68887,7 @@
         {
           "id": "word-n45-521",
           "primary": "上手だ",
-          "reading": "じょうず",
+          "reading": "じょうずだ",
           "meaning": "능숙하다, 잘하다",
           "exampleJa": "",
           "exampleEn": "",
@@ -68933,7 +68945,7 @@
         {
           "id": "word-n45-523",
           "primary": "暇だ",
-          "reading": "ひま",
+          "reading": "ひまだ",
           "meaning": "한가하다",
           "exampleJa": "",
           "exampleEn": "",
@@ -68960,7 +68972,7 @@
         {
           "id": "word-n45-524",
           "primary": "弱い",
-          "reading": "よわ",
+          "reading": "よわい",
           "meaning": "약하다",
           "exampleJa": "それを言われると弱いなあ。",
           "exampleEn": "That sure puts me on the spot. ",
@@ -69587,7 +69599,7 @@
         {
           "id": "word-n45-550",
           "primary": "重い",
-          "reading": "おも",
+          "reading": "おもい",
           "meaning": "무겁다",
           "exampleJa": "「彼の病気は重いのかな」「そうでないといいね」",
           "exampleEn": "\"\"\"Is he seriously ill?\"\" \"\"I hope not.\"\" \"",
@@ -69614,7 +69626,7 @@
         {
           "id": "word-n45-551",
           "primary": "太い",
-          "reading": "ふと",
+          "reading": "ふとい",
           "meaning": "굵다",
           "exampleJa": "彼は太い首をしている。",
           "exampleEn": "He has a thick neck. ",
@@ -69641,7 +69653,7 @@
         {
           "id": "word-n45-552",
           "primary": "小さい",
-          "reading": "ちい",
+          "reading": "ちいさい",
           "meaning": "작다, 여리다",
           "exampleJa": "その机はメグには小さすぎる。",
           "exampleEn": "The desk is too small for Meg. ",
@@ -69695,7 +69707,7 @@
         {
           "id": "word-n45-554",
           "primary": "美しい",
-          "reading": "うつく",
+          "reading": "うつくしい",
           "meaning": "아름답다",
           "exampleJa": "あなたは美しい蝶々です。",
           "exampleEn": "You are a beautiful butterfly. ",
@@ -69745,7 +69757,7 @@
         {
           "id": "word-n45-556",
           "primary": "大きい",
-          "reading": "おお",
+          "reading": "おおきい",
           "meaning": "크다",
           "exampleJa": "きみは何と大きい家を持っているんだろう。",
           "exampleEn": "What a big house you have! ",
@@ -69772,7 +69784,7 @@
         {
           "id": "word-n45-557",
           "primary": "長い",
-          "reading": "なが",
+          "reading": "ながい",
           "meaning": "길다",
           "exampleJa": "彼女が父親の死の悲しみから立ち直るには長い時間がかかるだろう。",
           "exampleEn": "It'll be a long time before she gets over her father's death. ",
@@ -69822,7 +69834,7 @@
         {
           "id": "word-n45-559",
           "primary": "素敵だ",
-          "reading": "すてき",
+          "reading": "すてきだ",
           "meaning": "멋지다",
           "exampleJa": "",
           "exampleEn": "",
@@ -69949,7 +69961,7 @@
         {
           "id": "word-n45-564",
           "primary": "太る",
-          "reading": "ふと",
+          "reading": "ふとる",
           "meaning": "살찌다",
           "exampleJa": "インシュリンを打つので彼女は太っていた。",
           "exampleEn": "The insulin was making her fat. ",
@@ -70115,7 +70127,7 @@
         {
           "id": "word-n45-570",
           "primary": "育てる",
-          "reading": "そだ",
+          "reading": "そだてる",
           "meaning": "양육하다, 기르다",
           "exampleJa": "叔父が今日の私を育ててくれた。",
           "exampleEn": "My uncle has made me what I am. ",
@@ -70207,11 +70219,11 @@
           "rubyParts": [
             {
               "base": "誕",
-              "ruby": "たん"
+              "ruby": "たんじょ"
             },
             {
               "base": "生",
-              "ruby": "じょう"
+              "ruby": "う"
             },
             {
               "base": "日",
@@ -70227,7 +70239,7 @@
         {
           "id": "word-n45-574",
           "primary": "生まれる",
-          "reading": "う",
+          "reading": "うまれる",
           "meaning": "태어나다",
           "exampleJa": "あなたは何座生まれですか。",
           "exampleEn": "What sign were you born under? ",
@@ -70281,7 +70293,7 @@
         {
           "id": "word-n45-576",
           "primary": "赤ん坊",
-          "reading": "あかぼう",
+          "reading": "あかんぼう",
           "meaning": "갓난아기",
           "exampleJa": "うちの赤ん坊は口をきくようになってきました。",
           "exampleEn": "Our baby is learning to speak. ",
@@ -70817,7 +70829,7 @@
         {
           "id": "word-n45-596",
           "primary": "置く",
-          "reading": "お",
+          "reading": "おく",
           "meaning": "두다",
           "exampleJa": "好きなとこへ置けよ。",
           "exampleEn": "Put it where you like.",
@@ -70948,7 +70960,7 @@
         {
           "id": "word-n45-601",
           "primary": "汚れる",
-          "reading": "よご",
+          "reading": "よごれる",
           "meaning": "더러워지다",
           "exampleJa": "このズボンは汚れている。",
           "exampleEn": "These trousers are dirty.",
@@ -70975,7 +70987,7 @@
         {
           "id": "word-n45-602",
           "primary": "汚い",
-          "reading": "きたな",
+          "reading": "きたない",
           "meaning": "더럽다",
           "exampleJa": "ジャックは私に汚いいたずらをした。",
           "exampleEn": "Jack played a dirty trick on me. ",
@@ -71002,7 +71014,7 @@
         {
           "id": "word-n45-603",
           "primary": "洗う",
-          "reading": "あら",
+          "reading": "あらう",
           "meaning": "씻다",
           "exampleJa": "そのバッグを洗うときは洗濯機に入れないでください。",
           "exampleEn": "When you wash the bag, please do not put it in the washing machine. ",
@@ -71534,7 +71546,7 @@
         {
           "id": "word-n45-623",
           "primary": "覚える",
-          "reading": "おぼ",
+          "reading": "おぼえる",
           "meaning": "외우다, 기억하다",
           "exampleJa": "彼は詩を覚えていた。",
           "exampleEn": "He was learning a poem.",
@@ -72013,7 +72025,7 @@
         {
           "id": "word-n45-640",
           "primary": "絵を描く",
-          "reading": "ええが",
+          "reading": "えをえがく",
           "meaning": "그림을 그리다",
           "exampleJa": "彼は３０歳になってから絵をかき始めた。",
           "exampleEn": "He didn't start to paint until he was thirty. ",
@@ -72079,7 +72091,7 @@
         {
           "id": "word-n45-642",
           "primary": "入る",
-          "reading": "はい",
+          "reading": "はいる",
           "meaning": "들어가다, 들어오다",
           "exampleJa": "彼女は部屋に入ってきた。",
           "exampleEn": "She came into the room.",
@@ -72187,7 +72199,7 @@
         {
           "id": "word-n45-646",
           "primary": "学ぶ",
-          "reading": "まな",
+          "reading": "まなぶ",
           "meaning": "배우다",
           "exampleJa": "いくつになっても学ぶことはある。",
           "exampleEn": "One is never too old to learn. ",
@@ -72214,7 +72226,7 @@
         {
           "id": "word-n45-647",
           "primary": "教える",
-          "reading": "おし",
+          "reading": "おしえる",
           "meaning": "알려주다, 가르치다",
           "exampleJa": "あなたの銀行口座を教えていただけますか。",
           "exampleEn": "May we know your bank account? ",
@@ -72241,7 +72253,7 @@
         {
           "id": "word-n45-648",
           "primary": "教わる",
-          "reading": "おそ",
+          "reading": "おそわる",
           "meaning": "가르침을 받다, 배우다",
           "exampleJa": "あなたが教わった事は間違っている。",
           "exampleEn": "What you were taught is wrong. ",
@@ -72573,7 +72585,7 @@
         {
           "id": "word-n45-660",
           "primary": "冬休み",
-          "reading": "ふゆやす",
+          "reading": "ふゆやすみ",
           "meaning": "겨울 방학",
           "exampleJa": "やがて冬休みも終わるだろう。",
           "exampleEn": "It will not be long before the winter vacation ends. ",
@@ -73145,7 +73157,7 @@
         {
           "id": "word-n45-680",
           "primary": "飾る",
-          "reading": "かざ",
+          "reading": "かざる",
           "meaning": "장식하다, 꾸미다",
           "exampleJa": "私たち自身が部屋を飾ったのです。",
           "exampleEn": "We decorated the room ourselves. ",
@@ -73172,7 +73184,7 @@
         {
           "id": "word-n45-681",
           "primary": "乾く",
-          "reading": "かわ",
+          "reading": "かわく",
           "meaning": "마르다, 건조하다",
           "exampleJa": "そのぬれたシャツはすぐに乾くだろう。",
           "exampleEn": "The wet shirt will soon dry up. ",
@@ -73199,7 +73211,7 @@
         {
           "id": "word-n45-682",
           "primary": "片づける",
-          "reading": "かた",
+          "reading": "かたづける",
           "meaning": "정리하다, 치우다",
           "exampleJa": "昨日の仕事を片づけるつもりです。",
           "exampleEn": "I will clean up yesterday's work.",
@@ -74191,7 +74203,7 @@
         {
           "id": "word-n45-718",
           "primary": "仕方ない",
-          "reading": "しかた",
+          "reading": "しかたない",
           "meaning": "어쩔 수 없다",
           "exampleJa": "私は行くより仕方なかった。",
           "exampleEn": "I had no choice but to go.",
@@ -74523,7 +74535,7 @@
         {
           "id": "word-n45-730",
           "primary": "習う",
-          "reading": "なら",
+          "reading": "ならう",
           "meaning": "배우다, 익히다",
           "exampleJa": "車の運転を習っています。",
           "exampleEn": "I have been learning to drive. ",
@@ -74550,7 +74562,7 @@
         {
           "id": "word-n45-731",
           "primary": "調べる",
-          "reading": "しら",
+          "reading": "しらべる",
           "meaning": "조사하다",
           "exampleJa": "ココの知能指数を調べるのは容易ではない。",
           "exampleEn": "Testing Koko's IQ is not easy. ",
@@ -74631,7 +74643,7 @@
         {
           "id": "word-n45-734",
           "primary": "急ぐ",
-          "reading": "いそ",
+          "reading": "いそぐ",
           "meaning": "서두르다",
           "exampleJa": "ニックはバスに間に合うように急いだ。",
           "exampleEn": "Nick hurried to catch the bus. ",
@@ -74658,7 +74670,7 @@
         {
           "id": "word-n45-735",
           "primary": "戻る",
-          "reading": "もど",
+          "reading": "もどる",
           "meaning": "되돌아가다, 되돌아오다",
           "exampleJa": "やってしまったことは元に戻らない。",
           "exampleEn": "What is done cannot be undone. ",
@@ -74739,7 +74751,7 @@
         {
           "id": "word-n45-738",
           "primary": "渡す",
-          "reading": "わた",
+          "reading": "わたす",
           "meaning": "건네주다",
           "exampleJa": "走者がリレーでバトンを渡さなければなりません。",
           "exampleEn": "A runner must pass the baton in a relay race. ",
@@ -74766,7 +74778,7 @@
         {
           "id": "word-n45-739",
           "primary": "運ぶ",
-          "reading": "はこ",
+          "reading": "はこぶ",
           "meaning": "나르다, 운반하다",
           "exampleJa": "その箱は重くて運べません。",
           "exampleEn": "The box is too heavy to carry. ",
@@ -74793,7 +74805,7 @@
         {
           "id": "word-n45-740",
           "primary": "選ぶ",
-          "reading": "えら",
+          "reading": "えらぶ",
           "meaning": "고르다, 선택하다",
           "exampleJa": "どうやって新鮮な魚をえらぶのですか。",
           "exampleEn": "How can I pick out fresh fish? ",
@@ -75009,7 +75021,7 @@
         {
           "id": "word-n45-748",
           "primary": "働く",
-          "reading": "はたら",
+          "reading": "はたらく",
           "meaning": "일하다",
           "exampleJa": "彼は年を取りすぎていて、もう働けなかった。",
           "exampleEn": "He was too old to work any more.",
@@ -75187,7 +75199,7 @@
         {
           "id": "word-n45-754",
           "primary": "例えば",
-          "reading": "たと",
+          "reading": "たとえば",
           "meaning": "예를 들면",
           "exampleJa": "たとえば、標本はいくつですか。",
           "exampleEn": "How many samples, for example? ",
@@ -75260,7 +75272,7 @@
         {
           "id": "word-n45-757",
           "primary": "考える",
-          "reading": "かんが",
+          "reading": "かんがえる",
           "meaning": "고안하다, 생각하다",
           "exampleJa": "あなたは家族の事を考えるべきです。",
           "exampleEn": "You must think of your family. ",
@@ -75287,7 +75299,7 @@
         {
           "id": "word-n45-758",
           "primary": "思う",
-          "reading": "おも",
+          "reading": "おもう",
           "meaning": "생각하다",
           "exampleJa": "私は父を大変誇りに思っている。",
           "exampleEn": "I'm very proud of my father.",
@@ -75314,7 +75326,7 @@
         {
           "id": "word-n45-759",
           "primary": "思い出す",
-          "reading": "おもだ",
+          "reading": "おもいだす",
           "meaning": "생각나다, 생각해 내다",
           "exampleJa": "あなたを見るとお兄さんを思い出します。",
           "exampleEn": "You remind me of your brother. ",
@@ -75353,7 +75365,7 @@
         {
           "id": "word-n45-760",
           "primary": "悩む",
-          "reading": "なや",
+          "reading": "なやむ",
           "meaning": "고민하다",
           "exampleJa": "悩んでも何の利益にもならない。",
           "exampleEn": "There is no profit in worrying. ",
@@ -75380,7 +75392,7 @@
         {
           "id": "word-n45-761",
           "primary": "欲しい",
-          "reading": "ほ",
+          "reading": "ほしい",
           "meaning": "원하다, 바라다",
           "exampleJa": "欲しいほうを獲れ。",
           "exampleEn": "Take whichever you like.",
@@ -75407,7 +75419,7 @@
         {
           "id": "word-n45-762",
           "primary": "考え方",
-          "reading": "かんがかた",
+          "reading": "かんがえかた",
           "meaning": "사고방식",
           "exampleJa": "彼らは時間に関しては厳格な考え方をしている。",
           "exampleEn": "They have a strict idea of time. ",
@@ -75442,7 +75454,7 @@
         {
           "id": "word-n45-763",
           "primary": "生き方",
-          "reading": "いかた",
+          "reading": "いきかた",
           "meaning": "생활 방식",
           "exampleJa": "人の死に方は、その人の生き方を見ればわかる。",
           "exampleEn": "As a man lives, so shall he die. ",
@@ -75527,7 +75539,7 @@
         {
           "id": "word-n45-766",
           "primary": "決める",
-          "reading": "き",
+          "reading": "きめる",
           "meaning": "결정하다, 정하다",
           "exampleJa": "そこに行くことに決めた。",
           "exampleEn": "I made up my mind to go there. ",
@@ -75581,7 +75593,7 @@
         {
           "id": "word-n45-768",
           "primary": "特別だ",
-          "reading": "とくべつ",
+          "reading": "とくべつだ",
           "meaning": "특별하다",
           "exampleJa": "",
           "exampleEn": "",
@@ -75612,7 +75624,7 @@
         {
           "id": "word-n45-769",
           "primary": "易しい",
-          "reading": "やさ",
+          "reading": "やさしい",
           "meaning": "쉽다",
           "exampleJa": "この仕事は決してやさしくない。",
           "exampleEn": "This work is by no means easy. ",
@@ -75639,7 +75651,7 @@
         {
           "id": "word-n45-770",
           "primary": "簡単だ",
-          "reading": "かんたん",
+          "reading": "かんたんだ",
           "meaning": "간단하다",
           "exampleJa": "",
           "exampleEn": "",
@@ -75670,7 +75682,7 @@
         {
           "id": "word-n45-771",
           "primary": "大事だ",
-          "reading": "だいじ",
+          "reading": "だいじだ",
           "meaning": "중요하다, 소중하다",
           "exampleJa": "",
           "exampleEn": "",
@@ -75701,7 +75713,7 @@
         {
           "id": "word-n45-772",
           "primary": "面白い",
-          "reading": "おもしろ",
+          "reading": "おもしろい",
           "meaning": "재미있다",
           "exampleJa": "これがあなたの面白い本ですか。",
           "exampleEn": "Is this your interesting book? ",
@@ -75732,7 +75744,7 @@
         {
           "id": "word-n45-773",
           "primary": "大丈夫だ",
-          "reading": "だいじょうぶ",
+          "reading": "だいじょうぶだ",
           "meaning": "괜찮다",
           "exampleJa": "",
           "exampleEn": "",
@@ -75817,7 +75829,7 @@
         {
           "id": "word-n45-776",
           "primary": "正しい",
-          "reading": "ただ",
+          "reading": "ただしい",
           "meaning": "맞다, 올바르다",
           "exampleJa": "これが正しいかどうか自信がない。",
           "exampleEn": "I'm not sure if this is correct. ",
@@ -75902,7 +75914,7 @@
         {
           "id": "word-n45-779",
           "primary": "同じだ",
-          "reading": "おな",
+          "reading": "おなじだ",
           "meaning": "같다",
           "exampleJa": "",
           "exampleEn": "",
@@ -75983,7 +75995,7 @@
         {
           "id": "word-n45-782",
           "primary": "違う",
-          "reading": "ちが",
+          "reading": "ちがう",
           "meaning": "다르다, 틀리다",
           "exampleJa": "残念ながらあなたとは意見がちがいます。",
           "exampleEn": "I'm sorry to differ with you.",
@@ -76033,7 +76045,7 @@
         {
           "id": "word-n45-784",
           "primary": "多い",
-          "reading": "おお",
+          "reading": "おおい",
           "meaning": "많다",
           "exampleJa": "おりものが多いのです。",
           "exampleEn": "I have a lot of discharge.",
@@ -76060,7 +76072,7 @@
         {
           "id": "word-n45-785",
           "primary": "明らかだ",
-          "reading": "あき",
+          "reading": "あきらかだ",
           "meaning": "분명하다",
           "exampleJa": "",
           "exampleEn": "",
@@ -76214,7 +76226,7 @@
         {
           "id": "word-n45-791",
           "primary": "十分だ",
-          "reading": "じゅうぶん",
+          "reading": "じゅうぶんだ",
           "meaning": "충분하다",
           "exampleJa": "",
           "exampleEn": "",
@@ -76318,7 +76330,7 @@
         {
           "id": "word-n45-795",
           "primary": "特に",
-          "reading": "とく",
+          "reading": "とくに",
           "meaning": "특히",
           "exampleJa": "私は音楽特にロックが大好きだ。",
           "exampleEn": "I love music, especially rock. ",
@@ -76368,7 +76380,7 @@
         {
           "id": "word-n45-797",
           "primary": "決して",
-          "reading": "けっ",
+          "reading": "けっして",
           "meaning": "결코",
           "exampleJa": "アンディはけっしてデートにおくれたことはない。",
           "exampleEn": "Andy is never late for a date. ",
@@ -76395,7 +76407,7 @@
         {
           "id": "word-n45-798",
           "primary": "少しも",
-          "reading": "すこ",
+          "reading": "すこしも",
           "meaning": "조금도",
           "exampleJa": "コックさんは少しもかけていない。",
           "exampleEn": "The cook hasn't put any on it. ",
@@ -76603,7 +76615,7 @@
         {
           "id": "word-n45-806",
           "primary": "残る",
-          "reading": "のこ",
+          "reading": "のこる",
           "meaning": "남다",
           "exampleJa": "もう３ページ残っている。",
           "exampleEn": "I have three more pages to go. ",
@@ -76746,7 +76758,7 @@
         {
           "id": "word-n45-811",
           "primary": "楽しい",
-          "reading": "たの",
+          "reading": "たのしい",
           "meaning": "즐겁다",
           "exampleJa": "あなたと一緒にいて楽しかった。",
           "exampleEn": "I really enjoyed your company. ",
@@ -76773,7 +76785,7 @@
         {
           "id": "word-n45-812",
           "primary": "楽しむ",
-          "reading": "たの",
+          "reading": "たのしむ",
           "meaning": "즐기다",
           "exampleJa": "グレイ先生は仕事を楽しんでいませんでした。",
           "exampleEn": "Mr Grey did not enjoy his job. ",
@@ -76800,7 +76812,7 @@
         {
           "id": "word-n45-813",
           "primary": "笑う",
-          "reading": "わら",
+          "reading": "わらう",
           "meaning": "웃다",
           "exampleJa": "彼のジョークで笑った。",
           "exampleEn": "His joke killed me.",
@@ -76827,7 +76839,7 @@
         {
           "id": "word-n45-814",
           "primary": "喜ぶ",
-          "reading": "よろこ",
+          "reading": "よろこぶ",
           "meaning": "기뻐하다, 즐거워하다",
           "exampleJa": "喜んであなたのお手伝いをします。",
           "exampleEn": "I will be pleased to help you. ",
@@ -76881,7 +76893,7 @@
         {
           "id": "word-n45-816",
           "primary": "驚く",
-          "reading": "おどろ",
+          "reading": "おどろく",
           "meaning": "놀라다",
           "exampleJa": "その銃声に我々はあっと驚いた。",
           "exampleEn": "We are astonished at the shot. ",
@@ -76908,7 +76920,7 @@
         {
           "id": "word-n45-817",
           "primary": "結構だ",
-          "reading": "けっこう",
+          "reading": "けっこうだ",
           "meaning": "훌륭하다",
           "exampleJa": "",
           "exampleEn": "",
@@ -76962,7 +76974,7 @@
         {
           "id": "word-n45-819",
           "primary": "嬉しい",
-          "reading": "うれ",
+          "reading": "うれしい",
           "meaning": "기쁘다",
           "exampleJa": "あなたに再会できてうれしい。",
           "exampleEn": "I am pleased to see you again. ",
@@ -77085,7 +77097,7 @@
         {
           "id": "word-n45-824",
           "primary": "不便だ",
-          "reading": "ふべん",
+          "reading": "ふべんだ",
           "meaning": "불편하다",
           "exampleJa": "",
           "exampleEn": "",
@@ -77116,7 +77128,7 @@
         {
           "id": "word-n45-825",
           "primary": "苦い",
-          "reading": "にが",
+          "reading": "にがい",
           "meaning": "쓰다, 슬프다",
           "exampleJa": "私は苦いものが好きだ。",
           "exampleEn": "I have a fancy for bitter things. ",
@@ -77143,7 +77155,7 @@
         {
           "id": "word-n45-826",
           "primary": "残念だ",
-          "reading": "ざんねん",
+          "reading": "ざんねんだ",
           "meaning": "유감이다, 아쉽다",
           "exampleJa": "",
           "exampleEn": "",
@@ -77174,7 +77186,7 @@
         {
           "id": "word-n45-827",
           "primary": "心配だ",
-          "reading": "しんぱい",
+          "reading": "しんぱいだ",
           "meaning": "걱정이다",
           "exampleJa": "",
           "exampleEn": "",
@@ -77205,7 +77217,7 @@
         {
           "id": "word-n45-828",
           "primary": "悲しい",
-          "reading": "かな",
+          "reading": "かなしい",
           "meaning": "슬프다",
           "exampleJa": "そんな悲しい目で見ないで。",
           "exampleEn": "Don't give me such a sad look. ",
@@ -77232,7 +77244,7 @@
         {
           "id": "word-n45-829",
           "primary": "悪い",
-          "reading": "わる",
+          "reading": "わるい",
           "meaning": "나쁘다",
           "exampleJa": "どこが悪いのですか。",
           "exampleEn": "What's wrong with me?",
@@ -77259,7 +77271,7 @@
         {
           "id": "word-n45-830",
           "primary": "嫌だ",
-          "reading": "いや",
+          "reading": "いやだ",
           "meaning": "싫다",
           "exampleJa": "",
           "exampleEn": "",
@@ -77286,7 +77298,7 @@
         {
           "id": "word-n45-831",
           "primary": "嫌いだ",
-          "reading": "きら",
+          "reading": "きらいだ",
           "meaning": "싫어하다",
           "exampleJa": "",
           "exampleEn": "",
@@ -77409,7 +77421,7 @@
         {
           "id": "word-n45-836",
           "primary": "元気だ",
-          "reading": "げんき",
+          "reading": "げんきだ",
           "meaning": "기운 있다, 건강하다",
           "exampleJa": "",
           "exampleEn": "",
@@ -77540,7 +77552,7 @@
         {
           "id": "word-n45-841",
           "primary": "危険だ",
-          "reading": "きけん",
+          "reading": "きけんだ",
           "meaning": "위험하다",
           "exampleJa": "",
           "exampleEn": "",
@@ -77598,7 +77610,7 @@
         {
           "id": "word-n45-843",
           "primary": "痛む",
-          "reading": "いた",
+          "reading": "いたむ",
           "meaning": "아프다",
           "exampleJa": "彼はいま歯が痛むのでよくかむことができない。",
           "exampleEn": "He can't chew well, because he has a toothache now. ",
@@ -77625,7 +77637,7 @@
         {
           "id": "word-n45-844",
           "primary": "続ける",
-          "reading": "つづ",
+          "reading": "つづける",
           "meaning": "계속하다",
           "exampleJa": "ケンはその歌を歌い続けた。",
           "exampleEn": "Ken kept on singing that song. ",
@@ -77652,7 +77664,7 @@
         {
           "id": "word-n45-845",
           "primary": "倒れる",
-          "reading": "たお",
+          "reading": "たおれる",
           "meaning": "쓰러지다",
           "exampleJa": "内閣は倒れるだろうということだ。",
           "exampleEn": "They say that the cabinet will fall. ",
@@ -77706,7 +77718,7 @@
         {
           "id": "word-n45-847",
           "primary": "疲れる",
-          "reading": "つか",
+          "reading": "つかれる",
           "meaning": "지치다, 피곤해지다 ",
           "exampleJa": "目が疲れました。",
           "exampleEn": "My eyes are tired.",
@@ -77856,7 +77868,7 @@
         {
           "id": "word-n45-853",
           "primary": "お腹",
-          "reading": "なか",
+          "reading": "おなか",
           "meaning": "배 (신체 부위)",
           "exampleJa": "いいえ、結構です。お腹が一杯ですから。",
           "exampleEn": "No, thank you. I've had enough. ",
@@ -77883,7 +77895,7 @@
         {
           "id": "word-n45-854",
           "primary": "生む",
-          "reading": "う",
+          "reading": "うむ",
           "meaning": "낳다",
           "exampleJa": "彼女は子供を５人産んだ。",
           "exampleEn": "She has borne five children.",
@@ -78126,7 +78138,7 @@
         {
           "id": "word-n45-863",
           "primary": "治す",
-          "reading": "なお",
+          "reading": "なおす",
           "meaning": "치료하다, 고치다",
           "exampleJa": "私は風邪を治す事ができない。",
           "exampleEn": "I can't get rid of this cold.",
@@ -78153,7 +78165,7 @@
         {
           "id": "word-n45-864",
           "primary": "治る",
-          "reading": "なお",
+          "reading": "なおる",
           "meaning": "낫다, 치료되다",
           "exampleJa": "私は病気が治った。",
           "exampleEn": "I recovered from my illness.",
@@ -78265,7 +78277,7 @@
         {
           "id": "word-n45-868",
           "primary": "気をつける",
-          "reading": "き",
+          "reading": "きをつける",
           "meaning": "주의하다",
           "exampleJa": "静かにするように気をつけなさい。",
           "exampleEn": "See to it that you keep quiet. ",
@@ -78292,7 +78304,7 @@
         {
           "id": "word-n45-869",
           "primary": "薬を飲む",
-          "reading": "くすりの",
+          "reading": "くすりをのむ",
           "meaning": "약을 먹다",
           "exampleJa": "",
           "exampleEn": "",
@@ -78331,7 +78343,7 @@
         {
           "id": "word-n45-870",
           "primary": "元気になる",
-          "reading": "げんき",
+          "reading": "げんきになる",
           "meaning": "건강해지다",
           "exampleJa": "",
           "exampleEn": "",
@@ -78658,7 +78670,7 @@
         {
           "id": "word-n45-883",
           "primary": "触る",
-          "reading": "さわ",
+          "reading": "さわる",
           "meaning": "만지다, 닿다",
           "exampleJa": "触らぬ神に祟りなし。",
           "exampleEn": "Let sleeping dogs lie. ",
@@ -79146,7 +79158,7 @@
         {
           "id": "word-n45-903",
           "primary": "険しい",
-          "reading": "けわ",
+          "reading": "けわしい",
           "meaning": "험하다",
           "exampleJa": "彼らは険しい北面を登った。",
           "exampleEn": "They climbed the rugged north face. ",
@@ -79227,7 +79239,7 @@
         {
           "id": "word-n45-906",
           "primary": "深い",
-          "reading": "ふか",
+          "reading": "ふかい",
           "meaning": "깊다",
           "exampleJa": "その湖の深さはどのくらいですか。",
           "exampleEn": "What is the depth of the lake? ",
@@ -79254,7 +79266,7 @@
         {
           "id": "word-n45-907",
           "primary": "浅い",
-          "reading": "あさ",
+          "reading": "あさい",
           "meaning": "얕다",
           "exampleJa": "この川はあそこで浅くなっている。",
           "exampleEn": "This river becomes shallow at that point. ",
@@ -79477,7 +79489,7 @@
         {
           "id": "word-n45-916",
           "primary": "光る",
-          "reading": "ひか",
+          "reading": "ひかる",
           "meaning": "빛나다",
           "exampleJa": "上部前方で何かが光っている。",
           "exampleEn": "Something is flashing up ahead. ",
@@ -79504,7 +79516,7 @@
         {
           "id": "word-n45-917",
           "primary": "大切だ",
-          "reading": "たいせつ",
+          "reading": "たいせつだ",
           "meaning": "중요하다, 소중하다",
           "exampleJa": "",
           "exampleEn": "",
@@ -79535,7 +79547,7 @@
         {
           "id": "word-n45-918",
           "primary": "豊かだ",
-          "reading": "ゆた",
+          "reading": "ゆたかだ",
           "meaning": "풍부하다",
           "exampleJa": "",
           "exampleEn": "",
@@ -79562,7 +79574,7 @@
         {
           "id": "word-n45-919",
           "primary": "使い捨て",
-          "reading": "つかす",
+          "reading": "つかいすて",
           "meaning": "일회용",
           "exampleJa": "使い捨てスポイトはどうか。",
           "exampleEn": "How about using disposable droppers? ",
@@ -79717,7 +79729,7 @@
         {
           "id": "word-n45-924",
           "primary": "祭り",
-          "reading": "まつ",
+          "reading": "まつり",
           "meaning": "축제",
           "exampleJa": "その祭りはつまらないどころではありませんでした。",
           "exampleEn": "The festival was far from dull. ",
@@ -79744,7 +79756,7 @@
         {
           "id": "word-n45-925",
           "primary": "お正月",
-          "reading": "しょうがつ",
+          "reading": "おしょうがつ",
           "meaning": "설, 정월",
           "exampleJa": "",
           "exampleEn": "",
@@ -79995,7 +80007,7 @@
         {
           "id": "word-n45-934",
           "primary": "迎える",
-          "reading": "むか",
+          "reading": "むかえる",
           "meaning": "맞이하다",
           "exampleJa": "車で迎えに来て下さい。",
           "exampleEn": "Please come to pick me up.",
@@ -80045,7 +80057,7 @@
         {
           "id": "word-n45-936",
           "primary": "祈る",
-          "reading": "いの",
+          "reading": "いのる",
           "meaning": "빌다, 기원하다",
           "exampleJa": "早くよくなられるように祈っています。",
           "exampleEn": "I hope you will get well soon. ",
@@ -80435,7 +80447,7 @@
         {
           "id": "word-n45-950",
           "primary": "歌う",
-          "reading": "うた",
+          "reading": "うたう",
           "meaning": "노래하다",
           "exampleJa": "彼は歌い始めた。",
           "exampleEn": "He started singing.",
@@ -80593,7 +80605,7 @@
         {
           "id": "word-n45-956",
           "primary": "休む",
-          "reading": "やす",
+          "reading": "やすむ",
           "meaning": "쉬다",
           "exampleJa": "彼はよく会合を休む。",
           "exampleEn": "He often absents himself from meetings. ",
@@ -80620,7 +80632,7 @@
         {
           "id": "word-n45-957",
           "primary": "古い",
-          "reading": "ふる",
+          "reading": "ふるい",
           "meaning": "낡다, 오래되다",
           "exampleJa": "彼はその古い写真を大事にしている。",
           "exampleEn": "He cherishes the old photographs.",
@@ -81071,7 +81083,7 @@
         {
           "id": "word-n45-974",
           "primary": "通う",
-          "reading": "かよ",
+          "reading": "かよう",
           "meaning": "다니다",
           "exampleJa": "下品極まる盛り場に通いつける。",
           "exampleEn": "He haunts the lowest resorts.",
@@ -81202,7 +81214,7 @@
         {
           "id": "word-n45-979",
           "primary": "集める",
-          "reading": "あつ",
+          "reading": "あつめる",
           "meaning": "모으다",
           "exampleJa": "私の趣味は切手を集めることだ。",
           "exampleEn": "My hobby is collecting stamps. ",
@@ -81522,7 +81534,7 @@
         {
           "id": "word-n45-991",
           "primary": "自由だ",
-          "reading": "じゆう",
+          "reading": "じゆうだ",
           "meaning": "자유롭다",
           "exampleJa": "",
           "exampleEn": "",
@@ -81630,7 +81642,7 @@
         {
           "id": "word-n45-995",
           "primary": "お土産",
-          "reading": "みやげ",
+          "reading": "おみやげ",
           "meaning": "기념품, 선물",
           "exampleJa": "これはお土産です。",
           "exampleEn": "This is a little gift for you. ",
@@ -81688,7 +81700,7 @@
         {
           "id": "word-n45-997",
           "primary": "集まる",
-          "reading": "あつ",
+          "reading": "あつまる",
           "meaning": "모이다",
           "exampleJa": "私達は先生の前に集まった。",
           "exampleEn": "We gathered around the teacher. ",
@@ -81804,7 +81816,7 @@
         {
           "id": "word-n45-1001",
           "primary": "お弁当",
-          "reading": "べんとう",
+          "reading": "おべんとう",
           "meaning": "도시락",
           "exampleJa": "彼は今日、お弁当を持って来た。",
           "exampleEn": "He brought his lunch today. ",
@@ -81835,7 +81847,7 @@
         {
           "id": "word-n45-1002",
           "primary": "忘れる",
-          "reading": "わす",
+          "reading": "わすれる",
           "meaning": "잊다, 잊고 오다",
           "exampleJa": "とても物心を忘れやすい。",
           "exampleEn": "He's very forgetful of things. ",
@@ -82020,7 +82032,7 @@
         {
           "id": "word-n45-1009",
           "primary": "通る",
-          "reading": "とお",
+          "reading": "とおる",
           "meaning": "통하다, 지나다",
           "exampleJa": "私たちはしかの通ったあとをたどった。",
           "exampleEn": "We followed the deer's tracks. ",
@@ -82101,7 +82113,7 @@
         {
           "id": "word-n45-1012",
           "primary": "帰る",
-          "reading": "かえ",
+          "reading": "かえる",
           "meaning": "돌아가다, 돌아오다",
           "exampleJa": "私はすぐに帰ってくる。",
           "exampleEn": "I'll come back soon.",
@@ -82128,7 +82140,7 @@
         {
           "id": "word-n45-1013",
           "primary": "連れる",
-          "reading": "つ",
+          "reading": "つれる",
           "meaning": "데리고 가다(오다), 동반하다",
           "exampleJa": "でもさ、母を連れて行かなくては行けないんだ。",
           "exampleEn": "But, I have to take my mother. ",
@@ -82213,7 +82225,7 @@
         {
           "id": "word-n45-1016",
           "primary": "動く",
-          "reading": "うご",
+          "reading": "うごく",
           "meaning": "움직이다",
           "exampleJa": "あなたの新しい車は調子よく動いていますか。",
           "exampleEn": "Is your new car behaving well? ",
@@ -82286,7 +82298,7 @@
         {
           "id": "word-n45-1019",
           "primary": "登る",
-          "reading": "のぼ",
+          "reading": "のぼる",
           "meaning": "오르다",
           "exampleJa": "日が昇っていく。",
           "exampleEn": "The sun is rising.",
@@ -82313,7 +82325,7 @@
         {
           "id": "word-n45-1020",
           "primary": "踊る",
-          "reading": "おど",
+          "reading": "おどる",
           "meaning": "춤추다",
           "exampleJa": "なぜ彼と踊らなかったの？",
           "exampleEn": "Why didn't you dance with him? ",
@@ -82367,7 +82379,7 @@
         {
           "id": "word-n45-1022",
           "primary": "歩く",
-          "reading": "ある",
+          "reading": "あるく",
           "meaning": "걷다",
           "exampleJa": "あなたは歩いて行きますか。それともバスで行きますか。",
           "exampleEn": "Will you go on foot or by bus? ",
@@ -82394,7 +82406,7 @@
         {
           "id": "word-n45-1023",
           "primary": "走る",
-          "reading": "はし",
+          "reading": "はしる",
           "meaning": "달리다, 뛰다",
           "exampleJa": "編集者はささいな事実を読者に提供するのに極端に走ることがよくある。",
           "exampleEn": "Editors often go to extremes in providing their readers with unimportant facts. ",
@@ -82421,7 +82433,7 @@
         {
           "id": "word-n45-1024",
           "primary": "走り出す",
-          "reading": "はしだ",
+          "reading": "はしりだす",
           "meaning": "뛰기 시작하다",
           "exampleJa": "おまえは嵐の中へ走り出した。",
           "exampleEn": "You've run into a storm. ",
@@ -82483,7 +82495,7 @@
         {
           "id": "word-n45-1026",
           "primary": "泳ぐ",
-          "reading": "およ",
+          "reading": "およぐ",
           "meaning": "헤엄치다",
           "exampleJa": "あなたは、泳いで川を渡ることができますのか。",
           "exampleEn": "Can you swim across the river? ",
@@ -82649,7 +82661,7 @@
         {
           "id": "word-n45-1032",
           "primary": "硬い",
-          "reading": "かた",
+          "reading": "かたい",
           "meaning": "딱딱하다, 단단하다",
           "exampleJa": "彼は頭が固い。",
           "exampleEn": "He is thick-headed.",
@@ -82734,7 +82746,7 @@
         {
           "id": "word-n45-1035",
           "primary": "戻す",
-          "reading": "もど",
+          "reading": "もどす",
           "meaning": "되돌리다, 돌려놓다",
           "exampleJa": "その本を棚に戻しておきなさい。",
           "exampleEn": "Put the book back on the shelf. ",
@@ -82761,7 +82773,7 @@
         {
           "id": "word-n45-1036",
           "primary": "代わりに",
-          "reading": "か",
+          "reading": "かわりに",
           "meaning": "대신에",
           "exampleJa": "２階に私のかわりにもっていってください。",
           "exampleEn": "Would you mind carrying it up the stairs for me? ",
@@ -82815,7 +82827,7 @@
         {
           "id": "word-n45-1038",
           "primary": "非常に",
-          "reading": "ひじょう",
+          "reading": "ひじょうに",
           "meaning": "매우",
           "exampleJa": "その頃、私は非常に貧乏だった。",
           "exampleEn": "I was very poor in those days. ",
@@ -82846,7 +82858,7 @@
         {
           "id": "word-n45-1039",
           "primary": "適当だ",
-          "reading": "てきとう",
+          "reading": "てきとうだ",
           "meaning": "적당하다",
           "exampleJa": "",
           "exampleEn": "",
@@ -82877,7 +82889,7 @@
         {
           "id": "word-n45-1040",
           "primary": "負ける",
-          "reading": "ま",
+          "reading": "まける",
           "meaning": "지다, 패배하다",
           "exampleJa": "３対０で彼には負けています。",
           "exampleEn": "He's beating me, three to zip. ",
@@ -82989,7 +83001,7 @@
         {
           "id": "word-n45-1044",
           "primary": "汗をかく",
-          "reading": "あせ",
+          "reading": "あせをかく",
           "meaning": "땀을 흘리다",
           "exampleJa": "激しい運動をすると汗をかきます。",
           "exampleEn": "Vigorous exercise makes you sweat. ",
@@ -83097,7 +83109,7 @@
         {
           "id": "word-n45-1048",
           "primary": "使う",
-          "reading": "つか",
+          "reading": "つかう",
           "meaning": "사용하다, 쓰다",
           "exampleJa": "アジア諸国などから出稼ぎにきた外国人をメイドとして使うのが常識のようになっている。",
           "exampleEn": "It has become common practise to employ foreigners working abroad from Asian countries as maids. ",
@@ -83124,7 +83136,7 @@
         {
           "id": "word-n45-1049",
           "primary": "作り方",
-          "reading": "つくかた",
+          "reading": "つくりかた",
           "meaning": "만드는 법",
           "exampleJa": "ケイトはケーキの作り方を知っています。",
           "exampleEn": "Kate knows how to make a cake. ",
@@ -83236,7 +83248,7 @@
         {
           "id": "word-n45-1053",
           "primary": "丈夫だ",
-          "reading": "じょうぶ",
+          "reading": "じょうぶだ",
           "meaning": "튼튼하다",
           "exampleJa": "",
           "exampleEn": "",
@@ -83267,7 +83279,7 @@
         {
           "id": "word-n45-1054",
           "primary": "軽い",
-          "reading": "かる",
+          "reading": "かるい",
           "meaning": "가볍다",
           "exampleJa": "私は気が短いし、口も軽い男だ。",
           "exampleEn": "I'm short-tempered, and a loose-tongued man. ",
@@ -83568,7 +83580,7 @@
         {
           "id": "word-n45-1065",
           "primary": "壊れる",
-          "reading": "こわ",
+          "reading": "こわれる",
           "meaning": "고장 나다, 부서지다",
           "exampleJa": "このイヤホンは壊れています。",
           "exampleEn": "These earphones don't work.",
@@ -83595,7 +83607,7 @@
         {
           "id": "word-n45-1066",
           "primary": "直す",
-          "reading": "なお",
+          "reading": "なおす",
           "meaning": "고치다, 수리하다",
           "exampleJa": "時計の時刻を直して。",
           "exampleEn": "Put the clock right.",
@@ -83707,7 +83719,7 @@
         {
           "id": "word-n45-1070",
           "primary": "比べる",
-          "reading": "くら",
+          "reading": "くらべる",
           "meaning": "비교하다",
           "exampleJa": "周りの人達と比べると彼は本当に幸せそうだった。",
           "exampleEn": "He looked quite happy in contrast with those around him. ",
@@ -83869,7 +83881,7 @@
         {
           "id": "word-n45-1076",
           "primary": "写す",
-          "reading": "うつ",
+          "reading": "うつす",
           "meaning": "베끼다, (사진을) 찍다",
           "exampleJa": "このページをノートに写しておきなさい。",
           "exampleEn": "Copy this page in your notebook.",
@@ -83896,7 +83908,7 @@
         {
           "id": "word-n45-1077",
           "primary": "写る",
-          "reading": "うつ",
+          "reading": "うつる",
           "meaning": "(사진에) 찍히다",
           "exampleJa": "私は鏡に写っている自分を見つめているのです。",
           "exampleEn": "I'm staring at myself in a mirror. ",
@@ -84185,7 +84197,7 @@
         {
           "id": "word-n45-1088",
           "primary": "少ない",
-          "reading": "すく",
+          "reading": "すくない",
           "meaning": "적다",
           "exampleJa": "少ない収入をできる限りいかしたい。",
           "exampleEn": "Make the best of your small income.",
@@ -85134,7 +85146,7 @@
         {
           "id": "word-n45-1123",
           "primary": "貸出し",
-          "reading": "かしだ",
+          "reading": "かしだし",
           "meaning": "대출",
           "exampleJa": "銀行は産業向け貸出を減らしている。",
           "exampleEn": "Banks are cutting lending to industrial borrowers. ",
@@ -85338,7 +85350,7 @@
         {
           "id": "word-n45-1131",
           "primary": "便利だ",
-          "reading": "べんり",
+          "reading": "べんりだ",
           "meaning": "편리하다",
           "exampleJa": "",
           "exampleEn": "",
@@ -85473,7 +85485,7 @@
         {
           "id": "word-n45-1136",
           "primary": "難しい",
-          "reading": "むずか",
+          "reading": "むずかしい",
           "meaning": "어렵다",
           "exampleJa": "難しい状況です。",
           "exampleEn": "This is a difficult situation.",
@@ -86301,7 +86313,7 @@
         {
           "id": "word-n3-14",
           "primary": "後で",
-          "reading": "あと",
+          "reading": "あとで",
           "meaning": "나중에",
           "exampleJa": "あとで起こったことはなお悪かった。",
           "exampleEn": "What followed was still worse.  ",
@@ -86564,7 +86576,7 @@
         {
           "id": "word-n3-24",
           "primary": "この頃",
-          "reading": "ごろ",
+          "reading": "このごろ",
           "meaning": "요즘",
           "exampleJa": "私はこの頃とても忙しいのです。",
           "exampleEn": "I am very busy these days.",
@@ -86903,7 +86915,7 @@
         {
           "id": "word-n3-37",
           "primary": "程度",
-          "reading": "程度",
+          "reading": "ていど",
           "meaning": "정도",
           "exampleJa": "この程度のお金じゃ長くは持たないだろう。",
           "exampleEn": "This sum of money won't go far.  ",
@@ -86913,8 +86925,12 @@
           "sourceTag": "\"N5-N3단어장::#N3 N5-N3단어장::Day16\"",
           "rubyParts": [
             {
-              "base": "程度",
-              "ruby": "程度"
+              "base": "程",
+              "ruby": "てい"
+            },
+            {
+              "base": "度",
+              "ruby": "ど"
             }
           ],
           "tags": [
@@ -86926,7 +86942,7 @@
         {
           "id": "word-n3-38",
           "primary": "余る",
-          "reading": "あま",
+          "reading": "あまる",
           "meaning": "남다, 넘치다",
           "exampleJa": "それは身にあまる光栄です。",
           "exampleEn": "The honor is more than I deserve.  ",
@@ -87157,7 +87173,7 @@
         {
           "id": "word-n3-47",
           "primary": "親しい",
-          "reading": "した",
+          "reading": "したしい",
           "meaning": "친하다, 가깝다",
           "exampleJa": "ジョンは私の親しい友人です。",
           "exampleEn": "John is a good friend of mine.  ",
@@ -87581,7 +87597,7 @@
         {
           "id": "word-n3-63",
           "primary": "お互いに",
-          "reading": "たが",
+          "reading": "おたがいに",
           "meaning": "서로",
           "exampleJa": "ジョンとメアリーはお互いに愛し合っていました。",
           "exampleEn": "John and Mary loved each other.  ",
@@ -87840,7 +87856,7 @@
         {
           "id": "word-n3-72",
           "primary": "深まる",
-          "reading": "ふか",
+          "reading": "ふかまる",
           "meaning": "깊어지다",
           "exampleJa": "夕闇が次第に深まっていった。",
           "exampleEn": "The twilight merged into darkness.  ",
@@ -87867,7 +87883,7 @@
         {
           "id": "word-n3-73",
           "primary": "別れる",
-          "reading": "わか",
+          "reading": "わかれる",
           "meaning": "헤어지다",
           "exampleJa": "あなたが彼女と別れるのは賢明である。",
           "exampleEn": "You will do well to leave her.  ",
@@ -87894,7 +87910,7 @@
         {
           "id": "word-n3-74",
           "primary": "申し訳ない",
-          "reading": "もうわけ",
+          "reading": "もうしわけない",
           "meaning": "미안하다, 죄송하다",
           "exampleJa": "申し訳ないけど、できません。",
           "exampleEn": "I'm sorry, but it's impossible.  ",
@@ -88511,7 +88527,7 @@
         {
           "id": "word-n3-97",
           "primary": "助かる",
-          "reading": "たす",
+          "reading": "たすかる",
           "meaning": "도움이 되다, 살아나다",
           "exampleJa": "もう助からないものと観念した。",
           "exampleEn": "I gave up all hope of survival.  ",
@@ -89765,7 +89781,7 @@
         {
           "id": "word-n3-143",
           "primary": "扱う",
-          "reading": "あつか",
+          "reading": "あつかう",
           "meaning": "취급하다, 다루다",
           "exampleJa": "この問題は私が扱います。",
           "exampleEn": "I will deal with this problem.  ",
@@ -91481,7 +91497,7 @@
         {
           "id": "word-n3-207",
           "primary": "全て",
-          "reading": "すべ",
+          "reading": "すべて",
           "meaning": "모두, 모든, 모조리",
           "exampleJa": "この卵はすべて新しいとはかぎらない。",
           "exampleEn": "Not all of these eggs are fresh.  ",
@@ -91535,7 +91551,7 @@
         {
           "id": "word-n3-209",
           "primary": "詳しい",
-          "reading": "くわ",
+          "reading": "くわしい",
           "meaning": "상세하다, 정통하다",
           "exampleJa": "このあたりはお詳しいですか。",
           "exampleEn": "Are you familiar with this area?  ",
@@ -91759,7 +91775,7 @@
         {
           "id": "word-n3-217",
           "primary": "持ち帰る",
-          "reading": "もかえ",
+          "reading": "もちかえる",
           "meaning": "테이크아웃하다, 가지고 돌아가다",
           "exampleJa": "ミツバチは、においのサンプルを巣に持ち帰ることによって食糧のありかを伝える。",
           "exampleEn": "Bees communicate the location of food by carrying odor samples back to the hive.  ",
@@ -91856,7 +91872,7 @@
         {
           "id": "word-n3-220",
           "primary": "味わう",
-          "reading": "あじ",
+          "reading": "あじわう",
           "meaning": "맛보다, 감상하다",
           "exampleJa": "あのテーマパークでスリルを味わった。",
           "exampleEn": "We had a thrilling time at the theme park.  ",
@@ -91883,7 +91899,7 @@
         {
           "id": "word-n3-221",
           "primary": "盛んだ",
-          "reading": "さか",
+          "reading": "さかんだ",
           "meaning": "활발하다, 번성하다",
           "exampleJa": "",
           "exampleEn": "",
@@ -92393,7 +92409,7 @@
         {
           "id": "word-n3-239",
           "primary": "定期的だ",
-          "reading": "ていきてき",
+          "reading": "ていきてきだ",
           "meaning": "정기적이다",
           "exampleJa": "",
           "exampleEn": "",
@@ -92657,7 +92673,7 @@
         {
           "id": "word-n3-248",
           "primary": "具体的だ",
-          "reading": "ぐたいてき",
+          "reading": "ぐたいてきだ",
           "meaning": "구체적이다",
           "exampleJa": "",
           "exampleEn": "",
@@ -92800,7 +92816,7 @@
         {
           "id": "word-n3-253",
           "primary": "除く",
-          "reading": "のぞ",
+          "reading": "のぞく",
           "meaning": "제외하다",
           "exampleJa": "彼は日曜日を除いて毎日働いている。",
           "exampleEn": "He works every day save Sundays.  ",
@@ -92827,7 +92843,7 @@
         {
           "id": "word-n3-254",
           "primary": "含む",
-          "reading": "ふく",
+          "reading": "ふくむ",
           "meaning": "포함하다",
           "exampleJa": "費用には朝食も含まれている。",
           "exampleEn": "The breakfast is included in the charge.",
@@ -92997,7 +93013,7 @@
         {
           "id": "word-n3-260",
           "primary": "配る",
-          "reading": "くば",
+          "reading": "くばる",
           "meaning": "나누어 주다",
           "exampleJa": "サーカスで、商品としておもちゃを配っている。",
           "exampleEn": "Circuses offer toys for prizes.  ",
@@ -93374,7 +93390,7 @@
         {
           "id": "word-n3-272",
           "primary": "前もって",
-          "reading": "まえ",
+          "reading": "まえもって",
           "meaning": "사전에, 미리",
           "exampleJa": "私は前もってあなたに知らせる。",
           "exampleEn": "I will let you know in advance.  ",
@@ -93401,7 +93417,7 @@
         {
           "id": "word-n3-273",
           "primary": "別に",
-          "reading": "べつ",
+          "reading": "べつに",
           "meaning": "특별히, 별도로",
           "exampleJa": "ソースを別にください。",
           "exampleEn": "I'd like the sauce on the side.  ",
@@ -95496,7 +95512,7 @@
         {
           "id": "word-n3-350",
           "primary": "通り過ぎる",
-          "reading": "とおす",
+          "reading": "とおりすぎる",
           "meaning": "지나가다, 통과하다",
           "exampleJa": "私はその暗い道を通り過ぎた。",
           "exampleEn": "I passed over the dark street.  ",
@@ -96751,7 +96767,7 @@
         {
           "id": "word-n3-395",
           "primary": "話しかける",
-          "reading": "はな",
+          "reading": "はなしかける",
           "meaning": "말을 걸다",
           "exampleJa": "男が近づいて私に話しかけた。",
           "exampleEn": "A man came up and spoke to me.  ",
@@ -97134,7 +97150,7 @@
         {
           "id": "word-n3-409",
           "primary": "握る",
-          "reading": "にぎ",
+          "reading": "にぎる",
           "meaning": "잡다, 쥐다",
           "exampleJa": "彼らが眠っている間私がハンドルを握った。",
           "exampleEn": "I took the wheel while he slept.  ",
@@ -97339,7 +97355,7 @@
         {
           "id": "word-n3-416",
           "primary": "あて先",
-          "reading": "さき",
+          "reading": "あてさき",
           "meaning": "수신처, 수신인",
           "exampleJa": "",
           "exampleEn": "",
@@ -97401,7 +97417,7 @@
         {
           "id": "word-n3-418",
           "primary": "断る",
-          "reading": "ことわ",
+          "reading": "ことわる",
           "meaning": "거절하다",
           "exampleJa": "彼女は私と行くのを断った。",
           "exampleEn": "She refused to go with me.",
@@ -97648,7 +97664,7 @@
         {
           "id": "word-n3-427",
           "primary": "すぐ怒る",
-          "reading": "おこ",
+          "reading": "すぐおこる",
           "meaning": "금방 화내다",
           "exampleJa": "",
           "exampleEn": "",
@@ -98093,7 +98109,7 @@
         {
           "id": "word-n3-442",
           "primary": "柔らかだ",
-          "reading": "やわ",
+          "reading": "やわらかだ",
           "meaning": "부드럽다",
           "exampleJa": "",
           "exampleEn": "",
@@ -98147,7 +98163,7 @@
         {
           "id": "word-n3-444",
           "primary": "正直だ",
-          "reading": "しょうじき",
+          "reading": "しょうじきだ",
           "meaning": "정직하다",
           "exampleJa": "",
           "exampleEn": "",
@@ -99922,7 +99938,7 @@
         {
           "id": "word-n3-510",
           "primary": "離す",
-          "reading": "はな",
+          "reading": "はなす",
           "meaning": "떼다, 놓다",
           "exampleJa": "すみません。いま手が離せないんです。",
           "exampleEn": "I'm sorry, I'm busy right now.  ",
@@ -99949,7 +99965,7 @@
         {
           "id": "word-n3-511",
           "primary": "散らかす",
-          "reading": "ち",
+          "reading": "ちらかす",
           "meaning": "흐트리다, 어지럽히다",
           "exampleJa": "お前の物をその辺りに散らかすな。",
           "exampleEn": "Don't scatter your things about.  ",
@@ -100424,7 +100440,7 @@
         {
           "id": "word-n3-528",
           "primary": "重ねる",
-          "reading": "かさ",
+          "reading": "かさねる",
           "meaning": "포개다, 거듭하다, 쌓아 올리다",
           "exampleJa": "彼は悪事を重ねた。",
           "exampleEn": "He committed one crime after another.  ",
@@ -100852,7 +100868,7 @@
         {
           "id": "word-n3-544",
           "primary": "不要だ",
-          "reading": "ふよう",
+          "reading": "ふようだ",
           "meaning": "불필요하다",
           "exampleJa": "",
           "exampleEn": "",
@@ -101686,7 +101702,7 @@
         {
           "id": "word-n3-574",
           "primary": "諦める",
-          "reading": "あきら",
+          "reading": "あきらめる",
           "meaning": "포기하다",
           "exampleJa": "その少年は死んだものとしてあきらめられた。",
           "exampleEn": "The boy was given up for dead.  ",
@@ -102989,7 +103005,7 @@
         {
           "id": "word-n3-620",
           "primary": "重要だ",
-          "reading": "じゅうよう",
+          "reading": "じゅうようだ",
           "meaning": "중요하다",
           "exampleJa": "",
           "exampleEn": "",
@@ -103074,7 +103090,7 @@
         {
           "id": "word-n3-623",
           "primary": "快適だ",
-          "reading": "かいてき",
+          "reading": "かいてきだ",
           "meaning": "쾌적하다",
           "exampleJa": "",
           "exampleEn": "",
@@ -103711,7 +103727,7 @@
         {
           "id": "word-n3-646",
           "primary": "確実だ",
-          "reading": "かくじつ",
+          "reading": "かくじつだ",
           "meaning": "확실하다",
           "exampleJa": "",
           "exampleEn": "",
@@ -103742,7 +103758,7 @@
         {
           "id": "word-n3-647",
           "primary": "適する",
-          "reading": "てき",
+          "reading": "てきする",
           "meaning": "적합하다, 적당하다",
           "exampleJa": "その肉は全く食用に適さなかった。",
           "exampleEn": "None of the meat was fit to eat.  ",
@@ -104160,7 +104176,7 @@
         {
           "id": "word-n3-662",
           "primary": "何度も",
-          "reading": "なんど",
+          "reading": "なんども",
           "meaning": "몇 번이고",
           "exampleJa": "彼は戦場で何度も死をうまく逃れた。",
           "exampleEn": "He cheated death many times on the battlefield.  ",
@@ -104646,7 +104662,7 @@
         {
           "id": "word-n3-680",
           "primary": "削る",
-          "reading": "けず",
+          "reading": "けずる",
           "meaning": "줄이다, 깎다, 삭감하다",
           "exampleJa": "君の鉛筆は削る必要がある。",
           "exampleEn": "Your pencils need sharpening.",
@@ -104673,7 +104689,7 @@
         {
           "id": "word-n3-681",
           "primary": "飲み会",
-          "reading": "のかい",
+          "reading": "のみかい",
           "meaning": "회식",
           "exampleJa": "マックで軽く昼食をとって、スタバでコーヒーを飲んで、しゃぶしゃぶをしながら飲み会という流れだ。",
           "exampleEn": "A light lunch at MacD's, coffee at Starbucks, then a few drinks with shabu-shabu - that's the way it went.  ",
@@ -104735,7 +104751,7 @@
         {
           "id": "word-n3-683",
           "primary": "加える",
-          "reading": "くわ",
+          "reading": "くわえる",
           "meaning": "추가하다, 더하다",
           "exampleJa": "水を加えてペースト状になるまでかき回しなさい。",
           "exampleEn": "Add water and stir to a paste.  ",
@@ -104936,7 +104952,7 @@
         {
           "id": "word-n3-690",
           "primary": "やり方",
-          "reading": "かた",
+          "reading": "やりかた",
           "meaning": "방식, 하는 방법",
           "exampleJa": "これが僕のやり方だ。",
           "exampleEn": "This is how I go about it.  ",
@@ -105098,7 +105114,7 @@
         {
           "id": "word-n3-696",
           "primary": "訳す",
-          "reading": "やく",
+          "reading": "やくす",
           "meaning": "번역하다",
           "exampleJa": "この文を英語に訳しなさい。",
           "exampleEn": "Put this sentence into English.  ",
@@ -105125,7 +105141,7 @@
         {
           "id": "word-n3-697",
           "primary": "進める",
-          "reading": "すす",
+          "reading": "すすめる",
           "meaning": "진행하다",
           "exampleJa": "その計画は進められている。",
           "exampleEn": "The project is underway.  ",
@@ -105152,7 +105168,7 @@
         {
           "id": "word-n3-698",
           "primary": "任せる",
-          "reading": "まか",
+          "reading": "まかせる",
           "meaning": "맡기다",
           "exampleJa": "任せて！",
           "exampleEn": "Trust me!",
@@ -105206,7 +105222,7 @@
         {
           "id": "word-n3-700",
           "primary": "段取り",
-          "reading": "だんど",
+          "reading": "だんどり",
           "meaning": "일의 순서",
           "exampleJa": "リンダの先学期の成績が非常に良かったので、私は彼女がヨーロッパに行けるよう段取りをした。",
           "exampleEn": "Because of Linda's outstanding grades last semester, I have arranged for her to visit Europe.  ",
@@ -105264,7 +105280,7 @@
         {
           "id": "word-n3-702",
           "primary": "首になる",
-          "reading": "くび",
+          "reading": "くびになる",
           "meaning": "해고되다",
           "exampleJa": "早い話が彼は首になったのだ。",
           "exampleEn": "To cut a long story short, he was fired.",
@@ -105657,7 +105673,7 @@
         {
           "id": "word-n3-717",
           "primary": "思い浮かぶ",
-          "reading": "おもう",
+          "reading": "おもいうかぶ",
           "meaning": "(마음에) 떠오르다, 생각나다",
           "exampleJa": "これを言いあらわす適当なことばが思いうかびません。",
           "exampleEn": "The right word for this does not come to me.  ",
@@ -105697,7 +105713,7 @@
         {
           "id": "word-n3-718",
           "primary": "思い込む",
-          "reading": "おもこ",
+          "reading": "おもいこむ",
           "meaning": "믿어버리다, 깊이 마음먹다",
           "exampleJa": "彼が僕にそう思い込ませたのです。",
           "exampleEn": "He put the idea into my head.  ",
@@ -106403,7 +106419,7 @@
         {
           "id": "word-n3-744",
           "primary": "恋しい",
-          "reading": "こい",
+          "reading": "こいしい",
           "meaning": "(장소, 사람, 물건이) 그립다",
           "exampleJa": "あなたはアメリカで日本料理が恋しくなるでしょう。",
           "exampleEn": "You will miss Japanese food in the United States.  ",
@@ -106430,7 +106446,7 @@
         {
           "id": "word-n3-745",
           "primary": "懐かしい",
-          "reading": "なつ",
+          "reading": "なつかしい",
           "meaning": "(옛날에 있는 사람이나 물건, 과거의 일이) 그립다",
           "exampleJa": "懐かしい１２小節のブルース。",
           "exampleEn": "There go the twelve bars blues.  ",
@@ -106484,7 +106500,7 @@
         {
           "id": "word-n3-747",
           "primary": "羨ましい",
-          "reading": "うらや",
+          "reading": "うらやましい",
           "meaning": "부럽다",
           "exampleJa": "あなたがとても羨ましい。",
           "exampleEn": "I envy you so much.  ",
@@ -106827,7 +106843,7 @@
         {
           "id": "word-n3-760",
           "primary": "面倒くさい",
-          "reading": "めんどう",
+          "reading": "めんどうくさい",
           "meaning": "귀찮다",
           "exampleJa": "しかし部屋を整頓するのは面倒くさいし。",
           "exampleEn": "However it's a pain putting the room in order.",
@@ -107016,7 +107032,7 @@
         {
           "id": "word-n3-767",
           "primary": "恐ろしい",
-          "reading": "おそ",
+          "reading": "おそろしい",
           "meaning": "두렵다",
           "exampleJa": "その嵐の天候は恐ろしかった。",
           "exampleEn": "The storm weather was dreadful.  ",
@@ -107209,7 +107225,7 @@
         {
           "id": "word-n3-774",
           "primary": "思わず",
-          "reading": "おも",
+          "reading": "おもわず",
           "meaning": "엉겁결에, 무심코",
           "exampleJa": "彼は思わず笑った。",
           "exampleEn": "He laughed in spite of himself.  ",
@@ -108281,7 +108297,7 @@
         {
           "id": "word-n3-814",
           "primary": "触れる",
-          "reading": "ふ",
+          "reading": "ふれる",
           "meaning": "만지다, 닿다, 접촉하다",
           "exampleJa": "何かが足に触れるのを感じた。",
           "exampleEn": "I felt something touch my feet.  ",
@@ -108440,7 +108456,7 @@
         {
           "id": "word-n3-819",
           "primary": "助ける",
-          "reading": "たす",
+          "reading": "たすける",
           "meaning": "돕다",
           "exampleJa": "もし彼が頼んでくれれば、私達はかれを助けてあげます。",
           "exampleEn": "We will help him if he asks us.  ",
@@ -108617,7 +108633,7 @@
         {
           "id": "word-n3-826",
           "primary": "紅葉",
-          "reading": "こうよう",
+          "reading": "もみじ/こうよう",
           "meaning": "단풍  ",
           "exampleJa": "２、３週間もすれば木の葉は紅葉するでしょう。",
           "exampleEn": "The leaves will turn red in two or three weeks.  ",
@@ -108628,7 +108644,7 @@
           "rubyParts": [
             {
               "base": "紅",
-              "ruby": "こう"
+              "ruby": "もみじ/こう"
             },
             {
               "base": "葉",
@@ -108717,7 +108733,7 @@
         {
           "id": "word-n3-830",
           "primary": "囲む",
-          "reading": "かこ",
+          "reading": "かこむ",
           "meaning": "둘러싸다  ",
           "exampleJa": "正解をまるで囲みなさい。",
           "exampleEn": "Please circle the right answer.  ",
@@ -108968,7 +108984,7 @@
         {
           "id": "word-n3-840",
           "primary": "溺れる",
-          "reading": "おぼ",
+          "reading": "おぼれる",
           "meaning": "(물에) 빠지다  ",
           "exampleJa": "危うく溺れるところだった。",
           "exampleEn": "I came near to being drowned.",
@@ -109076,7 +109092,7 @@
         {
           "id": "word-n3-844",
           "primary": "流れる",
-          "reading": "なが",
+          "reading": "ながれる",
           "meaning": "흐르다",
           "exampleJa": "セーヌ川はパリを流れている。",
           "exampleEn": "The Seine flows through Paris.  ",
@@ -109296,7 +109312,7 @@
         {
           "id": "word-n3-852",
           "primary": "使い捨て用品",
-          "reading": "つかすようひん",
+          "reading": "つかいすてようひん",
           "meaning": "일회용품",
           "exampleJa": "",
           "exampleEn": "",
@@ -110629,7 +110645,7 @@
         {
           "id": "word-n3-900",
           "primary": "楽だ",
-          "reading": "らく",
+          "reading": "らくだ",
           "meaning": "편하다, 쉽다",
           "exampleJa": "",
           "exampleEn": "",
@@ -110984,7 +111000,7 @@
         {
           "id": "word-n3-913",
           "primary": "習い事",
-          "reading": "ならごと",
+          "reading": "ならいごと",
           "meaning": "학원(보습 또는 예체능 사교육)",
           "exampleJa": "",
           "exampleEn": "",
@@ -111046,7 +111062,7 @@
         {
           "id": "word-n3-915",
           "primary": "習い始める",
-          "reading": "ならはじゅ",
+          "reading": "ならいはじゅめる",
           "meaning": "배우기 시작하다  ",
           "exampleJa": "",
           "exampleEn": "",
@@ -111464,7 +111480,7 @@
         {
           "id": "word-n3-929",
           "primary": "夢中だ",
-          "reading": "むちゅう",
+          "reading": "むちゅうだ",
           "meaning": "몰두하다",
           "exampleJa": "",
           "exampleEn": "",
@@ -111495,7 +111511,7 @@
         {
           "id": "word-n3-930",
           "primary": "見返す",
-          "reading": "みかえ",
+          "reading": "みかえす",
           "meaning": "다시 보다",
           "exampleJa": "驚いて彼女の顔を見返した。",
           "exampleEn": "I stared back at her in surprise.  ",
@@ -112514,7 +112530,7 @@
         {
           "id": "word-n3-967",
           "primary": "早めに",
-          "reading": "はや",
+          "reading": "はやめに",
           "meaning": "일찌감치, 빨리",
           "exampleJa": "",
           "exampleEn": "",
@@ -112568,7 +112584,7 @@
         {
           "id": "word-n3-969",
           "primary": "初めて",
-          "reading": "はじ",
+          "reading": "はじめて",
           "meaning": "처음으로  ",
           "exampleJa": "１６歳の時、初めてテニスをした。",
           "exampleEn": "When I was sixteen, I played tennis for the first time.  ",
@@ -112630,7 +112646,7 @@
         {
           "id": "word-n3-971",
           "primary": "預ける",
-          "reading": "あず",
+          "reading": "あずける",
           "meaning": "맡기다",
           "exampleJa": "手荷物はどこに預ければいいですか。",
           "exampleEn": "Where can I check my baggage?",
@@ -112711,7 +112727,7 @@
         {
           "id": "word-n3-974",
           "primary": "この間",
-          "reading": "あいだ",
+          "reading": "このあいだ",
           "meaning": "얼마 전, 일전",
           "exampleJa": "この間の台風で、時速２００キロの風が吹きました。",
           "exampleEn": "In the last typhoon, the wind blew at over 200 kilometers per hour!  ",
@@ -112873,7 +112889,7 @@
         {
           "id": "word-n3-980",
           "primary": "動かす",
-          "reading": "うご",
+          "reading": "うごかす",
           "meaning": "움직이(게 하)다, 작동시키다",
           "exampleJa": "世の中を動かしてみたいんだ。",
           "exampleEn": "Just like you want it to.",
@@ -113224,7 +113240,7 @@
         {
           "id": "word-n3-993",
           "primary": "疲れが取れる",
-          "reading": "つかと",
+          "reading": "つかれがとれる",
           "meaning": "피로가 풀리다",
           "exampleJa": "",
           "exampleEn": "",
@@ -113425,7 +113441,7 @@
         {
           "id": "word-n3-1000",
           "primary": "少しずつ",
-          "reading": "すこ",
+          "reading": "すこしずつ",
           "meaning": "조금씩",
           "exampleJa": "彼は少しずつよくなっています。",
           "exampleEn": "He is getting better bit by bit.  ",
@@ -113795,7 +113811,7 @@
         {
           "id": "word-n3-1014",
           "primary": "力を注ぐ",
-          "reading": "ちからそそ",
+          "reading": "ちからをそそぐ",
           "meaning": "힘을 쏟다",
           "exampleJa": "",
           "exampleEn": "",
@@ -114112,7 +114128,7 @@
         {
           "id": "word-n3-1025",
           "primary": "作り出す",
-          "reading": "つくだ",
+          "reading": "つくりだす",
           "meaning": "만들어내다  ",
           "exampleJa": "だから音楽を作り出すことができるのだ。",
           "exampleEn": "So I can make music.",
@@ -114445,7 +114461,7 @@
         {
           "id": "word-n3-1036",
           "primary": "破れる",
-          "reading": "やぶ",
+          "reading": "やぶれる",
           "meaning": "찢어지다, 깨지다",
           "exampleJa": "バスに遅れて、会社に遅れてストッキングが破れて。",
           "exampleEn": "I was late for the bus, late for work, and got a run my stockings.  ",
@@ -114669,7 +114685,7 @@
         {
           "id": "word-n3-1044",
           "primary": "防ぐ",
-          "reading": "ふせ",
+          "reading": "ふせぐ",
           "meaning": "막다",
           "exampleJa": "何としても戦争は防がねばならない。",
           "exampleEn": "We must prevent war at any cost.",
@@ -115209,7 +115225,7 @@
         {
           "id": "word-n3-1064",
           "primary": "続いて",
-          "reading": "つづ",
+          "reading": "つづいて",
           "meaning": "계속해서  ",
           "exampleJa": "成功ほど続いて起こるものはない。",
           "exampleEn": "Nothing succeeds like success.",
@@ -115267,7 +115283,7 @@
         {
           "id": "word-n3-1066",
           "primary": "広まる",
-          "reading": "ひろ",
+          "reading": "ひろまる",
           "meaning": "널리 퍼지다, 널리 알려지다  ",
           "exampleJa": "そのうわさはすぐ広まった。",
           "exampleEn": "The rumors spread soon abroad.  ",
@@ -115294,7 +115310,7 @@
         {
           "id": "word-n3-1067",
           "primary": "急激だ",
-          "reading": "きゅうげき",
+          "reading": "きゅうげきだ",
           "meaning": "급격하다  ",
           "exampleJa": "",
           "exampleEn": "",
@@ -115541,7 +115557,7 @@
         {
           "id": "word-n3-1076",
           "primary": "守る",
-          "reading": "まも",
+          "reading": "まもる",
           "meaning": "지키다  ",
           "exampleJa": "秘密を守れるか。",
           "exampleEn": "Can you keep a secret?",
@@ -115568,7 +115584,7 @@
         {
           "id": "word-n3-1077",
           "primary": "許す",
-          "reading": "ゆる",
+          "reading": "ゆるす",
           "meaning": "허가하다, 용서하다",
           "exampleJa": "どうか僕を許して下さい。",
           "exampleEn": "Please forgive me.",
@@ -116359,7 +116375,7 @@
         {
           "id": "word-n3-1106",
           "primary": "換える",
-          "reading": "か",
+          "reading": "かえる",
           "meaning": "교환하다, 바꾸다",
           "exampleJa": "うちのマンションも古くなったから、リフォームして気分を換えるか。",
           "exampleEn": "This condo is getting old. Why don't we redecorate to give it a fresh feel?",
@@ -116386,7 +116402,7 @@
         {
           "id": "word-n3-1107",
           "primary": "引き出す",
-          "reading": "ひだ",
+          "reading": "ひきだす",
           "meaning": "인출하다, 꺼내다",
           "exampleJa": "読書から楽しみを引き出すのは読者次第です。",
           "exampleEn": "It's the reader that determines whether they extract pleasure from reading.  ",
@@ -116460,7 +116476,7 @@
         {
           "id": "word-n3-1109",
           "primary": "貯める",
-          "reading": "た",
+          "reading": "ためる",
           "meaning": "(돈을) 모으다, (일을) 미뤄 두다",
           "exampleJa": "お金を使うも貯めるも自由にしなさい。",
           "exampleEn": "You may spend or save at will.  ",
@@ -116626,7 +116642,7 @@
         {
           "id": "word-n3-1115",
           "primary": "主要だ",
-          "reading": "しゅよう",
+          "reading": "しゅようだ",
           "meaning": "주요하다",
           "exampleJa": "",
           "exampleEn": "",
@@ -116765,7 +116781,7 @@
         {
           "id": "word-n3-1120",
           "primary": "重大だ",
-          "reading": "じゅうだい",
+          "reading": "じゅうだいだ",
           "meaning": "중대하다  ",
           "exampleJa": "",
           "exampleEn": "",
@@ -117394,7 +117410,7 @@
         {
           "id": "word-n3-1143",
           "primary": "正確だ",
-          "reading": "せいかく",
+          "reading": "せいかくだ",
           "meaning": "정확하다  ",
           "exampleJa": "",
           "exampleEn": "",
@@ -117942,7 +117958,7 @@
         {
           "id": "word-n3-1163",
           "primary": "効果的だ",
-          "reading": "こうかてき",
+          "reading": "こうかてきだ",
           "meaning": "효과적이다  ",
           "exampleJa": "",
           "exampleEn": "",
