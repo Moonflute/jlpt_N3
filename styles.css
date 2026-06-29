@@ -917,10 +917,10 @@ button {
   visibility: hidden;
 }
 
-.card-bookmark-button {
+.card-bookmark-button,
+.card-check-button {
   position: absolute;
   top: 12px;
-  right: 12px;
   width: 34px;
   height: 34px;
   border: 0;
@@ -931,7 +931,16 @@ button {
   color: var(--muted);
 }
 
-.card-bookmark-button.is-active {
+.card-bookmark-button {
+  right: 12px;
+}
+
+.card-check-button {
+  right: 54px;
+}
+
+.card-bookmark-button.is-active,
+.card-check-button.is-active {
   background: rgba(20, 158, 163, 0.14);
   color: var(--teal-deep);
 }

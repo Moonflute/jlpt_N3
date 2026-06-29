@@ -1,10 +1,11 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "3.2.13";
+const APP_VERSION = "3.2.14";
 let transientNoticeTimer = null;
 
 function createDefaultCustomConfig() {
   return {
     batchSize: 20,
+    includeChecked: true,
     selectedStageKeys: [],
   };
 }
@@ -52,7 +53,10 @@ const state = {
 
 function restoreAppStateFromProgress() {
   const persisted = state.progress?.__appState ?? {};
-  state.customConfig = persisted.customConfig ?? createDefaultCustomConfig();
+  state.customConfig = {
+    ...createDefaultCustomConfig(),
+    ...(persisted.customConfig ?? {}),
+  };
   state.customSession = persisted.customSession ?? null;
 }
 
@@ -82,8 +86,16 @@ function getSavedItemIds() {
   return Array.isArray(state.progress.__savedItemIds) ? state.progress.__savedItemIds : [];
 }
 
+function getCheckedItemIds() {
+  return Array.isArray(state.progress.__checkedItemIds) ? state.progress.__checkedItemIds : [];
+}
+
 function setSavedItemIds(ids) {
   state.progress.__savedItemIds = [...new Set(ids)].sort();
+}
+
+function setCheckedItemIds(ids) {
+  state.progress.__checkedItemIds = [...new Set(ids)].sort();
 }
 
 function makeSavedItemKey(trackId, itemId) {
@@ -92,6 +104,10 @@ function makeSavedItemKey(trackId, itemId) {
 
 function isItemSaved(trackId, itemId) {
   return getSavedItemIds().includes(makeSavedItemKey(trackId, itemId));
+}
+
+function isItemChecked(trackId, itemId) {
+  return getCheckedItemIds().includes(makeSavedItemKey(trackId, itemId));
 }
 
 function buildProgressBackup() {
@@ -1631,9 +1647,34 @@ function getSelectedCustomStageOptions() {
   return getSelectableStageOptions().filter((option) => selected.has(option.id));
 }
 
+function getSelectedCustomStageItemCount(config = state.customConfig) {
+  const selected = new Set(config.selectedStageKeys ?? []);
+  const checkedSet = new Set(getCheckedItemIds());
+  const includeChecked = config.includeChecked ?? true;
+  let count = 0;
+
+  for (const option of getSelectableStageOptions()) {
+    if (!selected.has(option.id)) {
+      continue;
+    }
+
+    const track = getTrack(option.trackId);
+    const stage = getStages(track)[option.stageIndex];
+    for (const item of getItemsForStage(track, stage)) {
+      if (!includeChecked && checkedSet.has(makeSavedItemKey(track.id, item.id))) {
+        continue;
+      }
+      count += 1;
+    }
+  }
+
+  return count;
+}
+
 function buildCustomSelectionSignature(config = state.customConfig) {
   return JSON.stringify({
     batchSize: config?.batchSize ?? 20,
+    includeChecked: config?.includeChecked ?? true,
     selectedStageKeys: [...(config?.selectedStageKeys ?? [])].sort(),
   });
 }
@@ -1725,10 +1766,33 @@ function toggleSavedItem(trackId, itemId) {
   render();
 }
 
+function toggleCheckedItem(trackId, itemId) {
+  const key = makeSavedItemKey(trackId, itemId);
+  const checked = new Set(getCheckedItemIds());
+  if (checked.has(key)) {
+    checked.delete(key);
+  } else {
+    checked.add(key);
+  }
+
+  setCheckedItemIds([...checked]);
+  saveProgress();
+  render();
+}
+
 function setCustomBatchSize(batchSize) {
   state.customConfig = {
     ...state.customConfig,
     batchSize,
+  };
+  saveProgress();
+  render();
+}
+
+function toggleIncludeChecked() {
+  state.customConfig = {
+    ...state.customConfig,
+    includeChecked: !(state.customConfig.includeChecked ?? true),
   };
   saveProgress();
   render();
@@ -1773,6 +1837,8 @@ function getCustomSessionStats(session) {
 
 function buildCustomSessionEntries() {
   const selectedOptions = getSelectedCustomStageOptions();
+  const checkedSet = new Set(getCheckedItemIds());
+  const includeChecked = state.customConfig.includeChecked ?? true;
   const seen = new Set();
   const entries = [];
 
@@ -1781,6 +1847,10 @@ function buildCustomSessionEntries() {
     const stage = getStages(track)[option.stageIndex];
     for (const item of getItemsForStage(track, stage)) {
       const entryId = `${track.id}:${item.id}`;
+      const itemKey = makeSavedItemKey(track.id, item.id);
+      if (!includeChecked && checkedSet.has(itemKey)) {
+        continue;
+      }
       if (seen.has(entryId)) {
         continue;
       }
@@ -2798,21 +2868,9 @@ function renderCustomSelect() {
 function renderCustomSelectCompact() {
   const selected = new Set(state.customConfig.selectedStageKeys ?? []);
   const batchSize = state.customConfig.batchSize ?? 20;
+  const includeChecked = state.customConfig.includeChecked ?? true;
   const groups = getCustomStageGroups();
-  const selectedCardCount = groups.reduce(
-    (sum, group) =>
-      sum +
-      group.tracks.reduce(
-        (trackSum, track) =>
-          trackSum +
-          track.options.reduce(
-            (optionSum, option) => optionSum + (selected.has(option.id) ? option.itemCount : 0),
-            0,
-          ),
-        0,
-      ),
-    0,
-  );
+  const selectedCardCount = getSelectedCustomStageItemCount();
 
   return appShell(`
     <div class="topbar">
@@ -2870,8 +2928,9 @@ function renderCustomSelectCompact() {
       <div class="custom-batch-picker custom-batch-picker--footer">
         <button class="stage-preview-filter${batchSize === 7 ? " is-active" : ""}" type="button" data-custom-batch="7">7\uAC1C</button>
         <button class="stage-preview-filter${batchSize === 20 ? " is-active" : ""}" type="button" data-custom-batch="20">20\uAC1C</button>
+        <button class="stage-preview-filter${includeChecked ? " is-active" : ""}" type="button" data-custom-checked-toggle>v ${includeChecked ? "포함" : "제외"}</button>
       </div>
-      <button class="big-button big-button--accent big-button--single custom-select-start" data-custom-start${selected.size ? "" : " disabled"}>
+      <button class="big-button big-button--accent big-button--single custom-select-start" data-custom-start${selectedCardCount ? "" : " disabled"}>
         <div class="big-button__title">\uC2DC\uC791</div>
       </button>
     </div>
@@ -3108,6 +3167,7 @@ function renderStudy() {
   const exampleKo = escapeHtml(item.exampleKo);
   const isEnglish = (track.language ?? "ja") === "en";
   const isSaved = isItemSaved(track.id, item.id);
+  const isChecked = isItemChecked(track.id, item.id);
 
   let primary = "";
   let secondary = "";
@@ -3274,6 +3334,7 @@ function renderStudy() {
     <div class="section-card card-frame">
       <div class="card-panel">
         <button class="card-speak-button" data-speak aria-label="단어 발음 듣기">&#128266;</button>
+        <button class="card-check-button${isChecked ? " is-active" : ""}" data-check-toggle aria-label="${isChecked ? "체크 해제" : "체크 저장"}">&#9989;</button>
         <button class="card-bookmark-button${isSaved ? " is-active" : ""}" data-bookmark-toggle aria-label="${isSaved ? "저장 해제" : "저장"}">&#128278;</button>
         <div class="card-primary">${primary}</div>
         <div class="card-slot ${secondaryClass}${secondary ? "" : " is-empty"}">${secondary || "&nbsp;"}</div>
@@ -3733,6 +3794,7 @@ function bindEvents() {
 
       state.customConfig = {
         ...state.customConfig,
+        includeChecked: true,
         selectedStageKeys: [],
       };
       saveProgress();
@@ -3768,6 +3830,10 @@ function bindEvents() {
     button.addEventListener("click", () => setCustomBatchSize(Number(button.dataset.customBatch)));
   });
 
+  document.querySelectorAll("[data-custom-checked-toggle]").forEach((button) => {
+    button.addEventListener("click", toggleIncludeChecked);
+  });
+
   document.querySelectorAll("[data-custom-clear]").forEach((button) => {
     button.addEventListener("click", clearCustomStageSelection);
   });
@@ -3792,6 +3858,17 @@ function bindEvents() {
         return;
       }
       toggleSavedItem(activeTrack.id, currentItem.id);
+    });
+  });
+
+  document.querySelectorAll("[data-check-toggle]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const activeTrack = getActiveStudyTrack();
+      const currentItem = activeTrack ? getCurrentItem(activeTrack) : null;
+      if (!activeTrack || !currentItem) {
+        return;
+      }
+      toggleCheckedItem(activeTrack.id, currentItem.id);
     });
   });
 
