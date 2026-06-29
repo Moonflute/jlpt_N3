@@ -454,6 +454,8 @@ button {
 
 .custom-batch-picker--footer > .custom-checked-toggle {
   flex-basis: 100%;
+  width: 50%;
+  margin-left: auto;
   margin-top: 2px;
 }
 
