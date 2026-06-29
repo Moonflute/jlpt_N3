@@ -448,15 +448,25 @@ button {
 
 .custom-batch-picker--footer {
   margin-bottom: 0;
-  justify-content: flex-end;
-  align-content: start;
+  display: grid;
+  gap: 8px;
+  justify-items: end;
 }
 
-.custom-batch-picker--footer > .custom-checked-toggle {
-  flex-basis: 100%;
-  width: 50%;
-  margin-left: auto;
-  margin-top: 2px;
+.custom-batch-picker-row {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.custom-batch-picker-row--secondary {
+  justify-content: flex-end;
+}
+
+.custom-batch-picker-row--secondary > .custom-checked-toggle {
+  width: calc(50% - 4px);
+  min-width: 88px;
 }
 
 .custom-select-start {
