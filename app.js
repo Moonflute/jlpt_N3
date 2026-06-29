@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "3.2.17";
+const APP_VERSION = "3.2.18";
 let transientNoticeTimer = null;
 
 function createDefaultCustomConfig() {
@@ -1307,6 +1307,22 @@ function handleGamepadStudyAction(action) {
 
   if (action === "exampleKo") {
     reveal("exampleKo");
+    return;
+  }
+
+  if (action === "bookmark") {
+    const currentItem = getCurrentItem(track);
+    if (currentItem) {
+      toggleSavedItem(track.id, currentItem.id);
+    }
+    return;
+  }
+
+  if (action === "check") {
+    const currentItem = getCurrentItem(track);
+    if (currentItem) {
+      toggleCheckedItem(track.id, currentItem.id);
+    }
   }
 }
 
@@ -1321,7 +1337,9 @@ function pollGamepad() {
       [2, "again"],
       [3, "reading"],
       [4, "example"],
-      [5, "exampleKo"],
+      [6, "exampleKo"],
+      [5, "bookmark"],
+      [7, "check"],
     ];
 
     for (const [index, action] of mapping) {
