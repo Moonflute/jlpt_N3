@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "3.2.14";
+const APP_VERSION = "3.2.15";
 let transientNoticeTimer = null;
 
 function createDefaultCustomConfig() {
@@ -2928,7 +2928,7 @@ function renderCustomSelectCompact() {
       <div class="custom-batch-picker custom-batch-picker--footer">
         <button class="stage-preview-filter${batchSize === 7 ? " is-active" : ""}" type="button" data-custom-batch="7">7\uAC1C</button>
         <button class="stage-preview-filter${batchSize === 20 ? " is-active" : ""}" type="button" data-custom-batch="20">20\uAC1C</button>
-        <button class="stage-preview-filter${includeChecked ? " is-active" : ""}" type="button" data-custom-checked-toggle>v ${includeChecked ? "포함" : "제외"}</button>
+        <button class="stage-preview-filter custom-checked-toggle${includeChecked ? " is-active" : ""}" type="button" data-custom-checked-toggle>v ${includeChecked ? "포함" : "제외"}</button>
       </div>
       <button class="big-button big-button--accent big-button--single custom-select-start" data-custom-start${selectedCardCount ? "" : " disabled"}>
         <div class="big-button__title">\uC2DC\uC791</div>

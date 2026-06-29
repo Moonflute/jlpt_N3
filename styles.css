@@ -442,13 +442,19 @@ button {
 .custom-select-footer {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto 132px;
-  align-items: center;
+  align-items: start;
   gap: 12px;
 }
 
 .custom-batch-picker--footer {
   margin-bottom: 0;
   justify-content: flex-end;
+  align-content: start;
+}
+
+.custom-batch-picker--footer > .custom-checked-toggle {
+  flex-basis: 100%;
+  margin-top: 2px;
 }
 
 .custom-select-start {
