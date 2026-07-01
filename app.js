@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "3.2.18";
+const APP_VERSION = "3.3.0";
 let transientNoticeTimer = null;
 
 function createDefaultCustomConfig() {
@@ -45,6 +45,10 @@ const state = {
   voicesLoaded: false,
   backupNotice: "",
   gamepadButtons: {},
+  japaneseLookupQuery: "",
+  japaneseLookupResults: [],
+  japaneseLookupSearched: false,
+  japaneseLookupPreview: null,
   progress: loadProgress(),
   dataset: null,
   error: "",
@@ -185,6 +189,164 @@ function getTracks() {
 
 function getTrack(trackId) {
   return getTracks().find((track) => track.id === trackId) ?? null;
+}
+
+function normalizeLookupText(value) {
+  return String(value ?? "")
+    .toLowerCase()
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function compactLookupText(value) {
+  return normalizeLookupText(value).replace(/\s+/g, "");
+}
+
+function clearJapaneseLookupUi(options = {}) {
+  const keepQuery = Boolean(options.keepQuery);
+  if (!keepQuery) {
+    state.japaneseLookupQuery = "";
+  }
+  state.japaneseLookupResults = [];
+  state.japaneseLookupSearched = false;
+  state.japaneseLookupPreview = null;
+}
+
+function lookupTextMatches(text, normalizedQuery, compactQuery) {
+  if (!text) {
+    return false;
+  }
+
+  const normalizedText = normalizeLookupText(text);
+  const compactText = compactLookupText(text);
+  return normalizedText.includes(normalizedQuery) || compactText.includes(compactQuery);
+}
+
+function renderJapaneseLookupWord(track, item) {
+  if (!item) {
+    return "";
+  }
+
+  if (item.rubyParts?.length) {
+    return renderRubyParts(item.rubyParts, true, { padBlankRuby: true });
+  }
+
+  if (track?.mode === "kana_to_kanji") {
+    return escapeHtml(item.primary || "");
+  }
+
+  return escapeHtml(item.primary || item.reading || "");
+}
+
+function getJapaneseLookupScore(item, normalizedQuery, compactQuery) {
+  const primary = normalizeLookupText(item.primary);
+  const reading = normalizeLookupText(item.reading);
+  const meaning = normalizeLookupText(item.meaning);
+  const compactPrimary = compactLookupText(item.primary);
+  const compactReading = compactLookupText(item.reading);
+  const compactMeaning = compactLookupText(item.meaning);
+
+  if (primary === normalizedQuery || compactPrimary === compactQuery) {
+    return 0;
+  }
+  if (reading === normalizedQuery || compactReading === compactQuery) {
+    return 1;
+  }
+  if (meaning === normalizedQuery || compactMeaning === compactQuery) {
+    return 2;
+  }
+  if (primary.includes(normalizedQuery) || compactPrimary.includes(compactQuery)) {
+    return 3;
+  }
+  if (reading.includes(normalizedQuery) || compactReading.includes(compactQuery)) {
+    return 4;
+  }
+  if (meaning.includes(normalizedQuery) || compactMeaning.includes(compactQuery)) {
+    return 5;
+  }
+  return 9;
+}
+
+function searchJapaneseLookup(query) {
+  const normalizedQuery = normalizeLookupText(query);
+  const compactQuery = compactLookupText(query);
+  if (!normalizedQuery || !compactQuery) {
+    return [];
+  }
+
+  const results = [];
+  for (const track of getTracksByLanguage("ja")) {
+    track.items.forEach((item, itemIndex) => {
+      const fields = [
+        item.primary,
+        item.reading,
+        item.meaning,
+        item.note,
+        item.hint,
+        item.exampleJa,
+        item.exampleKo,
+        item.pairText,
+        item.pairReading,
+      ];
+
+      if (!fields.some((field) => lookupTextMatches(field, normalizedQuery, compactQuery))) {
+        return;
+      }
+
+      results.push({
+        id: `${track.id}:${item.id}`,
+        trackId: track.id,
+        itemId: item.id,
+        itemIndex,
+        score: getJapaneseLookupScore(item, normalizedQuery, compactQuery),
+      });
+    });
+  }
+
+  return results.sort((left, right) => {
+    if (left.score !== right.score) {
+      return left.score - right.score;
+    }
+    if (left.trackId !== right.trackId) {
+      return left.trackId.localeCompare(right.trackId);
+    }
+    return left.itemIndex - right.itemIndex;
+  });
+}
+
+function submitJapaneseLookupSearch(query) {
+  const trimmed = String(query ?? "").trim();
+  state.japaneseLookupQuery = trimmed;
+  state.japaneseLookupResults = trimmed ? searchJapaneseLookup(trimmed) : [];
+  state.japaneseLookupSearched = Boolean(trimmed);
+  state.japaneseLookupPreview = state.japaneseLookupResults.length === 1
+    ? { trackId: state.japaneseLookupResults[0].trackId, itemId: state.japaneseLookupResults[0].itemId }
+    : null;
+  render();
+}
+
+function openJapaneseLookupPreview(trackId, itemId) {
+  state.japaneseLookupPreview = { trackId, itemId };
+  render();
+}
+
+function closeJapaneseLookupPreview() {
+  state.japaneseLookupPreview = null;
+  render();
+}
+
+function getJapaneseLookupPreviewData() {
+  if (!state.japaneseLookupPreview) {
+    return null;
+  }
+
+  const track = getTrack(state.japaneseLookupPreview.trackId);
+  const item = track ? getItemById(track, state.japaneseLookupPreview.itemId) : null;
+  if (!track || !item) {
+    return null;
+  }
+
+  return { track, item };
 }
 
 function getTrackDisplayTitleLegacy(track) {
@@ -1505,15 +1667,13 @@ function waitForSpeechVoices(timeout = 800) {
   });
 }
 
-async function speakCurrentItem() {
-  const track = getActiveStudyTrack();
+async function speakItemWithTrack(track, item) {
   const synth = getSpeechSynth();
-  if (!track || !synth) {
+  if (!track || !item || !synth) {
     return;
   }
 
-  const item = getCurrentItem(track);
-  const text = item ? getSpeechText(item, track) : "";
+  const text = getSpeechText(item, track);
   if (!text) {
     return;
   }
@@ -1532,6 +1692,25 @@ async function speakCurrentItem() {
 
   synth.cancel();
   synth.speak(utterance);
+}
+
+async function speakCurrentItem() {
+  const track = getActiveStudyTrack();
+  if (!track) {
+    return;
+  }
+
+  const item = getCurrentItem(track);
+  await speakItemWithTrack(track, item);
+}
+
+async function speakJapaneseLookupPreview() {
+  const preview = getJapaneseLookupPreviewData();
+  if (!preview) {
+    return;
+  }
+
+  await speakItemWithTrack(preview.track, preview.item);
 }
 
 function getCurrentItem(track) {
@@ -2682,6 +2861,112 @@ function renderHome() {
   `);
 }
 
+function renderJapaneseLookupPanel() {
+  const query = escapeHtml(state.japaneseLookupQuery);
+  const results = state.japaneseLookupResults;
+  const searched = state.japaneseLookupSearched;
+  const resultsMarkup = !searched
+    ? ""
+    : !results.length
+      ? `<div class="lookup-result-empty">검색 결과가 없습니다.</div>`
+      : `
+        <div class="lookup-result-head">검색 결과 ${results.length}개</div>
+        <div class="lookup-result-list">
+          ${results.map((result) => {
+            const track = getTrack(result.trackId);
+            const item = track ? getItemById(track, result.itemId) : null;
+            if (!track || !item) {
+              return "";
+            }
+            const stage = getStageForItem(track, item.id);
+            const saved = isItemSaved(track.id, item.id);
+            const checked = isItemChecked(track.id, item.id);
+            const tags = [saved ? "저장" : "", checked ? "체크" : ""].filter(Boolean);
+            return `
+              <button class="lookup-result-button" type="button" data-jp-search-result="${track.id}::${item.id}">
+                <div class="lookup-result-main">
+                  <div class="lookup-result-word">${renderJapaneseLookupWord(track, item)}</div>
+                  <div class="lookup-result-meaning">${escapeHtml(item.meaning || "")}</div>
+                </div>
+                <div class="lookup-result-meta">${escapeHtml(`${track.group} · ${getTrackLabel(track)}${stage ? ` · ${formatStageDisplayLabel(stage)} ${stage.range}` : ""}`)}</div>
+                ${tags.length ? `<div class="lookup-result-tags">${tags.map((tag) => `<span class="lookup-result-tag">${escapeHtml(tag)}</span>`).join("")}</div>` : ""}
+              </button>
+            `;
+          }).join("")}
+        </div>
+      `;
+
+  return `
+    <div class="section-card japanese-lookup-card">
+      <div>
+        <div class="lookup-title">단어 검색</div>
+        <div class="page-subtitle">한글이나 일본어로 찾아보고 바로 북마크할 수 있습니다.</div>
+      </div>
+      <div class="lookup-search-row">
+        <input class="lookup-search-input" type="search" value="${query}" placeholder="예: 改札 / かいさつ / 개찰구" data-jp-search-input />
+        <button class="home-utility-button lookup-search-submit" type="button" data-jp-search-submit>검색</button>
+      </div>
+      ${resultsMarkup}
+    </div>
+  `;
+}
+
+function renderJapaneseLookupModal() {
+  const preview = getJapaneseLookupPreviewData();
+  if (!preview) {
+    return "";
+  }
+
+  const { track, item } = preview;
+  const stage = getStageForItem(track, item.id);
+  const saved = isItemSaved(track.id, item.id);
+  const checked = isItemChecked(track.id, item.id);
+  const exampleJa = item.exampleJa ? highlightExampleText(item.exampleJa, item, track) : "";
+
+  return `
+    <div class="modal-backdrop">
+      <div class="modal-panel section-card lookup-preview-modal">
+        <div class="lookup-preview-head">
+          <div>
+            <div class="lookup-preview-title">${renderJapaneseLookupWord(track, item)}</div>
+            <div class="lookup-preview-meta">${escapeHtml(`${track.group} · ${getTrackLabel(track)}${stage ? ` · ${formatStageDisplayLabel(stage)} ${stage.range}` : ""}`)}</div>
+          </div>
+          <button class="stage-preview-close" type="button" data-jp-search-preview-close aria-label="검색 카드 닫기">\u2715</button>
+        </div>
+        <div class="lookup-preview-actions">
+          <button class="home-utility-button" type="button" data-jp-search-preview-speak>발음</button>
+          <button class="home-utility-button${saved ? " is-active" : ""}" type="button" data-jp-search-preview-bookmark>${saved ? "저장됨" : "저장"}</button>
+          <button class="home-utility-button${checked ? " is-active" : ""}" type="button" data-jp-search-preview-check>${checked ? "체크됨" : "체크"}</button>
+        </div>
+        <div class="lookup-preview-body">
+          <div class="lookup-preview-field">
+            <div class="lookup-preview-label">뜻</div>
+            <div class="lookup-preview-value">${escapeHtml(item.meaning || "")}</div>
+          </div>
+          ${item.note ? `
+            <div class="lookup-preview-field">
+              <div class="lookup-preview-label">메모</div>
+              <div class="lookup-preview-value">${escapeHtml(item.note)}</div>
+            </div>
+          ` : ""}
+          ${exampleJa ? `
+            <div class="lookup-preview-field">
+              <div class="lookup-preview-label">예문</div>
+              <div class="lookup-preview-value lookup-preview-value--example">${exampleJa}</div>
+            </div>
+          ` : ""}
+          ${item.exampleKo ? `
+            <div class="lookup-preview-field">
+              <div class="lookup-preview-label">예문 해석</div>
+              <div class="lookup-preview-value">${escapeHtml(item.exampleKo)}</div>
+            </div>
+          ` : ""}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
 function renderGroups() {
   const groups = getLanguageGroups();
   const homeButtons = [
@@ -2753,6 +3038,8 @@ function renderGroups() {
       </div>
     `
     : "";
+  const lookupPanel = state.languageId === "ja" ? renderJapaneseLookupPanel() : "";
+  const lookupModal = state.languageId === "ja" ? renderJapaneseLookupModal() : "";
 
   return appShell(`
     <div class="topbar topbar--home">
@@ -2764,11 +3051,13 @@ function renderGroups() {
     </div>
     <div class="home-actions">
       <div class="home-actions-stack">
+        ${lookupPanel}
         <div class="grid-2">${homeButtons}</div>
       </div>
     </div>
     <div class="home-version">ver ${APP_VERSION}</div>
     ${overviewModal}
+    ${lookupModal}
   `);
 }
 
@@ -3792,6 +4081,60 @@ function bindEvents() {
     button.addEventListener("click", () => {
       state.progressOverview = false;
       render();
+    });
+  });
+
+  document.querySelectorAll("[data-jp-search-submit]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const input = document.querySelector("[data-jp-search-input]");
+      submitJapaneseLookupSearch(input?.value ?? "");
+    });
+  });
+
+  document.querySelectorAll("[data-jp-search-input]").forEach((input) => {
+    input.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        submitJapaneseLookupSearch(input.value);
+      }
+    });
+  });
+
+  document.querySelectorAll("[data-jp-search-result]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const [trackId, itemId] = String(button.dataset.jpSearchResult || "").split("::");
+      if (!trackId || !itemId) {
+        return;
+      }
+      openJapaneseLookupPreview(trackId, itemId);
+    });
+  });
+
+  document.querySelectorAll("[data-jp-search-preview-close]").forEach((button) => {
+    button.addEventListener("click", closeJapaneseLookupPreview);
+  });
+
+  document.querySelectorAll("[data-jp-search-preview-speak]").forEach((button) => {
+    button.addEventListener("click", speakJapaneseLookupPreview);
+  });
+
+  document.querySelectorAll("[data-jp-search-preview-bookmark]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const preview = getJapaneseLookupPreviewData();
+      if (!preview) {
+        return;
+      }
+      toggleSavedItem(preview.track.id, preview.item.id);
+    });
+  });
+
+  document.querySelectorAll("[data-jp-search-preview-check]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const preview = getJapaneseLookupPreviewData();
+      if (!preview) {
+        return;
+      }
+      toggleCheckedItem(preview.track.id, preview.item.id);
     });
   });
 
