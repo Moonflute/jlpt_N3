@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "3.3.0";
+const APP_VERSION = "3.3.1";
 let transientNoticeTimer = null;
 
 function createDefaultCustomConfig() {
@@ -280,6 +280,7 @@ function searchJapaneseLookup(query) {
       const fields = [
         item.primary,
         item.reading,
+        item.searchRomaji,
         item.meaning,
         item.note,
         item.hint,
@@ -287,6 +288,7 @@ function searchJapaneseLookup(query) {
         item.exampleKo,
         item.pairText,
         item.pairReading,
+        item.pairSearchRomaji,
       ];
 
       if (!fields.some((field) => lookupTextMatches(field, normalizedQuery, compactQuery))) {

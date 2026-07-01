@@ -788,6 +788,126 @@ function resolveReading(row) {
   return READING_OVERRIDES[row.c2] || row.c3 || "";
 }
 
+
+const ROMAJI_BASE_HEPBURN = {
+  "あ": "a", "い": "i", "う": "u", "え": "e", "お": "o",
+  "か": "ka", "き": "ki", "く": "ku", "け": "ke", "こ": "ko",
+  "さ": "sa", "し": "shi", "す": "su", "せ": "se", "そ": "so",
+  "た": "ta", "ち": "chi", "つ": "tsu", "て": "te", "と": "to",
+  "な": "na", "に": "ni", "ぬ": "nu", "ね": "ne", "の": "no",
+  "は": "ha", "ひ": "hi", "ふ": "fu", "へ": "he", "ほ": "ho",
+  "ま": "ma", "み": "mi", "む": "mu", "め": "me", "も": "mo",
+  "や": "ya", "ゆ": "yu", "よ": "yo",
+  "ら": "ra", "り": "ri", "る": "ru", "れ": "re", "ろ": "ro",
+  "わ": "wa", "を": "o", "ん": "n",
+  "が": "ga", "ぎ": "gi", "ぐ": "gu", "げ": "ge", "ご": "go",
+  "ざ": "za", "じ": "ji", "ず": "zu", "ぜ": "ze", "ぞ": "zo",
+  "だ": "da", "ぢ": "ji", "づ": "zu", "で": "de", "ど": "do",
+  "ば": "ba", "び": "bi", "ぶ": "bu", "べ": "be", "ぼ": "bo",
+  "ぱ": "pa", "ぴ": "pi", "ぷ": "pu", "ぺ": "pe", "ぽ": "po",
+  "ぁ": "a", "ぃ": "i", "ぅ": "u", "ぇ": "e", "ぉ": "o",
+  "ゔ": "vu",
+};
+
+const ROMAJI_BASE_KUNREI = {
+  ...ROMAJI_BASE_HEPBURN,
+  "し": "si",
+  "ち": "ti",
+  "つ": "tu",
+  "ふ": "hu",
+  "じ": "zi",
+  "ぢ": "di",
+  "づ": "du",
+};
+
+const ROMAJI_DIGRAPHS_HEPBURN = {
+  "きゃ": "kya", "きゅ": "kyu", "きょ": "kyo",
+  "しゃ": "sha", "しゅ": "shu", "しょ": "sho",
+  "ちゃ": "cha", "ちゅ": "chu", "ちょ": "cho",
+  "にゃ": "nya", "にゅ": "nyu", "にょ": "nyo",
+  "ひゃ": "hya", "ひゅ": "hyu", "ひょ": "hyo",
+  "みゃ": "mya", "みゅ": "myu", "みょ": "myo",
+  "りゃ": "rya", "りゅ": "ryu", "りょ": "ryo",
+  "ぎゃ": "gya", "ぎゅ": "gyu", "ぎょ": "gyo",
+  "じゃ": "ja", "じゅ": "ju", "じょ": "jo",
+  "ぢゃ": "ja", "ぢゅ": "ju", "ぢょ": "jo",
+  "びゃ": "bya", "びゅ": "byu", "びょ": "byo",
+  "ぴゃ": "pya", "ぴゅ": "pyu", "ぴょ": "pyo",
+};
+
+const ROMAJI_DIGRAPHS_KUNREI = {
+  ...ROMAJI_DIGRAPHS_HEPBURN,
+  "しゃ": "sya", "しゅ": "syu", "しょ": "syo",
+  "ちゃ": "tya", "ちゅ": "tyu", "ちょ": "tyo",
+  "じゃ": "zya", "じゅ": "zyu", "じょ": "zyo",
+  "ぢゃ": "dya", "ぢゅ": "dyu", "ぢょ": "dyo",
+};
+
+function romanizeKanaVariant(text, system = "hepburn") {
+  const source = toHiragana(String(text || ""));
+  const baseMap = system === "kunrei" ? ROMAJI_BASE_KUNREI : ROMAJI_BASE_HEPBURN;
+  const digraphMap = system === "kunrei" ? ROMAJI_DIGRAPHS_KUNREI : ROMAJI_DIGRAPHS_HEPBURN;
+  let output = "";
+
+  for (let index = 0; index < source.length; index += 1) {
+    const current = source[index];
+    const next = source[index + 1] || "";
+    const pair = `${current}${next}`;
+
+    if (current === "っ") {
+      const nextPair = `${next}${source[index + 2] || ""}`;
+      const nextRomaji = digraphMap[nextPair] || baseMap[next] || "";
+      if (nextRomaji) {
+        output += nextRomaji[0];
+      }
+      continue;
+    }
+
+    if (current === "ー") {
+      const lastVowelMatch = output.match(/[aeiou](?!.*[aeiou])/);
+      if (lastVowelMatch) {
+        output += lastVowelMatch[0];
+      }
+      continue;
+    }
+
+    if (digraphMap[pair]) {
+      output += digraphMap[pair];
+      index += 1;
+      continue;
+    }
+
+    if (current === "ん") {
+      const nextPair = `${next}${source[index + 2] || ""}`;
+      const nextRomaji = digraphMap[nextPair] || baseMap[next] || "";
+      output += /^[bmp]/.test(nextRomaji) ? "m" : "n";
+      continue;
+    }
+
+    if (baseMap[current]) {
+      output += baseMap[current];
+      continue;
+    }
+
+    if (/[a-z0-9]/i.test(current)) {
+      output += current.toLowerCase();
+    }
+  }
+
+  return output;
+}
+
+function createRomajiSearchKey(text) {
+  const variants = String(text || "")
+    .split(/[\/・,，、\s]+/)
+    .map((part) => part.trim())
+    .filter(Boolean)
+    .flatMap((part) => [romanizeKanaVariant(part, "hepburn"), romanizeKanaVariant(part, "kunrei")])
+    .filter(Boolean);
+
+  return [...new Set(variants)].join(" ");
+}
+
 function buildItem(track, row, index, candidateMap, overrides) {
   const effectiveReading = resolveReading(row);
   const override = overrides[row.c2];
@@ -801,6 +921,7 @@ function buildItem(track, row, index, candidateMap, overrides) {
     id: `${track.id}-${index + 1}`,
     primary: row.c2,
     reading: normalizedReading,
+    searchRomaji: createRomajiSearchKey(normalizedReading),
     meaning: row.c5,
     exampleJa: row.c6,
     exampleEn: row.c7,
@@ -820,6 +941,7 @@ function buildItem(track, row, index, candidateMap, overrides) {
     const pair = parseSynonymPair(row.c12);
     item.pairText = pair?.text || "";
     item.pairReading = pair?.reading || "";
+    item.pairSearchRomaji = createRomajiSearchKey(item.pairReading);
     const annotatedPairRubyParts = parseAnnotatedRuby(row.c12);
     item.pairRubyParts = item.pairText
       ? (overrides[item.pairText] || annotatedPairRubyParts || segmentReadingByKanji(item.pairText, item.pairReading, candidateMap))
