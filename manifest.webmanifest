@@ -1,0 +1,18 @@
+{
+  "name": "회독노트",
+  "short_name": "회독노트",
+  "description": "일본어와 영어 단어, 문법, 독해를 회독 방식으로 반복 학습하는 개인용 앱",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#fff8fb",
+  "theme_color": "#f7dce6",
+  "lang": "ko",
+  "icons": [
+    {
+      "src": "./icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

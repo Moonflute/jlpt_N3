@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Review Note app icon</title>
+  <desc id="desc">A soft, rounded app icon showing a simple green tree with a visible trunk.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fffdf8" />
+      <stop offset="100%" stop-color="#f1ebdd" />
+    </linearGradient>
+    <linearGradient id="leafLight" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#9bd18e" />
+      <stop offset="100%" stop-color="#5fa15f" />
+    </linearGradient>
+    <linearGradient id="leafDeep" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#6aae67" />
+      <stop offset="100%" stop-color="#3f7f4d" />
+    </linearGradient>
+    <linearGradient id="trunk" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#8b624f" />
+      <stop offset="100%" stop-color="#5e4033" />
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#52624b" flood-opacity="0.18" />
+    </filter>
+  </defs>
+
+  <rect width="512" height="512" rx="112" fill="url(#bg)" />
+  <ellipse cx="256" cy="408" rx="132" ry="28" fill="#e7decb" />
+
+  <g filter="url(#shadow)">
+    <path
+      d="M239 224
+         C236 266 229 310 216 346
+         C228 339 238 327 246 312
+         L246 386
+         H266
+         L266 309
+         C274 325 285 338 298 347
+         C283 307 277 266 274 224
+         Z"
+      fill="url(#trunk)"
+    />
+    <path
+      d="M254 189
+         C235 211 214 230 187 245
+         C204 248 220 246 234 241
+         C214 263 188 280 156 292
+         C183 296 211 293 236 283
+         C216 307 187 327 149 342
+         C197 347 236 335 256 316
+         C276 335 315 347 363 342
+         C325 327 296 307 276 283
+         C301 293 329 296 356 292
+         C324 280 298 263 278 241
+         C292 246 308 248 325 245
+         C298 230 277 211 258 189
+         Z"
+      fill="url(#leafDeep)"
+    />
+    <g>
+      <circle cx="256" cy="154" r="74" fill="url(#leafLight)" />
+      <circle cx="190" cy="188" r="60" fill="url(#leafLight)" />
+      <circle cx="322" cy="188" r="60" fill="url(#leafLight)" />
+      <circle cx="154" cy="254" r="52" fill="url(#leafDeep)" />
+      <circle cx="358" cy="254" r="52" fill="url(#leafDeep)" />
+      <circle cx="214" cy="286" r="58" fill="url(#leafLight)" />
+      <circle cx="298" cy="286" r="58" fill="url(#leafLight)" />
+      <circle cx="256" cy="242" r="72" fill="url(#leafLight)" />
+    </g>
+    <g fill="#eef8ef" opacity="0.9">
+      <circle cx="222" cy="132" r="14" />
+      <circle cx="298" cy="138" r="16" />
+      <circle cx="172" cy="194" r="12" />
+      <circle cx="338" cy="204" r="13" />
+      <circle cx="230" cy="226" r="13" />
+      <circle cx="286" cy="218" r="12" />
+      <circle cx="186" cy="272" r="12" />
+      <circle cx="326" cy="268" r="12" />
+    </g>
+  </g>
+</svg>
