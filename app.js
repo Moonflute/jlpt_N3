@@ -1,11 +1,12 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "3.3.1";
+const APP_VERSION = "3.4.0";
 let transientNoticeTimer = null;
 
 function createDefaultCustomConfig() {
   return {
     batchSize: 20,
     includeChecked: true,
+    showUncheckedCounts: false,
     selectedStageKeys: [],
   };
 }
@@ -41,6 +42,7 @@ const state = {
   stageStats: null,
   transientNotice: null,
   progressOverview: false,
+  savedListOpen: false,
   continuousProgress: false,
   voicesLoaded: false,
   backupNotice: "",
@@ -1796,6 +1798,32 @@ function getFilteredStagePreviewItems(track, items) {
   return items.filter((item) => progress.itemStates[item.id] !== "known");
 }
 
+function getSavedEntriesForLanguage(languageId = state.languageId) {
+  return getSavedItemIds()
+    .map((key) => {
+      const [trackId, itemId] = key.split(":");
+      const track = getTrack(trackId);
+      const item = track ? getItemById(track, itemId) : null;
+      if (!track || !item || (track.language ?? "ja") !== languageId) {
+        return null;
+      }
+      const stage = getStageForItem(track, item.id);
+      return { key, track, item, stage };
+    })
+    .filter(Boolean);
+}
+
+function renderSavedListRows(entries) {
+  return entries
+    .map(({ track, item }) => `
+      <tr>
+        <td class="stage-preview-table__word">${renderStagePreviewWord(track, item)}</td>
+        <td>${escapeHtml(item.meaning || "")}</td>
+        <td>${renderStagePreviewTarget(track, item)}</td>
+      </tr>
+    `)
+    .join("");
+}
 function getSelectableStageOptions(languageId = state.languageId) {
   return getTracksByLanguage(languageId).flatMap((track) =>
     getStages(track).map((stage, index) => ({
@@ -1827,6 +1855,7 @@ function getCustomStageGroups(languageId = state.languageId) {
             stageLabel: formatStageDisplayLabel(stage),
             stageRange: stage.range,
             itemCount: getItemsForStage(track, stage).length,
+            uncheckedCount: getUncheckedStageItemCount(track, stage),
             isCompleted: isStageCompleted(track, stage),
           })),
         }))
@@ -1841,6 +1870,10 @@ function getCustomStageGroups(languageId = state.languageId) {
     .filter((group) => group.tracks.length);
 }
 
+function getUncheckedStageItemCount(track, stage) {
+  const checkedSet = new Set(getCheckedItemIds());
+  return getItemsForStage(track, stage).filter((item) => !checkedSet.has(makeSavedItemKey(track.id, item.id))).length;
+}
 function getSelectedCustomStageOptions() {
   const selected = new Set(state.customConfig.selectedStageKeys ?? []);
   return getSelectableStageOptions().filter((option) => selected.has(option.id));
@@ -1988,6 +2021,14 @@ function setCustomBatchSize(batchSize) {
   render();
 }
 
+function toggleCustomCountDisplay() {
+  state.customConfig = {
+    ...state.customConfig,
+    showUncheckedCounts: !(state.customConfig.showUncheckedCounts ?? false),
+  };
+  saveProgress();
+  render();
+}
 function toggleIncludeChecked() {
   state.customConfig = {
     ...state.customConfig,
@@ -3093,11 +3134,37 @@ function renderCustomMenuResume() {
   const currentCustomKind = state.customSession?.kind ?? "selected";
   const hasActiveSelectedSession = Boolean(currentCustomKind === "selected" && state.customSession?.activeEntries?.length);
   const hasActiveSavedSession = Boolean(currentCustomKind === "saved" && state.customSession?.activeEntries?.length);
-  const savedCount = getSavedItemIds().filter((key) => {
-    const [trackId] = key.split(":");
-    const track = getTrack(trackId);
-    return track && (track.language ?? "ja") === state.languageId;
-  }).length;
+  const savedListEntries = getSavedEntriesForLanguage();
+  const savedCount = savedListEntries.length;
+  const savedListModal = state.savedListOpen
+    ? `
+      <div class="modal-backdrop">
+        <div class="modal-panel section-card stage-preview-modal">
+          <div class="stage-preview-head">
+            <div>
+              <div class="stage-preview-title">\uC800\uC7A5 \uBAA9\uB85D</div>
+              <div class="stage-preview-subtitle">\uC800\uC7A5\uD55C \uD56D\uBAA9 \uC804\uCCB4 - ${savedListEntries.length}\uAC1C</div>
+            </div>
+            <button class="stage-preview-close" type="button" data-saved-list-close aria-label="\uC800\uC7A5 \uBAA9\uB85D \uB2EB\uAE30">\u2715</button>
+          </div>
+          <div class="stage-preview-table-wrap">
+            ${savedListEntries.length
+              ? `<table class="stage-preview-table">
+                  <thead>
+                    <tr>
+                      <th>\uB2E8\uC5B4</th>
+                      <th>\uC758\uBBF8</th>
+                      <th>\uD655\uC778</th>
+                    </tr>
+                  </thead>
+                  <tbody>${renderSavedListRows(savedListEntries)}</tbody>
+                </table>`
+              : `<div class="stage-preview-empty">\uC800\uC7A5\uD55C \uD56D\uBAA9\uC774 \uC5C6\uC2B5\uB2C8\uB2E4.</div>`}
+          </div>
+        </div>
+      </div>
+    `
+    : "";
 
   return appShell(`
     <div class="topbar">
@@ -3125,10 +3192,12 @@ function renderCustomMenuResume() {
             <div class="type-button__title">${hasActiveSavedSession ? "\uC800\uC7A5 [\uD559\uC2B5\uC911]" : "\uC800\uC7A5"}</div>
             <div class="type-button__meta">${savedCount ? `\uC800\uC7A5\uB41C \uB2E8\uC5B4 ${savedCount}\uAC1C\uB97C \uD559\uC2B5\uD569\uB2C8\uB2E4.` : "\uC800\uC7A5\uB41C \uB2E8\uC5B4\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4."}</div>
           </button>
+          <button class="custom-abort-button" type="button" data-saved-list-open${savedCount ? "" : " disabled"}>[\uBAA9\uB85D]</button>
           <button class="custom-abort-button" type="button" data-saved-clear${savedCount ? "" : " disabled"}>[\uBAA8\uB450\uD574\uC81C]</button>
         </div>
       </div>
     </div>
+    ${savedListModal}
   `);
 }
 
@@ -3178,6 +3247,7 @@ function renderCustomSelectCompact() {
   const selected = new Set(state.customConfig.selectedStageKeys ?? []);
   const batchSize = state.customConfig.batchSize ?? 20;
   const includeChecked = state.customConfig.includeChecked ?? true;
+  const showUncheckedCounts = state.customConfig.showUncheckedCounts ?? false;
   const groups = getCustomStageGroups();
   const selectedCardCount = getSelectedCustomStageItemCount();
 
@@ -3214,7 +3284,7 @@ function renderCustomSelectCompact() {
                                 data-custom-stage="${option.id}"
                                 title="${escapeHtml(`${track.trackTitle} ${option.stageLabel} · ${option.stageRange}`)}"
                                 aria-label="${escapeHtml(`${track.trackTitle} ${option.stageLabel} ${option.stageRange}`)}"
-                              >${String(index + 1).padStart(2, "0")}</button>
+                              >${showUncheckedCounts ? option.uncheckedCount : String(index + 1).padStart(2, "0")}</button>
                             `,
                           )
                           .join("")}
@@ -3232,7 +3302,10 @@ function renderCustomSelectCompact() {
       <div class="custom-select-footer__summary-wrap">
         <div class="custom-select-footer__summary">\uC120\uD0DD\uD55C \uBB49\uCE58 ${selected.size}\uAC1C</div>
         <div class="custom-select-footer__summary">\uC120\uD0DD\uD55C \uCE74\uB4DC ${selectedCardCount}\uAC1C</div>
-        <button class="stage-preview-filter custom-select-clear" type="button" data-custom-clear${selected.size ? "" : " disabled"}>\uC804\uCCB4\uD574\uC81C</button>
+        <div class="custom-select-footer__button-row">
+          <button class="stage-preview-filter custom-select-clear" type="button" data-custom-clear${selected.size ? "" : " disabled"}>\uC804\uCCB4\uD574\uC81C</button>
+          <button class="stage-preview-filter custom-count-toggle${showUncheckedCounts ? " is-active" : ""}" type="button" data-custom-count-toggle>\uAC1C\uC218</button>
+        </div>
       </div>
       <div class="custom-batch-picker custom-batch-picker--footer">
         <div class="custom-batch-picker-row">
@@ -3542,6 +3615,17 @@ function renderStudy() {
       { key: "meaning", label: "의미 보기" },
       { key: "example", label: "예문 보기", enabled: Boolean(exampleJa) },
       { key: "exampleKo", label: "예문 해석 보기", enabled: Boolean(exampleKo) },
+    ];
+  } else if (track.mode === "kanji_reading") {
+    modeText = "\uD55C\uC790\uB97C \uBCF4\uACE0 \uD6C8\uB3C5\uACFC \uC74C\uB3C5\uC744 \uB5A0\uC62C\uB9B0 \uB4A4 \uD655\uC778";
+    primary = escapeHtml(item.primary);
+    secondary = state.reveal.reading ? escapeHtml(item.reading || "") : "";
+    tertiary = state.reveal.meaning ? escapeHtml(item.meaning || "") : "";
+    actions = [
+      { key: "reading", label: "\uD6C8\uB3C5 \uBCF4\uAE30" },
+      { key: "meaning", label: "\uC74C\uB3C5 \uBCF4\uAE30" },
+      { key: "example", label: "\uB2E8\uC5B4 \uBCF4\uAE30", enabled: Boolean(exampleJa) },
+      { key: "exampleKo", label: "\uD55C\uC790 \uB73B \uBCF4\uAE30", enabled: Boolean(exampleKo) },
     ];
   } else {
     modeText = "의미를 떠올린 뒤 예문으로 확인";
@@ -4181,6 +4265,20 @@ function bindEvents() {
     });
   });
 
+  document.querySelectorAll("[data-saved-list-open]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.savedListOpen = true;
+      render();
+    });
+  });
+
+  document.querySelectorAll("[data-saved-list-close]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.savedListOpen = false;
+      render();
+    });
+  });
+
   document.querySelectorAll("[data-saved-clear]").forEach((button) => {
     button.addEventListener("click", () => clearSavedItemsForLanguage());
   });
@@ -4199,6 +4297,10 @@ function bindEvents() {
 
   document.querySelectorAll("[data-custom-checked-toggle]").forEach((button) => {
     button.addEventListener("click", toggleIncludeChecked);
+  });
+
+  document.querySelectorAll("[data-custom-count-toggle]").forEach((button) => {
+    button.addEventListener("click", toggleCustomCountDisplay);
   });
 
   document.querySelectorAll("[data-custom-clear]").forEach((button) => {

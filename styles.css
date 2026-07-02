@@ -510,8 +510,14 @@ button {
   justify-items: start;
 }
 
-.custom-select-clear {
+.custom-select-footer__button-row {
+  display: flex;
+  gap: 6px;
   margin-top: 2px;
+}
+
+.custom-select-clear {
+  margin-top: 0;
 }
 
 .custom-select-board {

@@ -18,11 +18,13 @@ const sourceFileName = findSourceFile((name) => name.includes("해커스"));
 const vocabSourceFileName =
   findSourceFile((name) => name !== sourceFileName && name.includes("JLPT")) ||
   findSourceFile((name) => name !== sourceFileName);
+const kanjiSourceFileName = findSourceFile((name) => name.includes("\uD55C\uC790") && name.includes("2136"));
 const englishSourceFileName = fs.existsSync(englishSourceDir)
   ? fs.readdirSync(englishSourceDir).find((name) => name.endsWith(".txt")) || ""
   : "";
 const sourcePath = path.join(sourceDir, sourceFileName);
 const vocabSourcePath = path.join(sourceDir, vocabSourceFileName);
+const kanjiSourcePath = path.join(sourceDir, kanjiSourceFileName);
 const englishSourcePath = path.join(englishSourceDir, englishSourceFileName);
 const READING_OVERRIDES = {
   "～に比べて": "～にくらべて",
@@ -167,6 +169,15 @@ const WORD_TRACK_DEFS = {
     description: "가타가나 어휘를 Day 단위로 회독하는 트랙",
     mode: "meaning_check",
   },
+};
+
+const KANJI_TRACK_DEF = {
+  id: "word-kanji",
+  language: "ja",
+  group: "\uB2E8\uC5B4",
+  title: "\uD55C\uC790",
+  description: "\uC0C1\uC6A9\uD55C\uC790\uB97C \uD6C8\uB3C5\uACFC \uC74C\uB3C5 \uC911\uC2EC\uC73C\uB85C \uD68C\uB3C5\uD558\uB294 \uD2B8\uB799",
+  mode: "kanji_reading",
 };
 
 const ENGLISH_WORD_TRACK_DEFS = [
@@ -1075,6 +1086,147 @@ function buildWordTracks(rows, candidateMap, overrides) {
   });
 }
 
+
+function normalizeKanjiReading(text) {
+  return String(text || "")
+    .replace(/[()\uFF08\uFF09]/g, "")
+    .replace(/\s+/g, "")
+    .trim();
+}
+
+function splitReadingVariants(text) {
+  return String(text || "")
+    .split(/[\u3001,\/\uFF0F\u30FB]+/)
+    .map(normalizeKanjiReading)
+    .filter((part) => part && /^[\u3041-\u3096\u30A1-\u30FA\u30FC]+$/.test(part));
+}
+
+function extractOnReadings(raw) {
+  const firstToken = String(raw || "").trim().split(/\s+/)[0] || "";
+  return [...new Set(splitReadingVariants(firstToken))];
+}
+
+function extractKunReadings(raw) {
+  const source = String(raw || "");
+  const readings = [];
+  const parenPattern = /[\uFF08(]([^\uFF08\uFF09()]+)[\uFF09)]/g;
+  let match;
+
+  while ((match = parenPattern.exec(source))) {
+    const before = source.slice(0, match.index);
+    const tokenStart = Math.max(before.lastIndexOf(" "), before.lastIndexOf("?"), before.lastIndexOf("?")) + 1;
+    const headword = before.slice(tokenStart).trim();
+    const headwordLength = Array.from(headword).length;
+
+    if (headword && headwordLength <= 6 && /[\u4E00-\u9FFF\u3005]/.test(headword)) {
+      readings.push(...splitReadingVariants(match[1]));
+    }
+  }
+
+  const leadingPattern = /(?:^|\s)([\u3041-\u3096\u30A1-\u30FA\u30FC]+)(?=[\u4E00-\u9FFF\u3005])/g;
+  while ((match = leadingPattern.exec(source))) {
+    readings.push(...splitReadingVariants(match[1]));
+  }
+
+  return [...new Set(readings)];
+}
+
+function parseKanjiRows(text) {
+  return text
+    .split(/\r?\n/)
+    .filter((line) => line && !line.startsWith("#"))
+    .map((line) => line.split("\t"))
+    .filter((cols) => /^[\u4E00-\u9FFF\u3005]$/.test(cols[0] || ""))
+    .map((cols) => ({
+      kanji: cols[0] || "",
+      korean: cols[1] || "",
+      onSource: cols[2] || "",
+      kunSource: cols[3] || "",
+      related: cols[4] || "",
+    }));
+}
+
+function collectKanjiExampleMap(tracks) {
+  const examples = new Map();
+
+  for (const track of tracks) {
+    if ((track.language || "ja") !== "ja" || !Array.isArray(track.items)) {
+      continue;
+    }
+
+    for (const item of track.items) {
+      const term = String(item.answer || item.primary || "").trim();
+      if (!term || term.length < 2 || !/[\u4E00-\u9FFF\u3005]/.test(term)) {
+        continue;
+      }
+
+      const label = item.meaning ? `${term}(${item.meaning})` : term;
+      for (const char of Array.from(new Set(Array.from(term).filter((candidate) => /[一-鿿々]/.test(candidate))))) {
+        if (!examples.has(char)) {
+          examples.set(char, []);
+        }
+        const bucket = examples.get(char);
+        const hasSameTerm = bucket.some((entry) => entry === term || entry.startsWith(`${term}(`));
+        if (bucket.length < 3 && !hasSameTerm) {
+          bucket.push(label);
+        }
+      }
+    }
+  }
+
+  return examples;
+}
+
+function buildKanjiStages(items) {
+  const stages = [];
+  const size = 25;
+
+  for (let start = 0; start < items.length; start += size) {
+    const end = Math.min(start + size, items.length);
+    stages.push({
+      id: `kanji-${String(stages.length + 1).padStart(3, "0")}`,
+      label: String(stages.length + 1).padStart(2, "0"),
+      range: `${start + 1}~${end}`,
+      start,
+      end,
+    });
+  }
+
+  return stages;
+}
+
+function buildKanjiTrack(rows, tracksForExamples) {
+  const exampleMap = collectKanjiExampleMap(tracksForExamples);
+  const items = rows.map((row, index) => {
+    const kunReadings = extractKunReadings(row.kunSource);
+    const onReadings = extractOnReadings(row.onSource);
+    const reading = kunReadings.join(" / ");
+    const meaning = onReadings.join(" / ");
+    const examples = exampleMap.get(row.kanji) || [];
+
+    return {
+      id: `${KANJI_TRACK_DEF.id}-${index + 1}`,
+      primary: row.kanji,
+      reading,
+      searchRomaji: createRomajiSearchKey(`${reading} ${meaning}`),
+      meaning,
+      exampleJa: examples.join(" / "),
+      exampleKo: row.korean,
+      note: row.korean,
+      hint: row.related,
+      sourceTag: "상용한자 2136",
+      rubyParts: [{ base: row.kanji, ruby: "" }],
+    };
+  });
+
+  return {
+    ...KANJI_TRACK_DEF,
+    total: items.length,
+    items,
+    stages: buildKanjiStages(items),
+  };
+}
+
 function makePlainRubyParts(text) {
   return [{ base: text || "", ruby: "" }];
 }
@@ -1164,9 +1316,11 @@ function main() {
   const text = fs.readFileSync(sourcePath, "utf8");
   const vocabText = fs.readFileSync(vocabSourcePath, "utf8");
   const englishText = englishSourceFileName ? fs.readFileSync(englishSourcePath, "utf8") : "";
+  const kanjiText = kanjiSourceFileName ? fs.readFileSync(kanjiSourcePath, "utf8") : "";
   const rows = parseTsv(text);
   const vocabRows = parseTsv(vocabText);
   const englishRows = englishText ? parseEnglishTsv(englishText) : [];
+  const kanjiRows = kanjiText ? parseKanjiRows(kanjiText) : [];
   const tracks = [];
   const overrides = loadOverrides();
   const candidateMap = buildExpandedCandidateMap([...rows, ...vocabRows], overrides);
@@ -1223,6 +1377,9 @@ function main() {
   }
 
   tracks.push(...buildWordTracks(vocabRows, candidateMap, overrides));
+  if (kanjiRows.length) {
+    tracks.push(buildKanjiTrack(kanjiRows, tracks));
+  }
   tracks.push(...buildEnglishWordTracks(englishRows));
 
   fs.mkdirSync(outputDir, { recursive: true });
