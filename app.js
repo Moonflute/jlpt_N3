@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "3.4.0";
+const APP_VERSION = "3.4.1";
 let transientNoticeTimer = null;
 
 function createDefaultCustomConfig() {
@@ -3303,7 +3303,7 @@ function renderCustomSelectCompact() {
         <div class="custom-select-footer__summary">\uC120\uD0DD\uD55C \uBB49\uCE58 ${selected.size}\uAC1C</div>
         <div class="custom-select-footer__summary">\uC120\uD0DD\uD55C \uCE74\uB4DC ${selectedCardCount}\uAC1C</div>
         <div class="custom-select-footer__button-row">
-          <button class="stage-preview-filter custom-select-clear" type="button" data-custom-clear${selected.size ? "" : " disabled"}>\uC804\uCCB4\uD574\uC81C</button>
+          <button class="stage-preview-filter custom-select-clear" type="button" data-custom-clear${selected.size ? "" : " disabled"}>\uD574\uC81C</button>
           <button class="stage-preview-filter custom-count-toggle${showUncheckedCounts ? " is-active" : ""}" type="button" data-custom-count-toggle>\uAC1C\uC218</button>
         </div>
       </div>
