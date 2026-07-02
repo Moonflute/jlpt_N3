@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "3.4.1";
+const APP_VERSION = "3.4.2";
 let transientNoticeTimer = null;
 
 function createDefaultCustomConfig() {
@@ -43,6 +43,7 @@ const state = {
   transientNotice: null,
   progressOverview: false,
   savedListOpen: false,
+  savedClearConfirmOpen: false,
   continuousProgress: false,
   voicesLoaded: false,
   backupNotice: "",
@@ -3166,6 +3167,19 @@ function renderCustomMenuResume() {
     `
     : "";
 
+  const savedClearConfirmModal = state.savedClearConfirmOpen
+    ? `
+      <div class="modal-backdrop">
+        <div class="modal-panel session-prompt session-prompt--modal">
+          <div class="session-prompt__text">\uC815\uB9D0 \uC800\uC7A5\uBAA9\uB85D\uC744 \uBAA8\uB450 \uD574\uC81C\uD558\uACA0\uC2B5\uB2C8\uAE4C?</div>
+          <div class="session-prompt__actions">
+            <button class="prompt-button" type="button" data-saved-clear-confirm="yes">\uC608</button>
+            <button class="prompt-button prompt-button--ghost" type="button" data-saved-clear-confirm="no">\uC544\uB2C8\uC624</button>
+          </div>
+        </div>
+      </div>
+    `
+    : "";
   return appShell(`
     <div class="topbar">
       <button class="back-button" data-route="${isCustomStudy ? "custom-select" : "groups"}">\uD648</button>
@@ -3192,12 +3206,15 @@ function renderCustomMenuResume() {
             <div class="type-button__title">${hasActiveSavedSession ? "\uC800\uC7A5 [\uD559\uC2B5\uC911]" : "\uC800\uC7A5"}</div>
             <div class="type-button__meta">${savedCount ? `\uC800\uC7A5\uB41C \uB2E8\uC5B4 ${savedCount}\uAC1C\uB97C \uD559\uC2B5\uD569\uB2C8\uB2E4.` : "\uC800\uC7A5\uB41C \uB2E8\uC5B4\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4."}</div>
           </button>
-          <button class="custom-abort-button" type="button" data-saved-list-open${savedCount ? "" : " disabled"}>[\uBAA9\uB85D]</button>
-          <button class="custom-abort-button" type="button" data-saved-clear${savedCount ? "" : " disabled"}>[\uBAA8\uB450\uD574\uC81C]</button>
+          <div class="custom-menu-action-row">
+            <button class="custom-abort-button" type="button" data-saved-list-open${savedCount ? "" : " disabled"}>[\uBAA9\uB85D]</button>
+            <button class="custom-abort-button" type="button" data-saved-clear${savedCount ? "" : " disabled"}>[\uBAA8\uB450\uD574\uC81C]</button>
+          </div>
         </div>
       </div>
     </div>
     ${savedListModal}
+    ${savedClearConfirmModal}
   `);
 }
 
@@ -4280,7 +4297,22 @@ function bindEvents() {
   });
 
   document.querySelectorAll("[data-saved-clear]").forEach((button) => {
-    button.addEventListener("click", () => clearSavedItemsForLanguage());
+    button.addEventListener("click", () => {
+      state.savedClearConfirmOpen = true;
+      render();
+    });
+  });
+
+  document.querySelectorAll("[data-saved-clear-confirm]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const confirmed = button.dataset.savedClearConfirm === "yes";
+      state.savedClearConfirmOpen = false;
+      if (confirmed) {
+        clearSavedItemsForLanguage();
+        return;
+      }
+      render();
+    });
   });
 
   document.querySelectorAll("[data-custom-abort]").forEach((button) => {

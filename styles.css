@@ -577,6 +577,12 @@ button {
   min-width: 0;
 }
 
+.custom-menu-action-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
 .custom-abort-button {
   align-self: center;
   border: 1px solid rgba(20, 158, 163, 0.24);
