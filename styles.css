@@ -322,6 +322,21 @@ button {
   font-size: clamp(18px, 4.8vw, 22px);
 }
 
+.page-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.stage-preview-button--title {
+  flex: 0 0 auto;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  font-size: 18px;
+}
+
 .title-block p,
 .page-subtitle {
   margin: 6px 0 0;

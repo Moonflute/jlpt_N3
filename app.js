@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "3.5.5";
+const APP_VERSION = "3.5.6";
 let transientNoticeTimer = null;
 
 function createDefaultCustomConfig() {
@@ -1796,10 +1796,9 @@ function getFilteredStagePreviewItems(track, items) {
     return items;
   }
 
-  const progress = getTrackProgress(track.id);
-  return items.filter((item) => progress.itemStates[item.id] !== "known");
+  const checkedSet = new Set(getCheckedItemIds());
+  return items.filter((item) => !checkedSet.has(makeSavedItemKey(track.id, item.id)));
 }
-
 function getSavedEntriesForLanguage(languageId = state.languageId) {
   return getSavedItemIds()
     .map((key) => {
@@ -3152,8 +3151,11 @@ function renderCustomMenu() {
       <button class="back-button" data-route="${isCustomStudy ? "custom-select" : "groups"}">홈</button>
     </div>
     <div class="section-card">
-      <h1 class="page-title">맞춤</h1>
-      <p class="page-subtitle">진행 추천 또는 여러 뭉치를 직접 골라 학습합니다.</p>
+      <div class="page-title-row">
+        <h1 class="page-title">${escapeHtml(getTrackLabel(track))}</h1>
+        <button class="stage-preview-button stage-preview-button--title" type="button" data-track-preview aria-label="전체 목록 보기">&#9776;</button>
+      </div>
+      <p class="page-subtitle">${escapeHtml(track.description)}</p>
     </div>
     <div class="section-card">
       <div class="type-list">
@@ -3490,9 +3492,19 @@ function renderStage() {
     })
     .join("");
 
-  const previewStage = state.stagePreview ? stages[state.stagePreview.index] : null;
-  const previewItems = previewStage ? getItemsForStage(track, previewStage) : [];
+  const isTrackPreview = state.stagePreview?.scope === "track";
+  const previewStage = state.stagePreview && !isTrackPreview ? stages[state.stagePreview.index] : null;
+  const previewItems = isTrackPreview ? (track.items || []) : previewStage ? getItemsForStage(track, previewStage) : [];
   const filteredPreviewItems = getFilteredStagePreviewItems(track, previewItems);
+  const previewTitleText = isTrackPreview
+    ? `${getTrackLabel(track)} 전체`
+    : `${getTrackLabel(track)} · ${formatStageDisplayLabel(previewStage)} ${previewStage.range}`;
+  const previewSubtitleText = isTrackPreview
+    ? `이 유형 전체에서 확인할 항목 목록 · ${filteredPreviewItems.length}개`
+    : `이 회독 범위에서 확인할 항목 목록 · ${filteredPreviewItems.length}개`;
+  const previewEmptyText = isTrackPreview
+    ? "이 유형 전체에서 아직 미완료 항목이 없습니다."
+    : "이 회독 범위에서 아직 미완료 항목이 없습니다.";
   const previewTitle = track.mode === "kana_to_kanji"
     ? "히라가나 / 정답 표기"
     : track.mode === "synonym_pair"
@@ -3527,13 +3539,13 @@ function renderStage() {
       }
 
       ${
-        state.stagePreview && previewStage
+        state.stagePreview && (isTrackPreview || previewStage)
           ? `<div class="modal-backdrop">
         <div class="modal-panel section-card stage-preview-modal">
           <div class="stage-preview-head">
             <div>
-              <div class="stage-preview-title">${escapeHtml(getTrackLabel(track))} · ${escapeHtml(formatStageDisplayLabel(previewStage))} ${escapeHtml(previewStage.range)}</div>
-              <div class="stage-preview-subtitle">이 회독 범위에서 확인할 항목 목록 · ${filteredPreviewItems.length}개</div>
+              <div class="stage-preview-title">${escapeHtml(previewTitleText)}</div>
+              <div class="stage-preview-subtitle">${escapeHtml(previewSubtitleText)}</div>
             </div>
             <button class="stage-preview-close" type="button" data-stage-preview-close aria-label="목록 닫기">\u2715</button>
           </div>
@@ -3566,7 +3578,7 @@ function renderStage() {
               </thead>
               <tbody>${renderStagePreviewRows(track, filteredPreviewItems)}</tbody>
             </table>`
-                : `<div class="stage-preview-empty">이 회독 범위에서 아직 미완료 항목이 없습니다.</div>`
+                : `<div class="stage-preview-empty">${escapeHtml(previewEmptyText)}</div>`
             }
           </div>
         </div>
@@ -4140,6 +4152,12 @@ function bindEvents() {
     });
   });
 
+  document.querySelectorAll("[data-track-preview]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.stagePreview = { scope: "track", filter: "all" };
+      render();
+    });
+  });
   document.querySelectorAll("[data-stage-preview-filter]").forEach((button) => {
     button.addEventListener("click", () => {
       if (!state.stagePreview) {
