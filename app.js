@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "3.5.0";
+const APP_VERSION = "3.5.1";
 let transientNoticeTimer = null;
 
 function createDefaultCustomConfig() {
@@ -2267,30 +2267,41 @@ function renderRubyParts(parts, revealRuby, options = {}) {
     .join("");
 }
 
-function renderKanjiExampleWords(example) {
+function renderKanjiExampleWords(example, targetKanji = "") {
   const source = String(example || "").trim();
   if (!source) {
     return "";
   }
 
-  return source
+  const parsed = source
     .split(/\s*\/\s*/)
     .filter(Boolean)
     .map((part) => {
       const match = part.match(/^(.+?)[（(]([^）)]+)[）)]$/u);
-      if (!match) {
-        return escapeHtml(part);
-      }
-
-      const base = match[1].trim();
-      const detail = match[2].trim();
-      if (/^[\u3041-\u3096\u30A1-\u30FA\u30FC]+$/u.test(detail)) {
-        return `<ruby class="kanji-example-ruby">${escapeHtml(base)}<rt>${escapeHtml(detail)}</rt></ruby>`;
-      }
-
-      return `${escapeHtml(base)}<span class="kanji-example-meaning">(${escapeHtml(detail)})</span>`;
+      const term = (match ? match[1] : part).trim();
+      const detail = (match ? match[2] : "").trim();
+      const isReading = /^[\u3041-\u3096\u30A1-\u30FA\u30FC]+$/u.test(detail);
+      return {
+        term,
+        reading: isReading ? detail : "",
+        meaning: isReading ? "" : detail,
+        score: (isReading ? 1 : 0) + (!isReading && detail ? 2 : 0),
+      };
     })
-    .join('<span class="kanji-example-separator"> / </span>');
+    .filter((entry) => entry.term);
+
+  return parsed
+    .sort((left, right) => right.score - left.score)
+    .slice(0, 2)
+    .map((entry) => {
+      const term = Array.from(entry.term)
+        .map((char) => char === targetKanji ? '<span class="kanji-example-target">' + escapeHtml(char) + '</span>' : escapeHtml(char))
+        .join("");
+      const reading = entry.reading ? '<span class="kanji-example-reading">[' + escapeHtml(entry.reading) + ']</span>' : "";
+      const meaning = entry.meaning ? '<span class="kanji-example-colon"> : </span>' + escapeHtml(entry.meaning) : "";
+      return '<div class="kanji-example-line">' + term + reading + meaning + '</div>';
+    })
+    .join("");
 }
 
 function addTerm(target, value) {
@@ -3593,7 +3604,7 @@ function renderStudy() {
     `);
   }
 
-  const exampleJa = track.mode === "kanji_reading" ? renderKanjiExampleWords(item.exampleJa) : escapeHtml(item.exampleJa);
+  const exampleJa = track.mode === "kanji_reading" ? renderKanjiExampleWords(item.exampleJa, item.primary) : escapeHtml(item.exampleJa);
   const exampleKo = escapeHtml(item.exampleKo);
   const isEnglish = (track.language ?? "ja") === "en";
   const isSaved = isItemSaved(track.id, item.id);
@@ -3665,6 +3676,7 @@ function renderStudy() {
     primary = escapeHtml(item.primary);
     secondary = state.reveal.exampleKo ? escapeHtml(item.exampleKo || "") : "";
     tertiary = state.reveal.note ? escapeHtml(item.note || "") : "";
+    tertiaryClass = "card-choice card-choice--kanji-note";
     const readingParts = [];
     if (item.reading) {
       readingParts.push(`훈독 : ${escapeHtml(item.reading)}`);
@@ -3676,9 +3688,10 @@ function renderStudy() {
     actions = [
       { key: "exampleKo", label: "한자뜻 보기", enabled: Boolean(exampleKo) },
       { key: "note", label: "메모 보기", enabled: Boolean(item.note) },
-      { key: "reading", label: "훈독/음독 보기", enabled: Boolean(item.reading || item.meaning) },
+      { key: "reading", label: "훈음독 보기", enabled: Boolean(item.reading || item.meaning) },
       { key: "example", label: "단어 보기", enabled: Boolean(exampleJa) },
     ];
+
   } else {
     modeText = "의미를 떠올린 뒤 예문으로 확인";
     primary = renderRubyParts(item.rubyParts, state.reveal.reading, { padBlankRuby: true });
@@ -3795,7 +3808,7 @@ function renderStudy() {
         </div>
       </div>
       <div class="action-stack">
-        <div class="action-row action-row--primary">
+        <div class="action-row action-row--primary${track.mode === "kanji_reading" ? " action-row--kanji" : ""}">
           ${primaryActions
             .map(
               (action) =>

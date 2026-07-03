@@ -1099,6 +1099,15 @@ button {
   color: var(--muted);
 }
 
+.card-choice--kanji-note {
+  max-width: 620px;
+  min-height: 24px;
+  color: var(--muted);
+  font-size: 16px;
+  font-weight: 520;
+  line-height: 1.55;
+}
+
 .card-example-shell {
   width: 100%;
   max-width: 620px;
@@ -1136,6 +1145,21 @@ button {
   color: var(--teal-deep);
   font-size: 0.72em;
   font-weight: 700;
+}
+
+.kanji-example-line {
+  line-height: 1.6;
+}
+
+.kanji-example-target {
+  color: var(--teal-deep);
+  font-weight: 850;
+}
+
+.kanji-example-reading,
+.kanji-example-colon,
+.kanji-example-meaning {
+  color: var(--muted-light);
 }
 
 .kanji-example-separator {
@@ -1243,6 +1267,16 @@ rt {
 
 .action-button--secondary {
   flex: 1 1 calc(50% - 5px);
+}
+
+.action-row--kanji {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.action-row--kanji .action-button {
+  width: 100%;
+  min-width: 0;
 }
 
 .decision-button {
