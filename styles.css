@@ -1586,6 +1586,39 @@ rt {
   word-break: keep-all;
 }
 
+.stage-preview-table--saved th:nth-child(1),
+.stage-preview-table--saved td:nth-child(1) {
+  width: 46%;
+}
+
+.stage-preview-table--saved th:nth-child(2),
+.stage-preview-table--saved td:nth-child(2) {
+  width: 40%;
+}
+
+.stage-preview-table--saved th:nth-child(3),
+.stage-preview-table--saved td:nth-child(3) {
+  width: 14%;
+  text-align: center;
+}
+
+.stage-preview-table__save-cell {
+  vertical-align: middle;
+}
+
+.saved-list-toggle {
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(20, 158, 163, 0.35);
+  border-radius: 8px;
+  background: rgba(20, 158, 163, 0.12);
+  color: var(--teal-deep);
+  font-size: 15px;
+  font-weight: 900;
+  line-height: 1;
+  cursor: pointer;
+}
+
 .session-prompt--complete {
   background: #f3fbf8;
 }

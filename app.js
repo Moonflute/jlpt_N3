@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "3.5.1";
+const APP_VERSION = "3.5.2";
 let transientNoticeTimer = null;
 
 function createDefaultCustomConfig() {
@@ -1817,11 +1817,13 @@ function getSavedEntriesForLanguage(languageId = state.languageId) {
 
 function renderSavedListRows(entries) {
   return entries
-    .map(({ track, item }) => `
+    .map(({ key, track, item }) => `
       <tr>
         <td class="stage-preview-table__word">${renderStagePreviewWord(track, item)}</td>
         <td>${escapeHtml(item.meaning || "")}</td>
-        <td>${renderStagePreviewTarget(track, item)}</td>
+        <td class="stage-preview-table__save-cell">
+          <button class="saved-list-toggle" type="button" data-saved-list-toggle="${escapeHtml(key)}" aria-label="저장 해제">✓</button>
+        </td>
       </tr>
     `)
     .join("");
@@ -3188,12 +3190,12 @@ function renderCustomMenuResume() {
           </div>
           <div class="stage-preview-table-wrap">
             ${savedListEntries.length
-              ? `<table class="stage-preview-table">
+              ? `<table class="stage-preview-table stage-preview-table--saved">
                   <thead>
                     <tr>
                       <th>\uB2E8\uC5B4</th>
                       <th>\uC758\uBBF8</th>
-                      <th>\uD655\uC778</th>
+                      <th>\uC800\uC7A5</th>
                     </tr>
                   </thead>
                   <tbody>${renderSavedListRows(savedListEntries)}</tbody>
@@ -4340,6 +4342,16 @@ function bindEvents() {
   document.querySelectorAll("[data-saved-list-close]").forEach((button) => {
     button.addEventListener("click", () => {
       state.savedListOpen = false;
+      render();
+    });
+  });
+
+  document.querySelectorAll("[data-saved-list-toggle]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const key = button.dataset.savedListToggle;
+      setSavedItemIds(getSavedItemIds().filter((itemKey) => itemKey !== key));
+      rebalanceSavedSession(state.customSession);
+      saveProgress();
       render();
     });
   });
