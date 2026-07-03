@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "3.5.4";
+const APP_VERSION = "3.5.5";
 let transientNoticeTimer = null;
 
 function createDefaultCustomConfig() {
@@ -2287,7 +2287,7 @@ function renderKanjiExampleWords(example, targetKanji = "") {
         term,
         reading: isReading ? detail : "",
         meaning: isReading ? "" : detail,
-        score: (isReading ? 1 : 0) + (!isReading && detail ? 2 : 0),
+        score: (isReading ? 4 : 0) + (!isReading && detail ? 2 : 0),
       };
     })
     .filter((entry) => entry.term);
@@ -3708,11 +3708,11 @@ function renderStudy() {
 
   const visibleActions = actions.filter((action) => action.enabled !== false);
   const primaryActions = visibleActions.filter(
-    (action) => action.key !== "example" && !(action.key === "exampleKo" && track.mode !== "kanji_reading"),
+    (action) => track.mode === "kanji_reading" || (action.key !== "example" && action.key !== "exampleKo"),
   );
-  const exampleActions = visibleActions.filter(
-    (action) => action.key === "example" || (action.key === "exampleKo" && track.mode !== "kanji_reading"),
-  );
+  const exampleActions = track.mode === "kanji_reading"
+    ? []
+    : visibleActions.filter((action) => action.key === "example" || action.key === "exampleKo");
   const isPromptOpen = Boolean(session.prompt);
   const retryPromptModal =
     !isCustomStudy && session.prompt?.type === "retry"
