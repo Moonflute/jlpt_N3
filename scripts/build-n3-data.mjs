@@ -8,6 +8,7 @@ const outputDir = path.join(rootDir, "data");
 const outputPath = path.join(outputDir, "n3.json");
 const overridePath = path.join(rootDir, "data", "furigana-overrides.json");
 const extraOverridePath = path.join(rootDir, "data", "furigana-overrides-extra.json");
+const kyoikuKanjiPath = path.join(rootDir, "data", "kyoiku-kanji-1026.txt");
 
 function findSourceFile(matcher) {
   const entries = fs.readdirSync(sourceDir).filter((name) => name.endsWith(".txt"));
@@ -1201,11 +1202,10 @@ function getKanjiKoreanSound(label) {
 }
 
 function buildKanjiStages(items) {
-  const stages = [];
+  const ranges = [];
   let start = 0;
   let currentCount = 0;
   let startSound = "";
-  let previousSound = "";
 
   for (let index = 0; index < items.length; index += 1) {
     const item = items[index];
@@ -1218,37 +1218,37 @@ function buildKanjiStages(items) {
     const nextSound = items[index + 1]?.koreanSound || "";
     const isSoundBoundary = nextSound !== sound;
     if (isSoundBoundary && currentCount > 25) {
-      const end = index + 1;
-      const label = startSound === sound ? startSound : `${startSound}~${sound}`;
-      stages.push({
-        id: `kanji-${String(stages.length + 1).padStart(3, "0")}`,
-        label,
-        range: `${start + 1}~${end}`,
-        start,
-        end,
-      });
-      start = end;
+      ranges.push({ start, end: index + 1 });
+      start = index + 1;
       currentCount = 0;
       startSound = nextSound;
     }
-    previousSound = sound;
   }
 
   if (start < items.length) {
-    const lastSound = previousSound || startSound || "기타";
-    const label = startSound === lastSound ? startSound : `${startSound}~${lastSound}`;
-    stages.push({
-      id: `kanji-${String(stages.length + 1).padStart(3, "0")}`,
-      label,
-      range: `${start + 1}~${items.length}`,
-      start,
-      end: items.length,
-    });
+    ranges.push({ start, end: items.length });
   }
 
-  return stages;
-}
+  const lastRange = ranges.at(-1);
+  if (ranges.length > 1 && lastRange && lastRange.end - lastRange.start < 13) {
+    const previousRange = ranges[ranges.length - 2];
+    previousRange.end = lastRange.end;
+    ranges.pop();
+  }
 
+  return ranges.map((range, index) => {
+    const startSoundLabel = items[range.start]?.koreanSound || "기타";
+    const endSoundLabel = items[range.end - 1]?.koreanSound || startSoundLabel;
+    const label = startSoundLabel === endSoundLabel ? startSoundLabel : startSoundLabel + "~" + endSoundLabel;
+    return {
+      id: `kanji-${String(index + 1).padStart(3, "0")}`,
+      label,
+      range: `${range.start + 1}~${range.end}`,
+      start: range.start,
+      end: range.end,
+    };
+  });
+}
 function extractKanjiSourceExamples(row) {
   const values = [];
   const source = `${row.onSource || ""} ${row.kunSource || ""}`;
@@ -1288,9 +1288,36 @@ function mergeKanjiExamples(...groups) {
   return merged;
 }
 
+function collectTrackKanjiSet(tracks) {
+  const kanji = new Set();
+  for (const track of tracks) {
+    for (const item of track.items || []) {
+      const text = String(item.answer || item.primary || "");
+      for (const char of Array.from(text)) {
+        if (/[\u3400-\u9fff\u3005]/u.test(char)) {
+          kanji.add(char);
+        }
+      }
+    }
+  }
+  return kanji;
+}
+
+function loadKyoikuKanjiSet() {
+  if (!fs.existsSync(kyoikuKanjiPath)) {
+    return new Set();
+  }
+
+  return new Set(Array.from(fs.readFileSync(kyoikuKanjiPath, "utf8")).filter((char) => /[\u3400-\u9fff\u3005]/u.test(char)));
+}
+
 function buildKanjiTrack(rows, tracksForExamples) {
   const exampleMap = collectKanjiExampleMap(tracksForExamples);
-  const items = rows.map((row, index) => {
+  const n3WordKanjiSet = collectTrackKanjiSet(tracksForExamples.filter((track) => track.id === "word-n3"));
+  const kyoikuKanjiSet = loadKyoikuKanjiSet();
+  const keepKanjiSet = new Set([...n3WordKanjiSet, ...kyoikuKanjiSet]);
+  const filteredRows = rows.filter((row) => keepKanjiSet.has(row.kanji));
+  const items = filteredRows.map((row, index) => {
     const kunReadings = extractKunReadings(row.kunSource);
     const onReadings = extractOnReadings(row.onSource);
     const reading = kunReadings.join(" / ");
