@@ -1131,6 +1131,18 @@ function extractKunReadings(raw) {
   return [...new Set(readings)];
 }
 
+function splitKanjiKoreanMemo(text) {
+  const source = String(text || "").trim();
+  const match = source.match(/^([^()??]+)[(?]([\s\S]+)[)?]$/);
+  if (!match) {
+    return { label: source, memo: "" };
+  }
+
+  return {
+    label: match[1].trim(),
+    memo: match[2].trim(),
+  };
+}
 function parseKanjiRows(text) {
   return text
     .split(/\r?\n/)
@@ -1202,6 +1214,7 @@ function buildKanjiTrack(rows, tracksForExamples) {
     const onReadings = extractOnReadings(row.onSource);
     const reading = kunReadings.join(" / ");
     const meaning = onReadings.join(" / ");
+    const korean = splitKanjiKoreanMemo(row.korean);
     const examples = exampleMap.get(row.kanji) || [];
 
     return {
@@ -1211,8 +1224,8 @@ function buildKanjiTrack(rows, tracksForExamples) {
       searchRomaji: createRomajiSearchKey(`${reading} ${meaning}`),
       meaning,
       exampleJa: examples.join(" / "),
-      exampleKo: row.korean,
-      note: row.korean,
+      exampleKo: korean.label,
+      note: korean.memo,
       hint: row.related,
       sourceTag: "상용한자 2136",
       rubyParts: [{ base: row.kanji, ruby: "" }],

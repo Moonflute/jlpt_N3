@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "3.4.5";
+const APP_VERSION = "3.4.6";
 let transientNoticeTimer = null;
 
 function createDefaultCustomConfig() {
@@ -1382,7 +1382,8 @@ function advanceCard(result) {
 }
 
 function reveal(key) {
-  if (key === "exampleKo" && !state.reveal.exampleKo && !state.reveal.example) {
+  const activeTrack = getActiveStudyTrack();
+  if (key === "exampleKo" && activeTrack?.mode !== "kanji_reading" && !state.reveal.exampleKo && !state.reveal.example) {
     state.reveal.example = true;
     state.reveal.exampleKo = true;
     render();
@@ -3636,13 +3637,22 @@ function renderStudy() {
   } else if (track.mode === "kanji_reading") {
     modeText = "\uD55C\uC790\uB97C \uBCF4\uACE0 \uD6C8\uB3C5\uACFC \uC74C\uB3C5\uC744 \uB5A0\uC62C\uB9B0 \uB4A4 \uD655\uC778";
     primary = escapeHtml(item.primary);
-    secondary = state.reveal.reading ? escapeHtml(item.reading || "") : "";
-    tertiary = state.reveal.meaning ? escapeHtml(item.meaning || "") : "";
+    const readingParts = [];
+    if (state.reveal.reading) {
+      readingParts.push(`훈독 : ${escapeHtml(item.reading || "")}`);
+    }
+    if (state.reveal.meaning) {
+      readingParts.push(`음독 : ${escapeHtml(item.meaning || "")}`);
+    }
+    secondary = readingParts.join(" / ");
+    tertiary = state.reveal.exampleKo ? escapeHtml(item.exampleKo || "") : "";
+    choices = state.reveal.note ? escapeHtml(item.note || "") : "";
     actions = [
-      { key: "reading", label: "\uD6C8\uB3C5 \uBCF4\uAE30" },
-      { key: "meaning", label: "\uC74C\uB3C5 \uBCF4\uAE30" },
-      { key: "example", label: "\uB2E8\uC5B4 \uBCF4\uAE30", enabled: Boolean(exampleJa) },
-      { key: "exampleKo", label: "\uD55C\uC790 \uB73B \uBCF4\uAE30", enabled: Boolean(exampleKo) },
+      { key: "reading", label: "훈독 보기" },
+      { key: "meaning", label: "음독 보기" },
+      { key: "exampleKo", label: "한자 뜻 보기", enabled: Boolean(exampleKo) },
+      { key: "note", label: "메모 보기", enabled: Boolean(item.note) },
+      { key: "example", label: "단어 보기", enabled: Boolean(exampleJa) },
     ];
   } else {
     modeText = "의미를 떠올린 뒤 예문으로 확인";
