@@ -1133,16 +1133,17 @@ function extractKunReadings(raw) {
 
 function splitKanjiKoreanMemo(text) {
   const source = String(text || "").trim();
-  const match = source.match(/^([^()??]+)[(?]([\s\S]+)[)?]$/);
-  if (!match) {
+  const parenIndex = source.search(/[()\uFF08\uFF09]/);
+  if (parenIndex < 0) {
     return { label: source, memo: "" };
   }
 
   return {
-    label: match[1].trim(),
-    memo: match[2].trim(),
+    label: source.slice(0, parenIndex).trim(),
+    memo: source.slice(parenIndex).replace(/^[()\uFF08\uFF09]+|[()\uFF08\uFF09]+$/g, "").trim(),
   };
 }
+
 function parseKanjiRows(text) {
   return text
     .split(/\r?\n/)
@@ -1189,22 +1190,102 @@ function collectKanjiExampleMap(tracks) {
   return examples;
 }
 
+function getKanjiKoreanSound(label) {
+  const cleaned = String(label || "")
+    .replace(/[=?].*$/, "")
+    .replace(/[()\uFF08\uFF09].*$/, "")
+    .trim();
+  const matches = cleaned.match(/[\uAC00-\uD7A3]+/g) || [];
+  const lastWord = matches.at(-1) || "";
+  return Array.from(lastWord).at(-1) || lastWord;
+}
+
 function buildKanjiStages(items) {
   const stages = [];
-  const size = 25;
+  let start = 0;
+  let currentCount = 0;
+  let startSound = "";
+  let previousSound = "";
 
-  for (let start = 0; start < items.length; start += size) {
-    const end = Math.min(start + size, items.length);
+  for (let index = 0; index < items.length; index += 1) {
+    const item = items[index];
+    const sound = item.koreanSound || "기타";
+    if (!startSound) {
+      startSound = sound;
+    }
+
+    currentCount += 1;
+    const nextSound = items[index + 1]?.koreanSound || "";
+    const isSoundBoundary = nextSound !== sound;
+    if (isSoundBoundary && currentCount > 25) {
+      const end = index + 1;
+      const label = startSound === sound ? startSound : `${startSound}~${sound}`;
+      stages.push({
+        id: `kanji-${String(stages.length + 1).padStart(3, "0")}`,
+        label,
+        range: `${start + 1}~${end}`,
+        start,
+        end,
+      });
+      start = end;
+      currentCount = 0;
+      startSound = nextSound;
+    }
+    previousSound = sound;
+  }
+
+  if (start < items.length) {
+    const lastSound = previousSound || startSound || "기타";
+    const label = startSound === lastSound ? startSound : `${startSound}~${lastSound}`;
     stages.push({
       id: `kanji-${String(stages.length + 1).padStart(3, "0")}`,
-      label: String(stages.length + 1).padStart(2, "0"),
-      range: `${start + 1}~${end}`,
+      label,
+      range: `${start + 1}~${items.length}`,
       start,
-      end,
+      end: items.length,
     });
   }
 
   return stages;
+}
+
+function extractKanjiSourceExamples(row) {
+  const values = [];
+  const source = `${row.onSource || ""} ${row.kunSource || ""}`;
+  const patterns = [
+    /([\u4E00-\u9FFF\u3005][\u3040-\u30FF\u4E00-\u9FFF\u3005]*)(?:[（(]([^）)]+)[）)])/g,
+    /([\u3040-\u30FF]*[\u4E00-\u9FFF\u3005][\u3040-\u30FF\u4E00-\u9FFF\u3005]*)/g,
+  ];
+  for (const pattern of patterns) {
+    let match;
+    while ((match = pattern.exec(source))) {
+      const term = String(match[1] || "").trim();
+      if (!term || term === row.kanji || term.length < 2 || !term.includes(row.kanji)) {
+        continue;
+      }
+      const meaning = String(match[2] || "").trim();
+      values.push(meaning ? `${term}(${meaning})` : term);
+    }
+  }
+  return values;
+}
+
+function mergeKanjiExamples(...groups) {
+  const merged = [];
+  for (const group of groups) {
+    for (const value of group || []) {
+      const normalized = String(value || "").trim();
+      const term = normalized.replace(/[（(].*$/, "");
+      if (!normalized || merged.some((entry) => entry === normalized || entry.replace(/[（(].*$/, "") === term)) {
+        continue;
+      }
+      merged.push(normalized);
+      if (merged.length >= 3) {
+        return merged;
+      }
+    }
+  }
+  return merged;
 }
 
 function buildKanjiTrack(rows, tracksForExamples) {
@@ -1215,7 +1296,8 @@ function buildKanjiTrack(rows, tracksForExamples) {
     const reading = kunReadings.join(" / ");
     const meaning = onReadings.join(" / ");
     const korean = splitKanjiKoreanMemo(row.korean);
-    const examples = exampleMap.get(row.kanji) || [];
+    const examples = mergeKanjiExamples(exampleMap.get(row.kanji) || [], extractKanjiSourceExamples(row));
+    const koreanSound = getKanjiKoreanSound(korean.label);
 
     return {
       id: `${KANJI_TRACK_DEF.id}-${index + 1}`,
@@ -1225,6 +1307,7 @@ function buildKanjiTrack(rows, tracksForExamples) {
       meaning,
       exampleJa: examples.join(" / "),
       exampleKo: korean.label,
+      koreanSound,
       note: korean.memo,
       hint: row.related,
       sourceTag: "상용한자 2136",
@@ -1232,11 +1315,19 @@ function buildKanjiTrack(rows, tracksForExamples) {
     };
   });
 
+  const sortedItems = items
+    .map((item, index) => ({ ...item, originalIndex: index }))
+    .sort((left, right) => left.koreanSound.localeCompare(right.koreanSound, "ko-KR") || left.originalIndex - right.originalIndex)
+    .map(({ originalIndex, ...item }, index) => ({
+      ...item,
+      id: `${KANJI_TRACK_DEF.id}-${index + 1}`,
+    }));
+
   return {
     ...KANJI_TRACK_DEF,
-    total: items.length,
-    items,
-    stages: buildKanjiStages(items),
+    total: sortedItems.length,
+    items: sortedItems,
+    stages: buildKanjiStages(sortedItems),
   };
 }
 
