@@ -1132,6 +1132,17 @@ button {
   font-weight: 800;
 }
 
+.kanji-example-ruby rt {
+  color: var(--teal-deep);
+  font-size: 0.72em;
+  font-weight: 700;
+}
+
+.kanji-example-separator {
+  color: var(--muted-light);
+  margin: 0 2px;
+}
+
 .card-example.is-empty {
   visibility: hidden;
 }

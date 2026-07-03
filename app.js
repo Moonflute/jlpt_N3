@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "3.4.7";
+const APP_VERSION = "3.5.0";
 let transientNoticeTimer = null;
 
 function createDefaultCustomConfig() {
@@ -2267,6 +2267,32 @@ function renderRubyParts(parts, revealRuby, options = {}) {
     .join("");
 }
 
+function renderKanjiExampleWords(example) {
+  const source = String(example || "").trim();
+  if (!source) {
+    return "";
+  }
+
+  return source
+    .split(/\s*\/\s*/)
+    .filter(Boolean)
+    .map((part) => {
+      const match = part.match(/^(.+?)[（(]([^）)]+)[）)]$/u);
+      if (!match) {
+        return escapeHtml(part);
+      }
+
+      const base = match[1].trim();
+      const detail = match[2].trim();
+      if (/^[\u3041-\u3096\u30A1-\u30FA\u30FC]+$/u.test(detail)) {
+        return `<ruby class="kanji-example-ruby">${escapeHtml(base)}<rt>${escapeHtml(detail)}</rt></ruby>`;
+      }
+
+      return `${escapeHtml(base)}<span class="kanji-example-meaning">(${escapeHtml(detail)})</span>`;
+    })
+    .join('<span class="kanji-example-separator"> / </span>');
+}
+
 function addTerm(target, value) {
   const term = String(value || "").trim();
   if (!term) {
@@ -3567,7 +3593,7 @@ function renderStudy() {
     `);
   }
 
-  const exampleJa = escapeHtml(item.exampleJa);
+  const exampleJa = track.mode === "kanji_reading" ? renderKanjiExampleWords(item.exampleJa) : escapeHtml(item.exampleJa);
   const exampleKo = escapeHtml(item.exampleKo);
   const isEnglish = (track.language ?? "ja") === "en";
   const isSaved = isItemSaved(track.id, item.id);
@@ -3637,21 +3663,20 @@ function renderStudy() {
   } else if (track.mode === "kanji_reading") {
     modeText = "\uD55C\uC790\uB97C \uBCF4\uACE0 \uD6C8\uB3C5\uACFC \uC74C\uB3C5\uC744 \uB5A0\uC62C\uB9B0 \uB4A4 \uD655\uC778";
     primary = escapeHtml(item.primary);
+    secondary = state.reveal.exampleKo ? escapeHtml(item.exampleKo || "") : "";
+    tertiary = state.reveal.note ? escapeHtml(item.note || "") : "";
     const readingParts = [];
-    if (state.reveal.reading) {
-      readingParts.push(`훈독 : ${escapeHtml(item.reading || "")}`);
+    if (item.reading) {
+      readingParts.push(`훈독 : ${escapeHtml(item.reading)}`);
     }
-    if (state.reveal.meaning) {
-      readingParts.push(`음독 : ${escapeHtml(item.meaning || "")}`);
+    if (item.meaning) {
+      readingParts.push(`음독 : ${escapeHtml(item.meaning)}`);
     }
-    secondary = readingParts.join(" / ");
-    tertiary = state.reveal.exampleKo ? escapeHtml(item.exampleKo || "") : "";
-    choices = state.reveal.note ? escapeHtml(item.note || "") : "";
+    choices = state.reveal.reading ? readingParts.join(" / ") : "";
     actions = [
-      { key: "reading", label: "훈독 보기" },
-      { key: "meaning", label: "음독 보기" },
-      { key: "exampleKo", label: "한자 뜻 보기", enabled: Boolean(exampleKo) },
+      { key: "exampleKo", label: "한자뜻 보기", enabled: Boolean(exampleKo) },
       { key: "note", label: "메모 보기", enabled: Boolean(item.note) },
+      { key: "reading", label: "훈독/음독 보기", enabled: Boolean(item.reading || item.meaning) },
       { key: "example", label: "단어 보기", enabled: Boolean(exampleJa) },
     ];
   } else {
@@ -3668,10 +3693,10 @@ function renderStudy() {
 
   const visibleActions = actions.filter((action) => action.enabled !== false);
   const primaryActions = visibleActions.filter(
-    (action) => action.key !== "example" && action.key !== "exampleKo",
+    (action) => action.key !== "example" && !(action.key === "exampleKo" && track.mode !== "kanji_reading"),
   );
   const exampleActions = visibleActions.filter(
-    (action) => action.key === "example" || action.key === "exampleKo",
+    (action) => action.key === "example" || (action.key === "exampleKo" && track.mode !== "kanji_reading"),
   );
   const isPromptOpen = Boolean(session.prompt);
   const retryPromptModal =
@@ -3765,8 +3790,8 @@ function renderStudy() {
         <div class="card-slot ${tertiaryClass}${tertiary ? "" : " is-empty"}">${tertiary || "&nbsp;"}</div>
         <div class="card-slot ${choiceClass}${choices ? "" : " is-empty"}">${choices || "&nbsp;"}</div>
         <div class="card-example-shell">
-          <div class="card-example${state.reveal.example && exampleJa ? "" : " is-empty"}">${state.reveal.example && exampleJa ? highlightExampleText(item.exampleJa, item, track) : "&nbsp;"}</div>
-          <div class="card-example card-example--ko${state.reveal.exampleKo && exampleKo ? "" : " is-empty"}">${state.reveal.exampleKo && exampleKo ? exampleKo : "&nbsp;"}</div>
+          <div class="card-example${state.reveal.example && exampleJa ? "" : " is-empty"}">${state.reveal.example && exampleJa ? (track.mode === "kanji_reading" ? exampleJa : highlightExampleText(item.exampleJa, item, track)) : "&nbsp;"}</div>
+          <div class="card-example card-example--ko${track.mode !== "kanji_reading" && state.reveal.exampleKo && exampleKo ? "" : " is-empty"}">${track.mode !== "kanji_reading" && state.reveal.exampleKo && exampleKo ? exampleKo : "&nbsp;"}</div>
         </div>
       </div>
       <div class="action-stack">
