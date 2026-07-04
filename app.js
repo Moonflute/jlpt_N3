@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "4.0.4";
+const APP_VERSION = "4.0.5";
 let transientNoticeTimer = null;
 
 function createDefaultCustomConfig() {
@@ -1905,14 +1905,12 @@ function renderStagePreviewTarget(track, item) {
 }
 
 function renderStagePreviewRows(track, items) {
-  const isEnglish = (track.language ?? "ja") === "en";
   return items
     .map((item) => {
       return `
         <tr>
           <td class="stage-preview-table__word">${renderStagePreviewWord(track, item)}</td>
           <td>${escapeHtml(item.meaning || "")}</td>
-          ${isEnglish ? "" : `<td>${renderStagePreviewTarget(track, item)}</td>`}
         </tr>
       `;
     })
@@ -3756,7 +3754,6 @@ function renderStage() {
     : track.mode === "synonym_pair"
       ? "단어 / 유의 표현"
       : "단어 / 읽기";
-  const previewTargetHeader = (track.language ?? "ja") === "en" ? "" : "<th>\uBA54\uBAA8 / \uB300\uC0C1</th>";
 
   return appShell(`
       <div class="topbar">
@@ -3823,7 +3820,6 @@ function renderStage() {
                 <tr>
                   <th>${escapeHtml(previewTitle)}</th>
                   <th>\uB73B</th>
-                  ${previewTargetHeader}
                 </tr>
               </thead>
               <tbody>${renderStagePreviewRows(track, filteredPreviewItems)}</tbody>
