@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "3.5.6";
+const APP_VERSION = "3.5.7";
 let transientNoticeTimer = null;
 
 function createDefaultCustomConfig() {
@@ -3494,14 +3494,19 @@ function renderStage() {
 
   const isTrackPreview = state.stagePreview?.scope === "track";
   const previewStage = state.stagePreview && !isTrackPreview ? stages[state.stagePreview.index] : null;
+  const hasPreview = Boolean(state.stagePreview && (isTrackPreview || previewStage));
   const previewItems = isTrackPreview ? (track.items || []) : previewStage ? getItemsForStage(track, previewStage) : [];
   const filteredPreviewItems = getFilteredStagePreviewItems(track, previewItems);
-  const previewTitleText = isTrackPreview
-    ? `${getTrackLabel(track)} 전체`
-    : `${getTrackLabel(track)} · ${formatStageDisplayLabel(previewStage)} ${previewStage.range}`;
-  const previewSubtitleText = isTrackPreview
-    ? `이 유형 전체에서 확인할 항목 목록 · ${filteredPreviewItems.length}개`
-    : `이 회독 범위에서 확인할 항목 목록 · ${filteredPreviewItems.length}개`;
+  const previewTitleText = !hasPreview
+    ? ""
+    : isTrackPreview
+      ? `${getTrackLabel(track)} 전체`
+      : `${getTrackLabel(track)} · ${formatStageDisplayLabel(previewStage)} ${previewStage.range}`;
+  const previewSubtitleText = !hasPreview
+    ? ""
+    : isTrackPreview
+      ? `이 유형 전체에서 확인할 항목 목록 · ${filteredPreviewItems.length}개`
+      : `이 회독 범위에서 확인할 항목 목록 · ${filteredPreviewItems.length}개`;
   const previewEmptyText = isTrackPreview
     ? "이 유형 전체에서 아직 미완료 항목이 없습니다."
     : "이 회독 범위에서 아직 미완료 항목이 없습니다.";
@@ -3516,7 +3521,10 @@ function renderStage() {
         <button class="back-button" data-route="${isCustomStudy ? "custom-select" : "groups"}">홈</button>
       </div>
     <div class="section-card">
-      <h1 class="page-title">${escapeHtml(getTrackLabel(track))}</h1>
+      <div class="page-title-row">
+        <h1 class="page-title">${escapeHtml(getTrackLabel(track))}</h1>
+        <button class="stage-preview-button stage-preview-button--title" type="button" data-track-preview aria-label="전체 목록 보기">&#9776;</button>
+      </div>
       <p class="page-subtitle">${escapeHtml(track.description)}</p>
     </div>
     <div class="section-card">
@@ -3539,7 +3547,7 @@ function renderStage() {
       }
 
       ${
-        state.stagePreview && (isTrackPreview || previewStage)
+        hasPreview
           ? `<div class="modal-backdrop">
         <div class="modal-panel section-card stage-preview-modal">
           <div class="stage-preview-head">
