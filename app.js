@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "4.0.1";
+const APP_VERSION = "4.0.4";
 let transientNoticeTimer = null;
 
 function createDefaultCustomConfig() {
@@ -500,8 +500,8 @@ function getTrackDisplayTitleLegacy(track) {
 
 function getEnglishWordSubgroupsLegacy() {
   return [
-    { id: "green", title: "초록이" },
-    { id: "yellow", title: "노랭이" },
+    { id: "green", title: "TOFLE" },
+    { id: "yellow", title: "TOEIC" },
   ];
 }
 
@@ -540,8 +540,8 @@ function getTrackDisplayTitle(track) {
 
 function getEnglishWordSubgroups() {
   return [
-    { id: "yellow", title: "노랭이" },
-    { id: "green", title: "초록이" },
+    { id: "yellow", title: "TOEIC" },
+    { id: "green", title: "TOFLE" },
   ];
 }
 
@@ -580,8 +580,8 @@ function getTrackLabel(track) {
 
 function getEnglishWordSubgroupOptions() {
   return [
-    { id: "yellow", title: "\uB178\uB791\uC774" },
-    { id: "green", title: "\uCD08\uB85D\uC774" },
+    { id: "yellow", title: "TOEIC" },
+    { id: "green", title: "TOFLE" },
   ];
 }
 
@@ -1905,13 +1905,14 @@ function renderStagePreviewTarget(track, item) {
 }
 
 function renderStagePreviewRows(track, items) {
+  const isEnglish = (track.language ?? "ja") === "en";
   return items
     .map((item) => {
       return `
         <tr>
           <td class="stage-preview-table__word">${renderStagePreviewWord(track, item)}</td>
           <td>${escapeHtml(item.meaning || "")}</td>
-          <td>${renderStagePreviewTarget(track, item)}</td>
+          ${isEnglish ? "" : `<td>${renderStagePreviewTarget(track, item)}</td>`}
         </tr>
       `;
     })
@@ -3724,7 +3725,6 @@ function renderStage() {
             <div class="stage-button__sidebar">
               <div class="stage-button__sidebar-actions">
                 <button class="stage-action-button stage-action-button--compact" type="button" data-stage-day="${index}">단일</button>
-                <button class="stage-action-button stage-action-button--compact stage-action-button--ghost" type="button" data-stage-review="${index}">복습</button>
               </div>
             </div>
           </div>
@@ -3756,6 +3756,7 @@ function renderStage() {
     : track.mode === "synonym_pair"
       ? "단어 / 유의 표현"
       : "단어 / 읽기";
+  const previewTargetHeader = (track.language ?? "ja") === "en" ? "" : "<th>\uBA54\uBAA8 / \uB300\uC0C1</th>";
 
   return appShell(`
       <div class="topbar">
@@ -3821,8 +3822,8 @@ function renderStage() {
               <thead>
                 <tr>
                   <th>${escapeHtml(previewTitle)}</th>
-                  <th>뜻</th>
-                  <th>메모 / 대상</th>
+                  <th>\uB73B</th>
+                  ${previewTargetHeader}
                 </tr>
               </thead>
               <tbody>${renderStagePreviewRows(track, filteredPreviewItems)}</tbody>
@@ -4227,31 +4228,8 @@ function normalizeStageRecordMeta() {
     }).length;
     const record = getStageRecord(track, stage);
     submeta.textContent = `복습 후보 ${reviewCount}개${record ? ` · 최근 ${record.lastRounds}R` : ""}`;
-
-    if (head && !head.querySelector("[data-stage-stats]")) {
-      const previewButton = head.querySelector("[data-stage-preview]");
-      const actionWrap = document.createElement("div");
-      actionWrap.className = "stage-head-actions";
-
-      const statsButton = document.createElement("button");
-      statsButton.className = "stage-preview-button stage-preview-button--compact";
-      statsButton.type = "button";
-      statsButton.setAttribute("data-stage-stats", String(index));
-      statsButton.setAttribute("aria-label", "회독 통계 보기");
-      statsButton.innerHTML = "&#128202;";
-
-      if (previewButton) {
-        previewButton.remove();
-        actionWrap.append(statsButton, previewButton);
-      } else {
-        actionWrap.append(statsButton);
-      }
-
-      head.append(actionWrap);
-    }
   });
 
-  renderStageStatsModal(track, stages);
 }
 
 function normalizeTransientNotice() {
@@ -4388,10 +4366,6 @@ function bindEvents() {
 
   document.querySelectorAll("[data-stage-day]").forEach((button) => {
     button.addEventListener("click", () => onSelectStage(Number(button.dataset.stageDay), { mode: "day" }));
-  });
-
-  document.querySelectorAll("[data-stage-review]").forEach((button) => {
-    button.addEventListener("click", () => onSelectStage(Number(button.dataset.stageReview), { mode: "review" }));
   });
 
   document.querySelectorAll("[data-stage-preview]").forEach((button) => {

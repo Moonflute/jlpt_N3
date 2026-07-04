@@ -1,6 +1,6 @@
 {
   "level": "N3",
-  "generatedAt": "2026-07-04T08:00:42.663Z",
+  "generatedAt": "2026-07-04T09:25:21.178Z",
   "stageSize": 25,
   "tracks": [
     {
@@ -150648,8 +150648,8 @@
       "id": "eng-word-green-main",
       "language": "en",
       "group": "단어",
-      "title": "초록이 메인",
-      "description": "해커스 초록이 메인 단어를 Day 단위로 회독하는 트랙",
+      "title": "TOFLE 메인",
+      "description": "TOFLE 메인 단어를 Day 단위로 회독하는 트랙",
       "mode": "meaning_check",
       "total": 2365,
       "items": [
@@ -204598,8 +204598,8 @@
       "id": "eng-word-green-sub",
       "language": "en",
       "group": "단어",
-      "title": "초록이 유의어",
-      "description": "해커스 초록이 유의어/반의어 단어를 Day 단위로 회독하는 트랙",
+      "title": "TOFLE 유의어",
+      "description": "TOFLE 유의어/반의어 단어를 Day 단위로 회독하는 트랙",
       "mode": "meaning_check",
       "total": 2292,
       "items": [
@@ -255456,8 +255456,8 @@
       "id": "eng-word-yellow-core",
       "language": "en",
       "group": "단어",
-      "title": "노랭이 빈출",
-      "description": "해커스 노랭이 빈출단어를 Day 단위로 회독하는 트랙",
+      "title": "TOEIC 빈출",
+      "description": "TOEIC 빈출단어를 Day 단위로 회독하는 트랙",
       "mode": "meaning_check",
       "total": 1296,
       "items": [
@@ -282908,8 +282908,8 @@
       "id": "eng-word-yellow-basic",
       "language": "en",
       "group": "단어",
-      "title": "노랭이 기초",
-      "description": "해커스 노랭이 기초단어를 Day 단위로 회독하는 트랙",
+      "title": "TOEIC 기초",
+      "description": "TOEIC 기초단어를 Day 단위로 회독하는 트랙",
       "mode": "meaning_check",
       "total": 872,
       "items": [
@@ -302316,8 +302316,8 @@
       "id": "eng-word-yellow-800",
       "language": "en",
       "group": "단어",
-      "title": "노랭이 800",
-      "description": "해커스 노랭이 800단어를 Day 단위로 회독하는 트랙",
+      "title": "TOEIC 800",
+      "description": "TOEIC 800단어를 Day 단위로 회독하는 트랙",
       "mode": "meaning_check",
       "total": 2005,
       "items": [
@@ -346650,8 +346650,8 @@
       "id": "eng-word-yellow-900",
       "language": "en",
       "group": "단어",
-      "title": "노랭이 900",
-      "description": "해커스 노랭이 900단어를 Day 단위로 회독하는 트랙",
+      "title": "TOEIC 900",
+      "description": "TOEIC 900단어를 Day 단위로 회독하는 트랙",
       "mode": "meaning_check",
       "total": 960,
       "items": [
