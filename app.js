@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "3.5.8";
+const APP_VERSION = "3.5.9";
 let transientNoticeTimer = null;
 
 function createDefaultCustomConfig() {
@@ -24,7 +24,10 @@ const GROUPS_BY_LANGUAGE = {
     { id: "청해", title: "청해" },
     { id: "단어", title: "단어" },
   ],
-  en: [{ id: "단어", title: "단어" }],
+  en: [
+    { id: "\uB2E8\uC5B4", title: "\uB2E8\uC5B4" },
+    { id: "\uBB38\uBC95", title: "\uBB38\uBC95" },
+  ],
 };
 
 const state = {

@@ -1,7 +1,7 @@
 ﻿{
   "name": "jlpt-n3-review",
   "private": true,
-  "version": "3.5.8",
+  "version": "3.5.9",
   "type": "module",
   "scripts": {
     "dev": "node ./scripts/serve.mjs",

@@ -238,6 +238,39 @@ const ENGLISH_WORD_TRACK_DEFS = [
   },
 ];
 
+const ENGLISH_GRAMMAR_TRACK_DEFS = [
+  {
+    source: "Basic English Grammar In Use Exercises",
+    id: "eng-grammar-basic-exercises",
+    language: "en",
+    group: "\uBB38\uBC95",
+    title: "Basic Exercises",
+    description: "Basic English Grammar In Use Exercises\uB97C \uC139\uC158 \uB2E8\uC704\uB85C \uD68C\uB3C5\uD558\uB294 \uD2B8\uB799",
+    mode: "meaning_check",
+    kind: "exercises",
+  },
+  {
+    source: "Basic English Grammar In Use Activities",
+    id: "eng-grammar-basic-activities",
+    language: "en",
+    group: "\uBB38\uBC95",
+    title: "Basic Activities",
+    description: "Basic English Grammar In Use Activities\uB97C \uC139\uC158 \uB2E8\uC704\uB85C \uD68C\uB3C5\uD558\uB294 \uD2B8\uB799",
+    mode: "meaning_check",
+    kind: "activities",
+  },
+  {
+    source: "Advanced English Grammar In Use Activities",
+    id: "eng-grammar-advanced-activities",
+    language: "en",
+    group: "\uBB38\uBC95",
+    title: "Advanced Activities",
+    description: "Advanced English Grammar In Use Activities\uB97C \uC139\uC158 \uB2E8\uC704\uB85C \uD68C\uB3C5\uD558\uB294 \uD2B8\uB799",
+    mode: "meaning_check",
+    kind: "activities",
+  },
+];
+
 const KATAKANA_START = 0x30a1;
 const KATAKANA_END = 0x30f6;
 
@@ -1443,6 +1476,141 @@ function buildEnglishWordTracks(rows) {
   }).filter((track) => track.total > 0);
 }
 
+function parseEnglishCloze(text) {
+  const source = text || "";
+  const answers = [];
+  const prompt = source.replace(/\{\{c\d+::([^}]+)\}\}/g, (_, answer) => {
+    answers.push(answer.trim());
+    return " ____ ";
+  });
+  const cleanedPrompt = prompt
+    .replace(/\s+/g, " ")
+    .replace(/\s+([,.!?;:])/g, "$1")
+    .trim();
+
+  return {
+    prompt: cleanedPrompt,
+    answer: answers.join(" / ").trim(),
+  };
+}
+
+function normalizeEnglishChoiceText(text) {
+  return (text || "")
+    .split(";")
+    .map((choice) => choice.trim())
+    .filter(Boolean)
+    .join(" / ");
+}
+
+function getEnglishGrammarDeckSource(deck) {
+  const parts = deck.split("::");
+  return parts[2] || "";
+}
+
+function getEnglishGrammarStageLabel(deck) {
+  const parts = deck.split("::");
+  return parts[3] || shortDayLabel(deck);
+}
+
+function buildEnglishGrammarItem(track, row, index) {
+  const rawPrompt = track.kind === "activities" ? row.c8 : row.c6;
+  const parsed = parseEnglishCloze(rawPrompt);
+  const choices = normalizeEnglishChoiceText(track.kind === "activities" ? row.c11 : row.c7);
+  const topic = track.kind === "activities" ? row.c5 : row.c3;
+  const unit = track.kind === "activities" ? row.c6 : row.c4;
+  const instruction = track.kind === "activities" ? row.c7 : row.c5;
+  const extra = row.c12;
+  const metaLines = [unit, instruction, extra].filter(Boolean);
+
+  return {
+    id: `${track.id}-${index + 1}`,
+    primary: parsed.prompt || rawPrompt,
+    reading: parsed.prompt || rawPrompt,
+    meaning: parsed.answer || row.c7 || row.c11 || "",
+    exampleJa: choices ? `보기: ${choices}` : "",
+    exampleKo: metaLines.join("\n"),
+    note: topic || "",
+    hint: unit || "",
+    sourceTag: row.deck,
+    rubyParts: makePlainRubyParts(parsed.prompt || rawPrompt),
+    tags: [],
+    dayTag: row.deck,
+  };
+}
+
+function sortEnglishGrammarDecks(decks) {
+  return [...decks].sort((a, b) => {
+    const aLabel = getEnglishGrammarStageLabel(a);
+    const bLabel = getEnglishGrammarStageLabel(b);
+    return aLabel.localeCompare(bLabel, "en", { numeric: true, sensitivity: "base" });
+  });
+}
+
+function makeEnglishGrammarStageId(label, index) {
+  const slug = label.replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "").toLowerCase();
+  return slug ? `${slug}-${index + 1}` : `section-${index + 1}`;
+}
+
+function buildEnglishGrammarStages(items) {
+  const byDeck = new Map();
+
+  for (const item of items) {
+    const deck = item.dayTag || "NO_SECTION";
+    if (!byDeck.has(deck)) {
+      byDeck.set(deck, []);
+    }
+    byDeck.get(deck).push(item);
+  }
+
+  const stages = [];
+  let offset = 0;
+  const stageSize = 25;
+
+  for (const deck of sortEnglishGrammarDecks(byDeck.keys())) {
+    const deckItems = byDeck.get(deck) || [];
+    const baseLabel = getEnglishGrammarStageLabel(deck);
+    const chunkCount = Math.max(1, Math.ceil(deckItems.length / stageSize));
+
+    for (let chunkIndex = 0; chunkIndex < chunkCount; chunkIndex += 1) {
+      const chunkStart = chunkIndex * stageSize;
+      const chunkEnd = Math.min(chunkStart + stageSize, deckItems.length);
+      const chunkLength = chunkEnd - chunkStart;
+      const label = chunkCount > 1 ? `${baseLabel} (${chunkIndex + 1}/${chunkCount})` : baseLabel;
+      stages.push({
+        id: makeEnglishGrammarStageId(baseLabel, chunkIndex),
+        label,
+        range: `${chunkStart + 1}~${chunkEnd} \u00B7 ${chunkLength}\uAC1C`,
+        start: offset + chunkStart,
+        end: offset + chunkEnd,
+      });
+    }
+
+    offset += deckItems.length;
+  }
+
+  return stages;
+}
+
+function buildEnglishGrammarTracks(rows) {
+  return ENGLISH_GRAMMAR_TRACK_DEFS.map((def) => {
+    const trackRows = rows.filter((row) => getEnglishGrammarDeckSource(row.deck) === def.source);
+    const sortedRows = trackRows.sort((a, b) => {
+      const deckCompare = getEnglishGrammarStageLabel(a.deck).localeCompare(getEnglishGrammarStageLabel(b.deck), "en", { numeric: true, sensitivity: "base" });
+      if (deckCompare) {
+        return deckCompare;
+      }
+      return String(a.c2).localeCompare(String(b.c2), "en", { numeric: true, sensitivity: "base" });
+    });
+    const items = sortedRows.map((row, index) => buildEnglishGrammarItem(def, row, index));
+    const stages = buildEnglishGrammarStages(items);
+    return {
+      ...def,
+      total: items.length,
+      items,
+      stages,
+    };
+  }).filter((track) => track.total > 0);
+}
 function main() {
   const text = fs.readFileSync(sourcePath, "utf8");
   const vocabText = fs.readFileSync(vocabSourcePath, "utf8");
@@ -1512,6 +1680,7 @@ function main() {
     tracks.push(buildKanjiTrack(kanjiRows, tracks));
   }
   tracks.push(...buildEnglishWordTracks(englishRows));
+  tracks.push(...buildEnglishGrammarTracks(englishRows));
 
   fs.mkdirSync(outputDir, { recursive: true });
   fs.writeFileSync(
