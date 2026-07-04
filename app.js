@@ -1,5 +1,5 @@
 const STORAGE_KEY = "jlpt-review-trainer-progress-v1";
-const APP_VERSION = "3.5.7";
+const APP_VERSION = "3.5.8";
 let transientNoticeTimer = null;
 
 function createDefaultCustomConfig() {
